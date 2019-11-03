@@ -22,7 +22,7 @@ namespace server.Util
         private const bool OnlyBeta = true;
         private const int BetaGroupId = 7;
 
-        private static readonly HttpClient Client = new HttpClient();
+        private static readonly HttpClient HttpClient = new HttpClient();
 
         public static async Task<LoginStatus> Login(string username, string password)
         {
@@ -35,7 +35,7 @@ namespace server.Util
             };
 
             var content = new FormUrlEncodedContent(values);
-            var response = await Client.PostAsync(Url, content);
+            var response = await HttpClient.PostAsync(Url, content);
 
             var responseString = await response.Content.ReadAsStringAsync();
             if (PrintToConsole)
@@ -65,7 +65,7 @@ namespace server.Util
             };
 
             var content = new FormUrlEncodedContent(values);
-            var response = await Client.PostAsync(Url, content);
+            var response = await HttpClient.PostAsync(Url, content);
 
             var responseString = await response.Content.ReadAsStringAsync();
             if (PrintToConsole)
@@ -94,7 +94,7 @@ namespace server.Util
             };
 
             var content = new FormUrlEncodedContent(values);
-            var response = await Client.PostAsync(Url, content);
+            var response = await HttpClient.PostAsync(Url, content);
 
             var responseString = await response.Content.ReadAsStringAsync();
             if (PrintToConsole)

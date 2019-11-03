@@ -1,7 +1,5 @@
 ﻿using System;
 using AltV.Net;
-using AltV.Net.Elements.Entities;
-using AltV.Net.Enums;
 
 namespace eXoTest1
 {

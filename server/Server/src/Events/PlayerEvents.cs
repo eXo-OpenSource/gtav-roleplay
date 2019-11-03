@@ -4,13 +4,14 @@ using Newtonsoft.Json;
 using server.Util;
 using server.Util.Log;
 using System;
+using server.Players;
 
 namespace Server.Events
 {
     class PlayerEvents : IScript
     {
         [Event("registerLogin:Login")]
-        public void OnClientLogin(IPlayer player, string username, string password)
+        public void OnIPlayerLogin(IPlayer player, string username, string password)
         {
             //Logger.Info(player.Name + " has requested Login");
             Console.Write(player.Name + " has requested Login");
@@ -24,6 +25,7 @@ namespace Server.Events
                             {
                                 Console.WriteLine("Login erfolgreich!");
                                 player.Emit("registerLogin:Success");
+                                PlayerManager.DoLogin(player);
 
                             break;
                         }

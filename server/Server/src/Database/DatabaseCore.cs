@@ -89,14 +89,16 @@ namespace server.Database
             Logger.Info($"Database connection to server: {SettingsManager.ServerSettings.Database.Server}");
 
             var stopWatch = Stopwatch.StartNew();
-            /*
+            
             ContextFactory.Instance.AccountModel.Load();
             Logger.Info($"Loaded {ContextFactory.Instance.AccountModel.Local.Count} accounts...");
 
             ContextFactory.Instance.CharacterModel.Load();
-            ContextFactory.Instance.FaceFeaturesModel.Load();
             Logger.Info($"Loaded {ContextFactory.Instance.CharacterModel.Local.Count} characters...");
+            
+            ContextFactory.Instance.FaceFeaturesModel.Load();
 
+            
             ContextFactory.Instance.VehicleModel.Load();
             Logger.Info($"Loaded {ContextFactory.Instance.VehicleModel.Local.Count} vehicles...");
 
@@ -137,7 +139,7 @@ namespace server.Database
             Logger.Info($"Loaded {ContextFactory.Instance.WorldObjectsModels.Local.Count} world objects...");
 
             stopWatch.Stop();
-            */
+            
             Logger.Debug($"Loaded database in {stopWatch.ElapsedMilliseconds} ms.");
 
             _lastUpdate = Stopwatch.StartNew();

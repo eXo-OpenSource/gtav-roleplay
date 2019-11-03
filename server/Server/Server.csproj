@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <PackageReference Include="AltV.Net" Version="1.16.5" />
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.0-preview2.19525.5">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -25,6 +26,7 @@
 
   <ItemGroup>
     <Folder Include="src\Enums\" />
+    <Folder Include="src\Players\" />
   </ItemGroup>
 
   <Target Name="CopyFiles" AfterTargets="publish">

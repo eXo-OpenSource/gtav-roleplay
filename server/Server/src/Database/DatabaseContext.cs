@@ -5,7 +5,7 @@ using System.Text;
 using Microsoft.Extensions.Logging;
 using server.Util.Settings;
 
-/*
+
 using server.Inventory;
 using server.Teams;
 using TeamModel = server.Teams.Team;
@@ -17,18 +17,21 @@ using VehicleShopVehicleModel = server.Vehicles.VehicleShopVehicle;
 using VehicleModel = server.Vehicles.Vehicle;
 using ItemModel = server.Inventory.Items.Item;
 using InventoryModel = server.Inventory.Inventory;
-using CharacterModel = server.Players.Characters.Character;
-using AccountModel = server.Players.Accounts.Account;
+
 using TeamMemberModel = server.Teams.TeamMember;
 using FaceFeaturesModel = server.Players.Characters.FaceFeatures;
-*/
+
+using CharacterModel = server.Players.Characters.Character;
+using AccountModel = server.Players.Accounts.Account;
+
 namespace server.Database
 {
     public class DatabaseContext : DbContext
     {
         // If a new entity is added it need to be load "DatabaseCore.OnResourceStartHandler()"
-       /* public DbSet<AccountModel> AccountModel { get; set; }
+        public DbSet<AccountModel> AccountModel { get; set; }
         public DbSet<CharacterModel> CharacterModel { get; set; }
+        
         public DbSet<VehicleModel> VehicleModel { get; set; }
         public DbSet<TeamModel> TeamModel { get; set; }
         public DbSet<DepartmentModel> TeamDepartmentModel { get; set; }
@@ -44,7 +47,7 @@ namespace server.Database
         public DbSet<WorldObjectsModel> WorldObjectsModels { get; set; }
         
         public DbSet<FaceFeaturesModel> FaceFeaturesModel { get; set; }
-        */
+        
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (ContextFactory.ConnectionString == null)
