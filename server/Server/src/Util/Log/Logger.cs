@@ -89,7 +89,7 @@ namespace server.Util.Log
 
             if (LogManager.IsLogCatIncluded(logMsg.Category, (LogCat)flags))
             {
-                Console.WriteLine(logMsg);
+                Console.WriteLine(logMsg.GetMessage());
             }
 
             SettingsManager.LogOutput.Add(logMsg);

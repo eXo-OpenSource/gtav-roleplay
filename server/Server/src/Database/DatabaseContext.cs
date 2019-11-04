@@ -59,11 +59,11 @@ namespace server.Database
 
             if (SettingsManager.ServerSettings.Database.QueryLog)
             {
-                optionsBuilder.UseLoggerFactory(DatabaseCore.GetLoggerFactory(LogLevel.Information)).UseMySQL(ContextFactory.ConnectionString);
+                optionsBuilder.UseLoggerFactory(DatabaseCore.GetLoggerFactory(LogLevel.Information)).UseMySql(ContextFactory.ConnectionString);
             }
             else
             {
-                optionsBuilder.UseLoggerFactory(DatabaseCore.GetLoggerFactory(LogLevel.Error)).UseMySQL(ContextFactory.ConnectionString);
+                optionsBuilder.UseLoggerFactory(DatabaseCore.GetLoggerFactory(LogLevel.Error)).UseMySql(ContextFactory.ConnectionString);
             }
         }
     }
