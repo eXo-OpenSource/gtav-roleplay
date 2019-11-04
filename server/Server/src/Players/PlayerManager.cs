@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using server.Database;
 using server.Extensions;
@@ -80,6 +82,8 @@ namespace server.Players
                 Logger.Debug(player.Name + " already added!");
                 return;
             }
+            Console.Write("Test");
+            player.Spawn(new Position(-725.7460327148438f, -282.2967224121094f, 36.959503173828125f));
 
             var account = player.GetAccountModel();
             player.SetData("account.id", account.Id);
@@ -87,7 +91,6 @@ namespace server.Players
             Accounts.Add(player, account);
             Characters.Add(player, ContextFactory.Instance.CharacterModel.Local.FirstOrDefault(c => c.Id == account.CharacterId));
             player.GetCharacter().Login(player);
-
             player.Emit("afterLogin");
         }
 

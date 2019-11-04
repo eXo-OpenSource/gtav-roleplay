@@ -51,7 +51,7 @@ namespace server.Util.Settings
                 ServerConsoleFlags = LogCat.None | LogCat.Debug | LogCat.Info | LogCat.Warn | LogCat.Error | LogCat.Fatal | LogCat.RageMp,
                 Database = new DatabaseSettings
                 {
-                    Server = "88.198.41.242",
+                    Server = "148.251.132.111",
                     Database = "gtav_dev",
                     UserId = "exoV",
                     Password = "6LdyVn3uQJbfdSJJ",
