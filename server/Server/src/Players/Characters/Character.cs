@@ -257,7 +257,7 @@ namespace server.Players.Characters
         {
            // var weapons = _player.Weapon;
             /* Not implemented yet
-            foreach (WeaponHash i in weapons)
+            foreach (WeaponModel i in weapons)
             {
                 properties.SavedWeapons.Add(new SavedWeapon { weapon = i, ammo = player.GetWeaponAmmo(i) });
             }
