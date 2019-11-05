@@ -5,12 +5,15 @@ using server.Database;
 using server.Enums;
 using server.Shops.Types;
 using System.Linq;
+using server.AutoMapper;
 
 namespace server.Shops
 {
     internal class ShopManager
     {
         private static readonly List<Shop> Shops = new List<Shop>();
+
+        private static Mapper mapper;
 
         static ShopManager()
         {
@@ -22,29 +25,36 @@ namespace server.Shops
                 {
                     case ShopType.Vehicle:
                         Console.Write("Vehicle Shop loaded");
-                        AddShop<VehicleShop>(shopModel);
-                        GetShop<VehicleShop>(shopModel.Id).Load();
+                        Add<VehicleShop>(shopModel, true);
                         break;
                     case ShopType.Item:
-                        AddShop<ItemShop>(shopModel);
+                        Add<ItemShop>(shopModel);
                         break;
                     case ShopType.Tuning:
-                        AddShop<TuningShop>(shopModel);
+                        Add<TuningShop>(shopModel);
+                        break;
+                    case ShopType.Food:
                         break;
                     default:
-                        AddShop<Shop>(shopModel);
+                        Add<Shop>(shopModel);
                         break;
                 }
         }
 
-        private static void AddShop<T>(Shop shop) where T : Shop
+        private static void Add<T>(Shop shop, bool autoLoad = false) 
+            where T : Shop
         {
-            //Shops.Add(Mapper.Map<T>(shop));
+            Shops.Add(AutoMapperConfiguration.GetMapper().Map<T>(shop));
+
+            var shopT = shop as T;
+            if (autoLoad)
+                shopT?.Load();
         }
 
-        public static T GetShop<T>(int shopId) where T : Shop
+        public static T Get<T>(int shopId) 
+            where T : Shop
         {
-            return (T)Shops.Find(x => x.Id == shopId);
+            return Shops.Find(x => x.Id == shopId) as T;
         }
 
     }

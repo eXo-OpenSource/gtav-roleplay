@@ -4,6 +4,7 @@ using AltV.Net.Elements.Entities;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore.Internal;
 using Newtonsoft.Json;
+using server.AutoMapper;
 using server.Database;
 using server.Teams.State;
 using server.Util.Log;
@@ -55,14 +56,16 @@ namespace server.Teams
                 TeamMemberPermissions.AddRange(ContextFactory.Instance.TeamMemberPermissionModel.Local);
         }
 
-        private static void AddTeam<T>(Team team) where T: Team
+        private static void AddTeam<T>(Team team) 
+            where T: Team
         {
-            //Teams.Add(Mapper.Map<T>(team));
+            Teams.Add(AutoMapperConfiguration.GetMapper().Map<T>(team));
         }
 
-        public static T GetTeam<T>(int teamId) where T: Team
+        public static T GetTeam<T>(int teamId) 
+            where T: Team
         {
-            return (T)Teams.Find(x => x.Id == teamId);
+            return Teams.Find(x => x.Id == teamId) as T;
         }
 
         public static DepartmentModel GetTeamDepartment(int departmentId)
@@ -94,7 +97,7 @@ namespace server.Teams
             return departments;
         }
 
-        public static List<TeamMember> GetTeamMembersForPlayer(Character player)
+        public static IEnumerable<TeamMember> GetTeamMembersForPlayer(Character player)
         {
             return TeamMembers.FindAll(x => x.CharacterId == player.Id);
         }

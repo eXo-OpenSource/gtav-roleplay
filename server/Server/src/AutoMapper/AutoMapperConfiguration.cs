@@ -10,11 +10,13 @@ using server.Vehicles.Types;
 
 namespace server.AutoMapper
 {
-    static class AutoMapperConfiguration
+    internal static class AutoMapperConfiguration
     {
+        private static Mapper mapper;
+
         public static void Initialize()
         {
-            /*Mapper.Initialize(cfg =>
+            var configuration = new MapperConfiguration(cfg =>
             {
                 // Teams
                 cfg.CreateMap<Team, Lspd>();
@@ -33,7 +35,13 @@ namespace server.AutoMapper
 
                 // Shops
                 cfg.CreateMap<Shop, VehicleShop>();
-            });*/
+                cfg.CreateMap<Shop, ItemShop>();
+                cfg.CreateMap<Shop, TuningShop>();
+            });
+
+            mapper = new Mapper(configuration);
         }
+
+        public static Mapper GetMapper() => mapper;
     }
 }

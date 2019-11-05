@@ -6,6 +6,7 @@ using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
 using AutoMapper;
 using Newtonsoft.Json;
+using server.AutoMapper;
 using server.Database;
 using server.Enums;
 using Server.Extensions;
@@ -56,24 +57,17 @@ namespace server.Vehicles
             }
         }
 
-        private static void AddVehicle<T>(Vehicle vehicle, bool spawn = true) where T : Vehicle
+        private static void AddVehicle<T>(Vehicle vehicle, bool spawn = true) 
+            where T : Vehicle
         {
+            _vehicles.Add(AutoMapperConfiguration.GetMapper().Map<T>(vehicle));
             if (spawn) vehicle.Spawn();
-           // _vehicles.Add(Mapper.Map<T>(vehicle));
         }
 
         public static T GetVehicleFromHandle<T>(IVehicle vehicle)
             where T : Vehicle
         {
-            foreach (var veh in _vehicles)
-            {
-                if (veh.handle == null) continue;
-                if (veh.handle != vehicle) continue;
-                if (veh.GetType() != typeof(T) && typeof(T) != typeof(Vehicle)) continue;
-                return (T) _vehicles.First(x => x == veh);
-            }
-
-            return null;
+            return _vehicles.FirstOrDefault(x => x.handle == vehicle) as T;
         }
 
         public static T GetVehicle<T>(Vehicle vehicle)
@@ -84,9 +78,8 @@ namespace server.Vehicles
 
         public static void SavePlayerVehicles(IPlayer player)
         {
-            foreach (var veh in _playerVehicles.Values)
-                if (veh.OwnerId == player.GetId())
-                    veh.Save();
+            foreach (var veh in _playerVehicles.Values.Where(veh => veh.OwnerId == player.GetId()))
+                veh.Save();
         }
 
         public static List<Vehicle> GetPlayerVehicles(IPlayer player)
