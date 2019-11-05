@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace shared.Enums
+namespace server.Enums
 {
     [Flags]
     public enum TeamPermissions : ulong

@@ -1,22 +1,15 @@
-﻿using server.Enums;
-using server.Environment;
-using server.Extensions;
-using server.Inventory.Inventories;
-using server.Shops;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
-using Newtonsoft.Json;
-using server.Database;
+using server.Enums;
+using server.Inventory.Inventories;
 using server.Jobs;
-using server.Peds;
+using server.Shops;
 using server.Teams;
-using server.Vehicles;
+using Team = server.Teams.Team;
 
 namespace server.Players.Characters
 {
@@ -202,12 +195,12 @@ namespace server.Players.Characters
 
             UpdateHud();
 
-            Logger.Debug("SEND TEAMS to " + _player.Name);
+            global::server.Players.Characters.Character.Logger.Debug("SEND TEAMS to " + _player.Name);
             // PedManager.Instance.SendToIPlayer(player);
-            Logger.Debug("SEND IPL's to " + _player.Name);
+            global::server.Players.Characters.Character.Logger.Debug("SEND IPL's to " + _player.Name);
             //Logger.Debug("SEND INVENTORY to " + _player.Name);
             //InventoryModel.SyncInventory(_player);
-            Logger.Debug("APPLY FACEFEATURES to " + _player.Name);
+            global::server.Players.Characters.Character.Logger.Debug("APPLY FACEFEATURES to " + _player.Name);
             //_player.SetElementData("player:FaceFeatures", FaceFeatures);
             // EntityExtensions.TriggerElementDatas(player);
         }
@@ -326,7 +319,7 @@ namespace server.Players.Characters
             return true;
         }
 
-        public bool TransferMoneyToPlayer(Character target, int amount, string reason, MoneyTransferCategory category,
+        public bool TransferMoneyToPlayer(global::server.Players.Characters.Character target, int amount, string reason, MoneyTransferCategory category,
             MoneyTransferSubCategory subcategory, [Optional] TransferMoneyOptions options)
         {
             if (options == null) options = DefaultMoneyTransferOptions;
@@ -363,12 +356,13 @@ namespace server.Players.Characters
 
         public Job GetJob()
         {
-            return JobId > 0 ? JobManager.GetJob(JobId) : null;
+            //return Enums.JobId > 0 ? JobManager.GetJob(Enums.JobId) : null; // Todo WTF?
+            return null; 
         }
 
         public void SetJob(Job job)
         {
-            JobId = job?.JobId ?? 0;
+            //Enums.JobId = job?.JobId ?? 0; // Todo WTF?
             Save();
         }
 

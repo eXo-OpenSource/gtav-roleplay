@@ -1,14 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Diagnostics;
+using System.IO;
+using System.Threading.Tasks;
+using AltV.Net;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using MySql.Data.MySqlClient;
 using server.Enums;
 using server.Util.Log;
 using server.Util.Settings;
-using System.Diagnostics;
-using System.IO;
-using System.Threading.Tasks;
-using AltV.Net;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace server.Database
 {

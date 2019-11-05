@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
+using server.AutoMapper;
 using server.Database;
 using server.Enums;
 using server.Shops.Types;
-using System.Linq;
-using server.AutoMapper;
 
 namespace server.Shops
 {

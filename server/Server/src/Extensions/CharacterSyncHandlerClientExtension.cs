@@ -1,5 +1,4 @@
-﻿
-using AltV.Net.Elements.Entities;
+﻿using AltV.Net.Elements.Entities;
 using server.Players.Characters;
 
 namespace server.Extensions

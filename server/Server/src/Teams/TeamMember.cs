@@ -1,7 +1,7 @@
 ﻿using AltV.Net.Elements.Entities;
-using server.Enums;
 using server.Players;
 using Character = server.Players.Characters.Character;
+using TeamPermissions = server.Models.Enums.TeamPermissions;
 
 namespace server.Teams
 {

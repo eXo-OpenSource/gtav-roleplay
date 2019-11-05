@@ -1,7 +1,6 @@
 ﻿using System;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
-
 using server.Players;
 using server.Players.Characters;
 
@@ -12,7 +11,7 @@ namespace server.Jobs.Jobs
         public Stone(Position stoneCenter)
         {
             Center = stoneCenter;
-            //Col = AltV.Net.Alt.Server.CreateColShapeSphere(stoneCenter, 1);
+            //Col = AltV.Net.Alt.Exo.RP.Server.CreateColShapeSphere(stoneCenter, 1);
             //Col.OnEntityEnterColShape += OnEnterCol;
             //Col.OnEntityExitColShape += OnExitCol;
             LastUsed = DateTime.Now.AddSeconds(-Miner.StoneCooldown);

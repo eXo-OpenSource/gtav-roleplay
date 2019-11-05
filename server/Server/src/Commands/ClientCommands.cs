@@ -1,6 +1,4 @@
-﻿
-
-using AltV.Net;
+﻿using AltV.Net;
 using AltV.Net.Elements.Entities;
 
 namespace server.Commands

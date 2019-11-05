@@ -2,7 +2,7 @@
 using AltV.Net.Elements.Entities;
 using server.Database;
 using server.Players.Accounts;
-using server.Players.Characters;
+using Character = server.Players.Characters.Character;
 
 namespace server.Players
 {

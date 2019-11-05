@@ -4,8 +4,8 @@ using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using server.Enums;
 using server.Inventory.Items;
+using server.Models.Jobs;
 using server.Players;
-using shared.Jobs;
 
 namespace server.Jobs.Jobs
 {

@@ -1,13 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.IO;
+﻿using System.IO;
 using System.Reflection;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using server.Util.Settings;
-
-
 using server.Inventory;
 using server.Teams;
+using server.Util.Settings;
 using TeamModel = server.Teams.Team;
 using ShopModel = server.Shops.Shop;
 using BankAccountModel = server.BankAccounts.BankAccount;
@@ -17,10 +15,8 @@ using VehicleShopVehicleModel = server.Vehicles.VehicleShopVehicle;
 using VehicleModel = server.Vehicles.Vehicle;
 using ItemModel = server.Inventory.Items.Item;
 using InventoryModel = server.Inventory.Inventory;
-
 using TeamMemberModel = server.Teams.TeamMember;
 using FaceFeaturesModel = server.Players.Characters.FaceFeatures;
-
 using CharacterModel = server.Players.Characters.Character;
 using AccountModel = server.Players.Accounts.Account;
 

@@ -4,7 +4,6 @@ using AltV.Net.Elements.Entities;
 using server.Enums;
 using server.Players;
 using server.Util.Log;
-using shared.Enums;
 
 namespace server.Admin
 {

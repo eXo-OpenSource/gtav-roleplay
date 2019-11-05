@@ -1,15 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
-using AutoMapper;
-using Newtonsoft.Json;
 using server.AutoMapper;
 using server.Database;
 using server.Enums;
-using Server.Extensions;
+using server.Extensions;
 using server.Inventory.Inventories;
 using server.Players;
 using server.Util.Log;

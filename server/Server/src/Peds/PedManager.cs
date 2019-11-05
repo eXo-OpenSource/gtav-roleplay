@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
@@ -6,8 +7,7 @@ using Newtonsoft.Json;
 using server.Database;
 using server.Enums;
 using server.Extensions;
-using shared.Peds;
-using System.Linq;
+using server.Models.Peds;
 
 namespace server.Peds
 {

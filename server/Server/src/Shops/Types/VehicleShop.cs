@@ -8,11 +8,11 @@ using AltV.Net.Enums;
 using Newtonsoft.Json;
 using server.Database;
 using server.Enums;
+using server.Models.Shops.Vehicles;
 using server.Players;
 using server.Players.Characters;
 using server.Vehicles;
 using server.Vehicles.Types;
-using Vehicle = AltV.Net.Elements.Entities.IVehicle;
 
 namespace server.Shops.Types
 {
@@ -23,7 +23,7 @@ namespace server.Shops.Types
         [NotMapped]
         private float _spawnRot;
         [NotMapped]
-        private Dictionary<int, shared.Shops.Vehicles.VehicleDataDto> _vehicleData;
+        private Dictionary<int, VehicleDataDto> _vehicleData;
         [NotMapped]
         private Dictionary<int, TemporaryVehicle> _vehicles;
 
@@ -60,7 +60,7 @@ namespace server.Shops.Types
 
         public void OpenVehicleShopMenu(IPlayer player)
         {
-            var data = new shared.Shops.Vehicles.BuyMenuDto()
+            var data = new BuyMenuDto()
             {
                 Id = Id,
                 Name = Name,
@@ -73,7 +73,7 @@ namespace server.Shops.Types
 
         private void LoadVehicles()
         {
-            _vehicleData = new Dictionary<int, shared.Shops.Vehicles.VehicleDataDto>();
+            _vehicleData = new Dictionary<int, VehicleDataDto>();
             _vehicles = new Dictionary<int, TemporaryVehicle>();
 
             if (!ContextFactory.Instance.VehicleShopVehicleModel.Local.Any()) return;
@@ -83,7 +83,7 @@ namespace server.Shops.Types
                 var nVehicle = VehicleManager.CreateTemporaryVehicle(vehicleM.Vehicle, vehicleM.Pos, vehicleM.RotZ,
                     new Rgba(255, 255, 0, 255), new Rgba(255, 255, 0, 255), "for Sale");
 
-                var nVehicleData = new shared.Shops.Vehicles.VehicleDataDto()
+                var nVehicleData = new VehicleDataDto()
                 {
                     Id = vehicleM.Id,
                     Price = vehicleM.Price,

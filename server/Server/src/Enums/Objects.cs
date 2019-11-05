@@ -1,4 +1,4 @@
-﻿namespace shared.Enums
+﻿namespace server.Enums
 {
     public enum Objects : uint
     {

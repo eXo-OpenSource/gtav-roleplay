@@ -1,9 +1,9 @@
-﻿using server.Enums;
-using server.Util.Settings;
-using System;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using server.Enums;
+using server.Util.Settings;
 
 namespace server.Util.Log
 {

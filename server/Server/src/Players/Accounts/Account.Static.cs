@@ -4,7 +4,6 @@ using AltV.Net.Enums;
 using server.BankAccounts;
 using server.Database;
 using server.Enums;
-using Server.Enums;
 using server.Inventory;
 using server.Inventory.Inventories;
 using server.Players.Characters;

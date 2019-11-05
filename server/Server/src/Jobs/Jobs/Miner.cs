@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
-
 using Object = AltV.Net.Elements.Entities.IWorldObject;
 
 namespace server.Jobs.Jobs

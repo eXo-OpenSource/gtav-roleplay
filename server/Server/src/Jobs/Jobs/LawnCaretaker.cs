@@ -1,8 +1,6 @@
 ﻿using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
-
 using server.Enums;
-using server.Extensions;
 using server.Players;
 using server.Util.Log;
 

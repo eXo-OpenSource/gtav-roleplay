@@ -1,0 +1,15 @@
+D:\Dev\private\altv-gamemode\server\bin\server\netcoreapp3.0\Exo.RP.Server.deps.json
+D:\Dev\private\altv-gamemode\server\bin\server\netcoreapp3.0\Exo.RP.Server.runtimeconfig.json
+D:\Dev\private\altv-gamemode\server\bin\server\netcoreapp3.0\Exo.RP.Server.runtimeconfig.dev.json
+D:\Dev\private\altv-gamemode\server\bin\server\netcoreapp3.0\Exo.RP.Server.dll
+D:\Dev\private\altv-gamemode\server\bin\server\netcoreapp3.0\Exo.RP.Server.pdb
+D:\Dev\private\altv-gamemode\server\Exo.Roleplay.Server\obj\x64\Debug\netcoreapp3.0\Exo.RP.Server.AssemblyInfoInputs.cache
+D:\Dev\private\altv-gamemode\server\Exo.Roleplay.Server\obj\x64\Debug\netcoreapp3.0\Exo.RP.Server.AssemblyInfo.cs
+D:\Dev\private\altv-gamemode\server\Exo.Roleplay.Server\obj\x64\Debug\netcoreapp3.0\Exo.RP.Server.csproj.CopyComplete
+D:\Dev\private\altv-gamemode\server\Exo.Roleplay.Server\obj\x64\Debug\netcoreapp3.0\Exo.RP.Server.dll
+D:\Dev\private\altv-gamemode\server\Exo.Roleplay.Server\obj\x64\Debug\netcoreapp3.0\Exo.RP.Server.pdb
+D:\Dev\private\altv-gamemode\server\server\obj\x64\Debug\netcoreapp3.0\Exo.RP.Server.AssemblyInfoInputs.cache
+D:\Dev\private\altv-gamemode\server\server\obj\x64\Debug\netcoreapp3.0\Exo.RP.Server.AssemblyInfo.cs
+D:\Dev\private\altv-gamemode\server\server\obj\x64\Debug\netcoreapp3.0\Exo.RP.Server.csproj.CopyComplete
+D:\Dev\private\altv-gamemode\server\server\obj\x64\Debug\netcoreapp3.0\Exo.RP.Server.dll
+D:\Dev\private\altv-gamemode\server\server\obj\x64\Debug\netcoreapp3.0\Exo.RP.Server.pdb

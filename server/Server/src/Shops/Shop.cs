@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using AltV.Net.Elements.Entities;
-using server.Enums;
 using server.Players;
 
 namespace server.Shops

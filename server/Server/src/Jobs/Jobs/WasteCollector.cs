@@ -6,10 +6,9 @@ using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
 using Newtonsoft.Json;
 using server.Database;
-using server.Enums;
 using server.Extensions;
+using server.Models.Jobs;
 using server.Players;
-using shared.Jobs;
 
 namespace server.Jobs.Jobs
 {

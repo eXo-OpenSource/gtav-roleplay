@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using server.Database;
 using server.Enums;
 using server.Util.Log;
-using System.Linq;
 
 namespace server.Inventory.Items
 {

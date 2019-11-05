@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Numerics;
 using System.Text;
 using AltV.Net;
 using AltV.Net.Data;
@@ -12,7 +11,7 @@ using server.Database;
 using server.Enums;
 using server.Inventory.Inventories;
 using server.Players;
-using server.Teams;
+using Team = server.Teams.Team;
 using Vehicle = server.Vehicles.Vehicle;
 
 namespace server.Commands

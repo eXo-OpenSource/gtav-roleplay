@@ -1,6 +1,6 @@
-﻿using server.Util.Log;
-using System;
+﻿using System;
 using MySql.Data.MySqlClient;
+using server.Util.Log;
 
 namespace server.Database
 {

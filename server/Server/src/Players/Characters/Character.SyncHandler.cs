@@ -3,9 +3,9 @@ using System.Linq;
 using System.Timers;
 using AltV.Net;
 using AltV.Net.Elements.Entities;
-using Newtonsoft.Json;
 using server.Util.Log;
 using server.Util.Settings;
+
 //using shared.Serialization;
 
 namespace server.Players.Characters

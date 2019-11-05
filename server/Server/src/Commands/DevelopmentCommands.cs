@@ -17,8 +17,8 @@ using server.Shops.Types;
 using server.Teams.State;
 using server.Util;
 using server.Vehicles;
-using shared.Players;
-using Objects = shared.Enums.Objects;
+using Objects = server.Enums.Objects;
+using Player = server.Util.Player;
 
 namespace server.Commands
 {
@@ -255,7 +255,7 @@ namespace server.Commands
         //[Command("jail")]
         public void Jail(IPlayer player, string target)
         {
-            var test = _jail.AddPrisoner(Util.Player.FindPlayer(player, target), new TimeSpan(0, 0, 10));
+            var test = _jail.AddPrisoner(Player.FindPlayer(player, target), new TimeSpan(0, 0, 10));
             player.SendChatMessage(test.ToString());
         }
 

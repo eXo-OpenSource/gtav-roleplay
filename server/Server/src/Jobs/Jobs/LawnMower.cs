@@ -1,7 +1,6 @@
 ﻿using System;
 using AltV.Net.Elements.Entities;
 
-
 namespace server.Jobs.Jobs
 {
     public class LawnMower

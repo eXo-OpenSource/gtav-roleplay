@@ -4,7 +4,7 @@ using AltV.Net.Data;
 using AltV.Net.Enums;
 using Newtonsoft.Json;
 using server.BankAccounts;
-using Server.Enums;
+using server.Enums;
 using server.Inventory.Inventories;
 using server.Jobs;
 

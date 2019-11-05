@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using AltV.Net.Elements.Entities;
 using server.Database;
+using server.Models.Teams;
 using server.Players;
 using server.Util.Log;
-using shared.Teams;
 
 namespace server.Teams
 {

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using server.Enums;
+using server.Models.Inventory;
 using server.Util.Log;
-using shared.Inventory;
 
 //using shared.Inventory;
 

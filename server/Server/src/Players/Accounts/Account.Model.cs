@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using server.Enums;
-using server.Players.Characters;
+using Character = server.Players.Characters.Character;
 
 namespace server.Players.Accounts
 {

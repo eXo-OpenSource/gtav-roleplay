@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using AutoMapper;
 using server.AutoMapper;
 
 namespace server.Inventory

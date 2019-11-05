@@ -1,4 +1,4 @@
-﻿namespace Server.Enums
+﻿namespace server.Enums
 {
     public enum Gender
     {

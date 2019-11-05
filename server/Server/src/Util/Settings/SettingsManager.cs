@@ -1,8 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using System.IO;
+using Newtonsoft.Json;
 using server.Enums;
 using server.Util.Log;
-using System.Collections.Generic;
-using System.IO;
 
 namespace server.Util.Settings
 {

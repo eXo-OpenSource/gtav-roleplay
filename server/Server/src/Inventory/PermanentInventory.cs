@@ -40,7 +40,7 @@ namespace server.Inventory
 
             if (!BagMap.TryGetValue(item.Bag, out var bag))
             {
-                Logger.Debug("AddItem Error: Bag not available!");
+                PermanentInventory.Logger.Debug("AddItem Error: Bag not available!");
                 return;
             }
 
@@ -51,7 +51,7 @@ namespace server.Inventory
 
                 if (items.Any())
                 {
-                    Logger.Debug("AddItem: Increased Amount!");
+                    PermanentInventory.Logger.Debug("AddItem: Increased Amount!");
                     items.First().Amount = items.First().Amount + amount;
                     ContextFactory.Instance.Entry(items.First()).State = EntityState.Modified;
                 }

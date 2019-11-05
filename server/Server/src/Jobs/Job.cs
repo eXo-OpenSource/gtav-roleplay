@@ -1,20 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
 using AltV.Net;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
-using Newtonsoft.Json;
-using server.Enums;
-using server.Extensions;
+using server.Models.Jobs;
 using server.Players;
 using server.Players.Characters;
-using server.Util;
 using server.Util.Log;
 using server.Vehicles;
 using server.Vehicles.Types;
-using shared.Jobs;
 using Vehicle = server.Vehicles.Vehicle;
 
 namespace server.Jobs
@@ -69,6 +64,7 @@ namespace server.Jobs
             player.GetCharacter().HideInteraction();
         }
 
+        /*
         public void ShowJobMenu(IPlayer player, string subMenu = null)
         {
             var players = new Dictionary<int, string>(){};
@@ -100,6 +96,7 @@ namespace server.Jobs
 
             player.Emit("outputIPlayerConsole", JsonConvert.SerializeObject(data));
         }
+        */
 
         public virtual void StartJobForPlayer(IPlayer player)
         {

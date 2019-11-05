@@ -3,8 +3,7 @@ using AltV.Net.Elements.Entities;
 using Newtonsoft.Json;
 using server.Enums;
 using server.Inventory.Items;
-using server.Util.Log;
-using shared.Inventory;
+using server.Models.Inventory;
 
 namespace server.Inventory
 {

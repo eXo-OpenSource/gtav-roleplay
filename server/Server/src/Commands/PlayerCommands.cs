@@ -3,7 +3,6 @@ using AltV.Net;
 using AltV.Net.Elements.Entities;
 using server.Enums;
 using server.Players;
-using shared.Enums;
 
 namespace server.Commands
 {

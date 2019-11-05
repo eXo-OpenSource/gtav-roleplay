@@ -1,12 +1,10 @@
-﻿using AltV.Net;
+﻿using System;
+using AltV.Net;
 using AltV.Net.Elements.Entities;
-using Newtonsoft.Json;
-using server.Util;
-using server.Util.Log;
-using System;
 using server.Players;
+using server.Util;
 
-namespace Server.Events
+namespace server.Events
 {
     class PlayerEvents : IScript
     {

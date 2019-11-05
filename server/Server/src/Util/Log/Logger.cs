@@ -1,7 +1,7 @@
-﻿using server.Enums;
-using server.Util.Settings;
-using System;
+﻿using System;
 using System.Reflection;
+using server.Enums;
+using server.Util.Settings;
 
 namespace server.Util.Log
 {

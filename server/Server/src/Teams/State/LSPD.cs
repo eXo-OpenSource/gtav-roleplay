@@ -2,7 +2,6 @@
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
-using server.Enums;
 using server.Peds;
 
 namespace server.Teams.State
