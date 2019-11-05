@@ -30,6 +30,12 @@
     <Folder Include="src\Players\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="resource.cfg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
   <Target Name="CopyFiles" AfterTargets="publish">
     <PropertyGroup>
       <CopiedFiles>$(OutputPath)\publish\*.*</CopiedFiles>

@@ -327,7 +327,7 @@ namespace server.Commands
                 return;
             }
 
-            if (ShopManager.GetShop<VehicleShop>(shopId) == null)
+            if (ShopManager.Get<VehicleShop>(shopId) == null)
             {
                 player.SendError("Shop nicht gefunden!");
                 return;
@@ -340,7 +340,7 @@ namespace server.Commands
                 ModelName = ((VehicleModel)veh.Model).ToString(),
                 Pos = veh.Position,
                 Rot = veh.Rotation,
-                Shop = ShopManager.GetShop<VehicleShop>(shopId),
+                Shop = ShopManager.Get<VehicleShop>(shopId),
                 Price = price
             });
             player.SendSuccess("Fahrzeug hinzugefügt!");
