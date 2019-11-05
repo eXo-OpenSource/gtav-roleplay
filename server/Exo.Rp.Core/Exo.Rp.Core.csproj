@@ -5,9 +5,9 @@
     <RuntimeIdentifiers>win10-x64;debian.9-x64</RuntimeIdentifiers>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
-    <AssemblyName>Exo.RP.Server</AssemblyName>
+    <GenerateRuntimeConfigurationFiles>false</GenerateRuntimeConfigurationFiles>
     <Platforms>x64</Platforms>
+    <AssemblyName>Exo.Rp.Core</AssemblyName>
     <Authors>eXo Roleplay Developers</Authors>
     <Company>eXo Roleplay</Company>
     <Product>eXo Roleplay Server</Product>
@@ -49,7 +49,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Exo.RP.Server.Models\Exo.Rp.Models.csproj" />
+    <ProjectReference Include="..\Exo.Rp.Models\Exo.Rp.Models.csproj" />
   </ItemGroup>
 
 </Project>

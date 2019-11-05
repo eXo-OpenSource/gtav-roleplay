@@ -5,9 +5,9 @@
     <RuntimeIdentifiers>win10-x64;debian.9-x64</RuntimeIdentifiers>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+    <GenerateRuntimeConfigurationFiles>false</GenerateRuntimeConfigurationFiles>
     <Platforms>x64</Platforms>
-    <AssemblyName>Exo.RP.Server.Serialization</AssemblyName>
+    <AssemblyName>Exo.Rp.Serialization</AssemblyName>
     <Authors>eXo Roleplay Developers</Authors>
     <Company>eXo Roleplay</Company>
     <Product>eXo Roleplay Server</Product>
