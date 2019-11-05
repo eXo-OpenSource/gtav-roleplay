@@ -1,5 +1,0 @@
-D:\Dev\private\altv-gamemode\server\Exo.RP.Server.Extensions\bin\Debug\netcoreapp3.0\Exo.RP.Server.Extensions.deps.json
-D:\Dev\private\altv-gamemode\server\Exo.RP.Server.Extensions\bin\Debug\netcoreapp3.0\Exo.RP.Server.Extensions.dll
-D:\Dev\private\altv-gamemode\server\Exo.RP.Server.Extensions\obj\Debug\netcoreapp3.0\Exo.RP.Server.Extensions.csprojAssemblyReference.cache
-D:\Dev\private\altv-gamemode\server\Exo.RP.Server.Extensions\obj\Debug\netcoreapp3.0\Exo.RP.Server.Extensions.AssemblyInfoInputs.cache
-D:\Dev\private\altv-gamemode\server\Exo.RP.Server.Extensions\obj\Debug\netcoreapp3.0\Exo.RP.Server.Extensions.AssemblyInfo.cs

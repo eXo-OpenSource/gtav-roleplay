@@ -3,16 +3,24 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29009.5
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Exo.RP.Server", "server\Exo.RP.Server.csproj", "{C9EA3283-4B4C-4405-B324-87EDE569571B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Exo.RP.Server", "Exo.RP.Server\Exo.RP.Server.csproj", "{C9EA3283-4B4C-4405-B324-87EDE569571B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exo.RP.Server.Models", "Exo.RP.Server.Models\Exo.RP.Server.Models.csproj", "{A8CD5397-8F79-4CFB-A667-3BBF32F10EAC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C9EA3283-4B4C-4405-B324-87EDE569571B}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{C9EA3283-4B4C-4405-B324-87EDE569571B}.Release|Any CPU.ActiveCfg = Release|x64
+		{C9EA3283-4B4C-4405-B324-87EDE569571B}.Debug|x64.ActiveCfg = Debug|x64
+		{C9EA3283-4B4C-4405-B324-87EDE569571B}.Debug|x64.Build.0 = Debug|x64
+		{C9EA3283-4B4C-4405-B324-87EDE569571B}.Release|x64.ActiveCfg = Debug|x64
+		{C9EA3283-4B4C-4405-B324-87EDE569571B}.Release|x64.Build.0 = Debug|x64
+		{A8CD5397-8F79-4CFB-A667-3BBF32F10EAC}.Debug|x64.ActiveCfg = Debug|x64
+		{A8CD5397-8F79-4CFB-A667-3BBF32F10EAC}.Debug|x64.Build.0 = Debug|x64
+		{A8CD5397-8F79-4CFB-A667-3BBF32F10EAC}.Release|x64.ActiveCfg = Debug|x64
+		{A8CD5397-8F79-4CFB-A667-3BBF32F10EAC}.Release|x64.Build.0 = Debug|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
