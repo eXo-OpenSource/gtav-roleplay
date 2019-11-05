@@ -1,4 +1,4 @@
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">14.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -43,11 +43,6 @@
     <Content Include="cef\_assets\js\babel.min.js" />
     <Content Include="cef\_assets\js\react.dom.js" />
     <Content Include="cef\_assets\js\react.js" />
-    <Content Include="client\chat\Chat.mjs" />
-    <Content Include="client\client.mjs" />
-    <Content Include="client\RegisterLogin.mjs" />
-    <Content Include="client\utils\Cursor.mjs" />
-    <Content Include="client\utils\View.mjs" />
     <Content Include="package.json" />
     <Content Include="README.md" />
     <Content Include="tsconfig.json" />
@@ -59,9 +54,10 @@
     <Folder Include="cef\_assets\" />
     <Folder Include="cef\_assets\css\" />
     <Folder Include="cef\_assets\js\" />
-    <Folder Include="client\" />
-    <Folder Include="client\chat\" />
-    <Folder Include="client\utils\" />
+    <Folder Include="src\" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="src\Singleton.ts" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
   <!-- <ProjectExtensions>
