@@ -21,7 +21,6 @@ namespace server.Shops
         [Column(TypeName = "int(11)")]
         public BlipId Blip { get; set; }
         public string BlipText { get; set; }
-        public string Options { get; set; }
         
         [ForeignKey("BankAccountId")]
         public BankAccount BankAccount { get; set; }

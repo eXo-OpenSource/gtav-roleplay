@@ -66,5 +66,10 @@ namespace server.Players
         {
 
         }
+
+        public static void SetIntoVehicle(this IPlayer player, IVehicle veh, int seat)
+        {
+
+        }
     }
 }

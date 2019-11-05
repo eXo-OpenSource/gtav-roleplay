@@ -1,17 +1,24 @@
 ﻿using System;
 using AltV.Net;
+using eXoTest1;
+using server.AutoMapper;
+using server.Players;
+using server.Util.Log;
 
-namespace eXoTest1
+namespace server
 {
-    internal class eXoTest1 : Resource
+    internal class Core : Resource
     {
+        private static readonly Logger<Core> Logger = new Logger<Core>();
+        private PlayerManager _playerManager;
 
-        public eXoTest1()
-        {
-        }
         public override void OnStart()
         {
             Console.WriteLine("Started");
+
+            AutoMapperConfiguration.Initialize();
+            Database.DatabaseCore.OnDatabaseInitialized += Event_OnResourceStart;
+
             var test = new Test2();
         }
 
@@ -20,7 +27,11 @@ namespace eXoTest1
             Console.WriteLine("Stopped");
         }
 
-        
+        public void Event_OnResourceStart()
+        {
+            _playerManager = new PlayerManager();
+
+        }
 
     }
 }

@@ -48,14 +48,14 @@ namespace server.Vehicles
         }
 
         [NotMapped]
-        public Position Rot
+        public Rotation Rot
         {
-            get => new Position(RotX, RotY, RotZ);
+            get => new Rotation(RotX, RotY, RotZ);
             set
             {
-                RotX = value.X;
-                RotY = value.Y;
-                RotZ = value.Z;
+                RotX = value.Yaw;
+                RotY = value.Roll;
+                RotZ = value.Pitch;
             }
         }
     }

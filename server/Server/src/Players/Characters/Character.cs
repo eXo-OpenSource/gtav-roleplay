@@ -43,8 +43,10 @@ namespace server.Players.Characters
 
         public void Init()
         {
+            _player.Spawn(Pos);
             _player.Position = Pos;
             _player.Health = (ushort)Health;
+            Console.Write(FirstName + " " + LastName + " ist gespawnt!");
             /*
             _player.SetPublicSync("player.data", new PlayerDto()
             {
@@ -255,7 +257,7 @@ namespace server.Players.Characters
         {
            // var weapons = _player.Weapon;
             /* Not implemented yet
-            foreach (WeaponHash i in weapons)
+            foreach (WeaponModel i in weapons)
             {
                 properties.SavedWeapons.Add(new SavedWeapon { weapon = i, ammo = player.GetWeaponAmmo(i) });
             }

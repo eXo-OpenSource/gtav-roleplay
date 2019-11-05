@@ -1,6 +1,6 @@
-﻿using MySql.Data.MySqlClient;
-using server.Util.Log;
+﻿using server.Util.Log;
 using System;
+using MySql.Data.MySqlClient;
 
 namespace server.Database
 {
@@ -13,7 +13,7 @@ namespace server.Database
 
         public static void SetConnectionString(MySqlConnectionStringBuilder connectionString)
         {
-            ConnectionString = connectionString.GetConnectionString(true);
+            ConnectionString = connectionString.ConnectionString;
         }
 
         public static string ConnectionString { get; private set; }
@@ -46,7 +46,7 @@ namespace server.Database
             }
             catch (MySqlException ex)
             {
-                Logger.Fatal($"MySql error: {ex.Message} ErrorCode: {ex.Code}");
+                Logger.Fatal($"MySql error: {ex.Message} ErrorCode: {ex.Number}");
                 return null;
             }
 

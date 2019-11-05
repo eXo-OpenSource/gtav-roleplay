@@ -166,7 +166,8 @@ namespace server.Database
                 UserID = SettingsManager.ServerSettings.Database.UserId,
                 Password = SettingsManager.ServerSettings.Database.Password,
                 Database = SettingsManager.ServerSettings.Database.Database,
-                Port = SettingsManager.ServerSettings.Database.Port
+                Port = SettingsManager.ServerSettings.Database.Port,
+                TreatTinyAsBoolean = false,
             };
 
             ContextFactory.SetConnectionString(connectionStringBuilder);
