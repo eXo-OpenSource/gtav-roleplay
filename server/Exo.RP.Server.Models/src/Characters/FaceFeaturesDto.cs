@@ -1,7 +1,7 @@
 using System;
 using System.IO;
-using models.Utils.Extensions;
-using models.Utils.Serialization;
+using serialization;
+using serialization.Extensions;
 
 namespace models.Characters
 {

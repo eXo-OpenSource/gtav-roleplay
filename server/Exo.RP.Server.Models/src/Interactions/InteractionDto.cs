@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using models.Utils.Serialization;
+using serialization;
 
 namespace models.Interactions
 {

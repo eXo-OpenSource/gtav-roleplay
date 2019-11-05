@@ -7,11 +7,11 @@
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
     <Platforms>x64</Platforms>
-    <AssemblyName>Exo.RP.Server.Models</AssemblyName>
+    <AssemblyName>Exo.RP.Server.Serialization</AssemblyName>
     <Authors>eXo Roleplay Developers</Authors>
     <Company>eXo Roleplay</Company>
     <Product>eXo Roleplay Server</Product>
-    <RootNamespace>models</RootNamespace>
+    <RootNamespace>serialization</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
@@ -36,11 +36,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AltV.Net" Version="1.16.5" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Exo.RP.Server.Serialization\Exo.RP.Server.Serialization.csproj" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3-beta2" />
   </ItemGroup>
 
 </Project>

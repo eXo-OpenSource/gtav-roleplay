@@ -1,8 +1,8 @@
-﻿namespace models.Utils.Serialization
+﻿namespace serialization
 {
     public abstract class Serializable<T> where T : Serializable<T>, new()
     {
-        internal string GetClassName()
+        public string GetClassName()
         {
             return typeof(T).Name;
         }

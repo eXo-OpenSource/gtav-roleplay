@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using AltV.Net.Elements.Entities;
-using models.Utils.Serialization;
+using serialization;
 
 namespace models.Shops.Vehicles
 {

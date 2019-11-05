@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using models.Enums;
-using models.Utils.Serialization;
+using serialization;
 
 namespace models.Vehicle
 {

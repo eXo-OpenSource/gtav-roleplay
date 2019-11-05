@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using models.Utils.Extensions;
-using models.Utils.Serialization;
+using serialization;
+using serialization.Extensions;
 
 namespace models.Inventory
 {

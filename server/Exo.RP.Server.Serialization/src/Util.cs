@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace models.Utils.Serialization
+namespace serialization
 {
     public static class Util
     {

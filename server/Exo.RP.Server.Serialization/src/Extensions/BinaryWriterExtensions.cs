@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using models.Utils.Serialization;
 
-namespace models.Utils.Extensions
+namespace serialization.Extensions
 {
     public static class BinaryWriterExtensions
     {
