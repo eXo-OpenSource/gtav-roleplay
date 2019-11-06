@@ -52,7 +52,7 @@ namespace server.Commands
                 return;
             }
 
-            var veh = VehicleManager.CreateTemporaryVehicle(model, player.Position, player.Rotation.Roll,
+            var veh = Core.GetService<VehicleManager>().CreateTemporaryVehicle(model, player.Position, player.Rotation.Roll,
                 General.GetRandomColor(), General.GetRandomColor(), "Admin");
 
             //NAPI.Chat.SendChatMessageToPlayer(player, "Fahrzeug gespawnt: " + vehicleName + "!");
@@ -287,7 +287,7 @@ namespace server.Commands
         //[Command("jobpoints")]
         public void JobPoints(IPlayer player)
         {
-            JobManager.GetJob(1).GivePlayerUpgradePoints(player, 50);
+            Core.GetService<JobManager>().GetJob(1).GivePlayerUpgradePoints(player, 50);
         }
 
         //[Command("del")]
@@ -326,7 +326,7 @@ namespace server.Commands
                 return;
             }
 
-            if (ShopManager.Get<VehicleShop>(shopId) == null)
+            if (Core.GetService<ShopManager>().Get<VehicleShop>(shopId) == null)
             {
                 player.SendError("Shop nicht gefunden!");
                 return;
@@ -339,7 +339,7 @@ namespace server.Commands
                 ModelName = ((VehicleModel)veh.Model).ToString(),
                 Pos = veh.Position,
                 Rot = veh.Rotation,
-                Shop = ShopManager.Get<VehicleShop>(shopId),
+                Shop = Core.GetService<ShopManager>().Get<VehicleShop>(shopId),
                 Price = price
             });
             player.SendSuccess("Fahrzeug hinzugefügt!");

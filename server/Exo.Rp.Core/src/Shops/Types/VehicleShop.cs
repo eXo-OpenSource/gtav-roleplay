@@ -80,7 +80,7 @@ namespace server.Shops.Types
 
             foreach (var vehicleM in ContextFactory.Instance.VehicleShopVehicleModel.Local.Where(x => x.ShopId == Id))
             {
-                var nVehicle = VehicleManager.CreateTemporaryVehicle(vehicleM.Vehicle, vehicleM.Pos, vehicleM.RotZ,
+                var nVehicle = Core.GetService<VehicleManager>().CreateTemporaryVehicle(vehicleM.Vehicle, vehicleM.Pos, vehicleM.RotZ,
                     new Rgba(255, 255, 0, 255), new Rgba(255, 255, 0, 255), "for Sale");
 
                 var nVehicleData = new VehicleDataDto()
@@ -105,7 +105,7 @@ namespace server.Shops.Types
                     if (player.GetCharacter().TransferMoneyToShop(this, selectedVehicle.Price, "Fahrzeug-Kauf",
                         MoneyTransferCategory.Vehicle, MoneyTransferSubCategory.Buy))
                     {
-                        var veh = VehicleManager.CreatePlayerVehicle(player, (VehicleModel) vehicleHandle.handle.Model,
+                        var veh = Core.GetService<VehicleManager>().CreatePlayerVehicle(player, (VehicleModel) vehicleHandle.handle.Model,
                             _spawnPos, _spawnRot);
                         //player.SetIntoVehicle(veh.handle, -1);
                         veh.handle.SetSyncedMetaData("vehicle:setCollision", false);

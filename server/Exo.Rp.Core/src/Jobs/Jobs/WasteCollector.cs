@@ -87,7 +87,7 @@ namespace server.Jobs.Jobs
 
             foreach (var jobPlayer in GetJobTeam(player))
             {
-                var coopPlayer = PlayerManager.GetClient(jobPlayer.Key);
+                var coopPlayer = Core.GetService<PlayerManager>().GetClient(jobPlayer.Key);
                 coopPlayer.Emit("JobTrash:UpdateBlips", JsonConvert.SerializeObject(GetFullWastebinPositions()),
                     GetJobUpgradeValue(player, 2));
             }

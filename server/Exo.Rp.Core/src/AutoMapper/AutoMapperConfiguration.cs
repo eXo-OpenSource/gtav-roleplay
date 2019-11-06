@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using server.Inventory;
 using server.Inventory.Inventories;
 using server.Shops;
@@ -10,11 +11,11 @@ using server.Vehicles.Types;
 
 namespace server.AutoMapper
 {
-    internal static class AutoMapperConfiguration
+    public static class AutoMapperConfiguration
     {
-        private static Mapper mapper;
+        private static Mapper _mapper;
 
-        public static void Initialize()
+        public static Mapper GetMapper()
         {
             var configuration = new MapperConfiguration(cfg =>
             {
@@ -39,9 +40,7 @@ namespace server.AutoMapper
                 cfg.CreateMap<Shop, TuningShop>();
             });
 
-            mapper = new Mapper(configuration);
+            return new Mapper(configuration);
         }
-
-        public static Mapper GetMapper() => mapper;
     }
 }

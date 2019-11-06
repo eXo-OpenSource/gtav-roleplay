@@ -23,7 +23,7 @@ namespace server.Events
                             {
                                 Console.WriteLine("Login erfolgreich!");
                                 player.Emit("registerLogin:Success");
-                                PlayerManager.DoLogin(player);
+                                Core.GetService<PlayerManager>().DoLogin(player);
 
                             break;
                         }

@@ -11,7 +11,7 @@ namespace server.Vehicles
     public partial class Vehicle
     {
         public int Id { get; set; }
-        public string ModelName { get; set; }
+        public Int64 Model { get; set; }
         public OwnerType OwnerType { get; set; }
         public int OwnerId { get; set; }
         public float PosX { get; set; }
@@ -34,8 +34,8 @@ namespace server.Vehicles
         [NotMapped]
         public VehicleModel VehicleModel
         {
-            get => (VehicleModel) Enum.Parse(typeof(VehicleModel), ModelName);
-            set => ModelName = value.ToString();
+            get => (VehicleModel) Model;
+            set => Model = (Int64) value;
         }
 
         [NotMapped]

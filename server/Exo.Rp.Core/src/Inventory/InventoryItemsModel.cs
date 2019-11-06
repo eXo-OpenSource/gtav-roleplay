@@ -15,14 +15,14 @@ namespace server.Inventory
         [NotMapped]
         public Item Item
         {
-            get => ItemManager.GetItem(ItemId);
+            get => Core.GetService<ItemManager>().GetItem(ItemId);
             set => ItemId = value.Id;
         }
 
         [NotMapped]
         public PermanentInventory Inventory
         {
-            get => InventoryManager.GetInventory<PermanentInventory>(InventoryId);
+            get => Core.GetService<InventoryManager>().GetInventory<PermanentInventory>(InventoryId);
             set => InventoryId = value.Id;
         }
     }

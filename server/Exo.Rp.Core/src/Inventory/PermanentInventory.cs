@@ -81,7 +81,7 @@ namespace server.Inventory
         public void LoadDatabaseItems()
         {
             var items = ContextFactory.Instance.InventoryItemsModel.Local.Where(x => x.Inventory == this);
-            foreach (var model in items) base.AddItem(ItemManager.GetItem(model.Id), model.Amount);
+            foreach (var model in items) base.AddItem(Core.GetService<ItemManager>().GetItem(model.Id), model.Amount);
         }
     }
 }

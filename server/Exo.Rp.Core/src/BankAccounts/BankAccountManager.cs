@@ -4,11 +4,11 @@ using server.Database;
 
 namespace server.BankAccounts
 {
-    internal class BankAccountManager
+    internal class BankAccountManager : IManager
     {
-        private static readonly Dictionary<int, BankAccount> _accounts;
+        private readonly Dictionary<int, BankAccount> _accounts;
 
-        static BankAccountManager()
+        public BankAccountManager()
         {
             _accounts = new Dictionary<int, BankAccount>();
 
@@ -18,7 +18,7 @@ namespace server.BankAccounts
                 _accounts.Add(account.Id, account);
         }
 
-        public static BankAccount GetAccount(int id)
+        public BankAccount GetAccount(int id)
         {
             return _accounts.TryGetValue(id, out var account) ? account : null;
         }

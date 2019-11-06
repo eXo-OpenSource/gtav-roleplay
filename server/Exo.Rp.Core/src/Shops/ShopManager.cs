@@ -9,22 +9,21 @@ using server.Shops.Types;
 
 namespace server.Shops
 {
-    internal class ShopManager
+    internal class ShopManager : IManager
     {
         private static readonly List<Shop> Shops = new List<Shop>();
 
-        private static Mapper mapper;
+        private readonly IMapper _mapper;
 
-        static ShopManager()
+        public ShopManager(IMapper mapper)
         {
-            if (!ContextFactory.Instance.ShopModel.Local.Any()) return;
-            Console.Write("Shop loaded:");
+            _mapper = mapper;
 
+            if (!ContextFactory.Instance.ShopModel.Local.Any()) return;
             foreach (var shopModel in ContextFactory.Instance.ShopModel.Local)
                 switch (shopModel.ShopType)
                 {
                     case ShopType.Vehicle:
-                        Console.Write("Vehicle Shop loaded");
                         Add<VehicleShop>(shopModel, true);
                         break;
                     case ShopType.Item:
@@ -41,17 +40,17 @@ namespace server.Shops
                 }
         }
 
-        private static void Add<T>(Shop shop, bool autoLoad = false) 
+        private void Add<T>(Shop shop, bool autoLoad = false) 
             where T : Shop
         {
-            Shops.Add(AutoMapperConfiguration.GetMapper().Map<T>(shop));
+            Shops.Add(_mapper.Map<T>(shop));
 
             var shopT = shop as T;
             if (autoLoad)
                 shopT?.Load();
         }
 
-        public static T Get<T>(int shopId) 
+        public T Get<T>(int shopId) 
             where T : Shop
         {
             return Shops.Find(x => x.Id == shopId) as T;

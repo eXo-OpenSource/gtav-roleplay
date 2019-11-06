@@ -65,7 +65,7 @@ namespace server.Shops.Types
             if (_options?.Items != null)
                 foreach (var item in _options.Items)
                 {
-                    var nItemData = ItemManager.GetItem(item.Key);
+                    var nItemData = Core.GetService<ItemManager>().GetItem(item.Key);
                     var nData = new ShopItemData
                     {
                         Id = item.Key,
@@ -86,7 +86,7 @@ namespace server.Shops.Types
                     if (player.GetCharacter().TransferMoneyToShop(this, selected.Price, "Item-Kauf",
                         MoneyTransferCategory.Item, MoneyTransferSubCategory.Buy))
                     {
-                        player.GetCharacter().Inventory.AddItem(ItemManager.GetItem(itemId), 1);
+                        player.GetCharacter().Inventory.AddItem(Core.GetService<ItemManager>().GetItem(itemId), 1);
                         return;
                     }
 

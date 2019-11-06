@@ -3,22 +3,22 @@ using server.AutoMapper;
 
 namespace server.Inventory
 {
-    internal class InventoryManager
+    internal class InventoryManager : IManager
     {
-        public static readonly Dictionary<int, Inventory> Inventories;
+        public readonly Dictionary<int, Inventory> Inventories;
 
-        static InventoryManager()
+        public InventoryManager()
         {
             Inventories = new Dictionary<int, Inventory>();
         }
 
-        public static void AddInventory<T>(Inventory inventory) 
+        public void AddInventory<T>(Inventory inventory) 
             where T : Inventory
         {
             Inventories.Add(inventory.Id, AutoMapperConfiguration.GetMapper().Map<T>(inventory));
         }
 
-        public static T GetInventory<T>(int id) 
+        public T GetInventory<T>(int id) 
             where T : Inventory
         {
             if (Inventories.ContainsKey(id))

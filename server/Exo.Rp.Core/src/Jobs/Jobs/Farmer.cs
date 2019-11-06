@@ -13,7 +13,7 @@ namespace server.Jobs.Jobs
     {
         public const double TreeCooldown = 30; // Seconds
 
-        private readonly Item _apple = ItemManager.GetItemFromName("Apfel");
+        private readonly Item _apple = Core.GetService<ItemManager>().GetItemFromName("Apfel");
 
         private readonly Position _deliveryMarker = new Position(2315.753f, 5076.539f, 44.3425f);
 

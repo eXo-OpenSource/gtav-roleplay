@@ -195,12 +195,12 @@ namespace server.Players.Characters
 
             UpdateHud();
 
-            global::server.Players.Characters.Character.Logger.Debug("SEND TEAMS to " + _player.Name);
+            Logger.Debug("SEND TEAMS to " + _player.Name);
             // PedManager.Instance.SendToIPlayer(player);
-            global::server.Players.Characters.Character.Logger.Debug("SEND IPL's to " + _player.Name);
+            Logger.Debug("SEND IPL's to " + _player.Name);
             //Logger.Debug("SEND INVENTORY to " + _player.Name);
             //InventoryModel.SyncInventory(_player);
-            global::server.Players.Characters.Character.Logger.Debug("APPLY FACEFEATURES to " + _player.Name);
+            Logger.Debug("APPLY FACEFEATURES to " + _player.Name);
             //_player.SetElementData("player:FaceFeatures", FaceFeatures);
             // EntityExtensions.TriggerElementDatas(player);
         }
@@ -231,7 +231,7 @@ namespace server.Players.Characters
 
         public List<Team> GetTeams()
         {
-            return TeamManager.GetTeamsForPlayer(this);
+            return Core.GetService<TeamManager>().GetTeamsForPlayer(this);
         }
 
         public void UpdateHud()

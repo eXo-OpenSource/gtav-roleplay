@@ -17,7 +17,7 @@ namespace server.Inventory.Inventories
             AddBag(BagNames.Allgemein, 10, true, false);
             AddBag(BagNames.Weapon, 10, false, false);
 
-            AddItem(ItemManager.GetItemFromName("Smartphone"), 1, false);
+            AddItem(Core.GetService<ItemManager>().GetItemFromName("Smartphone"), 1, false);
         }
     }
 }

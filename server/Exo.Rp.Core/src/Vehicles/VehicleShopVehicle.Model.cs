@@ -31,7 +31,7 @@ namespace server.Vehicles
         [NotMapped]
         public Shop Shop
         {
-            get => ShopId > 0 ? ShopManager.Get<Shop>(ShopId) : null;
+            get => ShopId > 0 ? Core.GetService<ShopManager>().Get<Shop>(ShopId) : null;
             set => ShopId = value.Id;
         }
 

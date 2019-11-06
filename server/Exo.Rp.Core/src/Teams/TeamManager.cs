@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using AltV.Net.Elements.Entities;
+using AutoMapper;
 using models.Teams;
 using Newtonsoft.Json;
 using server.AutoMapper;
@@ -11,20 +12,24 @@ using Character = server.Players.Characters.Character;
 
 namespace server.Teams
 {
-    internal class TeamManager
+    internal class TeamManager : IManager
     {
         private static readonly Logger<TeamManager> Logger = new Logger<TeamManager>();
 
-        public static readonly List<DepartmentModel> TeamDepartments;
-        public static readonly List<TeamMemberPermissionModel> TeamMemberPermissions;
-        public static readonly List<TeamMember> TeamMembers;
-        public static readonly List<global::server.Teams.Team> Teams;
+        public readonly List<DepartmentModel> TeamDepartments;
+        public readonly List<TeamMemberPermissionModel> TeamMemberPermissions;
+        public readonly List<TeamMember> TeamMembers;
+        public readonly List<global::server.Teams.Team> Teams;
 
         //public Dictionary<int, List<TeamMemberModel>> TeamMembers;
 
-        static TeamManager()
+        private readonly IMapper _mapper;
+
+        public TeamManager(IMapper mapper)
         {
-            Teams = new List<global::server.Teams.Team>();
+            _mapper = mapper;
+
+            Teams = new List<Team>();
             TeamDepartments = new List<DepartmentModel>();
             TeamMembers = new List<TeamMember>();
             TeamMemberPermissions = new List<TeamMemberPermissionModel>();
@@ -37,46 +42,45 @@ namespace server.Teams
             if (!ContextFactory.Instance.TeamModel.Local.Any()) return;
             foreach (var team in ContextFactory.Instance.TeamModel.Local.ToList())
             {
+                //Logger.Debug($"Loaded Team \"{team.Name}\"");
                 switch (team.Id)
                 {
                     case 1:
                         AddTeam<Lspd>(team);
                         break;
                     default:
-                        AddTeam<global::server.Teams.Team>(team);
+                        AddTeam<Team>(team);
                         break;
                 }
-
-                ;
             }
 
             if (ContextFactory.Instance.TeamMemberPermissionModel.Local.Any())
                 TeamMemberPermissions.AddRange(ContextFactory.Instance.TeamMemberPermissionModel.Local);
         }
 
-        private static void AddTeam<T>(global::server.Teams.Team team) 
+        private void AddTeam<T>(global::server.Teams.Team team) 
             where T: global::server.Teams.Team
         {
-            Teams.Add(AutoMapperConfiguration.GetMapper().Map<T>(team));
+            Teams.Add(_mapper.Map<T>(team));
         }
 
-        public static T GetTeam<T>(int teamId) 
+        public T GetTeam<T>(int teamId) 
             where T: global::server.Teams.Team
         {
             return Teams.Find(x => x.Id == teamId) as T;
         }
 
-        public static DepartmentModel GetTeamDepartment(int departmentId)
+        public DepartmentModel GetTeamDepartment(int departmentId)
         {
             return TeamDepartments.Find(x => x.Id == departmentId);
         }
 
-        public static TeamMember GetTeamMember(int memberId)
+        public TeamMember GetTeamMember(int memberId)
         {
             return TeamMembers.Find(x => x.Id == memberId);
         }
 
-        public static List<global::server.Teams.Team> GetTeamsForPlayer(Character player)
+        public List<global::server.Teams.Team> GetTeamsForPlayer(Character player)
         {
             var teams = new List<global::server.Teams.Team>();
 
@@ -85,7 +89,7 @@ namespace server.Teams
             return teams;
         }
 
-        public static List<DepartmentModel> GetDepartmentsForPlayer(Character player)
+        public List<DepartmentModel> GetDepartmentsForPlayer(Character player)
         {
             var departments = new List<DepartmentModel>();
 
@@ -95,11 +99,11 @@ namespace server.Teams
             return departments;
         }
 
-        public static IEnumerable<TeamMember> GetTeamMembersForPlayer(Character player)
+        public IEnumerable<TeamMember> GetTeamMembersForPlayer(Character player)
         {
             return TeamMembers.FindAll(x => x.CharacterId == player.Id);
         }
-        public static List<TeamDto> GetTeamsIPlayer()
+        public List<TeamDto> GetTeamsIPlayer()
         {
             var teams = new List<TeamDto>();
 
@@ -132,7 +136,7 @@ namespace server.Teams
             return teams;
         }
 
-        public static void SendToIPlayer(IPlayer player)
+        public void SendToIPlayer(IPlayer player)
         {
             player.Emit("Teams:Receive", JsonConvert.SerializeObject(GetTeamsIPlayer()));
         }

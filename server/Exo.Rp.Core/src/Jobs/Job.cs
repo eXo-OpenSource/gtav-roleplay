@@ -135,7 +135,7 @@ namespace server.Jobs
             if (JobPlayers[player].Count <= 0) return;
             foreach (var jobPlayer in JobPlayers[player])
             {
-                var coopPlayer = PlayerManager.GetClient(jobPlayer.Key);
+                var coopPlayer = Core.GetService<PlayerManager>().GetClient(jobPlayer.Key);
                 RemovePlayerFromJob(coopPlayer);
                 coopPlayer.SendInformation("Du wurdest aus dem " + Name + "-Team von " +
                                            player.GetCharacter().GetNormalizedName() + " entfernt!");
@@ -144,7 +144,7 @@ namespace server.Jobs
 
         public virtual Vehicle CreateJobVehicle(IPlayer player, VehicleModel vehModel, Position pos, float rot)
         {
-            var veh = VehicleManager.CreateTemporaryVehicle(vehModel, pos, rot, Rgba.Zero, Rgba.Zero);
+            var veh = Core.GetService<VehicleManager>().CreateTemporaryVehicle(vehModel, pos, rot, Rgba.Zero, Rgba.Zero);
             //player.SetIntoVehicle(veh.handle, -1);
             JobVehicles.Add(player, veh);
             player.Emit("disableVehicleCollission", veh.handle, 10000);
@@ -295,7 +295,7 @@ namespace server.Jobs
             if (leader == null || !JobPlayers.ContainsKey(leader)) return;
             foreach (var jobPlayer in JobPlayers[leader])
             {
-                var coopPlayer = PlayerManager.GetClient(jobPlayer.Key);
+                var coopPlayer = Core.GetService<PlayerManager>().GetClient(jobPlayer.Key);
                 coopPlayer.Emit(eventName, data, data2, data3);
             }
         }
@@ -315,7 +315,7 @@ namespace server.Jobs
             if (JobPlayers[leader].Count > 1)
                 foreach (var jobPlayer in JobPlayers[leader])
                     if (jobPlayer.Key != leader.GetId())
-                        StartJobForPlayer(PlayerManager.GetClient(jobPlayer.Key));
+                        StartJobForPlayer(Core.GetService<PlayerManager>().GetClient(jobPlayer.Key));
         }
 
         #endregion

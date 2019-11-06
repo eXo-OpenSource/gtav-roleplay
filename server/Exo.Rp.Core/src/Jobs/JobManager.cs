@@ -1,15 +1,16 @@
 ﻿using System.Collections.Generic;
 using server.Jobs.Jobs;
+using server.Players;
 
 namespace server.Jobs
 {
-    internal class JobManager
+    internal class JobManager : IManager
     {
-        private static readonly Dictionary<int, Job> Jobs;
+        private readonly Dictionary<int, Job> _jobs;
 
-        static JobManager()
+        public JobManager()
         {
-            Jobs = new Dictionary<int, Job>
+            _jobs = new Dictionary<int, Job>
             {
                 {1, new WasteCollector(1)},
                 {2, new LawnCaretaker(2)},
@@ -18,9 +19,9 @@ namespace server.Jobs
             };
         }
 
-        public static Job GetJob(int id)
+        public Job GetJob(int id)
         {
-            return Jobs.ContainsKey(id) ? Jobs[id] : null;
+            return _jobs.ContainsKey(id) ? _jobs[id] : null;
         }
     }
 }

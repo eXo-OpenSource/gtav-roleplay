@@ -15,12 +15,12 @@ namespace server.Players
 
         public static Account GetAccount(this IPlayer player)
         {
-            return PlayerManager.GetAccount(player);
+            return Core.GetService<PlayerManager>().GetAccount(player);
         }
 
         public static Character GetCharacter(this IPlayer player)
         {
-            return PlayerManager.GetCharacter(player);
+            return Core.GetService<PlayerManager>().GetCharacter(player);
         }
 
         public static int GetId(this IPlayer player)

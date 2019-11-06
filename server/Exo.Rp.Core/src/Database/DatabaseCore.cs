@@ -86,52 +86,52 @@ namespace server.Database
             var stopWatch = Stopwatch.StartNew();
             
             ContextFactory.Instance.AccountModel.Load();
-            Logger.Info($"Loaded {ContextFactory.Instance.AccountModel.Local.Count} accounts...");
+            Logger.Info($"Loaded {ContextFactory.Instance.AccountModel.Local.Count} accounts.");
 
             ContextFactory.Instance.CharacterModel.Load();
-            Logger.Info($"Loaded {ContextFactory.Instance.CharacterModel.Local.Count} characters...");
+            Logger.Info($"Loaded {ContextFactory.Instance.CharacterModel.Local.Count} characters.");
             
             ContextFactory.Instance.FaceFeaturesModel.Load();
 
             
             ContextFactory.Instance.VehicleModel.Load();
-            Logger.Info($"Loaded {ContextFactory.Instance.VehicleModel.Local.Count} vehicles...");
+            Logger.Info($"Loaded {ContextFactory.Instance.VehicleModel.Local.Count} vehicles.");
 
             ContextFactory.Instance.TeamModel.Load();
-            Logger.Info($"Loaded {ContextFactory.Instance.TeamModel.Local.Count} teams...");
+            Logger.Info($"Loaded {ContextFactory.Instance.TeamModel.Local.Count} teams.");
 
             ContextFactory.Instance.TeamDepartmentModel.Load();
-            Logger.Info($"Loaded {ContextFactory.Instance.TeamDepartmentModel.Local.Count} departments...");
+            Logger.Info($"Loaded {ContextFactory.Instance.TeamDepartmentModel.Local.Count} departments.");
 
             ContextFactory.Instance.TeamMemberModel.Load();
-            Logger.Info($"Loaded {ContextFactory.Instance.TeamMemberModel.Local.Count} team members...");
+            Logger.Info($"Loaded {ContextFactory.Instance.TeamMemberModel.Local.Count} team members.");
 
             ContextFactory.Instance.TeamMemberPermissionModel.Load();
-            Logger.Info($"Loaded {ContextFactory.Instance.TeamMemberPermissionModel.Local.Count} team member permissions...");
+            Logger.Info($"Loaded {ContextFactory.Instance.TeamMemberPermissionModel.Local.Count} team member permissions.");
 
             ContextFactory.Instance.BankAccountModel.Load();
-            Logger.Info($"Loaded {ContextFactory.Instance.BankAccountModel.Local.Count} bank accounts...");
+            Logger.Info($"Loaded {ContextFactory.Instance.BankAccountModel.Local.Count} bank accounts.");
 
             ContextFactory.Instance.ShopModel.Load();
-            Logger.Info($"Loaded {ContextFactory.Instance.ShopModel.Local.Count} shops...");
+            Logger.Info($"Loaded {ContextFactory.Instance.ShopModel.Local.Count} shops.");
 
             ContextFactory.Instance.VehicleShopVehicleModel.Load();
-            Logger.Info($"Loaded {ContextFactory.Instance.VehicleShopVehicleModel.Local.Count} shop vehicles...");
+            Logger.Info($"Loaded {ContextFactory.Instance.VehicleShopVehicleModel.Local.Count} shop vehicles.");
 
             ContextFactory.Instance.PedModel.Load();
-            Logger.Info($"Loaded {ContextFactory.Instance.PedModel.Local.Count} peds...");
+            Logger.Info($"Loaded {ContextFactory.Instance.PedModel.Local.Count} peds.");
 
             ContextFactory.Instance.InventoryModel.Load();
-            Logger.Info($"Loaded {ContextFactory.Instance.InventoryModel.Local.Count} inventories...");
+            Logger.Info($"Loaded {ContextFactory.Instance.InventoryModel.Local.Count} inventories.");
 
             ContextFactory.Instance.ItemModel.Load();
-            Logger.Info($"Loaded {ContextFactory.Instance.ItemModel.Local.Count} items...");
+            Logger.Info($"Loaded {ContextFactory.Instance.ItemModel.Local.Count} items.");
 
             ContextFactory.Instance.InventoryItemsModel.Load();
-            Logger.Info($"Loaded {ContextFactory.Instance.InventoryItemsModel.Local.Count} inventory items...");
+            Logger.Info($"Loaded {ContextFactory.Instance.InventoryItemsModel.Local.Count} inventory items.");
 
             ContextFactory.Instance.WorldObjectsModels.Load();
-            Logger.Info($"Loaded {ContextFactory.Instance.WorldObjectsModels.Local.Count} world objects...");
+            Logger.Info($"Loaded {ContextFactory.Instance.WorldObjectsModels.Local.Count} world objects.");
 
             stopWatch.Stop();
             

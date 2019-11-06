@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Timers;
+using System.Threading;
 using AltV.Net;
 using InfluxDB.Collector;
 using server.Util.Log;
 using server.Util.Settings;
+using Timer = System.Timers.Timer;
 
 namespace server.Metrics
 {

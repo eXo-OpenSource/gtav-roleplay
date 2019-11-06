@@ -6,14 +6,14 @@ using server.Util.Log;
 
 namespace server.Inventory.Items
 {
-    internal class ItemManager
+    internal class ItemManager : IManager
     {
         private static readonly Logger<ItemManager> Logger = new Logger<ItemManager>();
 
-        private static readonly Dictionary<int, Item> Items;
-        private static readonly Dictionary<string, Item> ItemsMap;
+        private readonly Dictionary<int, Item> Items;
+        private readonly Dictionary<string, Item> ItemsMap;
 
-        static ItemManager()
+        public ItemManager()
         {
             Items = new Dictionary<int, Item>();
             ItemsMap = new Dictionary<string, Item>();
@@ -46,12 +46,12 @@ namespace server.Inventory.Items
             }
         }
 
-        public static Item GetItem(int itemId)
+        public Item GetItem(int itemId)
         {
             return Items.TryGetValue(itemId, out var item) ? item : null;
         }
 
-        public static Item GetItemFromName(string itemName)
+        public Item GetItemFromName(string itemName)
         {
             return ItemsMap.TryGetValue(itemName, out var item) ? item : null;
         }

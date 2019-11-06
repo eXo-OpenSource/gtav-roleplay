@@ -66,7 +66,7 @@ namespace server.Teams
 
         public DepartmentModel GetDepartmentForPlayer(TeamMember teamMember)
         {
-            return TeamManager.TeamDepartments.Find(x => x.Id == teamMember.DepartmentId);
+            return Core.GetService<TeamManager>().TeamDepartments.Find(x => x.Id == teamMember.DepartmentId);
         }
 
         public List<TeamMemberDto> GetTeamMembersForIPlayer()

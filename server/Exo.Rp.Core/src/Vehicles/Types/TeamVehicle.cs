@@ -35,7 +35,7 @@ namespace server.Vehicles.Types
         {
             if (seat != 0) return true;
 
-            return client.GetCharacter().GetTeams() != null && client.GetCharacter().GetTeams().Contains(TeamManager.Teams.Find(x => x.Id == OwnerId));
+            return client.GetCharacter().GetTeams() != null && client.GetCharacter().GetTeams().Contains(Core.GetService<TeamManager>().Teams.Find(x => x.Id == OwnerId));
         }
 
         public override bool CanStartEngine(IPlayer client)

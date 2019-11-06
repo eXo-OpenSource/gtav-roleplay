@@ -17,7 +17,7 @@ namespace server.Teams
 
         private bool IsInSameTeam(Character player)
         {
-            foreach (var team in TeamManager.GetTeamsForPlayer(player))
+            foreach (var team in Core.GetService<TeamManager>().GetTeamsForPlayer(player))
                 if (team.Id == TeamId)
                     return true;
             return false;

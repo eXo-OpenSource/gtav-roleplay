@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
+using AutoMapper;
 using models.Enums;
 using server.AutoMapper;
 using server.Database;
@@ -13,20 +15,24 @@ using server.Util.Log;
 using server.Vehicles.Types;
 
 namespace server.Vehicles
-{
-    internal class VehicleManager
+{ 
+    internal class VehicleManager : IManager
     {
         private static readonly Logger<VehicleManager> Logger = new Logger<VehicleManager>();
 
-        private static readonly Dictionary<int, PlayerVehicle> _playerVehicles;
-        private static readonly Dictionary<int, TeamVehicle> _teamVehicles;
-        private static readonly List<TemporaryVehicle> _temporaryVehicles;
-        private static readonly List<Vehicle> _vehicles;
-        private static int _teamporaryVehicleId = 50000;
-        private static Rgba _defaultColor = new Rgba(0, 0, 0, 255);
+        private readonly Dictionary<int, PlayerVehicle> _playerVehicles;
+        private readonly Dictionary<int, TeamVehicle> _teamVehicles;
+        private readonly List<TemporaryVehicle> _temporaryVehicles;
+        private readonly List<Vehicle> _vehicles;
+        private int _teamporaryVehicleId = 50000;
+        private Rgba _defaultColor = new Rgba(0, 0, 0, 255);
 
-        static VehicleManager()
+        private readonly IMapper _mapper;
+
+        public VehicleManager(IMapper mapper)
         {
+            _mapper = mapper;
+
             _vehicles = new List<Vehicle>();
             _playerVehicles = new Dictionary<int, PlayerVehicle>();
             _teamVehicles = new Dictionary<int, TeamVehicle>();
@@ -34,7 +40,7 @@ namespace server.Vehicles
             SpawnVehicles();
         }
 
-        private static void SpawnVehicles()
+        private void SpawnVehicles()
         {
             foreach (var vehicle in ContextFactory.Instance.VehicleModel.Local.ToList())
             {
@@ -54,44 +60,44 @@ namespace server.Vehicles
             }
         }
 
-        private static void AddVehicle<T>(Vehicle vehicle, bool spawn = true) 
+        private void AddVehicle<T>(Vehicle vehicle, bool spawn = true) 
             where T : Vehicle
         {
-            _vehicles.Add(AutoMapperConfiguration.GetMapper().Map<T>(vehicle));
+            _vehicles.Add(_mapper.Map<T>(vehicle));
             if (spawn) vehicle.Spawn();
         }
 
-        public static T GetVehicleFromHandle<T>(IVehicle vehicle)
+        public T GetVehicleFromHandle<T>(IVehicle vehicle)
             where T : Vehicle
         {
             return _vehicles.FirstOrDefault(x => x.handle == vehicle) as T;
         }
 
-        public static T GetVehicle<T>(Vehicle vehicle)
+        public T GetVehicle<T>(Vehicle vehicle)
             where T : Vehicle
         {
             return (T) _vehicles.First(x => x == vehicle);
         }
 
-        public static void SavePlayerVehicles(IPlayer player)
+        public void SavePlayerVehicles(IPlayer player)
         {
             foreach (var veh in _playerVehicles.Values.Where(veh => veh.OwnerId == player.GetId()))
                 veh.Save();
         }
 
-        public static List<Vehicle> GetPlayerVehicles(IPlayer player)
+        public List<Vehicle> GetPlayerVehicles(IPlayer player)
         {
             return _vehicles.Where(veh => veh.OwnerType == OwnerType.Player && veh.OwnerId == player.GetCharacter().Id).ToList();
         }
 
-        public static PlayerVehicle CreatePlayerVehicle(IPlayer owner, VehicleModel model, Position position, float rotation)
+        public PlayerVehicle CreatePlayerVehicle(IPlayer owner, VehicleModel model, Position position, float rotation)
         {
             var nVehicle = new PlayerVehicle()
             {
                 OwnerType = OwnerType.Player,
                 OwnerId =  owner.GetCharacter().Id,
                 Plate = owner.GetCharacter().LastName,
-                ModelName = model.ToString(),
+                Model = (Int64)model,
                 Color1 = new Rgba(0, 0, 0, 255).ToInt32(),
                 Color2 = new Rgba(0, 0, 0, 255).ToInt32(),
                 VehicleModel = model,
@@ -111,7 +117,7 @@ namespace server.Vehicles
             ContextFactory.Instance.VehicleModel.Local.Add(nVehicle);
             return nVehicle;
         }
-        public static TemporaryVehicle CreateTemporaryVehicle(VehicleModel hash, Position position, float heading,
+        public TemporaryVehicle CreateTemporaryVehicle(VehicleModel hash, Position position, float heading,
             Rgba? color1T, Rgba? color2T, string plate = "Temporary")
         {
             if (color1T == null) color1T = _defaultColor;
@@ -125,7 +131,7 @@ namespace server.Vehicles
                 OwnerType = OwnerType.None,
                 OwnerId = -1,
                 Plate = plate,
-                ModelName = hash.ToString(),
+                Model = (Int64)hash,
                 Color1 = color1.ToInt32(),
                 Color2 = color2.ToInt32(),
                 PosX = position.X,

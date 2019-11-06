@@ -4,12 +4,12 @@ using Newtonsoft.Json;
 
 namespace server.Environment
 {
-    internal class IplManager
+    internal class IplManager : IManager
     {
-        private static readonly List<string> Loaded;
-        private static readonly List<string> Unloaded;
+        private readonly List<string> Loaded;
+        private readonly List<string> Unloaded;
 
-        static IplManager()
+        public IplManager()
         {
             Loaded = new List<string>
             {
@@ -29,7 +29,7 @@ namespace server.Environment
             };
         }
 
-        public static void SendToIPlayer(IPlayer player)
+        public void SendToIPlayer(IPlayer player)
         {
             player.Emit("loadIPL", JsonConvert.SerializeObject(Loaded));
             player.Emit("unloadIPL", JsonConvert.SerializeObject(Unloaded));

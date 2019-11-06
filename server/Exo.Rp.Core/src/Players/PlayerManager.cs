@@ -10,39 +10,39 @@ using Character = server.Players.Characters.Character;
 
 namespace server.Players
 {
-    internal class PlayerManager
+    internal class PlayerManager : IManager
     {
         private static readonly Logger<PlayerManager> Logger = new Logger<PlayerManager>();
 
-        private static readonly Dictionary<IPlayer, Account> Accounts;
-        private static readonly Dictionary<IPlayer, Character> Characters;
-        private static readonly Dictionary<int, IPlayer> Players;
+        private readonly Dictionary<IPlayer, Account> Accounts;
+        private readonly Dictionary<IPlayer, Character> Characters;
+        private readonly Dictionary<int, IPlayer> Players;
 
-        static PlayerManager()
+        public PlayerManager()
         {
             Players = new Dictionary<int, IPlayer>();
             Characters = new Dictionary<IPlayer, Character>();
             Accounts = new Dictionary<IPlayer, Account>();
         }
 
-        public static IPlayer GetClient(int accountId)
+        public IPlayer GetClient(int accountId)
         {
             return Players.TryGetValue(accountId, out var client) ? client : null;
         }
 
-        public static Character GetCharacter(IPlayer player)
+        public Character GetCharacter(IPlayer player)
         {
             if (player == null) return null;
             return Characters.TryGetValue(player, out var character) ? character : null;
         }
 
-        public static Account GetAccount(IPlayer player)
+        public Account GetAccount(IPlayer player)
         {
             if (player == null) return null;
             return Accounts.TryGetValue(player, out var account) ? account : null;
         }
 
-        public static Account GetAccountBySerial(IPlayer player)
+        public Account GetAccountBySerial(IPlayer player)
         {
             if (player == null) return null;
             foreach (var (_, accountModel) in Accounts)
@@ -54,17 +54,17 @@ namespace server.Players
             return null;
         }
 
-        public static string GetName(int accountId)
+        public string GetName(int accountId)
         {
             return ContextFactory.Instance.CharacterModel.Local.FirstOrDefault(x => x.Id == accountId)?.FullName ?? "Unbekannt";
         }
 
-        public static bool IsPlayerOnline(int accountId)
+        public bool IsPlayerOnline(int accountId)
         {
             return Players.ContainsKey(accountId);
         }
 
-        public static void OnDisconnect(IPlayer player)
+        public void OnDisconnect(IPlayer player)
         {
             if (player.GetCharacter()?.IsJobActive() == true) player.GetCharacter()?.GetJob()?.StopJob(player);
             Logger.Info("Saved Data for " + player.Name);
@@ -74,15 +74,13 @@ namespace server.Players
             Characters.Remove(player);
         }
 
-        public static void DoLogin(IPlayer player)
+        public void DoLogin(IPlayer player)
         {
             if (Accounts.ContainsKey(player))
             {
                 Logger.Debug(player.Name + " already added!");
                 return;
             }
-            Console.Write("Test");
-            player.Spawn(new Position(-725.7460327148438f, -282.2967224121094f, 36.959503173828125f));
 
             var account = player.GetAccountModel();
             player.SetData("account.id", account.Id);
@@ -93,12 +91,12 @@ namespace server.Players
             player.Emit("afterLogin");
         }
 
-        public static bool DoesAccountExist(IPlayer player)
+        public bool DoesAccountExist(IPlayer player)
         {
             return ContextFactory.Instance.AccountModel.Local.Any(x => x.SocialClubName == player.SocialClubId.ToString());
         }
 
-        public static void PlayerReady(IPlayer player)
+        public void PlayerReady(IPlayer player)
         {
             //player.SendInitialSync();
         }
