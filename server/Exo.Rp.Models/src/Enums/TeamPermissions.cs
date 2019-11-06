@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace models.Enums
 {
@@ -57,9 +58,7 @@ namespace models.Enums
 
         public static IEnumerable<TeamPermissions> GetFlags(this TeamPermissions input)
         {
-            foreach (TeamPermissions value in Enum.GetValues(typeof(TeamPermissions)))
-                if (input.HasFlag(value))
-                    yield return value;
+            return Enum.GetValues(typeof(TeamPermissions)).Cast<TeamPermissions>().Where(value => input.HasFlag(value));
         }
     }
 }

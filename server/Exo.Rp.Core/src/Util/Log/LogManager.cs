@@ -23,7 +23,7 @@ namespace server.Util.Log
                 case LogCat.Error:
                     return ConsoleColor.Magenta;
                 case LogCat.Debug:
-                    return ConsoleColor.Gray;
+                    return ConsoleColor.DarkCyan;
                 case LogCat.Fatal:
                     return ConsoleColor.Red;
                 case LogCat.None:

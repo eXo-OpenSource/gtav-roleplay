@@ -52,4 +52,10 @@
     <ProjectReference Include="..\Exo.Rp.Models\Exo.Rp.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="resource.cfg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

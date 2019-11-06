@@ -12,13 +12,8 @@ using server.Util.Settings;
 
 namespace server.Database
 {
-    public class DatabaseCore : IScript
+    public class DatabaseCore
     {
-        public DatabaseCore()
-        {
-            OnResourceStartHandler();
-        }
-
         private static readonly Util.Log.Logger<DatabaseCore> Logger = new Util.Log.Logger<DatabaseCore>();
 
         private Stopwatch _lastUpdate;

@@ -24,7 +24,9 @@ namespace server.Util.Log
 
         public void Debug(string message, params object[] args)
         {
-            Log(LogCat.Debug, message, args);
+            #if DEBUG
+                Log(LogCat.Debug, message, args);
+            #endif
         }
 
         public void Info(string message, params object[] args)
@@ -89,7 +91,7 @@ namespace server.Util.Log
 
             if (LogManager.IsLogCatIncluded(logMsg.Category, (LogCat)flags))
             {
-                Console.WriteLine(logMsg.GetMessage());
+                logMsg.WriteToConsole();
             }
 
             SettingsManager.LogOutput.Add(logMsg);
