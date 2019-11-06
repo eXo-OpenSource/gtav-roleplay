@@ -6,6 +6,7 @@ using models.Enums;
 using models.Jobs;
 using server.Inventory.Items;
 using server.Players;
+using IPlayer = server.Players.Interfaces.IPlayer;
 
 namespace server.Jobs.Jobs
 {
@@ -13,7 +14,7 @@ namespace server.Jobs.Jobs
     {
         public const double TreeCooldown = 30; // Seconds
 
-        private readonly Item _apple = Core.GetService<ItemManager>().GetItemFromName("Apfel");
+        private readonly Item _apple = Core.GetService<ItemManager>().GetItem(ItemModel.Apfel);
 
         private readonly Position _deliveryMarker = new Position(2315.753f, 5076.539f, 44.3425f);
 
@@ -71,9 +72,11 @@ namespace server.Jobs.Jobs
                 colshapeRange: 2,
                 colEnter: p =>
                 {
-                    if (player.GetCharacter() != null && player.GetCharacter().GetJob() == this &&
-                        player.GetCharacter().IsJobActive())
-                        ((Farmer) player.GetCharacter().GetJob()).OnDeliveryMarkerHit(player);
+                    var character = player.GetCharacter();
+                    if (character.IsJobCurrentAndActive<Farmer>())
+                    {
+                        OnDeliveryMarkerHit(player);
+                    }
                 }
             );
 
@@ -95,7 +98,7 @@ namespace server.Jobs.Jobs
 
         public void OnDeliveryMarkerHit(IPlayer player)
         {
-            if (player.GetCharacter().IsJobCurrentAndActive(default(Farmer))) return;
+            if (player.GetCharacter().IsJobCurrentAndActive<Farmer>()) return;
 
             if (player.GetCharacter().GetInventory().GetItemCount(_apple) > 0)
             {
@@ -110,7 +113,7 @@ namespace server.Jobs.Jobs
 
         public void OnTreeInteract(IPlayer player, Tree tree)
         {
-            if (player.GetCharacter().IsJobCurrentAndActive(default(Farmer))) return;
+            if (!player.GetCharacter().IsJobCurrentAndActive<Farmer>()) return;
 
             if (tree.IsUsable())
             {

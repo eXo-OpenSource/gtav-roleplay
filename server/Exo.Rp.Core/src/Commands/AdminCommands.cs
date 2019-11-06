@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Text;
 using AltV.Net;
 using AltV.Net.Data;
-using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
 using models.Enums;
 using server.Admin;
 using server.BankAccounts;
 using server.Database;
 using server.Inventory.Inventories;
-using server.Players;
+using IPlayer = server.Players.Interfaces.IPlayer;
+using Player = server.Players.Player;
 using Team = server.Teams.Team;
 using Vehicle = server.Vehicles.Vehicle;
 
@@ -23,7 +23,7 @@ namespace server.Commands
         {
             if (!player.HasPermission(AdminLevel.Supporter)) return;
 
-            var targetPlayer = Util.Player.FindPlayer(player, target);
+            var targetPlayer = Player.FindPlayer(player, target);
             if (targetPlayer != null)
             {
                 var pos = player.Position;
@@ -43,7 +43,7 @@ namespace server.Commands
         {
             if (!player.HasPermission(AdminLevel.Supporter)) return;
 
-            var targetPlayer = Util.Player.FindPlayer(player, target);
+            var targetPlayer = Player.FindPlayer(player, target);
             if (targetPlayer != null)
             {
                 var pos = targetPlayer.Position;
@@ -62,7 +62,7 @@ namespace server.Commands
         {
             if (!player.HasPermission(AdminLevel.Moderator)) return;
 
-            var targetPlayer = Util.Player.FindPlayer(player, target);
+            var targetPlayer = Player.FindPlayer(player, target);
             if (targetPlayer != null)
             {
                 targetPlayer.Kick(reason);

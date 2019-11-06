@@ -1,7 +1,9 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Linq;
+using System.Text.RegularExpressions;
 using AltV.Net;
 using AltV.Net.Elements.Entities;
 using server.Players;
+using IPlayer = server.Players.Interfaces.IPlayer;
 
 namespace server.Chat
 {
@@ -17,7 +19,7 @@ namespace server.Chat
             message = EscapeMessage(message);
             var senderName = sender.GetCharacter()?.GetNormalizedName();
 
-            foreach (var player in Alt.GetAllPlayers())
+            foreach (var player in Alt.GetAllPlayers().Cast<IPlayer>())
             {
                 if (player == null) continue;
                 if (player.Position.Distance(sender.Position) < _maxChatDistance) continue;
@@ -33,7 +35,7 @@ namespace server.Chat
             message = EscapeMessage(message);
             var senderName = sender.GetCharacter()?.GetNormalizedName();
 
-            foreach (var player in Alt.GetAllPlayers())
+            foreach (var player in Alt.GetAllPlayers().Cast<IPlayer>())
             {
                 if (player == null) continue;
                 if (player.Position.Distance(sender.Position) < _maxChatDistance) continue;
@@ -49,7 +51,7 @@ namespace server.Chat
             message = EscapeMessage(message);
             var senderName = sender.GetCharacter()?.GetNormalizedName();
 
-            foreach (var player in Alt.GetAllPlayers())
+            foreach (var player in Alt.GetAllPlayers().Cast<IPlayer>())
             {
                 if (player == null) continue;
                 if (player.Position.Distance(sender.Position) < _maxScreamDistance) continue;
@@ -65,7 +67,7 @@ namespace server.Chat
             message = EscapeMessage(message);
             var senderName = sender.GetCharacter()?.GetNormalizedName();
 
-            foreach (var player in Alt.GetAllPlayers())
+            foreach (var player in Alt.GetAllPlayers().Cast<IPlayer>())
             {
                 if (player == null) continue;
                 if (player.Position.Distance(sender.Position) < _maxWhisperDistance) continue;

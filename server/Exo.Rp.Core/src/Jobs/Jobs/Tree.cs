@@ -3,6 +3,7 @@ using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using server.Players;
 using server.Players.Characters;
+using IPlayer = server.Players.Interfaces.IPlayer;
 
 namespace server.Jobs.Jobs
 {
@@ -24,7 +25,7 @@ namespace server.Jobs.Jobs
 
         private void OnEnterCol(ColShape shape, IPlayer player)
         {
-            if (player.GetCharacter().IsJobCurrentAndActive(default(Farmer))) return;
+            if (player.GetCharacter().IsJobCurrentAndActive<Farmer>()) return;
 
             var interactionData = new InteractionData
             {

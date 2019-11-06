@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using server.Database;
 using server.Extensions;
 using server.Players;
+using IPlayer = server.Players.Interfaces.IPlayer;
 
 namespace server.Jobs.Jobs
 {

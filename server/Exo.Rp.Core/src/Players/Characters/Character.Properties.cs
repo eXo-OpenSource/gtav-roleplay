@@ -15,7 +15,7 @@ namespace server.Players.Characters
 
         //Logged in:
         [NotMapped]
-        private IPlayer _player;
+        private Interfaces.IPlayer _player;
         [NotMapped]
         private Account _account;
         [NotMapped]

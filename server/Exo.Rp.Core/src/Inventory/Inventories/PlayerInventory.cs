@@ -12,7 +12,7 @@ namespace server.Inventory.Inventories
             AddBag(BagNames.Weapon, 10, false, false);
             AddBag(BagNames.Nature, 10, false, false);
 
-            AddItem(Core.GetService<ItemManager>().GetItemFromName("Smartphone"), 1, false);
+            AddItem(Core.GetService<ItemManager>().GetItem("Smartphone"), 1, false);
         }
 
         protected override void AddBag(BagNames name, int slots = 5, bool selected = false, bool sync = true)

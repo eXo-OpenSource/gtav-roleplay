@@ -16,7 +16,7 @@ namespace server.Players.Characters
     public partial class Character
     {
 
-        public void Login(IPlayer player)
+        public void Login(Interfaces.IPlayer player)
         {
             _player = player;
             _account = player.GetAccount();
@@ -377,10 +377,10 @@ namespace server.Players.Characters
             _player.SetSyncedMetaData("Job:Active", state);
         }
 
-
-        public bool IsJobCurrentAndActive<T>(T t) where T : Job
+        public bool IsJobCurrentAndActive<T>()
+            where T : Job
         {
-            return GetJob().GetType() == t.GetType() && IsJobActive();
+            return GetJob().GetType() == typeof(T) && IsJobActive();
         }
 
         #endregion
@@ -388,7 +388,7 @@ namespace server.Players.Characters
         #region marker
 
         public void CreateMarker(Position position, int markerType = 0, int markerScale = 1, int colshapeRange = 1,
-            Action<IPlayer> colEnter = null, Action<IPlayer> colExit = null)
+            Action<Interfaces.IPlayer> colEnter = null, Action<Interfaces.IPlayer> colExit = null)
         {
             /*var markerId = MarkerManager.Instance.AddMarker(new MarkerAction(colEnter, colExit));
             _player.Emit("player:createMarker", _player, position, markerId, markerType, markerScale,

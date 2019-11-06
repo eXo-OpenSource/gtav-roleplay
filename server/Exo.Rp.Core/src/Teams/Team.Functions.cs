@@ -4,6 +4,7 @@ using models.Teams;
 using server.Database;
 using server.Players;
 using server.Util.Log;
+using IPlayer = server.Players.Interfaces.IPlayer;
 
 namespace server.Teams
 {

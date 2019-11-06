@@ -12,7 +12,7 @@ namespace server.Players.Accounts
 {
     internal static class AccountStatic
     {
-        public static bool CreateAccount(this IPlayer player, string username, string mail, AdminLevel adminLvl)
+        public static bool CreateAccount(this Interfaces.IPlayer player, string username, string mail, AdminLevel adminLvl)
         {
             var accountData = new Account
             {

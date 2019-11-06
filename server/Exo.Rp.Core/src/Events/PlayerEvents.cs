@@ -3,6 +3,7 @@ using AltV.Net;
 using AltV.Net.Elements.Entities;
 using server.Players;
 using server.Util;
+using IPlayer = server.Players.Interfaces.IPlayer;
 
 namespace server.Events
 {

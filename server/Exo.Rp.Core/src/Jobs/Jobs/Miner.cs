@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using AltV.Net.Data;
-using AltV.Net.Elements.Entities;
+using server.Players;
+using IPlayer = server.Players.Interfaces.IPlayer;
 using Object = AltV.Net.Elements.Entities.IWorldObject;
 
 namespace server.Jobs.Jobs

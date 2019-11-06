@@ -13,6 +13,7 @@ using server.Players;
 using server.Players.Characters;
 using server.Vehicles;
 using server.Vehicles.Types;
+using IPlayer = server.Players.Interfaces.IPlayer;
 
 namespace server.Shops.Types
 {

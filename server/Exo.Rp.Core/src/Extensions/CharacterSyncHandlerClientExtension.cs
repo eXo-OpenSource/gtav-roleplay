@@ -1,5 +1,5 @@
-﻿using AltV.Net.Elements.Entities;
-using server.Players.Characters;
+﻿using server.Players.Characters;
+using IPlayer = server.Players.Player;
 
 namespace server.Extensions
 {

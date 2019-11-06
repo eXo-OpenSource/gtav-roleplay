@@ -1,21 +1,28 @@
 ﻿using System;
 using System.Diagnostics;
 using AltV.Net;
+using AltV.Net.Data;
+using AltV.Net.Elements.Entities;
 using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
 using server.AutoMapper;
 using server.BankAccounts;
 using server.Database;
 using server.Environment;
+using server.Extensions;
+using server.Factories.Entity;
 using server.Inventory;
 using server.Inventory.Items;
 using server.Jobs;
 using server.Players;
 using server.Shops;
 using server.Teams;
+using server.Util.Extensions;
 using server.Util.Log;
 using server.Vehicles;
 using MetricsCollector = server.Metrics.MetricsCollector;
+using IPlayer = AltV.Net.Elements.Entities.IPlayer;
+using IVehicle = AltV.Net.Elements.Entities.IVehicle;
 
 namespace server
 { 
@@ -45,9 +52,7 @@ namespace server
             DatabaseCore.OnDatabaseInitialized += LoadServices;
 
             // Prepare service provider
-            try
-            {
-                _serviceProvider = new ServiceCollection()
+            _serviceProvider = new ServiceCollection()
                     .AddSingleton<IMapper>(AutoMapperConfiguration.GetMapper())
                     .AddSingleton<MetricsCollector>()
                     .AddSingleton<PlayerManager>()
@@ -60,13 +65,8 @@ namespace server
                     .AddSingleton<IplManager>()
                     .AddSingleton<JobManager>()
                     .BuildServiceProvider();
-            }
-            catch (Exception e)
-            {
-                Logger.Fatal(e.Message);
-            }
 
-            // Start loading database models
+                // Start loading database models
             _databaseCore.OnResourceStartHandler();
         }
 
@@ -105,6 +105,18 @@ namespace server
             Logger.Info("Stopping metrics collector...");
             _serviceProvider.GetService<MetricsCollector>().Stop();
         }
+
+        public override IEntityFactory<IPlayer> GetPlayerFactory()
+        {
+            return new PlayerEntityFactory();
+        }
+
+        /*
+        public override IEntityFactory<IVehicle> GetVehicleFactory()
+        {
+            return new VehicleEntityFactory();
+        }
+        */
 
         public static T GetService<T>()
             where T : IService

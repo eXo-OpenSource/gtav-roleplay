@@ -17,7 +17,8 @@ using server.Shops.Types;
 using server.Teams.State;
 using server.Util;
 using server.Vehicles;
-using Player = server.Util.Player;
+using IPlayer = server.Players.Interfaces.IPlayer;
+using Player = server.Players.Player;
 
 namespace server.Commands
 {

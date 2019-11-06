@@ -14,44 +14,16 @@ namespace server.Players
     {
         private static readonly Logger<PlayerManager> Logger = new Logger<PlayerManager>();
 
-        private readonly Dictionary<IPlayer, Account> Accounts;
-        private readonly Dictionary<IPlayer, Character> Characters;
-        private readonly Dictionary<int, IPlayer> Players;
+        private readonly Dictionary<int, Interfaces.IPlayer> Players;
 
         public PlayerManager()
         {
-            Players = new Dictionary<int, IPlayer>();
-            Characters = new Dictionary<IPlayer, Character>();
-            Accounts = new Dictionary<IPlayer, Account>();
+            Players = new Dictionary<int, Interfaces.IPlayer>();
         }
 
-        public IPlayer GetClient(int accountId)
+        public Interfaces.IPlayer GetClient(int accountId)
         {
             return Players.TryGetValue(accountId, out var client) ? client : null;
-        }
-
-        public Character GetCharacter(IPlayer player)
-        {
-            if (player == null) return null;
-            return Characters.TryGetValue(player, out var character) ? character : null;
-        }
-
-        public Account GetAccount(IPlayer player)
-        {
-            if (player == null) return null;
-            return Accounts.TryGetValue(player, out var account) ? account : null;
-        }
-
-        public Account GetAccountBySerial(IPlayer player)
-        {
-            if (player == null) return null;
-            foreach (var (_, accountModel) in Accounts)
-            {
-                if (accountModel.Serial == player.HardwareIdHash.ToString())
-                    return accountModel;
-            }
-
-            return null;
         }
 
         public string GetName(int accountId)
@@ -64,6 +36,7 @@ namespace server.Players
             return Players.ContainsKey(accountId);
         }
 
+        /*
         public void OnDisconnect(IPlayer player)
         {
             if (player.GetCharacter()?.IsJobActive() == true) player.GetCharacter()?.GetJob()?.StopJob(player);
@@ -73,30 +46,21 @@ namespace server.Players
             Accounts.Remove(player);
             Characters.Remove(player);
         }
-
-        public void DoLogin(IPlayer player)
+        */
+        
+        public void DoLogin(Interfaces.IPlayer player)
         {
-            if (Accounts.ContainsKey(player))
-            {
-                Logger.Debug(player.Name + " already added!");
-                return;
-            }
-
-            var account = player.GetAccountModel();
-            player.SetData("account.id", account.Id);
-            Players.Add(account.Id, player);
-            Accounts.Add(player, account);
-            Characters.Add(player, ContextFactory.Instance.CharacterModel.Local.FirstOrDefault(c => c.Id == account.CharacterId));
+            Players.Add(player.GetAccount().Id, player);
             player.GetCharacter().Login(player);
             player.Emit("afterLogin");
         }
 
-        public bool DoesAccountExist(IPlayer player)
+        public bool DoesAccountExist(Interfaces.IPlayer player)
         {
             return ContextFactory.Instance.AccountModel.Local.Any(x => x.SocialClubName == player.SocialClubId.ToString());
         }
 
-        public void PlayerReady(IPlayer player)
+        public void PlayerReady(Interfaces.IPlayer player)
         {
             //player.SendInitialSync();
         }

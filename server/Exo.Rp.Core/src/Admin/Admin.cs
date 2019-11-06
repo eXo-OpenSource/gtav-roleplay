@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using AltV.Net;
 using AltV.Net.Elements.Entities;
 using models.Enums;
 using server.Players;
 using server.Util.Log;
+using IPlayer = server.Players.Interfaces.IPlayer;
 
 namespace server.Admin
 {
@@ -21,7 +23,7 @@ namespace server.Admin
         private static IEnumerable<IPlayer> GetAdmins()
         {
             var admins = new List<IPlayer>();
-            foreach (var player in Alt.GetAllPlayers())
+            foreach (var player in Alt.GetAllPlayers().Cast<IPlayer>())
                 if (player.HasPermission(AdminLevel.TicketSupporter, false))
                     admins.Add(player);
 
@@ -50,7 +52,7 @@ namespace server.Admin
             if (!sourcePlayer.HasPermission(AdminLevel.TicketSupporter)) return;
 
             var adminLevel = sourcePlayer.GetAccount().AdminLvl;
-            foreach (var player in Alt.GetAllPlayers())
+            foreach (var player in Alt.GetAllPlayers().Cast<IPlayer>())
                 player.SendChatMessage($"#b#[{adminLevel.ToString()} {sourcePlayer.Name}]#w#: {text}");
         }
     }

@@ -1,6 +1,7 @@
 ﻿using AltV.Net.Elements.Entities;
 using models.Enums;
 using server.Players;
+using IPlayer = server.Players.Interfaces.IPlayer;
 
 namespace server.Admin
 {

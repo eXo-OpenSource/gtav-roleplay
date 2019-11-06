@@ -8,6 +8,7 @@ using server.Inventory.Items;
 using server.Players;
 using server.Players.Characters;
 using server.Util.Log;
+using IPlayer = server.Players.Interfaces.IPlayer;
 
 namespace server.Shops.Types
 {

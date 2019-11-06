@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using models.Enums;
 
 namespace server.Inventory.Items
@@ -14,5 +15,12 @@ namespace server.Inventory.Items
 
         [Column(TypeName = "tinyint(1)")]
         public bool Stackable { get; set; }
+
+        [NotMapped]
+        public ItemModel ItemModel
+        {
+            get => Enum.Parse<ItemModel>(Name);
+            set => Name = value.ToString();
+        }
     }
 }

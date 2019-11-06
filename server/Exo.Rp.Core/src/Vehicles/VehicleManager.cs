@@ -13,6 +13,7 @@ using server.Inventory.Inventories;
 using server.Players;
 using server.Util.Log;
 using server.Vehicles.Types;
+using IPlayer = server.Players.Interfaces.IPlayer;
 
 namespace server.Vehicles
 { 

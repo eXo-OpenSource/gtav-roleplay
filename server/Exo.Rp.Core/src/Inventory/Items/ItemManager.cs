@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using models.Enums;
 using server.Database;
@@ -11,12 +12,10 @@ namespace server.Inventory.Items
         private static readonly Logger<ItemManager> Logger = new Logger<ItemManager>();
 
         private readonly Dictionary<int, Item> Items;
-        private readonly Dictionary<string, Item> ItemsMap;
 
         public ItemManager()
         {
             Items = new Dictionary<int, Item>();
-            ItemsMap = new Dictionary<string, Item>();
 
             if (!ContextFactory.Instance.ItemModel.Local.Any())
             {
@@ -42,7 +41,6 @@ namespace server.Inventory.Items
             foreach (var item in ContextFactory.Instance.ItemModel.Local)
             {
                 Items.Add(item.Id, item);
-                ItemsMap.Add(item.Name, item);
             }
         }
 
@@ -51,9 +49,15 @@ namespace server.Inventory.Items
             return Items.TryGetValue(itemId, out var item) ? item : null;
         }
 
-        public Item GetItemFromName(string itemName)
+        public Item GetItem(ItemModel itemModel)
         {
-            return ItemsMap.TryGetValue(itemName, out var item) ? item : null;
+            return Items.FirstOrDefault(x => x.Value.ItemModel == itemModel).Value;
+        }
+
+        [Obsolete("Use GetItem(ItemModel) instead.")]
+        public Item GetItem(string itemName)
+        {
+            return Items.FirstOrDefault(x => x.Value.Name.Equals(itemName)).Value;
         }
     }
 }
