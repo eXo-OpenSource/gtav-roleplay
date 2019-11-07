@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Linq;
-using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using server.Database;
-using server.Extensions;
 using server.Players.Accounts;
 using server.Players.Characters;
 using server.Util.Log;
-using IPlayer = server.Players.IPlayer;
 
 namespace server.Players
 {

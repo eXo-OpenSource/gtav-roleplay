@@ -83,7 +83,7 @@ namespace server.Database
 
             var stopWatch = Stopwatch.StartNew();
             
-            //ContextFactory.Instance.AccountModel.Load();
+            ContextFactory.Instance.AccountModel.Load();
             Logger.Info($"Loaded {ContextFactory.Instance.AccountModel.Local.Count} accounts.");
 
             ContextFactory.Instance.CharacterModel.Load();
@@ -91,7 +91,6 @@ namespace server.Database
             
             ContextFactory.Instance.FaceFeaturesModel.Load();
 
-            
             ContextFactory.Instance.VehicleModel.Load();
             Logger.Info($"Loaded {ContextFactory.Instance.VehicleModel.Local.Count} vehicles.");
 

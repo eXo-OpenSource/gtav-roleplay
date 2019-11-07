@@ -4,7 +4,6 @@ using AltV.Net.Elements.Entities;
 using AutoMapper;
 using models.Teams;
 using Newtonsoft.Json;
-using server.AutoMapper;
 using server.Database;
 using server.Teams.State;
 using server.Util.Log;

@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using models.Enums;
-using server.AutoMapper;
 using server.Database;
 using server.Shops.Types;
 

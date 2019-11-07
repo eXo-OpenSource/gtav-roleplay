@@ -2,7 +2,7 @@
 using AltV.Net;
 using AltV.Net.Elements.Entities;
 
-namespace server.Factories.Entity
+namespace server.Factories.Entities
 {
     public class VehicleEntityFactory : IEntityFactory<IVehicle>
     {

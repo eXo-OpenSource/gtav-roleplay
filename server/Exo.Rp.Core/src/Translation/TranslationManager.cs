@@ -15,7 +15,7 @@ namespace server.Translation
         private static readonly Logger<TranslationManager> Logger = new Logger<TranslationManager>();
 
         private readonly string _localDir = Path.Combine("resources", Alt.Server.Resource.Name, "translations");
-        private readonly CultureInfo[] _languages = { new CultureInfo("en-US") };
+        private readonly IReadOnlyList<CultureInfo> _languages = new List<CultureInfo>( new[] { new CultureInfo("en-US") } );
         private readonly IReadOnlyDictionary<CultureInfo, IReadOnlyDictionary<TranslationCatalog, Catalog>> _catalogs;
 
         public TranslationManager()

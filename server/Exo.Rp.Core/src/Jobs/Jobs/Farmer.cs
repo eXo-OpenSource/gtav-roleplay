@@ -1,11 +1,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AltV.Net.Data;
-using AltV.Net.Elements.Entities;
 using models.Enums;
 using models.Jobs;
 using server.Inventory.Items;
-using server.Players;
 using IPlayer = server.Players.IPlayer;
 
 namespace server.Jobs.Jobs

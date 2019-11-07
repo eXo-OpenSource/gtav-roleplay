@@ -24,11 +24,9 @@ namespace server.Players.Accounts
         [Column(TypeName = "tinyint(1)")]
         public bool Autologin { get; set; }
 
-        [NotMapped]
-        public CultureInfo Culture
+        public CultureInfo GetLanguage()
         {
-            get => new CultureInfo(Language);
-            set => Language = value.Name;
+            return new CultureInfo(Language);
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using AltV.Net.Data;
-using server.Players;
 using IPlayer = server.Players.IPlayer;
 using Object = AltV.Net.Elements.Entities.IWorldObject;
 

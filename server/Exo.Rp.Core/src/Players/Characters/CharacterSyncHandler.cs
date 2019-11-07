@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Timers;
 using AltV.Net;
-using AltV.Net.Elements.Entities;
 using server.Util.Log;
 using server.Util.Settings;
 
@@ -12,11 +11,6 @@ namespace server.Players.Characters
 {
     using ParameterMapping = Dictionary<string, object>;
     using ParameterUpdatedMapping = Dictionary<string, bool>;
-
-    internal enum CharacterSyncType
-    {
-        Public, Private
-    }
 
     public class CharacterSyncHandler
     {

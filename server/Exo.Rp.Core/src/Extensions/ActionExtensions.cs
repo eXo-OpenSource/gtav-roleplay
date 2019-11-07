@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace server.Util.Extensions
+namespace server.Extensions
 {
     public static class ActionExtensions
     {

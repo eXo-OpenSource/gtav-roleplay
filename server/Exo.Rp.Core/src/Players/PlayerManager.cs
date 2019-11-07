@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using AltV.Net.Data;
-using AltV.Net.Elements.Entities;
 using server.Database;
-using server.Players.Accounts;
 using server.Util.Log;
-using Character = server.Players.Characters.Character;
 
 namespace server.Players
 {

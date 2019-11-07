@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading;
 using AltV.Net;
 using InfluxDB.Collector;
 using server.Util.Log;

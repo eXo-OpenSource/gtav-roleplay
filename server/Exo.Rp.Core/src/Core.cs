@@ -1,19 +1,15 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Globalization;
-using System.Threading;
 using AltV.Net;
-using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
-using models.Enums.Translation;
 using server.AutoMapper;
 using server.BankAccounts;
+using server.Commands;
 using server.Database;
 using server.Environment;
-using server.Extensions;
-using server.Factories.Entity;
+using server.Factories.Entities;
 using server.Inventory;
 using server.Inventory.Items;
 using server.Jobs;
@@ -21,19 +17,13 @@ using server.Players;
 using server.Shops;
 using server.Teams;
 using server.Translation;
-using server.Util.Extensions;
 using server.Util.Log;
 using server.Vehicles;
 using MetricsCollector = server.Metrics.MetricsCollector;
 using IPlayer = AltV.Net.Elements.Entities.IPlayer;
-using IVehicle = AltV.Net.Elements.Entities.IVehicle;
 
 namespace server
-{ 
-    public interface IService { }
-
-    public interface IManager : IService { }
-
+{
     public class Core : Resource
     {
         private static readonly Logger<Core> Logger = new Logger<Core>();
@@ -49,6 +39,7 @@ namespace server
             // Prepare service provider
             var serviceCollection = new ServiceCollection()
                 .AddSingleton<IMapper>(AutoMapperConfiguration.GetMapper())
+                .AddSingleton<CommandHandler>()
                 .AddSingleton<MetricsCollector>()
                 .AddSingleton<TranslationManager>()
                 .AddSingleton<PlayerManager>()
@@ -68,7 +59,7 @@ namespace server
                     .AddSingleton(ContextFactory.Instance)
                     .BuildServiceProvider();
                 LoadServices();
-            });
+            }); 
         }
 
         private static void LoadServices()
@@ -76,6 +67,8 @@ namespace server
             Logger.Info("Loading services...");
             var stopWatch = Stopwatch.StartNew();
 
+            Logger.Info("Services | Loading Command handler...");
+            _serviceProvider.GetService<CommandHandler>();
             Logger.Info("Services | Loading Metrics collector...");
             _serviceProvider.GetService<MetricsCollector>().Start();
             Logger.Info("Services | Loading Translation manager...");
@@ -120,6 +113,16 @@ namespace server
             return new VehicleEntityFactory();
         }
         */
+
+        public override IBaseObjectFactory<IBlip> GetBlipFactory()
+        {
+            return base.GetBlipFactory();
+        }
+
+        public override IBaseObjectFactory<IColShape> GetColShapeFactory()
+        {
+            return base.GetColShapeFactory();
+        }
 
         public static T GetService<T>()
             where T : IService

@@ -3,7 +3,7 @@ using AltV.Net;
 using server.Players;
 using IPlayer = AltV.Net.Elements.Entities.IPlayer;
 
-namespace server.Factories.Entity
+namespace server.Factories.Entities
 {
     public class PlayerEntityFactory : IEntityFactory<IPlayer>
     {

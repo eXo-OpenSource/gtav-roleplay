@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
 using models.Enums;
-using server.Players.Accounts;
 using server.Util.Log;
 
 namespace server.Players.Characters

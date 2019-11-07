@@ -5,9 +5,8 @@
     <RuntimeIdentifiers>win10-x64;debian.9-x64</RuntimeIdentifiers>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <GenerateRuntimeConfigurationFiles>false</GenerateRuntimeConfigurationFiles>
     <Platforms>x64</Platforms>
-    <AssemblyName>Exo.Rp.Core</AssemblyName>
+    <AssemblyName>Exo.Rp.Server</AssemblyName>
     <Authors>eXo Roleplay Developers</Authors>
     <Company>eXo Roleplay</Company>
     <Product>eXo Roleplay Server</Product>
@@ -39,18 +38,13 @@
     <PackageReference Include="AltV.Net" Version="1.16.5" />
     <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="InfluxDB.Collector" Version="1.1.1-dev-10109" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.0.0">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="3.0.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3-beta2" />
     <PackageReference Include="NGettext" Version="0.6.4" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.0.0-rc3.final" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.0.0">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
@@ -58,9 +52,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="resource.cfg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="translations\en-US\LC_MESSAGES\General.mo">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using AltV.Net.Elements.Entities;
 using server.Jobs.Jobs;
-using server.Players;
 
 namespace server.Jobs
 {

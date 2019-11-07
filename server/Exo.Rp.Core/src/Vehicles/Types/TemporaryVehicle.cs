@@ -1,5 +1,4 @@
 ﻿using AltV.Net;
-using server.Players;
 using IPlayer = server.Players.IPlayer;
 
 namespace server.Vehicles.Types

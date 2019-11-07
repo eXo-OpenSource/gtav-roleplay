@@ -5,7 +5,6 @@ using AltV.Net.Elements.Entities;
 using models.Enums;
 using Newtonsoft.Json;
 using server.Inventory.Items;
-using server.Players;
 using server.Players.Characters;
 using server.Util.Log;
 using IPlayer = server.Players.IPlayer;

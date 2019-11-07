@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using AltV.Net;
 using AltV.Net.Data;
 using AltV.Net.Enums;
 using models.Enums;
@@ -16,7 +15,7 @@ using Vehicle = server.Vehicles.Vehicle;
 
 namespace server.Commands
 {
-    public class AdminCommands : IScript
+    public class AdminCommands
     {
         //[Command("gethere", GreedyArg = true)]
         public void GetHere(IPlayer player, string target)

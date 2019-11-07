@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
-using AltV.Net.Elements.Entities;
 using models.Teams;
 using server.Database;
-using server.Players;
 using server.Util.Log;
 using IPlayer = server.Players.IPlayer;
 

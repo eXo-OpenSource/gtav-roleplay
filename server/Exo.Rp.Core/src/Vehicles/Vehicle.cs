@@ -2,7 +2,6 @@
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
-using server.Players;
 using server.Util.Log;
 using IPlayer = server.Players.IPlayer;
 

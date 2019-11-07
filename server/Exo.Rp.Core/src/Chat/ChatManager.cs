@@ -1,8 +1,6 @@
 ﻿using System.Linq;
 using System.Text.RegularExpressions;
 using AltV.Net;
-using AltV.Net.Elements.Entities;
-using server.Players;
 using IPlayer = server.Players.IPlayer;
 
 namespace server.Chat

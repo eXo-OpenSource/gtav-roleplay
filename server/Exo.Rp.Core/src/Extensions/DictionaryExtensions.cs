@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace server.Util.Extensions
+namespace server.Extensions
 {
     public static class DictionaryExtensions
     {

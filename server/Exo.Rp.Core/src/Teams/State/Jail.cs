@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using AltV.Net.Data;
-using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
-using server.Players;
 using IPlayer = server.Players.IPlayer;
 
 namespace server.Teams.State
