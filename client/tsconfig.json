@@ -3,12 +3,14 @@
     "module": "commonjs",
     "target": "esnext",
     "lib": ["esnext"],
-    "sourceMap": true,
+    "inlineSourceMap": true,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "outDir": "build"
   },
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "cef"
   ], 
   "include": [
     "src/**.ts"
