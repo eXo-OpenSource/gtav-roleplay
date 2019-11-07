@@ -24,6 +24,7 @@ namespace server.Inventory.Items
                 Logger.Warn("WARNING no Items in the database found.");
                 _databaseContext.ItemModel.Local.Add(new Item
                 {
+                    Id = 1,
                     Name = "Smartphone",
                     SubText = "Stk.",
                     Icon = "smartphone.png",
@@ -32,6 +33,7 @@ namespace server.Inventory.Items
                 });
                 _databaseContext.ItemModel.Local.Add(new Item
                 {
+                    Id = 2,
                     Name = "Apfel",
                     SubText = "Stk.",
                     Icon = "apple.png",

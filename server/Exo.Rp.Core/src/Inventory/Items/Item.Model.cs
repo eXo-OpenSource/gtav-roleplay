@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using models.Enums;
 
@@ -7,6 +8,7 @@ namespace server.Inventory.Items
     [Table("Items")]
     public partial class Item
     {
+        [Key]
         public int Id { get; set; }
         public string Name { get; set; }
         public string SubText { get; set; }

@@ -100,6 +100,9 @@ namespace server
         {
             Logger.Info("Stopping metrics collector...");
             _serviceProvider.GetService<MetricsCollector>().Stop();
+
+            Logger.Info("Committing changes to database...");
+            DatabaseCore.SaveChangeToDatabase();
         }
 
         public override IEntityFactory<IPlayer> GetPlayerFactory()

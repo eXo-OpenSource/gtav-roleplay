@@ -35,7 +35,7 @@ namespace server.Teams
             TeamDepartments = new List<DepartmentModel>();
             TeamMembers = new List<TeamMember>();
             TeamMemberPermissions = new List<TeamMemberPermissionModel>();
-            Teams.Add(new global::server.Teams.Team
+            Teams.Add(new Team
             {
                 Id = 0,
                 Name = " - keine -"
