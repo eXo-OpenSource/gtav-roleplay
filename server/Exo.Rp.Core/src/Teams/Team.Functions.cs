@@ -22,7 +22,7 @@ namespace server.Teams
                 CharacterId = player.GetCharacter().Id
             };
 
-            ContextFactory.Instance.TeamMemberModel.Local.Add(teamMemberModel);
+            Core.GetService<DatabaseContext>().TeamMemberModel.Local.Add(teamMemberModel);
             //DatabaseCore.SaveChangeToDatabase();
             //TODO player inform etc
 
@@ -51,7 +51,7 @@ namespace server.Teams
             {
                 try
                 {
-                    // ContextFactory.Instance.TeamMemberModel.Local.Remove(members); ?
+                    // Core.GetService<DatabaseContext>().TeamMemberModel.Local.Remove(members); ?
                     //db.TeamMemberModel.Remove(members);
                     db.SaveChanges();
                     //

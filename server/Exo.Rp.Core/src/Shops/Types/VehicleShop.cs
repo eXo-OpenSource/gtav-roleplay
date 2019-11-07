@@ -77,9 +77,9 @@ namespace server.Shops.Types
             _vehicleData = new Dictionary<int, VehicleDataDto>();
             _vehicles = new Dictionary<int, TemporaryVehicle>();
 
-            if (!ContextFactory.Instance.VehicleShopVehicleModel.Local.Any()) return;
+            if (!Core.GetService<DatabaseContext>().VehicleShopVehicleModel.Local.Any()) return;
 
-            foreach (var vehicleM in ContextFactory.Instance.VehicleShopVehicleModel.Local.Where(x => x.ShopId == Id))
+            foreach (var vehicleM in Core.GetService<DatabaseContext>().VehicleShopVehicleModel.Local.Where(x => x.ShopId == Id))
             {
                 var nVehicle = Core.GetService<VehicleManager>().CreateTemporaryVehicle(vehicleM.Vehicle, vehicleM.Pos, vehicleM.RotZ,
                     new Rgba(255, 255, 0, 255), new Rgba(255, 255, 0, 255), "for Sale");

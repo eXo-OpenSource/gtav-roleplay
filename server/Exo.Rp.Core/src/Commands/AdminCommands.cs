@@ -199,9 +199,9 @@ namespace server.Commands
                 }
 
             };
-            ContextFactory.Instance.TeamModel.Local.Add(team);
-            ContextFactory.Instance.BankAccountModel.Local.Add(team.BankAccount);
-            ContextFactory.Instance.InventoryModel.Local.Add(team.Inventory);
+            Core.GetService<DatabaseContext>().TeamModel.Local.Add(team);
+            Core.GetService<DatabaseContext>().BankAccountModel.Local.Add(team.BankAccount);
+            Core.GetService<DatabaseContext>().InventoryModel.Local.Add(team.Inventory);
 
             player.SendInformation("Team wurde erfolgreich gespeichert!");
         }
@@ -249,8 +249,8 @@ namespace server.Commands
                         Type = InventoryType.Vehicle
                     }
                 };
-                ContextFactory.Instance.VehicleModel.Local.Add(data);
-                ContextFactory.Instance.InventoryModel.Local.Add(data.InventoryModel);
+                Core.GetService<DatabaseContext>().VehicleModel.Local.Add(data);
+                Core.GetService<DatabaseContext>().InventoryModel.Local.Add(data.InventoryModel);
                 player.SendInformation("Fahrzeug wurde erfolgreich gespeichert!");
 
             }

@@ -68,7 +68,7 @@ namespace server
             _databaseCore.OnResourceStartHandler(() =>
             {
                 _serviceProvider = serviceCollection
-                    .AddSingleton<DatabaseContext>(ContextFactory.Instance)
+                    .AddSingleton(ContextFactory.Instance)
                     .BuildServiceProvider();
                 LoadServices();
             });

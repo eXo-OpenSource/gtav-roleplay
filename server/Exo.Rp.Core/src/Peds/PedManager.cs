@@ -19,8 +19,8 @@ namespace server.Peds
         {
             Peds = new Dictionary<int, Ped>();
 
-            if (!ContextFactory.Instance.PedModel.Local.Any()) return;
-            foreach (var pedM in ContextFactory.Instance.PedModel.Local) Peds.Add(pedM.Id, pedM);
+            if (!Core.GetService<DatabaseContext>().PedModel.Local.Any()) return;
+            foreach (var pedM in Core.GetService<DatabaseContext>().PedModel.Local) Peds.Add(pedM.Id, pedM);
         }
 
         public static List<PedDto> GetPedsForIPlayer()
@@ -59,7 +59,7 @@ namespace server.Peds
                 Rot = rot,
                 Type = type
             };
-            ContextFactory.Instance.PedModel.Local.Add(ped);
+            Core.GetService<DatabaseContext>().PedModel.Local.Add(ped);
             return ped;
         }
 

@@ -46,14 +46,14 @@ namespace server.Inventory
 
             if (bag.Items.ContainsKey(item.Id))
             {
-                var items = ContextFactory.Instance.InventoryItemsModel.Local
+                var items = Core.GetService<DatabaseContext>().InventoryItemsModel.Local
                     .Where(x => x.ItemId == item.Id && x.Inventory == this);
 
                 if (items.Any())
                 {
                     PermanentInventory.Logger.Debug("AddItem: Increased Amount!");
                     items.First().Amount = items.First().Amount + amount;
-                    ContextFactory.Instance.Entry(items.First()).State = EntityState.Modified;
+                    Core.GetService<DatabaseContext>().Entry(items.First()).State = EntityState.Modified;
                 }
             }
             else
@@ -64,13 +64,13 @@ namespace server.Inventory
                     Amount = amount,
                     ItemId = item.Id
                 };
-                ContextFactory.Instance.InventoryItemsModel.Add(nItem);
+                Core.GetService<DatabaseContext>().InventoryItemsModel.Add(nItem);
             }
         }
 
         public void Save()
         {
-            ContextFactory.Instance.Entry(this).State = EntityState.Modified;
+            Core.GetService<DatabaseContext>().Entry(this).State = EntityState.Modified;
         }
 
         public void LoadDatabaseBags()
@@ -80,7 +80,7 @@ namespace server.Inventory
 
         public void LoadDatabaseItems()
         {
-            var items = ContextFactory.Instance.InventoryItemsModel.Local.Where(x => x.Inventory == this);
+            var items = Core.GetService<DatabaseContext>().InventoryItemsModel.Local.Where(x => x.Inventory == this);
             foreach (var model in items) base.AddItem(Core.GetService<ItemManager>().GetItem(model.Id), model.Amount);
         }
     }

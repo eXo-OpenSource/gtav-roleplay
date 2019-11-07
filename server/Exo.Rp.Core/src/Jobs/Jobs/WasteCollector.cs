@@ -132,7 +132,7 @@ namespace server.Jobs.Jobs
             _binPositions = new Dictionary<int, Position[]>();
             _bins = new Dictionary<int, WasteBin>();
 
-            var worldObjects = ContextFactory.Instance.WorldObjectsModels.Local.Where(x => x.Type == models.Enums.WorldObjects.WasteBin);
+            var worldObjects = Core.GetService<DatabaseContext>().WorldObjectsModels.Local.Where(x => x.Type == models.Enums.WorldObjects.WasteBin);
             foreach (var model in worldObjects)
                 _binPositions.Add(model.Id,
                     new[] { model.Position.DeserializeVector(), model.Rotation.DeserializeVector() });
@@ -150,7 +150,7 @@ namespace server.Jobs.Jobs
                 PlacedBy = player.GetId(),
                 Date = DateTime.Now
             };
-            var factory = ContextFactory.Instance.WorldObjectsModels.Local;
+            var factory = Core.GetService<DatabaseContext>().WorldObjectsModels.Local;
             factory.Add(nModel);
 
             foreach (var model in factory.OrderByDescending(o => o.Id))

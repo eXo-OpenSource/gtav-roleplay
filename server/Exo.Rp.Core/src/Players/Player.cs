@@ -16,9 +16,9 @@ namespace server.Players
         private static readonly Logger<Player> Logger = new Logger<Player>();
         
         private Account _account;
-        public Account Account => _account ??= ContextFactory.Instance.AccountModel?.Local.FirstOrDefault(x => x.SocialClubId == SocialClubId);
+        public Account Account => _account ??= Core.GetService<DatabaseContext>().AccountModel?.Local.FirstOrDefault(x => x.SocialClubId == SocialClubId);
         private Character _character;
-        public Character Character => _character ??= ContextFactory.Instance.CharacterModel.Local.FirstOrDefault(c => c.Id == Account.CharacterId);
+        public Character Character => _character ??= Core.GetService<DatabaseContext>().CharacterModel.Local.FirstOrDefault(c => c.Id == Account.CharacterId);
 
         public Player(IntPtr nativePointer, ushort id) : base(nativePointer, id)
         {

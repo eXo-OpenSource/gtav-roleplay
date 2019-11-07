@@ -53,11 +53,11 @@ namespace server.Players.Accounts
 
             //var characterData = ;
 
-            ContextFactory.Instance.AccountModel.Local.Add(accountData);
-            ContextFactory.Instance.CharacterModel.Local.Add(accountData.Character);
-            ContextFactory.Instance.BankAccountModel.Local.Add(accountData.Character.BankAccount);
-            ContextFactory.Instance.InventoryModel.Local.Add(accountData.Character.InventoryModel);
-            ContextFactory.Instance.FaceFeaturesModel.Local.Add(accountData.Character.FaceFeatures);
+            Core.GetService<DatabaseContext>().AccountModel.Local.Add(accountData);
+            Core.GetService<DatabaseContext>().CharacterModel.Local.Add(accountData.Character);
+            Core.GetService<DatabaseContext>().BankAccountModel.Local.Add(accountData.Character.BankAccount);
+            Core.GetService<DatabaseContext>().InventoryModel.Local.Add(accountData.Character.InventoryModel);
+            Core.GetService<DatabaseContext>().FaceFeaturesModel.Local.Add(accountData.Character.FaceFeatures);
 
             DatabaseCore.SaveChangeToDatabase();
 

@@ -335,7 +335,7 @@ namespace server.Commands
 
             var veh = player.Vehicle;
 
-            ContextFactory.Instance.VehicleShopVehicleModel.Local.Add(new VehicleShopVehicle()
+            Core.GetService<DatabaseContext>().VehicleShopVehicleModel.Local.Add(new VehicleShopVehicle()
             {
                 ModelName = ((VehicleModel)veh.Model).ToString(),
                 Pos = veh.Position,
