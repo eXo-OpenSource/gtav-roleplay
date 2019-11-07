@@ -22,7 +22,7 @@ namespace server.Players
             Logger.Debug($"{Name} has joined the server.");
 
             // Todo: only for debug, do not spawn the player here.
-            Core.GetService<PlayerManager>().DoLogin(this);
+            //Core.GetService<PlayerManager>().DoLogin(this);
         }
 
         public int GetId()

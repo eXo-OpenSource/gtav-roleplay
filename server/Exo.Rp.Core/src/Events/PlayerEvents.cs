@@ -50,5 +50,11 @@ namespace server.Events
             }
         }
 
+        [ScriptEvent(ScriptEventType.PlayerConnect)]
+        public void PlayerConnect(IPlayer player, string reason)
+        {
+            Alt.Log($"{player.Name} connected.");
+            player.Emit("showLogin");
+        }
     }
 }
