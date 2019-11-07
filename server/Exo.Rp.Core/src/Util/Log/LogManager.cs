@@ -28,7 +28,7 @@ namespace server.Util.Log
                     return ConsoleColor.Red;
                 case LogCat.None:
                     return ConsoleColor.Gray;
-                case LogCat.RageMp:
+                case LogCat.AltV:
                     return ConsoleColor.DarkCyan;
                 default:
                     return ConsoleColor.Gray;
@@ -84,7 +84,7 @@ namespace server.Util.Log
                 return true;
             if (flags.HasFlag(LogCat.Fatal) && category == LogCat.Fatal)
                 return true;
-            if (flags.HasFlag(LogCat.RageMp) && category == LogCat.RageMp)
+            if (flags.HasFlag(LogCat.AltV) && category == LogCat.AltV)
                 return true;
 
             return category == LogCat.None;

@@ -5,6 +5,7 @@ using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
 using models.Enums;
+using server.Extensions;
 using server.Inventory.Inventories;
 using server.Jobs;
 using server.Shops;
@@ -16,15 +17,14 @@ namespace server.Players.Characters
     public partial class Character
     {
 
-        public void Login(Interfaces.IPlayer player)
+        public void Login(IPlayer player)
         {
             _player = player;
-            _account = player.GetAccount();
             //player.Name = FullName;
+            _player.SetPublicSync("dsf", "sdgf");
 
             IsLoggedIn = true;
             Init();
-
         }
 
         public void Logout()
@@ -388,7 +388,7 @@ namespace server.Players.Characters
         #region marker
 
         public void CreateMarker(Position position, int markerType = 0, int markerScale = 1, int colshapeRange = 1,
-            Action<Interfaces.IPlayer> colEnter = null, Action<Interfaces.IPlayer> colExit = null)
+            Action<IPlayer> colEnter = null, Action<IPlayer> colExit = null)
         {
             /*var markerId = MarkerManager.Instance.AddMarker(new MarkerAction(colEnter, colExit));
             _player.Emit("player:createMarker", _player, position, markerId, markerType, markerScale,

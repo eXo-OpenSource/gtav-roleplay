@@ -48,7 +48,7 @@ namespace server.Util.Settings
 
             var defaultSettings = new SettingsFile
             {
-                ServerConsoleFlags = LogCat.None | LogCat.Debug | LogCat.Info | LogCat.Warn | LogCat.Error | LogCat.Fatal | LogCat.RageMp,
+                ServerConsoleFlags = LogCat.None | LogCat.Debug | LogCat.Info | LogCat.Warn | LogCat.Error | LogCat.Fatal | LogCat.AltV,
                 Database = new DatabaseSettings
                 {
                     Server = "148.251.132.111",
@@ -60,7 +60,7 @@ namespace server.Util.Settings
                 },
                 Logger = new LoggerSettings
                 {
-                    LogFileFlags = LogCat.None | LogCat.Debug | LogCat.Info | LogCat.Warn | LogCat.Error | LogCat.Fatal | LogCat.RageMp,
+                    LogFileFlags = LogCat.None | LogCat.Debug | LogCat.Info | LogCat.Warn | LogCat.Error | LogCat.Fatal | LogCat.AltV,
                     PathToLogFolder = logsPath,
                     FileName = "{0}.log"
                 },

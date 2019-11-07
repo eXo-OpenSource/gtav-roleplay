@@ -8,10 +8,10 @@ namespace server.Players.Accounts
     public partial class Account
     {
         public int Id { get; set; }
+        public ulong SocialClubId { get; set; }
         public string Username { get; set; }
         public string EMail { get; set; }
         public AdminLevel AdminLvl { get; set; }
-        public string SocialClubName { get; set; }
         public int ForumId { get; set; }
 
         [ForeignKey("Character")]

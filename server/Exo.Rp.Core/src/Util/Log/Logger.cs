@@ -51,7 +51,7 @@ namespace server.Util.Log
 
         public void ServerOutput(string message, params object[] args)
         {
-            Log(LogCat.RageMp, message, args);
+            Log(LogCat.AltV, message, args);
         }
 
         public LogMessage GetPrefix(LogCat category, string message, params object[] args)
@@ -60,18 +60,14 @@ namespace server.Util.Log
 
             var textMessage = (args.Length > 0) ? string.Format(message, args) : message;
 
-            var flags = SettingsManager.ServerSettings?.ServerConsoleFlags;
-
-            flags = flags ?? LogCat.None | LogCat.Debug | LogCat.Info | LogCat.Warn | LogCat.Error | LogCat.Fatal | LogCat.RageMp;
-
-            var parent = category.HasFlag(LogCat.RageMp) ? "ServerOutput" : _parent;
+            var parent = category.HasFlag(LogCat.AltV) ? "ServerOutput" : _parent;
 
             var logMsg = new LogMessage
             {
                 Color = LogManager.LogCatToColor(category),
                 Messages = new[]
                 {
-                    $@"{date,12:HH:mm:ss.fff}",
+                    $@"[{date,12:HH:mm:ss.fff}]",
                     $@"{category.ToString(),6}",
                     $@"{parent}",
                     textMessage
@@ -85,7 +81,7 @@ namespace server.Util.Log
         {
             var flags = SettingsManager.ServerSettings?.ServerConsoleFlags;
 
-            flags = flags ?? LogCat.None | LogCat.Debug | LogCat.Info | LogCat.Warn | LogCat.Error | LogCat.Fatal | LogCat.RageMp;
+            flags ??= LogCat.None | LogCat.Debug | LogCat.Info | LogCat.Warn | LogCat.Error | LogCat.Fatal | LogCat.AltV;
 
             var logMsg = GetPrefix(category, message, args);
 

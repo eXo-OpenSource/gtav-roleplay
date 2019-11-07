@@ -13,14 +13,16 @@ namespace server.Shops
     {
         private static readonly List<Shop> Shops = new List<Shop>();
 
+        private readonly DatabaseContext _databaseContext;
         private readonly IMapper _mapper;
 
-        public ShopManager(IMapper mapper)
+        public ShopManager(DatabaseContext databaseContext, IMapper mapper)
         {
+            _databaseContext = databaseContext;
             _mapper = mapper;
 
-            if (!ContextFactory.Instance.ShopModel.Local.Any()) return;
-            foreach (var shopModel in ContextFactory.Instance.ShopModel.Local)
+            if (!_databaseContext.ShopModel.Local.Any()) return;
+            foreach (var shopModel in _databaseContext.ShopModel.Local)
                 switch (shopModel.ShopType)
                 {
                     case ShopType.Vehicle:

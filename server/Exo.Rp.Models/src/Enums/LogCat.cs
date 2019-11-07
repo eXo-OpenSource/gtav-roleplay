@@ -11,6 +11,6 @@ namespace models.Enums
         Warn   = 1 << 2, // 0b100
         Error  = 1 << 3, // 0b1000
         Fatal  = 1 << 4, // 0b10000
-        RageMp = 1 << 5  // 0b100000
+        AltV = 1 << 5  // 0b100000
     }
 }

@@ -14,26 +14,29 @@ namespace server.Players
     {
         private static readonly Logger<PlayerManager> Logger = new Logger<PlayerManager>();
 
-        private readonly Dictionary<int, Interfaces.IPlayer> Players;
+        private readonly DatabaseContext _databaseContext;
+        private readonly Dictionary<int, IPlayer> _players;
 
-        public PlayerManager()
+        public PlayerManager(DatabaseContext databaseContext)
         {
-            Players = new Dictionary<int, Interfaces.IPlayer>();
+            _databaseContext = databaseContext;
+
+            _players = new Dictionary<int, IPlayer>();
         }
 
-        public Interfaces.IPlayer GetClient(int accountId)
+        public IPlayer GetClient(int accountId)
         {
-            return Players.TryGetValue(accountId, out var client) ? client : null;
+            return _players.TryGetValue(accountId, out var client) ? client : null;
         }
 
         public string GetName(int accountId)
         {
-            return ContextFactory.Instance.CharacterModel.Local.FirstOrDefault(x => x.Id == accountId)?.FullName ?? "Unbekannt";
+            return _databaseContext.CharacterModel.Local.FirstOrDefault(x => x.Id == accountId)?.FullName ?? "Unbekannt";
         }
 
         public bool IsPlayerOnline(int accountId)
         {
-            return Players.ContainsKey(accountId);
+            return _players.ContainsKey(accountId);
         }
 
         /*
@@ -48,19 +51,17 @@ namespace server.Players
         }
         */
         
-        public void DoLogin(Interfaces.IPlayer player)
+        public void DoLogin(IPlayer player)
         {
-            Players.Add(player.GetAccount().Id, player);
+            if (player.GetAccount() == default || player.GetCharacter() == default)
+                player.Kick("Internal Server error: Account/Character not found!");
+
+            _players.Add(player.GetAccount().Id, player);
             player.GetCharacter().Login(player);
             player.Emit("afterLogin");
         }
 
-        public bool DoesAccountExist(Interfaces.IPlayer player)
-        {
-            return ContextFactory.Instance.AccountModel.Local.Any(x => x.SocialClubName == player.SocialClubId.ToString());
-        }
-
-        public void PlayerReady(Interfaces.IPlayer player)
+        public void PlayerReady(IPlayer player)
         {
             //player.SendInitialSync();
         }

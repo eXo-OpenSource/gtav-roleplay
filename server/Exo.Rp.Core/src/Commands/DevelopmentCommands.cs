@@ -17,7 +17,7 @@ using server.Shops.Types;
 using server.Teams.State;
 using server.Util;
 using server.Vehicles;
-using IPlayer = server.Players.Interfaces.IPlayer;
+using IPlayer = server.Players.IPlayer;
 using Player = server.Players.Player;
 
 namespace server.Commands
@@ -314,7 +314,7 @@ namespace server.Commands
         {
             player.GetAccount().Autologin = state;
             player.GetAccount().Serial = player.HardwareIdHash.ToString();
-            player.GetAccount().SocialClubName = player.SocialClubId.ToString();
+            player.GetAccount().SocialClubId = player.SocialClubId;
             player.SendChatMessage(state ? "Autologin aktiviert!" : "Autologin deaktiviert!");
         }
 

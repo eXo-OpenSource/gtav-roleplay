@@ -3,48 +3,44 @@ using System.Linq;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using server.Database;
-using server.Peds;
+using server.Extensions;
 using server.Players.Accounts;
 using server.Players.Characters;
 using server.Util.Log;
+using IPlayer = server.Players.IPlayer;
 
 namespace server.Players
 {
-    public partial class Player : AltV.Net.Elements.Entities.Player, Interfaces.IPlayer
+    public partial class Player : AltV.Net.Elements.Entities.Player, IPlayer
     {
         private static readonly Logger<Player> Logger = new Logger<Player>();
-
-        private Account Account => ContextFactory.Instance.AccountModel?.Local.FirstOrDefault(x => x.SocialClubName == SocialClubId.ToString());
-
-        private Character Character => ContextFactory.Instance.CharacterModel.Local.FirstOrDefault(c => c.Id == Account.CharacterId);
+        
+        private Account _account;
+        public Account Account => _account ??= ContextFactory.Instance.AccountModel?.Local.FirstOrDefault(x => x.SocialClubId == SocialClubId);
+        private Character _character;
+        public Character Character => _character ??= ContextFactory.Instance.CharacterModel.Local.FirstOrDefault(c => c.Id == Account.CharacterId);
 
         public Player(IntPtr nativePointer, ushort id) : base(nativePointer, id)
         {
             Logger.Debug($"{Name} has joined the server.");
 
             // Todo: only for debug, do not spawn the player here.
-            Model = 1885233650;
-            Spawn(new Position(0, 0, 70), 0);
+            Core.GetService<PlayerManager>().DoLogin(this);
         }
 
         public int GetId()
         {
-            return IsLoggedIn() ? Account.Id : default;
-        }
-
-        public bool IsLoggedIn()
-        {
-            return true;
+            return Account.Id;
         }
 
         public Account GetAccount()
         {
-            return IsLoggedIn() ? Account : default;
+            return Account;
         }
 
         public Character GetCharacter()
         {
-            return IsLoggedIn() ? Character : default;
+            return Character;
         }
         public void SendNotification(string text)
         {

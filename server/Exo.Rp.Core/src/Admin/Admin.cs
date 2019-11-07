@@ -5,7 +5,7 @@ using AltV.Net.Elements.Entities;
 using models.Enums;
 using server.Players;
 using server.Util.Log;
-using IPlayer = server.Players.Interfaces.IPlayer;
+using IPlayer = server.Players.IPlayer;
 
 namespace server.Admin
 {

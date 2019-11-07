@@ -13,7 +13,7 @@ using server.Inventory.Inventories;
 using server.Players;
 using server.Util.Log;
 using server.Vehicles.Types;
-using IPlayer = server.Players.Interfaces.IPlayer;
+using IPlayer = server.Players.IPlayer;
 
 namespace server.Vehicles
 { 
@@ -21,6 +21,8 @@ namespace server.Vehicles
     {
         private static readonly Logger<VehicleManager> Logger = new Logger<VehicleManager>();
 
+        private readonly DatabaseContext _databaseContext;
+        private readonly IMapper _mapper;
         private readonly Dictionary<int, PlayerVehicle> _playerVehicles;
         private readonly Dictionary<int, TeamVehicle> _teamVehicles;
         private readonly List<TemporaryVehicle> _temporaryVehicles;
@@ -28,10 +30,9 @@ namespace server.Vehicles
         private int _teamporaryVehicleId = 50000;
         private Rgba _defaultColor = new Rgba(0, 0, 0, 255);
 
-        private readonly IMapper _mapper;
-
-        public VehicleManager(IMapper mapper)
+        public VehicleManager(DatabaseContext databaseContext, IMapper mapper)
         {
+            _databaseContext = databaseContext;
             _mapper = mapper;
 
             _vehicles = new List<Vehicle>();
@@ -43,9 +44,8 @@ namespace server.Vehicles
 
         private void SpawnVehicles()
         {
-            foreach (var vehicle in ContextFactory.Instance.VehicleModel.Local.ToList())
+            foreach (var vehicle in _databaseContext.VehicleModel.Local.ToList())
             {
-
                 switch (vehicle.OwnerType)
                 {
                     case OwnerType.Player:
@@ -114,8 +114,8 @@ namespace server.Vehicles
                 }
             };
             AddVehicle<PlayerVehicle>(nVehicle);
-            ContextFactory.Instance.InventoryModel.Local.Add(nVehicle.InventoryModel);
-            ContextFactory.Instance.VehicleModel.Local.Add(nVehicle);
+            _databaseContext.InventoryModel.Local.Add(nVehicle.InventoryModel);
+            _databaseContext.VehicleModel.Local.Add(nVehicle);
             return nVehicle;
         }
         public TemporaryVehicle CreateTemporaryVehicle(VehicleModel hash, Position position, float heading,

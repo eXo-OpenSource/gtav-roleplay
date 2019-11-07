@@ -22,7 +22,7 @@ using AccountModel = server.Players.Accounts.Account;
 
 namespace server.Database
 {
-    public class DatabaseContext : DbContext
+    public class DatabaseContext : DbContext, IService
     {
         // If a new entity is added it need to be load "DatabaseCore.OnResourceStartHandler()"
         public DbSet<AccountModel> AccountModel { get; set; }

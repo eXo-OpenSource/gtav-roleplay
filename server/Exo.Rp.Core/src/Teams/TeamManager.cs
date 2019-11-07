@@ -16,6 +16,9 @@ namespace server.Teams
     {
         private static readonly Logger<TeamManager> Logger = new Logger<TeamManager>();
 
+        private readonly DatabaseContext _databaseContext;
+        private readonly IMapper _mapper;
+
         public readonly List<DepartmentModel> TeamDepartments;
         public readonly List<TeamMemberPermissionModel> TeamMemberPermissions;
         public readonly List<TeamMember> TeamMembers;
@@ -23,10 +26,10 @@ namespace server.Teams
 
         //public Dictionary<int, List<TeamMemberModel>> TeamMembers;
 
-        private readonly IMapper _mapper;
 
-        public TeamManager(IMapper mapper)
+        public TeamManager(DatabaseContext databaseContext, IMapper mapper)
         {
+            _databaseContext = databaseContext;
             _mapper = mapper;
 
             Teams = new List<Team>();
@@ -39,8 +42,8 @@ namespace server.Teams
                 Name = " - keine -"
             });
 
-            if (!ContextFactory.Instance.TeamModel.Local.Any()) return;
-            foreach (var team in ContextFactory.Instance.TeamModel.Local.ToList())
+            if (!_databaseContext.TeamModel.Local.Any()) return;
+            foreach (var team in _databaseContext.TeamModel.Local.ToList())
             {
                 //Logger.Debug($"Loaded Team \"{team.Name}\"");
                 switch (team.Id)
@@ -54,8 +57,8 @@ namespace server.Teams
                 }
             }
 
-            if (ContextFactory.Instance.TeamMemberPermissionModel.Local.Any())
-                TeamMemberPermissions.AddRange(ContextFactory.Instance.TeamMemberPermissionModel.Local);
+            if (_databaseContext.TeamMemberPermissionModel.Local.Any())
+                TeamMemberPermissions.AddRange(_databaseContext.TeamMemberPermissionModel.Local);
         }
 
         private void AddTeam<T>(global::server.Teams.Team team) 

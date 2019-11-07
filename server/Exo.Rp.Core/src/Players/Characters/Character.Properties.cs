@@ -15,9 +15,7 @@ namespace server.Players.Characters
 
         //Logged in:
         [NotMapped]
-        private Interfaces.IPlayer _player;
-        [NotMapped]
-        private Account _account;
+        private IPlayer _player;
         [NotMapped]
         public bool IsLoggedIn = false;
 

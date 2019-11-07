@@ -9,7 +9,7 @@ using server.Admin;
 using server.BankAccounts;
 using server.Database;
 using server.Inventory.Inventories;
-using IPlayer = server.Players.Interfaces.IPlayer;
+using IPlayer = server.Players.IPlayer;
 using Player = server.Players.Player;
 using Team = server.Teams.Team;
 using Vehicle = server.Vehicles.Vehicle;

@@ -49,25 +49,29 @@ namespace server
 
             // Initialize database
             _databaseCore = new DatabaseCore();
-            DatabaseCore.OnDatabaseInitialized += LoadServices;
 
             // Prepare service provider
-            _serviceProvider = new ServiceCollection()
-                    .AddSingleton<IMapper>(AutoMapperConfiguration.GetMapper())
-                    .AddSingleton<MetricsCollector>()
-                    .AddSingleton<PlayerManager>()
-                    .AddSingleton<TeamManager>()
-                    .AddSingleton<VehicleManager>()
-                    .AddSingleton<BankAccountManager>()
-                    .AddSingleton<ShopManager>()
-                    .AddSingleton<ItemManager>()
-                    .AddSingleton<InventoryManager>()
-                    .AddSingleton<IplManager>()
-                    .AddSingleton<JobManager>()
-                    .BuildServiceProvider();
+            var serviceCollection = new ServiceCollection()
+                .AddSingleton<IMapper>(AutoMapperConfiguration.GetMapper())
+                .AddSingleton<MetricsCollector>()
+                .AddSingleton<PlayerManager>()
+                .AddSingleton<TeamManager>()
+                .AddSingleton<VehicleManager>()
+                .AddSingleton<BankAccountManager>()
+                .AddSingleton<ShopManager>()
+                .AddSingleton<ItemManager>()
+                .AddSingleton<InventoryManager>()
+                .AddSingleton<IplManager>()
+                .AddSingleton<JobManager>();
 
-                // Start loading database models
-            _databaseCore.OnResourceStartHandler();
+            // Start loading database models
+            _databaseCore.OnResourceStartHandler(() =>
+            {
+                _serviceProvider = serviceCollection
+                    .AddSingleton<DatabaseContext>(ContextFactory.Instance)
+                    .BuildServiceProvider();
+                LoadServices();
+            });
         }
 
         private static void LoadServices()
@@ -75,8 +79,8 @@ namespace server
             Logger.Info("Loading services...");
             var stopWatch = Stopwatch.StartNew();
 
-            Logger.Info("Services | Loading metrics collector...");
-            _serviceProvider.GetService<MetricsCollector>().Start();;
+            Logger.Info("Services | Loading Metrics collector...");
+            _serviceProvider.GetService<MetricsCollector>().Start();
             Logger.Info("Services | Loading Player manager...");
             _serviceProvider.GetService<PlayerManager>();
             Logger.Info("Services | Loading Team manager...");

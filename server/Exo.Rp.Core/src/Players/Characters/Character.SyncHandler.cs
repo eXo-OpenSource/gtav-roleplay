@@ -22,10 +22,10 @@ namespace server.Players.Characters
     {
         private static readonly Logger<CharacterSyncHandler> Logger = new Logger<CharacterSyncHandler>();
 
-        private static readonly Dictionary<Interfaces.IPlayer, ParameterMapping> PublicSync = new Dictionary<Interfaces.IPlayer, ParameterMapping>();
-        private static readonly Dictionary<Interfaces.IPlayer, ParameterUpdatedMapping> PublicSyncUpdate = new Dictionary<Interfaces.IPlayer, ParameterUpdatedMapping>();
-        private static readonly Dictionary<Interfaces.IPlayer, ParameterMapping> PrivateSync = new Dictionary<Interfaces.IPlayer, ParameterMapping>();
-        private static readonly Dictionary<Interfaces.IPlayer, ParameterUpdatedMapping> PrivateSyncUpdate = new Dictionary<Interfaces.IPlayer, ParameterUpdatedMapping>();
+        private static readonly Dictionary<IPlayer, ParameterMapping> PublicSync = new Dictionary<IPlayer, ParameterMapping>();
+        private static readonly Dictionary<IPlayer, ParameterUpdatedMapping> PublicSyncUpdate = new Dictionary<IPlayer, ParameterUpdatedMapping>();
+        private static readonly Dictionary<IPlayer, ParameterMapping> PrivateSync = new Dictionary<IPlayer, ParameterMapping>();
+        private static readonly Dictionary<IPlayer, ParameterUpdatedMapping> PrivateSyncUpdate = new Dictionary<IPlayer, ParameterUpdatedMapping>();
 
         static CharacterSyncHandler()
         {
@@ -35,33 +35,32 @@ namespace server.Players.Characters
             timer.Enabled = true;
         }
 
-        static void Sync()
+        private static void Sync()
         {
-            var players = Alt.GetAllPlayers().Cast<Interfaces.IPlayer>();
+            var players = Alt.GetAllPlayers().Cast<IPlayer>().ToList();
             if (!players.Any())
                 return;
 
-            // Logger.Debug($"Syncing Private/Public Character Data for { players.Count } Players.");
-            //_Sync(players, PublicSync, PublicSyncUpdate, CharacterSyncType.Public);
-           // _Sync(players, PrivateSync, PrivateSyncUpdate, CharacterSyncType.Private);
+            Logger.Debug($"Syncing Private/Public Character Data for { players.Count } Players.");
+            _Sync(players, PublicSync, PublicSyncUpdate, CharacterSyncType.Public);
+            _Sync(players, PrivateSync, PrivateSyncUpdate, CharacterSyncType.Private);
         }
 
-        public static void SendInitialSync(Interfaces.IPlayer player)
+        public static void SendInitialSync(IPlayer player)
         {
-            /*if (PrivateSync.ContainsKey(player))
-                player.Emit("PlayerPrivateSync", JsonConvert.SerializeObject(PrivateSync[player], Formatting.None, DtoSerializationBinder.SerializerSettings));
+            if (PrivateSync.ContainsKey(player))
+                player.Emit("PlayerPrivateSync", PrivateSync[player]);
 
-            var summary = PublicSync.ToDictionary(x => (ushort)x.Key.Value, x => x.Value);
-            if (summary.Count == 0) return;
-            player.Emit("PlayerPublicSync",
-                JsonConvert.SerializeObject(summary, Formatting.None, DtoSerializationBinder.SerializerSettings));*/
+            var summary = PublicSync.ToDictionary(x => x.Key, x => x.Value);
+            if (summary.Count() == 0) return;
+            player.Emit("PlayerPublicSync", summary);
         }
 
-        private static void _Sync(IReadOnlyCollection<Interfaces.IPlayer> players,
-            IReadOnlyDictionary<Interfaces.IPlayer, ParameterMapping> data,
-            IReadOnlyDictionary<Interfaces.IPlayer, ParameterUpdatedMapping> updatedFields, CharacterSyncType type)
+        private static void _Sync(IReadOnlyList<IPlayer> players,
+            IReadOnlyDictionary<IPlayer, ParameterMapping> data,
+            IReadOnlyDictionary<IPlayer, ParameterUpdatedMapping> updatedFields, CharacterSyncType type)
         {
-            var summary = new Dictionary<ushort, ParameterMapping>();
+            var summary = new Dictionary<IPlayer, ParameterMapping>();
             foreach (var player in players)
             {
                 if (player == null || !data.ContainsKey(player) || !updatedFields.ContainsKey(player))
@@ -76,22 +75,24 @@ namespace server.Players.Characters
                     //var json = JsonConvert.SerializeObject(syncDict, Formatting.None,
                    //     DtoSerializationBinder.SerializerSettings);
                    // player.Emit("PlayerPrivateSync", json);
+                   player.Emit("PlayerPrivateSync", syncDict);
                     return;
                 }
 
-                summary[(ushort)player.Id] = syncDict;
+                summary[player] = syncDict;
             }
 
             if (summary.Count == 0) return;
             foreach (var player in players)
             {
-               // var json = JsonConvert.SerializeObject(summary, Formatting.None,
-                  //  DtoSerializationBinder.SerializerSettings);
-               // player.Emit("PlayerPublicSync", json);
+                // var json = JsonConvert.SerializeObject(summary, Formatting.None,
+                //  DtoSerializationBinder.SerializerSettings);
+                // player.Emit("PlayerPublicSync", json);
+                player.Emit("PlayerPublicSync", summary);
             }
         }
 
-        public static void SetPublicSync<T>(Interfaces.IPlayer client, string key, T value, bool forceSync = false)
+        public static void SetPublicSync<T>(IPlayer client, string key, T value, bool forceSync = false)
         {
             PublicSync.TryGetValue(client, out var dict);
             PublicSyncUpdate.TryGetValue(client, out var dictUpdate);
@@ -114,12 +115,14 @@ namespace server.Players.Characters
             Sync();
         }
 
-        public static T GetPublicSync<T>(Interfaces.IPlayer client, string key)
+        public static T GetPublicSync<T>(IPlayer client, string key)
+            where T : class
         {
-            return PublicSync.ContainsKey(client) ? (T)PublicSync[client][key] : default(T);
+            return PublicSync.ContainsKey(client) ? PublicSync[client][key] as T : default;
         }
 
-        public static bool TryGetPublicSync<T>(Interfaces.IPlayer client, string key, out T value)
+        public static bool TryGetPublicSync<T>(IPlayer client, string key, out T value)
+            where T : class
         {
             if (PublicSync.TryGetValue(client, out var dict) && dict.TryGetValue(key, out var result) && result is T outValue)
             {
@@ -130,7 +133,7 @@ namespace server.Players.Characters
             return false;
         }
 
-        public static void ClearPublicSync(Interfaces.IPlayer client)
+        public static void ClearPublicSync(IPlayer client)
         {
             if (PublicSyncUpdate.ContainsKey(client))
                 PublicSyncUpdate[client].Clear();
@@ -138,7 +141,8 @@ namespace server.Players.Characters
                 PublicSync[client].Clear();
         }
 
-        public static void SetPrivateSync<T>(Interfaces.IPlayer client, string key, T value, bool forceSync = false)
+        public static void SetPrivateSync<T>(IPlayer client, string key, T value, bool forceSync = false)
+            where T : class
         {
             PrivateSync.TryGetValue(client, out var dict);
             PrivateSyncUpdate.TryGetValue(client, out var dictUpdate);
@@ -161,12 +165,14 @@ namespace server.Players.Characters
             Sync();
         }
 
-        public static T GetPrivateSync<T>(Interfaces.IPlayer client, string key)
+        public static T GetPrivateSync<T>(IPlayer client, string key)
+            where T : class
         {
             return PrivateSync.ContainsKey(client) ? (T)PrivateSync[client][key] : default(T);
         }
 
-        public static bool TryGetPrivateSync<T>(Interfaces.IPlayer client, string key, out T value)
+        public static bool TryGetPrivateSync<T>(IPlayer client, string key, out T value)
+            where T : class
         {
             if (PrivateSync.TryGetValue(client, out var dict) && dict.TryGetValue(key, out var result) && result is T outValue)
             {
@@ -177,7 +183,7 @@ namespace server.Players.Characters
             return false;
         }
 
-        public static void ClearPrivateSync(Interfaces.IPlayer client)
+        public static void ClearPrivateSync(IPlayer client)
         {
             if (PrivateSyncUpdate.ContainsKey(client))
                 PrivateSyncUpdate[client].Clear();

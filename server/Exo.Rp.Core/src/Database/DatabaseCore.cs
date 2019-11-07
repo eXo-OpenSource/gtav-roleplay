@@ -20,9 +20,7 @@ namespace server.Database
 
         public delegate void DatabaseInitialized();
 
-        public static event DatabaseInitialized OnDatabaseInitialized;
-
-        public void OnResourceStartHandler()
+        public void OnResourceStartHandler(DatabaseInitialized? onDatabaseInitialized)
         {
             SettingsManager.LogOutput.Add(new LogMessage
             {
@@ -85,7 +83,7 @@ namespace server.Database
 
             var stopWatch = Stopwatch.StartNew();
             
-            ContextFactory.Instance.AccountModel.Load();
+            //ContextFactory.Instance.AccountModel.Load();
             Logger.Info($"Loaded {ContextFactory.Instance.AccountModel.Local.Count} accounts.");
 
             ContextFactory.Instance.CharacterModel.Load();
@@ -138,7 +136,7 @@ namespace server.Database
             Logger.Debug($"Loaded database in {stopWatch.ElapsedMilliseconds} ms.");
 
             _lastUpdate = Stopwatch.StartNew();
-            OnDatabaseInitialized?.Invoke();
+            onDatabaseInitialized?.Invoke();
         }
 
         public static bool SetDatabaseConnection(string settingsPath, string logsPath)

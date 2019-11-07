@@ -6,11 +6,11 @@ namespace server.Players
 {
     public partial class Player
     {
-        public static Interfaces.IPlayer FindPlayer(Interfaces.IPlayer sender, string name)
+        public static IPlayer FindPlayer(IPlayer sender, string name)
         {
             if (name.Contains("_")) name = name.Replace("_", " ");
-            Interfaces.IPlayer returnIPlayer = null;
-            var players = Alt.GetAllPlayers().Cast<Interfaces.IPlayer>();
+            IPlayer returnIPlayer = null;
+            var players = Alt.GetAllPlayers().Cast<IPlayer>();
             var playersCount = 0;
             foreach (var player in players)
             {
@@ -41,9 +41,9 @@ namespace server.Players
             */
         }
 
-        public static Interfaces.IPlayer GetFromId(int id)
+        public static IPlayer GetFromId(int id)
         {
-            foreach (var player in AltV.Net.Alt.GetAllPlayers().Cast<Interfaces.IPlayer>())
+            foreach (var player in AltV.Net.Alt.GetAllPlayers().Cast<IPlayer>())
             {
                 if (player.Id != id) continue;
                 return player;

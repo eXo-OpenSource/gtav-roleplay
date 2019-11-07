@@ -10,7 +10,7 @@ using server.Players.Characters;
 using server.Util.Log;
 using server.Vehicles;
 using server.Vehicles.Types;
-using IPlayer = server.Players.Interfaces.IPlayer;
+using IPlayer = server.Players.IPlayer;
 using Vehicle = server.Vehicles.Vehicle;
 
 namespace server.Jobs

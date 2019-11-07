@@ -11,16 +11,18 @@ namespace server.Inventory.Items
     {
         private static readonly Logger<ItemManager> Logger = new Logger<ItemManager>();
 
-        private readonly Dictionary<int, Item> Items;
+        private readonly DatabaseContext _databaseContext;
+        private readonly Dictionary<int, Item> _items;
 
-        public ItemManager()
+        public ItemManager(DatabaseContext databaseContext)
         {
-            Items = new Dictionary<int, Item>();
+            _databaseContext = databaseContext;
+            _items = new Dictionary<int, Item>();
 
-            if (!ContextFactory.Instance.ItemModel.Local.Any())
+            if (!_databaseContext.ItemModel.Local.Any())
             {
                 Logger.Warn("WARNING no Items in the database found.");
-                ContextFactory.Instance.ItemModel.Local.Add(new Item
+                _databaseContext.ItemModel.Local.Add(new Item
                 {
                     Name = "Smartphone",
                     SubText = "Stk.",
@@ -28,7 +30,7 @@ namespace server.Inventory.Items
                     Bag = BagNames.Allgemein,
                     Stackable = true
                 });
-                ContextFactory.Instance.ItemModel.Local.Add(new Item
+                _databaseContext.ItemModel.Local.Add(new Item
                 {
                     Name = "Apfel",
                     SubText = "Stk.",
@@ -38,26 +40,26 @@ namespace server.Inventory.Items
                 });
             }
 
-            foreach (var item in ContextFactory.Instance.ItemModel.Local)
+            foreach (var item in _databaseContext.ItemModel.Local)
             {
-                Items.Add(item.Id, item);
+                _items.Add(item.Id, item);
             }
         }
 
         public Item GetItem(int itemId)
         {
-            return Items.TryGetValue(itemId, out var item) ? item : null;
+            return _items.TryGetValue(itemId, out var item) ? item : null;
         }
 
         public Item GetItem(ItemModel itemModel)
         {
-            return Items.FirstOrDefault(x => x.Value.ItemModel == itemModel).Value;
+            return _items.FirstOrDefault(x => x.Value.ItemModel == itemModel).Value;
         }
 
         [Obsolete("Use GetItem(ItemModel) instead.")]
         public Item GetItem(string itemName)
         {
-            return Items.FirstOrDefault(x => x.Value.Name.Equals(itemName)).Value;
+            return _items.FirstOrDefault(x => x.Value.Name.Equals(itemName)).Value;
         }
     }
 }

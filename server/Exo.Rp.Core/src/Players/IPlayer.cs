@@ -2,12 +2,11 @@
 using server.Players.Accounts;
 using server.Players.Characters;
 
-namespace server.Players.Interfaces
+namespace server.Players
 {
     public interface IPlayer : AltV.Net.Elements.Entities.IPlayer
     {
         int GetId();
-        bool IsLoggedIn();
         Account GetAccount();
         Character GetCharacter();
         void SendNotification(string text);

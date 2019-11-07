@@ -2,7 +2,7 @@
 using models.Enums;
 using server.Players;
 using Character = server.Players.Characters.Character;
-using IPlayer = server.Players.Interfaces.IPlayer;
+using IPlayer = server.Players.IPlayer;
 using TeamPermissions = models.Enums.TeamPermissions;
 
 namespace server.Teams
