@@ -6,7 +6,7 @@
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Platforms>x64</Platforms>
-    <AssemblyName>Exo.Rp.Server</AssemblyName>
+    <AssemblyName>Exo.Rp.Core</AssemblyName>
     <Authors>eXo Roleplay Developers</Authors>
     <Company>eXo Roleplay</Company>
     <Product>eXo Roleplay Server</Product>
@@ -52,6 +52,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="resource.cfg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="translations\en-US\LC_MESSAGES\General.mo">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
