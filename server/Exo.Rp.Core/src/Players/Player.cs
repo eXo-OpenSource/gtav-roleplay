@@ -20,9 +20,6 @@ namespace server.Players
         public Player(IntPtr nativePointer, ushort id) : base(nativePointer, id)
         {
             Logger.Debug($"{Name} has joined the server.");
-
-            // Todo: only for debug, do not spawn the player here.
-            //Core.GetService<PlayerManager>().DoLogin(this);
         }
 
         public int GetId()
@@ -39,6 +36,7 @@ namespace server.Players
         {
             return Character;
         }
+
         public void SendNotification(string text)
         {
             Emit("sendNotification", text);

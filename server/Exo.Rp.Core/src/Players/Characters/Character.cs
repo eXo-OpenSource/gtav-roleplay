@@ -38,6 +38,7 @@ namespace server.Players.Characters
             _player.Spawn(Pos);
             _player.Position = Pos;
             _player.Health = (ushort)Health;
+            _player.Model = Convert.ToUInt32(Skin);
             Console.Write(FirstName + " " + LastName + " ist gespawnt!");
             /*
             _player.SetPublicSync("player.data", new PlayerDto()
