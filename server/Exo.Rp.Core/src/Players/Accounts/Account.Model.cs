@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Globalization;
 using models.Enums;
 using Character = server.Players.Characters.Character;
 
@@ -9,6 +10,8 @@ namespace server.Players.Accounts
     {
         public int Id { get; set; }
         public ulong SocialClubId { get; set; }
+        public ulong HardwareId { get; set; }
+        public string Language { private get; set; }
         public string Username { get; set; }
         public string EMail { get; set; }
         public AdminLevel AdminLvl { get; set; }
@@ -17,9 +20,15 @@ namespace server.Players.Accounts
         [ForeignKey("Character")]
         public int CharacterId { get; set; }
         public Character Character { get; set; }
-        public string Serial { get; set; }
 
         [Column(TypeName = "tinyint(1)")]
         public bool Autologin { get; set; }
+
+        [NotMapped]
+        public CultureInfo Culture
+        {
+            get => new CultureInfo(Language);
+            set => Language = value.Name;
+        }
     }
 }

@@ -313,7 +313,7 @@ namespace server.Commands
         public void Autologin(IPlayer player, bool state)
         {
             player.GetAccount().Autologin = state;
-            player.GetAccount().Serial = player.HardwareIdHash.ToString();
+            player.GetAccount().HardwareId = player.HardwareIdHash;
             player.GetAccount().SocialClubId = player.SocialClubId;
             player.SendChatMessage(state ? "Autologin aktiviert!" : "Autologin deaktiviert!");
         }

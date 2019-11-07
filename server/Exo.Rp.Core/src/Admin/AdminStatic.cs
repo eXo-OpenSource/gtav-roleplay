@@ -1,6 +1,7 @@
 ﻿using AltV.Net.Elements.Entities;
 using models.Enums;
 using server.Players;
+using server.Translation;
 using IPlayer = server.Players.IPlayer;
 
 namespace server.Admin
@@ -11,7 +12,7 @@ namespace server.Admin
         {
             if (player.GetAccount()?.AdminLvl >= adminLevel) return true;
 
-            if (notification) player.SendError("Du bist nicht berechtigt diese Funktion zu nutzen!");
+            if (notification) player.SendError("Du bist nicht berechtigt diese Funktion zu nutzen!".Translate(player));
             return false;
         }
     }

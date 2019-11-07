@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Globalization;
+using System.Threading;
 using AltV.Net;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
@@ -17,6 +19,7 @@ using server.Jobs;
 using server.Players;
 using server.Shops;
 using server.Teams;
+using server.Translation;
 using server.Util.Extensions;
 using server.Util.Log;
 using server.Vehicles;
@@ -39,14 +42,6 @@ namespace server
 
         public override void OnStart()
         {
-            /*
-            foreach (var player in Alt.GetAllPlayers())
-            {
-                player.SendError("Server is booting....");
-                player.Kick("Server is booting... Please try again later.");
-            }
-            */
-
             // Initialize database
             _databaseCore = new DatabaseCore();
 
@@ -54,6 +49,7 @@ namespace server
             var serviceCollection = new ServiceCollection()
                 .AddSingleton<IMapper>(AutoMapperConfiguration.GetMapper())
                 .AddSingleton<MetricsCollector>()
+                .AddSingleton<TranslationManager>()
                 .AddSingleton<PlayerManager>()
                 .AddSingleton<TeamManager>()
                 .AddSingleton<VehicleManager>()
@@ -81,6 +77,8 @@ namespace server
 
             Logger.Info("Services | Loading Metrics collector...");
             _serviceProvider.GetService<MetricsCollector>().Start();
+            Logger.Info("Services | Loading Translation manager...");
+            _serviceProvider.GetService<TranslationManager>();
             Logger.Info("Services | Loading Player manager...");
             _serviceProvider.GetService<PlayerManager>();
             Logger.Info("Services | Loading Team manager...");

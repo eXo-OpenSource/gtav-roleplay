@@ -20,7 +20,7 @@ namespace server.Players.Accounts
                 EMail = mail,
                 AdminLvl = adminLvl,
                 SocialClubId = player.SocialClubId,
-                Serial = player.HardwareIdHash.ToString(),
+                HardwareId = player.HardwareIdHash,
                 Character = new Character()
                 {
                     FirstName = "Fred",
