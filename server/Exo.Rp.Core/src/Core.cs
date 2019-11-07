@@ -7,6 +7,7 @@ using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
+using models.Enums.Translation;
 using server.AutoMapper;
 using server.BankAccounts;
 using server.Database;

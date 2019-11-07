@@ -6,13 +6,16 @@ using System.Linq;
 using AltV.Net;
 using models.Enums.Translation;
 using NGettext;
+using server.Util.Log;
 
 namespace server.Translation
 {
     public class TranslationManager : IManager
     {
-        private readonly string _localDir = Path.Combine("resources", Alt.Server.Resource.Name);
-        private readonly CultureInfo[] _languages = { new CultureInfo("de-DE") };
+        private static readonly Logger<TranslationManager> Logger = new Logger<TranslationManager>();
+
+        private readonly string _localDir = Path.Combine("resources", Alt.Server.Resource.Name, "translations");
+        private readonly CultureInfo[] _languages = { new CultureInfo("en-US") };
         private readonly IReadOnlyDictionary<CultureInfo, IReadOnlyDictionary<TranslationCatalog, Catalog>> _catalogs;
 
         public TranslationManager()
@@ -28,18 +31,26 @@ namespace server.Translation
         public string Translate(string formatString, CultureInfo lang, TranslationCatalog translationCatalog, 
             params object[] args)
         {
-            if (_catalogs == default)
-                return string.Format(formatString, args);
+            try
+            {
+                if (_catalogs == default)
+                    return string.Format(formatString, args);
 
-            _catalogs.TryGetValue(lang, out var catalogDict);
-            if (catalogDict == default)
-                return string.Format(formatString, args);
+                _catalogs.TryGetValue(lang, out var catalogDict);
+                if (catalogDict == default)
+                    return string.Format(formatString, args);
 
-            catalogDict.TryGetValue(translationCatalog, out var catalog);
-            if (catalog == default)
-                return string.Format(formatString, args);
+                catalogDict.TryGetValue(translationCatalog, out var catalog);
+                if (catalog == default)
+                    return string.Format(formatString, args);
 
-            return catalog.GetString(formatString, args);
+                return catalog.GetString(formatString, args);
+            }
+            catch (Exception)
+            {
+                Logger.Warn($"Translation of message '{formatString}' for '{lang}/{translationCatalog}' failed.");
+                return formatString;
+            }
         }
     }
 }

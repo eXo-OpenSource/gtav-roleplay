@@ -39,6 +39,10 @@
     <PackageReference Include="AltV.Net" Version="1.16.5" />
     <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="InfluxDB.Collector" Version="1.1.1-dev-10109" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="3.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3-beta2" />
     <PackageReference Include="NGettext" Version="0.6.4" />
@@ -55,6 +59,9 @@
 
   <ItemGroup>
     <None Update="resource.cfg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="translations\en-US\LC_MESSAGES\General.mo">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
