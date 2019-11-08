@@ -1,5 +1,5 @@
 import * as alt from 'alt';
-import { Singleton } from "./Singleton";
+import { Singleton } from "./utils/Singleton";
 import { RegisterLogin } from './RegisterLogin';
 
 @Singleton
