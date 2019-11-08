@@ -1,6 +1,6 @@
 import * as alt from 'alt';
 import * as native from 'natives';
-import { Cursor } from '/client/utils/Cursor.mjs';
+import { Cursor } from './Cursor';
 
 export let currentView;
 
@@ -11,7 +11,7 @@ alt.on('view:ForceClose', () => {
 
 export class View {
     constructor() {
-        if (alt.Player.local.getMeta('chat')) return;
+        if (alt.getLocalPlayer().getMeta('chat')) return;
         if (currentView === undefined) {
             currentView = this;
         }
@@ -20,7 +20,7 @@ export class View {
 
     open(url, killControls = true) {
         if (currentView.view) return;
-        alt.Player.local.setMeta('viewOpen', true);
+        alt.getLocalPlayer().setMeta('viewOpen', true);
         alt.emit('chat:Toggle');
         currentView.view = new alt.WebView(url);
         currentView.events = [];
@@ -52,7 +52,7 @@ export class View {
         currentView.view.unfocus();
         currentView.view.destroy();
         currentView.view = undefined;
-        alt.Player.local.setMeta('viewOpen', false);
+        alt.getLocalPlayer().setMeta('viewOpen', false);
         alt.emit('chat:Toggle');
         if (currentView.interval !== undefined) {
             alt.clearInterval(currentView.interval);

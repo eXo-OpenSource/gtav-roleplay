@@ -21,7 +21,7 @@ namespace server.Util.Settings
 
             try
             {
-                var settings = JsonConvert.DeserializeObject<SettingsFile>(System.IO.File.ReadAllText(path));
+                var settings = JsonConvert.DeserializeObject<SettingsFile>(File.ReadAllText(path));
                 ServerSettings = settings;
 
                 return true;

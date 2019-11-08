@@ -17,9 +17,6 @@ namespace server.Events
         [Event("registerLogin:Login")]
         public void OnPlayerLogin(IPlayer player, string username, string password)
         {
-            //Logger.Info(player.Name + " has requested Login");
-            Console.Write(player.Name + " has requested Login");
-
             try
             {
                     var result = WoltlabApi.Login(username, password).Result;

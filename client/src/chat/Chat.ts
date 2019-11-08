@@ -1,5 +1,5 @@
 import * as alt from 'alt';
-import * as game from 'natives';
+import * as natives from 'natives';
 
 let buffer = [];
 
@@ -29,10 +29,10 @@ view.on('chatmessage', (text) => {
 	alt.emitServer('chatmessage', text);
   
 	if (text !== undefined && text.length >= 1)
-		alt.emit('messageSent', text);
+		alt.emitServer('messageSent', text);
 
 	opened = false;
-	alt.emit('chatClosed');
+	alt.emitServer('chatClosed');
 	alt.toggleGameControls(true);
 });
 
@@ -65,26 +65,26 @@ alt.on('keyup', (key) => {
 	if (!opened && key === 0x54 && alt.gameControlsEnabled()) {
 		opened = true;
 		view.emit('openChat', false);
-		alt.emit('chatOpened');
+		alt.emitServer('chatOpened');
 		alt.toggleGameControls(false);
 	}
 	else if (!opened && key === 0xBF && alt.gameControlsEnabled()) {
 		opened = true;
 		view.emit('openChat', true);
-		alt.emit('chatOpened');
+		alt.emitServer('chatOpened');
 		alt.toggleGameControls(false);
 	}
 	else if (opened && key == 0x1B) {
 		opened = false;
 		view.emit('closeChat');
-		alt.emit('chatClosed');
+		alt.emitServer('chatClosed');
 		alt.toggleGameControls(true);
 	}
 
 	if (key == 0x76) {
 		hidden = !hidden;
-		game.displayHud(!hidden);
-		game.displayRadar(!hidden);
+		natives.displayHud(!hidden);
+		natives.displayRadar(!hidden);
 		view.emit('hideChat', hidden);
 	}
 });
