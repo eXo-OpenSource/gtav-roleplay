@@ -1,13 +1,4 @@
-import * as alt from 'alt';
-import { RegisterLogin } from './RegisterLogin';
+import * as alt from "alt";
+import { Core } from "./Core";
 
-alt.log('Loaded: client.mjs');
-
-alt.on('consoleCommand', () => {
-    alt.log('consoleCommand');
-    alt.emitServer("ClientConnectionComplete", "Test")
-})
-
-alt.onServer("showLogin", () => {
-    RegisterLogin.show();
-});
+new Core();

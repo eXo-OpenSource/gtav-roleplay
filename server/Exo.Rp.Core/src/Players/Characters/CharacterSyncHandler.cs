@@ -26,12 +26,12 @@ namespace server.Players.Characters
             var timer = new Timer();
             timer.Elapsed += (source, e) => Sync();
             timer.Interval = SettingsManager.ServerSettings.DataSync.Interval;
-            timer.Enabled = true;
+            //timer.Enabled = true;
         }
 
         private static void Sync()
         {
-            var players = Alt.GetAllPlayers().Cast<IPlayer>().ToList();
+            var players = Alt.GetAllPlayers().Cast<IPlayer>().Where(p => p.GetCharacter().IsLoggedIn).ToList();
             if (!players.Any())
                 return;
 
