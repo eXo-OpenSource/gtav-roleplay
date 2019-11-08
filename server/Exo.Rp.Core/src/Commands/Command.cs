@@ -8,7 +8,8 @@ namespace server.Commands
     {
         public string CommandIdentifier { get; }
         public Func<object> Context { get; set; }
-        public AdminLevel MinAdminLevel { get; set; }
+        public AdminLevel RequiredAdminLevel { get; set; }
+        public TeamPermissions RequiredTeamPermissions { get; set; }
         public bool GreedyArg { get; set; }
 
         public Command(string command)

@@ -17,6 +17,7 @@ using server.Players;
 using server.Shops;
 using server.Teams;
 using server.Translation;
+using server.Util;
 using server.Util.Log;
 using server.Vehicles;
 using MetricsCollector = server.Metrics.MetricsCollector;
@@ -39,6 +40,7 @@ namespace server
             // Prepare service provider
             var serviceCollection = new ServiceCollection()
                 .AddSingleton<IMapper>(AutoMapperConfiguration.GetMapper())
+                .AddSingleton<MethodIndexer>()
                 .AddSingleton<CommandHandler>()
                 .AddSingleton<MetricsCollector>()
                 .AddSingleton<TranslationManager>()

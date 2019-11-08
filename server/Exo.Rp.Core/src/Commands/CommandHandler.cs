@@ -1,8 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using server.Admin;
 using server.Players;
+using server.Util;
 using server.Util.Log;
 
 namespace server.Commands
@@ -13,41 +17,31 @@ namespace server.Commands
 
         private readonly Dictionary<string, (Command command, MethodInfo method)> _commands;
 
-        public CommandHandler()
+        public CommandHandler(MethodIndexer indexer)
         {
             _commands = new Dictionary<string, (Command, MethodInfo)>();
-            var types = Assembly.GetExecutingAssembly().GetTypes();
-            foreach (var methods in types
-                .Where(x => typeof(IHasCommands).IsAssignableFrom(x))
-                .Select(t => t.GetMethods()))
-            {
-                foreach (var method in methods.Where(m => m.IsPublic && m.IsStatic))
-                {
-                    foreach (var attribute in method.GetCustomAttributes())
-                    {
-                        if (!(attribute is Command command)) continue;
-                        _commands.Add(command.CommandIdentifier, (command, method));
-                    }
-                }
-            }
+            indexer.IndexMethodsWithAttribute<Command>(Assembly.GetExecutingAssembly(),
+                pair => _commands.Add(pair.attribute.CommandIdentifier, (pair.attribute, pair.method)));
         }
-        
+
         public void Invoke(string commandIdentifier, IPlayer player, params object[] commandArguments)
         {
             if (!_commands.TryGetValue(commandIdentifier, out var tuple)) return;
 
             // Check permission
-            if (tuple.command.MinAdminLevel != default && !player.HasPermission(tuple.command.MinAdminLevel))
+            if (tuple.command.RequiredAdminLevel != default && !player.HasPermission(tuple.command.RequiredAdminLevel))
                 return;
-            
+
             // Check for greedy arg
-            object[] args = { player, commandArguments };
+            var args = new object[] { player, commandArguments };
             if (tuple.command.GreedyArg && commandArguments is string[])
             {
-                args = new object[] {player, string.Join(" ", commandArguments)};
+                args = new object[] {string.Join(" ", commandArguments)};
             }
 
-            tuple.method.Invoke(tuple.command.Context?.Invoke(), args);
+            // Flatten the args (https://stackoverflow.com/questions/21562326/flatten-an-array-of-objects-that-may-contain-arrays)
+            var flattenArgs = args.SelectMany(x => x is Array array ? array.Cast<object>() : Enumerable.Repeat(x, 1)).ToArray();
+            tuple.method.Invoke(null, flattenArgs);
         }
     }
 }
