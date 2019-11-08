@@ -20,8 +20,9 @@ namespace server.Commands
         public CommandHandler(MethodIndexer indexer)
         {
             _commands = new Dictionary<string, (Command, MethodInfo)>();
-            indexer.IndexMethodsWithAttribute<Command>(Assembly.GetExecutingAssembly(),
-                pair => _commands.Add(pair.attribute.CommandIdentifier, (pair.attribute, pair.method)));
+            indexer.IndexWithAttribute<MethodInfo, Command>(Assembly.GetExecutingAssembly(),
+                AttributeTargets.Method, method => method.IsStatic && method.IsPublic,
+                pair => _commands.Add(pair.attribute.CommandIdentifier, (pair.attribute, pair.memberInfo)));
         }
 
         public void Invoke(string commandIdentifier, IPlayer player, params object[] commandArguments)
@@ -43,5 +44,8 @@ namespace server.Commands
             var flattenArgs = args.SelectMany(x => x is Array array ? array.Cast<object>() : Enumerable.Repeat(x, 1)).ToArray();
             tuple.method.Invoke(null, flattenArgs);
         }
+
+        [Command("fgf")]
+        public static void Test() { }
     }
 }
