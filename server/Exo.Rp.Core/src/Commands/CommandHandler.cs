@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using server.Admin;
@@ -20,8 +18,8 @@ namespace server.Commands
         public CommandHandler(MethodIndexer indexer)
         {
             _commands = new Dictionary<string, (Command, MethodInfo)>();
-            indexer.IndexWithAttribute<MethodInfo, Command>(Assembly.GetExecutingAssembly(),
-                AttributeTargets.Method, method => method.IsStatic && method.IsPublic,
+            indexer.IndexWithAttribute<Command, MethodInfo>(Assembly.GetExecutingAssembly(),
+                method => method.IsStatic && method.IsPublic,
                 pair => _commands.Add(pair.attribute.CommandIdentifier, (pair.attribute, pair.memberInfo)));
         }
 
@@ -33,19 +31,18 @@ namespace server.Commands
             if (tuple.command.RequiredAdminLevel != default && !player.HasPermission(tuple.command.RequiredAdminLevel))
                 return;
 
+            // push the player to the context
+            var args = new object[] {player, commandArguments};
+
             // Check for greedy arg
-            var args = new object[] { player, commandArguments };
             if (tuple.command.GreedyArg && commandArguments is string[])
             {
-                args = new object[] {string.Join(" ", commandArguments)};
+                args = new object[] {player, string.Join(" ", commandArguments)};
             }
 
             // Flatten the args (https://stackoverflow.com/questions/21562326/flatten-an-array-of-objects-that-may-contain-arrays)
             var flattenArgs = args.SelectMany(x => x is Array array ? array.Cast<object>() : Enumerable.Repeat(x, 1)).ToArray();
             tuple.method.Invoke(null, flattenArgs);
         }
-
-        [Command("fgf")]
-        public static void Test() { }
     }
 }
