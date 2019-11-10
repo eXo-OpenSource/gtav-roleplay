@@ -14,7 +14,7 @@ namespace server.Players
         private static readonly Logger<Player> Logger = new Logger<Player>();
         
         private Account _account;
-        private Account Account => _account ??= Core.GetService<DatabaseContext>().AccountModel?.Local.FirstOrDefault(x => x.SocialClubId == SocialClubId);
+        private Account Account => _account ??= Core.GetService<DatabaseContext>().AccountModel.Local.FirstOrDefault(x => x.SocialClubId == SocialClubId);
         private Character _character;
         private Character Character => _character ??= Core.GetService<DatabaseContext>().CharacterModel.Local.FirstOrDefault(c => c.Id == Account.CharacterId);
 

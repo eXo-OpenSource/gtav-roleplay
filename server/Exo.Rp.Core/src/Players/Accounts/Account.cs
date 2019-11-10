@@ -11,7 +11,7 @@ namespace server.Players.Accounts
         public int Id { get; set; }
         public ulong SocialClubId { get; set; }
         public ulong HardwareId { get; set; }
-        public string Language { private get; set; }
+        public string Language { get; set; }
         public string Username { get; set; }
         public string EMail { get; set; }
         public AdminLevel AdminLvl { get; set; }

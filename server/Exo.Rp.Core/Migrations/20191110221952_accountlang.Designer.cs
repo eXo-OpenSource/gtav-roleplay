@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using server.Database;
 
 namespace server.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20191110221952_accountlang")]
+    partial class accountlang
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -171,9 +173,6 @@ namespace server.Migrations
 
                     b.Property<ulong>("HardwareId")
                         .HasColumnType("bigint unsigned");
-
-                    b.Property<string>("Language")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<ulong>("SocialClubId")
                         .HasColumnType("bigint unsigned");

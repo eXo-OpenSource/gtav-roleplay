@@ -8,12 +8,12 @@ namespace server.Translation
     {
         public static string Translate(this string formatString, IPlayer player, params object[] formatStringArgs)
         {
-            return formatString.Translate(player.GetAccount().GetLanguage(), formatStringArgs);
+            return formatString.Translate(player?.GetAccount()?.GetLanguage(), formatStringArgs);
         }
 
         public static string Translate(this string formatString, IPlayer player, TranslationCatalog catalog, params object[] formatStringArgs)
         {
-            return formatString.Translate(player.GetAccount().GetLanguage(), catalog, formatStringArgs);
+            return formatString.Translate(player?.GetAccount()?.GetLanguage(), catalog, formatStringArgs);
         }
 
         public static string Translate(this string formatString, CultureInfo lang, params object[] formatStringArgs)
@@ -23,7 +23,7 @@ namespace server.Translation
 
         public static string Translate(this string formatString, CultureInfo lang, TranslationCatalog catalog, params object[] formatStringArgs)
         {
-            return Core.GetService<TranslationManager>().Translate(formatString, lang, catalog, formatStringArgs);
+            return Core.GetService<TranslationManager>().Translate(formatString, lang ?? new CultureInfo("de-DE"), catalog, formatStringArgs);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using AltV.Net.Enums;
 using models.Enums;
 using server.BankAccounts;
@@ -20,6 +21,7 @@ namespace server.Players.Accounts
                 AdminLvl = adminLvl,
                 SocialClubId = player.SocialClubId,
                 HardwareId = player.HardwareIdHash,
+                Language = "de-DE",
                 Character = new Character()
                 {
                     FirstName = "Fred",
