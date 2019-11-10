@@ -626,8 +626,8 @@ namespace server.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("PermissionId")
-                        .HasColumnType("int");
+                    b.Property<ulong>("Permissions")
+                        .HasColumnType("bigint unsigned");
 
                     b.Property<int>("TeamMemberId")
                         .HasColumnType("int");
