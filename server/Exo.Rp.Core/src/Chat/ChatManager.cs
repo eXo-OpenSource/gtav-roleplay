@@ -13,11 +13,11 @@ namespace server.Chat
 
         public ChatManager()
         {
-            
-        }
+
+            }
 
         //[ServerEvent(Event.ChatMessage)]
-        public void OnChatMessage(IPlayer sender, string message)
+            public void OnChatMessage(IPlayer sender, string message)
         {
             message = EscapeMessage(message);
             var senderName = sender.GetCharacter()?.GetNormalizedName();

@@ -11,9 +11,9 @@ let view = new alt.WebView('http://resource/cef/chat/index.html');
 
 function addMessage(name, text) {
 	if (name) {
-		view.emit('addMessage', name, text);
+		view.emit('Chat:AddMessage', name, text);
 	} else {
-		view.emit('addString', text);
+		view.emit('Chat:AddString', text);
 	}
 }
 
@@ -26,13 +26,13 @@ view.on('chatloaded', () => {
 });
 
 view.on('chatmessage', (text) => {
-	alt.emitServer('chatmessage', text);
+	alt.emitServer('Chat:Message', text);
   
 	if (text !== undefined && text.length >= 1)
-		alt.emitServer('messageSent', text);
+		alt.emitServer('Chat:MessageSent', text);
 
 	opened = false;
-	alt.emitServer('chatClosed');
+	alt.emitServer('Chat:Closed');
 	alt.toggleGameControls(true);
 });
 
@@ -56,7 +56,7 @@ export function isChatOpen() {
 	return opened;
 }
 
-alt.onServer('chatmessage', pushMessage);
+alt.onServer('Chat:Message', pushMessage);
 
 alt.on('keyup', (key) => {
 	if (!loaded)
