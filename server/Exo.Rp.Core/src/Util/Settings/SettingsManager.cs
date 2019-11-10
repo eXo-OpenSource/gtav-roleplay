@@ -75,6 +75,13 @@ namespace server.Util.Settings
                     Database = "exov",
                     User = "exov",
                     Password = "Cxv.oF73J!i8CtpebZvNFYuRHwW*!GCY"
+                },
+                WotlabApi = new WotlabApiSettings
+                {
+                    Url = "https://exo-roleplay.de/forum/?user-api",
+                    Secret = "jWTf6KBkVcJI$m0kP2tR_M",
+                    OnlyBeta = true,
+                    BetaGroupId = 7
                 }
             };
 

@@ -22,10 +22,10 @@ namespace server.Commands
 {
     internal class DevelopmentCommands : IScript
     {
-        private readonly Jail _jail = new Jail();
+        private static readonly Jail _jail = new Jail();
 
-        //[Command("fly")]
-        public void Fly(IPlayer player)
+        [Command("fly")]
+        public static void Fly(IPlayer player)
         {
             if (!player.HasPermission(AdminLevel.Moderator)) return;
 
@@ -35,15 +35,15 @@ namespace server.Commands
                 player.GetCharacter().SetTemporarySkin(PedModel.Crow);
         }
 
-        //[Command("save")]
-        public void Save(IPlayer player)
+        [Command("save")]
+        public static void Save(IPlayer player)
         {
             player.GetCharacter().Save();
             player.SendInformation("Dein Account wurde gespeichert!");
         }
-
-        //[Command("veh")]
-        public void CreateVehicle(IPlayer player, VehicleModel model)
+        
+        [Command("veh")]
+        public static void CreateVehicle(IPlayer player, VehicleModel model)
         {
             if (!Enum.IsDefined(typeof(VehicleModel), model))
             {
@@ -143,8 +143,8 @@ namespace server.Commands
             player.SetIntoVehicle(veh.handle, -1);
         }*/
 
-        //[Command("weapon")]
-        public void WeaponCommand(IPlayer player, WeaponModel hash)
+        [Command("weapon")]
+        public static void WeaponCommand(IPlayer player, WeaponModel hash)
         {
             if (!Enum.IsDefined(typeof(WeaponModel), hash))
             {
@@ -155,14 +155,16 @@ namespace server.Commands
             player.GiveWeapon((uint)hash, 500, true);
         }
 
-        //[Command("eval", GreedyArg = true)]
+        /*
+        [Command("eval", GreedyArg = true)]
         public void EvalCommand(IPlayer sender, string cmd)
         {
             //sender.Eval(cmd);
         }
+        */
 
-        //[Command("getpos", Alias = "gp")]
-        public void GetPosition(IPlayer player)
+        [Command("getpos", Alias = "gp")]
+        public static void GetPosition(IPlayer player)
         {
             if (player.IsInVehicle)
             {
@@ -197,8 +199,8 @@ namespace server.Commands
             player.Emit("chatHTMLOutput", html);
         }
 
-        //[Command("seat")]
-        public void ChangeSeat(IPlayer player, int seat)
+        [Command("seat")]
+        public static void ChangeSeat(IPlayer player, int seat)
         {
             if (player.IsInVehicle == false) return;
 
@@ -206,36 +208,36 @@ namespace server.Commands
         }
 
 
-        //[Command("skin")]
-        public void Skin(IPlayer player, PedModel skin)
+        [Command("skin")]
+        public static void Skin(IPlayer player, PedModel skin)
         {
             player.Model = (uint)skin;
             player.SendInformation($"Du hast dir den Skin {skin.ToString()} gegeben!.");
         }
 
  
-        //[Command("inv")]
-        public void InventoryTest(IPlayer player)
+        [Command("inv")]
+        public static void InventoryTest(IPlayer player)
         {
             player.GetCharacter().GetInventory().SyncInventory(player);
         }
 
-        //[Command("loadipl")]
-        public void LoadIpl(IPlayer player, string ipl)
+        [Command("loadipl")]
+        public static void LoadIpl(IPlayer player, string ipl)
         {
             player.Emit("loadIPL", JsonConvert.SerializeObject(new List<string> {ipl}));
             player.SendInformation("Trying to load IPL: " + ipl);
         }
 
-        //[Command("unloadipl")]
-        public void UnloadIpl(IPlayer player, string ipl)
+        [Command("unloadipl")]
+        public static void UnloadIpl(IPlayer player, string ipl)
         {
             player.Emit("unloadIPL", JsonConvert.SerializeObject(new List<string> {ipl}));
             player.SendInformation("Trying to unload IPL: " + ipl);
         }
 
-        //[Command("money")]
-        public void Money(IPlayer player, string func, int amount = 0, bool bank = false)
+        [Command("money")]
+        public static void Money(IPlayer player, string func, int amount = 0, bool bank = false)
         {
             if (func == "get") player.SendChatMessage("Geld: $" + player.GetCharacter().GetMoney(bank));
             else if (func == "give")
@@ -250,22 +252,22 @@ namespace server.Commands
             }
         }
 
-        //[Command("jail")]
-        public void Jail(IPlayer player, string target)
+        [Command("jail")]
+        public static void Jail(IPlayer player, string target)
         {
             var test = _jail.AddPrisoner(Player.FindPlayer(player, target), new TimeSpan(0, 0, 10));
             player.SendChatMessage(test.ToString());
         }
 
-        //[Command("waypoint")]
-        public void GoToWaypoint(IPlayer player)
+        [Command("waypoint")]
+        public static void GoToWaypoint(IPlayer player)
         {
             player.Emit("gotoWayPoint");
             player.SendInformation("Du hat dich an deine Waypoint Position geportet!");
         }
 
-        //[Command("place")]
-        public void PlaceObject(IPlayer player, Objects obj)
+        [Command("place")]
+        public static void PlaceObject(IPlayer player, Objects obj)
         {
             if (obj == Objects.WasteBin)
             {
@@ -277,20 +279,20 @@ namespace server.Commands
             player.SendError("Ungültiges Objekt!");
         }
 
-        //[Command("placeobject", Alias = "po")]
-        public void PlaceObject(IPlayer player, uint hash)
+        [Command("placeobject", Alias = "po")]
+        public static void PlaceObject(IPlayer player, uint hash)
         {
             player.Emit("placeObject", hash, "Debug:onObjectPlaced");
         }
 
-        //[Command("jobpoints")]
-        public void JobPoints(IPlayer player)
+        [Command("jobpoints")]
+        public static void JobPoints(IPlayer player)
         {
             Core.GetService<JobManager>().GetJob(1).GivePlayerUpgradePoints(player, 50);
         }
 
-        //[Command("del")]
-        public void Delete(IPlayer player)
+        [Command("del")]
+        public static void Delete(IPlayer player)
         {
 
             foreach (var veh in Alt.GetAllVehicles()) veh.Remove();
@@ -300,15 +302,15 @@ namespace server.Commands
             foreach (var blip in Alt.GetAllBlips()) blip.Remove();
         }
 
-        //[Command("dc")]
-        public void Disconnect(IPlayer player)
+        [Command("dc")]
+        public static void Disconnect(IPlayer player)
         {
             Delete(player);
             player.Kick("Disconnect");
         }
 
-        //[Command("autologin")]
-        public void Autologin(IPlayer player, bool state)
+        [Command("autologin")]
+        public static void Autologin(IPlayer player, bool state)
         {
             player.GetAccount().Autologin = state;
             player.GetAccount().HardwareId = player.HardwareIdHash;
@@ -316,8 +318,8 @@ namespace server.Commands
             player.SendChatMessage(state ? "Autologin aktiviert!" : "Autologin deaktiviert!");
         }
 
-        //[Command("addshopveh")]
-        public void AddShopVehicle(IPlayer player, int shopId, int price)
+        [Command("addshopveh")]
+        public static void AddShopVehicle(IPlayer player, int shopId, int price)
         {
             if (!player.IsInVehicle)
             {
@@ -346,7 +348,7 @@ namespace server.Commands
         }
 
         [Event("Debug:onObjectPlaced")]
-        public void OnObjectPlaced(IPlayer player, string pos, string rot, int number)
+        public static void OnObjectPlaced(IPlayer player, string pos, string rot, int number)
         {
             player.SendChatMessage("#b#Object-Position:");
             var vPos = pos.DeserializeVector();
@@ -356,8 +358,8 @@ namespace server.Commands
             OutputPosition(player, vPos, vRot);
         }
 
-        //[Command("clearvehicles")]
-        public void ClearVehicles(IPlayer player)
+        [Command("clearvehicles")]
+        public static void ClearVehicles(IPlayer player)
         {
             foreach (var veh in Alt.GetAllVehicles())
             {
@@ -366,29 +368,28 @@ namespace server.Commands
             //NAPI.Chat.SendChatMessageToAll($"Alle Fahrzeuge wurden von {player.Name} gelöscht.");
         }
 
-        //[Command("out")]
-        public void Test(IPlayer player)
+        [Command("out")]
+        public static void Test(IPlayer player)
         {
             player.Emit("PlayerCameraZoomOut");
         }
 
-        //[Command("in")]
-        public void Test2(IPlayer player)
+        [Command("in")]
+        public static void Test2(IPlayer player)
         {
             player.Emit("PlayerCameraZoomIn");
         }
 
-        //[Command("death")]
-        public void Death(IPlayer player)
+        [Command("death")]
+        public static void Death(IPlayer player)
         {
             player.Emit("PlayerDeath", "~r~Wasted", "Du bist gestorben!");
             Thread.Sleep(5000);
             player.Emit("PlayerDeathEnd");
         }
 
-        
-        //[Command("deathstop")]
-        public void DeathEnd(IPlayer player)
+        [Command("deathstop")]
+        public static void DeathEnd(IPlayer player)
         {
             player.Emit("PlayerDeathEnd");
         }

@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using server.Util.Log;
+using server.Util.Settings;
 
 namespace server.Util
 {
@@ -17,25 +18,23 @@ namespace server.Util
             NoBetaAccess = 2
         }
 
-        private const string Url = "https://exo-roleplay.de/forum/?user-api";
         private const bool PrintToConsole = true;
-        private const bool OnlyBeta = true;
-        private const int BetaGroupId = 7;
 
         private static readonly HttpClient HttpClient = new HttpClient();
 
         public static async Task<LoginStatus> Login(string username, string password)
         {
+            var settings = SettingsManager.ServerSettings.WotlabApi;
             var values = new Dictionary<string, string>
             {
                 {"method", "login"},
-                {"secret", "jWTf6KBkVcJI$m0kP2tR_M"},
+                {"secret", settings.Secret},
                 {"username", username},
                 {"password", password}
             };
 
             var content = new FormUrlEncodedContent(values);
-            var response = await HttpClient.PostAsync(Url, content);
+            var response = await HttpClient.PostAsync(settings.Url, content);
 
             var responseString = await response.Content.ReadAsStringAsync();
             if (PrintToConsole)
@@ -46,7 +45,7 @@ namespace server.Util
 
             var result = JsonConvert.DeserializeObject<WbbLoginResponse>(responseString);
             if (result.status != null && result.status == 200)
-                return OnlyBeta == false || CheckGroup(result.data.groups, BetaGroupId)
+                return settings.OnlyBeta == false || CheckGroup(result.data.groups, settings.BetaGroupId)
                     ? LoginStatus.Success
                     : LoginStatus.NoBetaAccess;
 
@@ -56,16 +55,17 @@ namespace server.Util
 
         public static async Task<LoginStatus> HashLogin(string username, string hash)
         {
+            var settings = SettingsManager.ServerSettings.WotlabApi;
             var values = new Dictionary<string, string>
             {
                 {"method", "loginWithHash"},
-                {"secret", "jWTf6KBkVcJI$m0kP2tR_M"},
+                {"secret", settings.Secret},
                 {"username", username},
                 {"hash", hash}
             };
 
             var content = new FormUrlEncodedContent(values);
-            var response = await HttpClient.PostAsync(Url, content);
+            var response = await HttpClient.PostAsync(settings.Url, content);
 
             var responseString = await response.Content.ReadAsStringAsync();
             if (PrintToConsole)
@@ -76,7 +76,7 @@ namespace server.Util
 
             var result = JsonConvert.DeserializeObject<WbbLoginResponse>(responseString);
             if (result.status != null && result.status == 200)
-                return OnlyBeta == false || CheckGroup(result.data.groups, BetaGroupId)
+                return settings.OnlyBeta == false || CheckGroup(result.data.groups, settings.BetaGroupId)
                     ? LoginStatus.Success
                     : LoginStatus.NoBetaAccess;
 
@@ -86,15 +86,16 @@ namespace server.Util
 
         public static async Task<UserData> GetUserData(string username)
         {
+            var settings = SettingsManager.ServerSettings.WotlabApi;
             var values = new Dictionary<string, string>
             {
                 {"method", "getPasswordHash"},
-                {"secret", "jWTf6KBkVcJI$m0kP2tR_M"},
+                {"secret", settings.Secret},
                 {"username", username}
             };
 
             var content = new FormUrlEncodedContent(values);
-            var response = await HttpClient.PostAsync(Url, content);
+            var response = await HttpClient.PostAsync(settings.Url, content);
 
             var responseString = await response.Content.ReadAsStringAsync();
             if (PrintToConsole)

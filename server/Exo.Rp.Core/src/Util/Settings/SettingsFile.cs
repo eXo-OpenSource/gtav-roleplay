@@ -20,5 +20,8 @@ namespace server.Util.Settings
 
         [JsonProperty("MetricsCollector")]
         public MetricsCollectorSettings MetricsCollector { get; set; }
+
+        [JsonProperty("WotlabApi")] 
+        public WotlabApiSettings WotlabApi { get; set; }
     }
 }

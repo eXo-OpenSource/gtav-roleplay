@@ -1,4 +1,5 @@
-﻿using AltV.Net.Elements.Entities;
+﻿using AltV.Net.Data;
+using AltV.Net.Elements.Entities;
 using server.Players.Accounts;
 using server.Players.Characters;
 
@@ -9,6 +10,7 @@ namespace server.Players
         int GetId();
         Account GetAccount();
         Character GetCharacter();
+        new void Spawn(Position position, uint delayMs = 0U);
         void SendNotification(string text);
         void SendInformation(string text);
         void SendWarning(string text);

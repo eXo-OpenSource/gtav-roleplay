@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using server.Database;
 using server.Players.Accounts;
@@ -13,13 +14,13 @@ namespace server.Players
         private static readonly Logger<Player> Logger = new Logger<Player>();
         
         private Account _account;
-       private Account Account => _account ??= Core.GetService<DatabaseContext>().AccountModel?.Local.FirstOrDefault(x => x.SocialClubId == SocialClubId);
+        private Account Account => _account ??= Core.GetService<DatabaseContext>().AccountModel?.Local.FirstOrDefault(x => x.SocialClubId == SocialClubId);
         private Character _character;
         private Character Character => _character ??= Core.GetService<DatabaseContext>().CharacterModel.Local.FirstOrDefault(c => c.Id == Account.CharacterId);
 
         public Player(IntPtr nativePointer, ushort id) : base(nativePointer, id)
         {
-            Logger.Debug($"{Name} has joined the server.");
+            Logger.Debug($"({Name}, {Ip}, {HardwareIdHash:x8}) has joined the server.");
         }
 
         public int GetId()
@@ -35,6 +36,11 @@ namespace server.Players
         public Character GetCharacter()
         {
             return Character;
+        }
+
+        public new void Spawn(Position position, uint delayMs = 0U)
+        {
+            base.Spawn(position, delayMs);
         }
 
         public void SendNotification(string text)

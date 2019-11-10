@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using server.Database;
+using server.Translation;
 using server.Util.Log;
 
 namespace server.Players
@@ -48,8 +49,17 @@ namespace server.Players
         
         public void DoLogin(IPlayer player)
         {
+            if (_databaseContext.AccountModel.Local.Count(account => account.HardwareId == player.HardwareIdHash) > 1)
+            {
+                player.Emit("registerLogin:Error", "Es wurden mehrere Accounts mit deiner HardwareId gefunden!".Translate(player));
+                return;
+            }
+
             if (player.GetAccount() == default || player.GetCharacter() == default)
-                player.Kick("Internal Server error: Account/Character not found!");
+            {
+                player.Emit("registerLogin:Error", "Account / Character wurde nicht gefunden.".Translate(player));
+                return;
+            }
 
             _players.Add(player.GetAccount().Id, player);
             player.GetCharacter().Login(player);

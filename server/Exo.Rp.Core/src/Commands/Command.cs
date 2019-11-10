@@ -7,7 +7,7 @@ namespace server.Commands
     public class Command : Attribute
     {
         public string CommandIdentifier { get; }
-        public Func<object> Context { get; set; }
+        public string Alias { get; set; }
         public AdminLevel RequiredAdminLevel { get; set; }
         public TeamPermissions RequiredTeamPermissions { get; set; }
         public bool GreedyArg { get; set; }

@@ -7,22 +7,22 @@ namespace server.Util
 {
     public class MethodIndexer
     {
-        public void IndexWithAttribute<TAttribute, TMemberInfoType>(Assembly target, Predicate<TMemberInfoType> filter, Action<(TAttribute attribute, TMemberInfoType memberInfo)> onFound)
+        public void IndexWithAttribute<TAttribute, TMemberInfo>(Assembly target, Predicate<TMemberInfo> filter, Action<(TAttribute attribute, TMemberInfo memberInfo)> onFound)
             where TAttribute : Attribute
-            where TMemberInfoType : MemberInfo
+            where TMemberInfo : MemberInfo
         {
             foreach (var types in target.GetTypes())
             {
-                var memberInfos = new List<TMemberInfoType>();
+                var memberInfos = new List<TMemberInfo>();
 
-                var type = typeof(TMemberInfoType);
+                var type = typeof(TMemberInfo);
                 if (type == typeof(MethodInfo))
                 {
-                    memberInfos.AddRange(types.GetMethods().Cast<TMemberInfoType>());
+                    memberInfos.AddRange(types.GetMethods().Cast<TMemberInfo>());
                 }
                 else if (type == typeof(FieldInfo))
                 {
-                    memberInfos.AddRange(types.GetFields().Cast<TMemberInfoType>());
+                    memberInfos.AddRange(types.GetFields().Cast<TMemberInfo>());
                 }
                 else
                 {
@@ -32,12 +32,9 @@ namespace server.Util
 
                 foreach (var memberInfo in memberInfos)
                 {
-                    foreach (var attribute in memberInfo.GetCustomAttributes())
+                    foreach (var attribute in memberInfo.GetCustomAttributes<TAttribute>())
                     {
-                        if (typeof(TAttribute) == attribute.GetType())
-                        {
-                            onFound((attribute as TAttribute, memberInfo));
-                        }
+                        onFound((attribute, memberInfo));
                     }
                 }
             }
