@@ -56,14 +56,24 @@
     <Folder Include="cef\_assets\js\" />
     <Folder Include="src\" />
     <Folder Include="src\chat\" />
+    <Folder Include="src\systems\" />
+    <Folder Include="src\ui\" />
     <Folder Include="src\utils\" />
     <Folder Include="typings\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="src\chat\Chat.ts" />
+    <TypeScriptCompile Include="src\Core.ts" />
     <TypeScriptCompile Include="src\Index.ts" />
-    <TypeScriptCompile Include="src\Singleton.ts" />
+    <TypeScriptCompile Include="src\RegisterLogin.ts" />
+    <TypeScriptCompile Include="src\systems\Ped.ts" />
+    <TypeScriptCompile Include="src\ui\FaceFeaturesUi.ts" />
+    <TypeScriptCompile Include="src\ui\UiManager.ts" />
+    <TypeScriptCompile Include="src\utils\Camera.ts" />
     <TypeScriptCompile Include="src\utils\Cursor.ts" />
+    <TypeScriptCompile Include="src\utils\Raycast.ts" />
+    <TypeScriptCompile Include="src\utils\Singleton.ts" />
+    <TypeScriptCompile Include="src\utils\Vector.ts" />
     <TypeScriptCompile Include="src\utils\View.ts" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />

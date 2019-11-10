@@ -5,6 +5,7 @@ using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
 using models.Jobs;
+using Newtonsoft.Json;
 using server.Players;
 using server.Players.Characters;
 using server.Util.Log;
@@ -65,7 +66,7 @@ namespace server.Jobs
             player.GetCharacter().HideInteraction();
         }
 
-        /*
+        
         public void ShowJobMenu(IPlayer player, string subMenu = null)
         {
             var players = new Dictionary<int, string>(){};
@@ -97,7 +98,7 @@ namespace server.Jobs
 
             player.Emit("outputIPlayerConsole", JsonConvert.SerializeObject(data));
         }
-        */
+        
 
         public virtual void StartJobForPlayer(IPlayer player)
         {

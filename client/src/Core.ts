@@ -1,10 +1,13 @@
 import * as alt from 'alt';
 import { Singleton } from "./utils/Singleton";
 import { RegisterLogin } from './RegisterLogin';
+import { UiManager } from './ui/UiManager';
 
 @Singleton
 export class Core {
     constructor() {
+        UiManager.loadEvents();
+        
         alt.log('Loaded: client.mjs');
 
         alt.on('consoleCommand', () => {

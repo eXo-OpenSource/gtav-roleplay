@@ -11,6 +11,11 @@ namespace server.Chat
         private const float _maxScreamDistance = 500.0f;
         private const float _maxWhisperDistance = 500.0f;
 
+        public ChatManager()
+        {
+            
+        }
+
         //[ServerEvent(Event.ChatMessage)]
         public void OnChatMessage(IPlayer sender, string message)
         {

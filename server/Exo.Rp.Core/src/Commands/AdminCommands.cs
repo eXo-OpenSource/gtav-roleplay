@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using AltV.Net;
 using AltV.Net.Data;
 using AltV.Net.Enums;
 using models.Enums;
@@ -17,6 +18,12 @@ namespace server.Commands
 {
     public class AdminCommands
     {
+        [Command("test", GreedyArg = true)]
+        public void CommandTest(IPlayer player, string target)
+        {
+
+        }
+
         //[Command("gethere", GreedyArg = true)]
         public void GetHere(IPlayer player, string target)
         {
