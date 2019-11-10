@@ -21,7 +21,7 @@ namespace server.Teams
         public readonly List<DepartmentModel> TeamDepartments;
         public readonly List<TeamMemberPermissionModel> TeamMemberPermissions;
         public readonly List<TeamMember> TeamMembers;
-        public readonly List<global::server.Teams.Team> Teams;
+        public readonly List<Team> Teams;
 
         //public Dictionary<int, List<TeamMemberModel>> TeamMembers;
 

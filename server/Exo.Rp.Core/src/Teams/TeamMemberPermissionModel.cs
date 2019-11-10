@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using models.Enums;
 
 namespace server.Teams
 {
@@ -12,15 +13,6 @@ namespace server.Teams
         public int TeamMemberId { get; set; }
         public TeamMember TeamMember { get; set; }
 
-        public int PermissionId { get; set; }
-
-        /*
-        [NotMapped]
-        public TeamMemberModel TeamMember
-        {
-            get => TeamManager.Instance.TeamMembers.Find(x => x.Data.id == TeamMemberId).Data;
-            set => TeamMemberId = value.id;
-        }
-        */
+        public TeamPermissions Permissions { get; set; }
     }
 }
