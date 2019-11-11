@@ -105,14 +105,14 @@ namespace server.Vehicles
                 PosZ = position.Z,
                 Pos = position,
                 RotZ = rotation,
-                InventoryModel = new VehicleInventory()
+                Inventory = new VehicleInventory()
                 {
                     OwnerType = OwnerType.Vehicle,
                     Type = InventoryType.Vehicle
                 }
             };
             AddVehicle<PlayerVehicle>(nVehicle);
-            _databaseContext.InventoryModel.Local.Add(nVehicle.InventoryModel);
+            _databaseContext.InventoryModel.Local.Add(nVehicle.Inventory);
             _databaseContext.VehicleModel.Local.Add(nVehicle);
             return nVehicle;
         }
@@ -138,7 +138,7 @@ namespace server.Vehicles
                 PosZ = position.Z,
                 Pos = position,
                 RotZ = heading,
-                InventoryModel = new VehicleInventory()
+                Inventory = new VehicleInventory()
                 {
                     OwnerType = OwnerType.Vehicle,
                     Type = InventoryType.Vehicle

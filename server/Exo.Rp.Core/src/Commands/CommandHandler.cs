@@ -9,10 +9,10 @@ using server.Util.Log;
 
 namespace server.Commands
 {
-    public enum CommandInvokeError
+    public enum CommandInvokeResult
     {
-        NoError = -1,
-        NotFound = 0,
+        Success = 0,
+        NotFound = 1,
         PermissionDenied = 2,
     }
 
@@ -31,16 +31,16 @@ namespace server.Commands
             Logger.Debug($"Found {_commands.Count} command(s).");
         }
 
-        public CommandInvokeError Invoke(string commandIdentifier, IPlayer player, object[] commandArguments)
+        public CommandInvokeResult Invoke(string commandIdentifier, IPlayer player, object[] commandArguments)
         {
             var tuple = _commands.FirstOrDefault(x =>
                 x.command.CommandIdentifier.Equals(commandIdentifier) || (x.command.Alias != null && x.command.Alias.Equals(commandIdentifier)));
             if (tuple == default) 
-                return CommandInvokeError.NotFound;
+                return CommandInvokeResult.NotFound;
 
             // Check permission
             if (tuple.command.RequiredAdminLevel != default && !player.HasPermission(tuple.command.RequiredAdminLevel, false))
-                return CommandInvokeError.PermissionDenied;
+                return CommandInvokeResult.PermissionDenied;
 
             // push the player to the context
             var args = new object[] {player, commandArguments};
@@ -54,7 +54,7 @@ namespace server.Commands
             // Flatten the args (https://stackoverflow.com/questions/21562326/flatten-an-array-of-objects-that-may-contain-arrays)
             var flattenArgs = args.SelectMany(x => x is Array array ? array.Cast<object>() : Enumerable.Repeat(x, 1)).ToArray();
             tuple.method.Invoke(null, flattenArgs);
-            return CommandInvokeError.NoError;
+            return CommandInvokeResult.Success;
         }
     }
 }

@@ -28,12 +28,12 @@ namespace server.Events
                 {
                     switch (Core.GetService<CommandHandler>().Invoke(command, player, args))
                     {
-                        case CommandInvokeError.NoError:
+                        case CommandInvokeResult.Success:
                             break;
-                        case CommandInvokeError.NotFound:
+                        case CommandInvokeResult.NotFound:
                             player.SendError("Befehl wurde nicht gefunden.".Translate(player));
                             break;
-                        case CommandInvokeError.PermissionDenied:
+                        case CommandInvokeResult.PermissionDenied:
                             player.SendError("Du bist nicht berechtigt diese Funktion zu nutzen.".Translate(player));
                             break;
                     }

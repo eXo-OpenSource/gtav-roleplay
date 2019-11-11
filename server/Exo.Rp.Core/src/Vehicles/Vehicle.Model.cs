@@ -11,7 +11,7 @@ namespace server.Vehicles
     public partial class Vehicle
     {
         public int Id { get; set; }
-        public Int64 Model { get; set; }
+        public long Model { get; set; }
         public OwnerType OwnerType { get; set; }
         public int OwnerId { get; set; }
         public float PosX { get; set; }
@@ -27,15 +27,13 @@ namespace server.Vehicles
 
         [ForeignKey("InventoryModel")]
         public int InventoryId { get; set; }
-        public VehicleInventory InventoryModel { get; set; }
-
-        private VehicleInventory _vehicleInventory { get; set; }
+        public VehicleInventory Inventory { get; set; }
 
         [NotMapped]
         public VehicleModel VehicleModel
         {
             get => (VehicleModel) Model;
-            set => Model = (Int64) value;
+            set => Model = (long) value;
         }
 
         [NotMapped]
@@ -47,17 +45,6 @@ namespace server.Vehicles
                 PosX = value.X;
                 PosY = value.Y;
                 PosZ = value.Z;
-            }
-        }
-
-        [NotMapped]
-        public VehicleInventory Inventory
-        {
-            get => _vehicleInventory;
-            set
-            {
-                _vehicleInventory = value;
-                InventoryModel = value;
             }
         }
     }

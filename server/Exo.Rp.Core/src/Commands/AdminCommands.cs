@@ -249,14 +249,14 @@ namespace server.Commands
                     Color2 = vehicle.SecondaryColor,
                     Plate = "new",
                     Locked = true,
-                    InventoryModel = new VehicleInventory()
+                    Inventory = new VehicleInventory()
                     {
                         OwnerType = OwnerType.Vehicle,
                         Type = InventoryType.Vehicle
                     }
                 };
                 Core.GetService<DatabaseContext>().VehicleModel.Local.Add(data);
-                Core.GetService<DatabaseContext>().InventoryModel.Local.Add(data.InventoryModel);
+                Core.GetService<DatabaseContext>().InventoryModel.Local.Add(data.Inventory);
                 player.SendInformation("Fahrzeug wurde erfolgreich gespeichert!");
 
             }
