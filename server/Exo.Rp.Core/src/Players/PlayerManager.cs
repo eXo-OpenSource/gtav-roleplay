@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using server.Database;
+using server.Extensions;
 using server.Translation;
 using server.Util.Log;
 
@@ -25,7 +26,7 @@ namespace server.Players
             return _players.TryGetValue(accountId, out var client) ? client : null;
         }
 
-        public string GetName(int accountId)
+        public string GetNameFromId(int accountId)
         {
             return _databaseContext.CharacterModel.Local.FirstOrDefault(x => x.Id == accountId)?.FullName ?? "Unbekannt";
         }
@@ -64,11 +65,13 @@ namespace server.Players
             _players.Add(player.GetAccount().Id, player);
             player.GetCharacter().Login(player);
             player.Emit("afterLogin");
+
+            player.SendWarning("Hi");
         }
 
         public void PlayerReady(IPlayer player)
         {
-            //player.SendInitialSync();
+            player.SendInitialSync();
         }
     }
 }

@@ -5,6 +5,8 @@ import { UiManager } from './ui/UiManager';
 
 @Singleton
 export class Core {
+    private registerLoging: RegisterLogin = new RegisterLogin();
+
     constructor() {
         UiManager.loadEvents();
         
@@ -16,7 +18,7 @@ export class Core {
         })
 
         alt.onServer("showLogin", () => {
-            RegisterLogin.show();
+            this.registerLoging.show();
         });
     }
 }

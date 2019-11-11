@@ -15,12 +15,19 @@ namespace server.Players
         
         private Account _account;
         private Account Account => _account ??= Core.GetService<DatabaseContext>().AccountModel.Local.FirstOrDefault(x => x.SocialClubId == SocialClubId);
-        private Character _character;
-        private Character Character => _character ??= Core.GetService<DatabaseContext>().CharacterModel.Local.FirstOrDefault(c => c.Id == Account.CharacterId);
 
         public Player(IntPtr nativePointer, ushort id) : base(nativePointer, id)
         {
-            Logger.Debug($"({Name}, {Ip}, {HardwareIdHash:x8}) has joined the server.");
+            Logger.Debug($"{ToString()} has joined the server.");
+        }
+
+        public new string ToString()
+        {
+#if DEBUG
+            return $"({Name}, {Ip}, {HardwareIdHash})";
+#else
+            return $"({Name}, {HardwareIdHash})";
+#endif
         }
 
         public int GetId()
@@ -35,7 +42,7 @@ namespace server.Players
 
         public Character GetCharacter()
         {
-            return Character;
+            return Account.Character;
         }
 
         public new void Spawn(Position position, uint delayMs = 0U)

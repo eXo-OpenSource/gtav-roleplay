@@ -24,11 +24,9 @@ namespace server.Commands
     {
         private static readonly Jail _jail = new Jail();
 
-        [Command("fly")]
+        [Command("fly", RequiredAdminLevel = AdminLevel.Moderator)]
         public static void Fly(IPlayer player)
         {
-            if (!player.HasPermission(AdminLevel.Moderator)) return;
-
             if (player.Model == (uint) PedModel.Crow)
                 player.GetCharacter().ResetSkin();
             else

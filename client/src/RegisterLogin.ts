@@ -3,35 +3,30 @@ import { View } from './utils/View'
 import * as chat from './chat/Chat';
 
 const url = 'http://resource/cef/login/index.html';
-var webview = undefined;
 
 export class RegisterLogin {
-    
-    static show() {
+    private webview: View;
+
+    public show() {
         
-        if (!webview) {
-            webview = new View();
+        if (!this.webview) {
+            this.webview = new View();
         }
     
         // Setup Webview
         chat.pushLine(url);
 
-        webview.open(url, true);
-        webview.on('login', RegisterLogin.login);
+        this.webview.open(url, true);
+        this.webview.on('login', (username: string, password: string) => {
+            alt.emitServer('registerLogin:Login', username, password);
+        });
         
         alt.onServer("registerLogin:Error", (error) => {
-            webview.emit("setError", error)
+            this.webview.emit("setError", error)
         });
         
         alt.onServer("registerLogin:Success", () => {
-            webview.close();
+            this.webview.close();
         });
-    }
-    
-    static login(username, password) {
-        chat.pushLine('hello ' + username + ' PW: ' + password);
-        chat.pushMessage('tacoGuy', 'hello');
-
-        alt.emitServer('registerLogin:Login', username, password);
     }
 }

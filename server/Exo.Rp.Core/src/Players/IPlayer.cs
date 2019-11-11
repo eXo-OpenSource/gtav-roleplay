@@ -7,6 +7,8 @@ namespace server.Players
 {
     public interface IPlayer : AltV.Net.Elements.Entities.IPlayer
     {
+        string ToString();
+
         int GetId();
         Account GetAccount();
         Character GetCharacter();
