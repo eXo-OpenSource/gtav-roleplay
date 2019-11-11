@@ -17,7 +17,7 @@ namespace server.Vehicles
 
         public virtual IVehicle Spawn()
         {
-            handle = Alt.CreateVehicle(VehicleModel, Pos, new Rotation(0f, 0f, RotZ));
+            handle = Alt.CreateVehicle(Model, Pos, new Rotation(0f, 0f, RotZ));
             handle.SetSyncedMetaData("OwnerType", (int)OwnerType);
             handle.SetSyncedMetaData("OwnerId", OwnerId);
             return handle;

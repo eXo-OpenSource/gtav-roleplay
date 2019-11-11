@@ -238,7 +238,7 @@ namespace server.Commands
                 var vehicle = player.Vehicle;
                 var data = new Vehicle
                 {
-                    VehicleModel = (VehicleModel) vehicle.Model,
+                    Model = (VehicleModel) vehicle.Model,
                     OwnerType = ownerType,
                     OwnerId = ownerId,
                     PosX = vehicle.Position.X,

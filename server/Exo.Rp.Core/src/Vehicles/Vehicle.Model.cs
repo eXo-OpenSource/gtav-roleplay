@@ -11,7 +11,7 @@ namespace server.Vehicles
     public partial class Vehicle
     {
         public int Id { get; set; }
-        public long Model { get; set; }
+        public VehicleModel Model { get; set; }
         public OwnerType OwnerType { get; set; }
         public int OwnerId { get; set; }
         public float PosX { get; set; }
@@ -25,16 +25,9 @@ namespace server.Vehicles
         [Column(TypeName = "tinyint(1)")]
         public bool Locked { get; set; }
 
-        [ForeignKey("InventoryModel")]
+        [ForeignKey("Inventory")]
         public int InventoryId { get; set; }
         public VehicleInventory Inventory { get; set; }
-
-        [NotMapped]
-        public VehicleModel VehicleModel
-        {
-            get => (VehicleModel) Model;
-            set => Model = (long) value;
-        }
 
         [NotMapped]
         public Position Pos
