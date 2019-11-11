@@ -27,7 +27,7 @@ namespace server.Commands
         public bool Invoke(string commandIdentifier, IPlayer player, params object[] commandArguments)
         {
             var tuple = _commands.FirstOrDefault(x =>
-                x.command.CommandIdentifier.Equals(commandIdentifier) || x.command.Alias.Equals(commandIdentifier));
+                x.command.CommandIdentifier.Equals(commandIdentifier) || (x.command.Alias != null && x.command.Alias.Equals(commandIdentifier)));
             if (tuple == default) 
                 return false;
 

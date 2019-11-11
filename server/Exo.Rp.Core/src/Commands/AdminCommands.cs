@@ -16,16 +16,16 @@ using Vehicle = server.Vehicles.Vehicle;
 
 namespace server.Commands
 {
-    public class AdminCommands
+    public class AdminCommands : IScript
     {
         [Command("test", GreedyArg = true)]
-        public void CommandTest(IPlayer player, string target)
+        public static void CommandTest(IPlayer player, string args)
         {
-
+            Alt.Log($"Test Command {player.Name}: {args}");
         }
 
-        //[Command("gethere", GreedyArg = true)]
-        public void GetHere(IPlayer player, string target)
+        [Command("gethere", GreedyArg = true)]
+        public static void GetHere(IPlayer player, string target)
         {
             if (!player.HasPermission(AdminLevel.Supporter)) return;
 
@@ -44,8 +44,8 @@ namespace server.Commands
             }
         }
 
-        //[Command("goto", GreedyArg = true)]
-        public void GoTo(IPlayer player, string target)
+        [Command("goto", GreedyArg = true)]
+        public static void GoTo(IPlayer player, string target)
         {
             if (!player.HasPermission(AdminLevel.Supporter)) return;
 
@@ -63,8 +63,8 @@ namespace server.Commands
             }
         }
 
-        //[Command("rkick", GreedyArg = true)]
-        public void KickPlayerFromServer(IPlayer player, string target, string reason)
+        [Command("rkick", GreedyArg = true)]
+        public static void KickPlayerFromServer(IPlayer player, string target, string reason)
         {
             if (!player.HasPermission(AdminLevel.Moderator)) return;
 
@@ -81,8 +81,8 @@ namespace server.Commands
             }
         }
 
-        //[Command("tp")]
-        public void TeleportToPosition(IPlayer player, string target)
+        [Command("tp")]
+        public static void TeleportToPosition(IPlayer player, string target)
         {
             if (!player.HasPermission(AdminLevel.TicketSupporter)) return;
 
@@ -169,14 +169,14 @@ namespace server.Commands
             }
         }
 
-        //[Command("getdim")]
-        public void GetDimension(IPlayer player)
+        [Command("getdim")]
+        public static void GetDimension(IPlayer player)
         {
             player.SendChatMessage("Du bist in Dimension: " + player.Dimension);
         }
 
-        //[Command("gotocords", Alias = "gtc")]
-        public void GoToCords(IPlayer player, float x, float y, float z)
+        [Command("gotocords", Alias = "gtc")]
+        public static void GoToCords(IPlayer player, float x, float y, float z)
         {
             if (!player.HasPermission(AdminLevel.Supporter)) return;
 
@@ -184,8 +184,8 @@ namespace server.Commands
             player.SendNotification($"Du hast dich zu ~b~{x}, {y}, {z}~s~ geportet!");
         }
 
-        //[Command("createteam")]
-        public void CreateTeam(IPlayer player, string name, TeamType type)
+        [Command("createteam")]
+        public static void CreateTeam(IPlayer player, string name, TeamType type)
         {
             //TODO: Not working yet
             if (!player.HasPermission(AdminLevel.Supporter)) return;
@@ -212,8 +212,8 @@ namespace server.Commands
             player.SendInformation("Team wurde erfolgreich gespeichert!");
         }
         
-        //[Command("weather")]
-       /* public void SetWeather(IPlayer player, string weather)
+       /* [Command("weather")]
+        public void SetWeather(IPlayer player, string weather)
         {
             if (weather == "list")
             {
@@ -228,8 +228,8 @@ namespace server.Commands
             NAPI.World.SetWeather(weather);
         }*/
         
-        //[Command("addvehicle", Alias = "addv")]
-        public void CreateVehicle(IPlayer player, OwnerType ownerType, int ownerId)
+        [Command("addvehicle", Alias = "addv")]
+        public static void CreateVehicle(IPlayer player, OwnerType ownerType, int ownerId)
         {
             if (!player.HasPermission(AdminLevel.Administrator)) return;
 

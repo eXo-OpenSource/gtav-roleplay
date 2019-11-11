@@ -20,8 +20,9 @@ namespace server.Events
                 {
                     Alt.Log($"[Chat:CMD] {player.Name}: /{command}");
                     var args = msg.Split(" ");
+                    command = args[0].TrimStart('/'); ;
                     args = args.Skip(1).ToArray();
-                    Core.GetService<CommandHandler>().Invoke(command, player, msg);
+                    Core.GetService<CommandHandler>().Invoke(command, player, args);
                 }
             }
             else
