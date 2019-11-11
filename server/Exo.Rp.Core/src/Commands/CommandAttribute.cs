@@ -3,8 +3,8 @@ using models.Enums;
 
 namespace server.Commands
 {
-    [AttributeUsage(AttributeTargets.Method)]
-    public class Command : Attribute
+    [AttributeUsage(AttributeTargets.Method, Inherited = false)]
+    public class CommandAttribute : Attribute
     {
         public string CommandIdentifier { get; }
         public string Alias { get; set; }
@@ -12,7 +12,7 @@ namespace server.Commands
         public TeamPermissions RequiredTeamPermissions { get; set; }
         public bool GreedyArg { get; set; }
 
-        public Command(string command)
+        public CommandAttribute(string command)
         {
             CommandIdentifier = command;
         }

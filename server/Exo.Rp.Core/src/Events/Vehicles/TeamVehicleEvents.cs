@@ -9,7 +9,7 @@ namespace server.Events.Vehicles
     internal class TeamVehicleEvents : IScript
     {
         [ScriptEvent(ScriptEventType.PlayerEnterVehicle)]
-        public void OnPlayerEnterVehicle(IPlayer client, IVehicle networkVehicle, int seat)
+        public void OnPlayerEnterVehicle(IVehicle networkVehicle, IPlayer client, byte seat)
         {
             var vehicle = Core.GetService<VehicleManager>().GetVehicleFromHandle<TeamVehicle>(networkVehicle);
             if (vehicle == null) return;
@@ -17,7 +17,7 @@ namespace server.Events.Vehicles
         }
 
         [ScriptEvent(ScriptEventType.PlayerEnterVehicle)]
-        public void OnPlayerEnterVehicleAttempt(IPlayer client, IVehicle networkVehicle, int seat)
+        public void OnPlayerEnterVehicleAttempt(IVehicle networkVehicle, IPlayer client, byte seat)
         {
             var vehicle = Core.GetService<VehicleManager>().GetVehicleFromHandle<TeamVehicle>(networkVehicle);
             if (vehicle == null) return;
@@ -33,14 +33,14 @@ namespace server.Events.Vehicles
         }
 
         [ScriptEvent(ScriptEventType.PlayerLeaveVehicle)]
-        public void OnPlayerExitVehicle(IPlayer client, IVehicle networkVehicle)
+        public void OnPlayerExitVehicle(IVehicle networkVehicle, IPlayer client, byte seat)
         {
             var vehicle = Core.GetService<VehicleManager>().GetVehicleFromHandle<TeamVehicle>(networkVehicle);
             vehicle?.OnExit(client);
         }
 
         [ScriptEvent(ScriptEventType.PlayerLeaveVehicle)]
-        public void OnPlayerExitVehicleAttempt(IPlayer client, IVehicle networkVehicle)
+        public void OnPlayerExitVehicleAttempt(IVehicle networkVehicle, IPlayer client, byte seat)
         {
             var vehicle = Core.GetService<VehicleManager>().GetVehicleFromHandle<TeamVehicle>(networkVehicle);
             vehicle?.OnStartExit(client);

@@ -9,23 +9,16 @@ using server.Util.Log;
 
 namespace server.Commands
 {
-    public enum CommandInvokeResult
-    {
-        Success = 0,
-        NotFound = 1,
-        PermissionDenied = 2,
-    }
-
     public class CommandHandler : IManager
     {
         private static readonly Logger<CommandHandler> Logger = new Logger<CommandHandler>();
 
-        private readonly List<(Command command, MethodInfo method)> _commands;
+        private readonly List<(CommandAttribute command, MethodInfo method)> _commands;
 
         public CommandHandler(MethodIndexer indexer)
         {
-            _commands = new List<(Command, MethodInfo)>();
-            indexer.IndexWithAttribute<Command, MethodInfo>(Assembly.GetExecutingAssembly(),
+            _commands = new List<(CommandAttribute, MethodInfo)>();
+            indexer.IndexWithAttribute<CommandAttribute, MethodInfo>(Assembly.GetExecutingAssembly(),
                 method => method.IsStatic && method.IsPublic,
                 pair => _commands.Add((pair.attribute, pair.memberInfo)));
             Logger.Debug($"Found {_commands.Count} command(s).");
