@@ -1,6 +1,6 @@
 import * as alt from 'alt';
 import { Singleton } from "./utils/Singleton";
-import { RegisterLogin } from './RegisterLogin';
+import { RegisterLogin } from './ui/RegisterLogin';
 import { UiManager } from './ui/UiManager';
 
 @Singleton
@@ -17,8 +17,6 @@ export class Core {
             alt.emitServer("ClientConnectionComplete", "Test")
         })
 
-        alt.onServer("showLogin", () => {
-            this.registerLoging.show();
-        });
+
     }
 }

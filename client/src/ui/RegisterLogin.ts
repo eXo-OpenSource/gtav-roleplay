@@ -1,13 +1,13 @@
 import * as alt from 'alt';
-import { View } from './utils/View'
-import * as chat from './chat/Chat';
+import { View } from '../utils/View'
+import * as chat from '../chat/Chat';
 
 const url = 'http://resource/cef/login/index.html';
 
 export class RegisterLogin {
     private webview: View;
 
-    public show() {
+    public constructor() {
         
         if (!this.webview) {
             this.webview = new View();
@@ -18,7 +18,7 @@ export class RegisterLogin {
 
         this.webview.open(url, true);
         this.webview.on('login', (username: string, password: string) => {
-            alt.emitServer('registerLogin:Login', username, password);
+            alt.emitServer('RegisterLogin:Login', username, password);
         });
         
         alt.onServer("registerLogin:Error", (error) => {

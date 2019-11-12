@@ -15,12 +15,13 @@ namespace server.Events
     {
         private static readonly Logger<PlayerEvents> Logger = new Logger<PlayerEvents>();
 
-        [Event("registerLogin:Login")]
-        public void OnPlayerLogin(IPlayer player, string username, string password)
+        [Event("RegisterLogin:Login")]
+        public void Login(IPlayer player, string username, string password)
         {
             try
             {
                     var result = WoltlabApi.Login(username, password).Result;
+                    Console.WriteLine(result.ToString());
                     switch (result)
                     {
                         case WoltlabApi.LoginStatus.Success:
@@ -60,6 +61,7 @@ namespace server.Events
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.Message);
                 player.Emit("registerLogin:Error", "Unbekannter Fehler!");
             }
         }
@@ -68,7 +70,7 @@ namespace server.Events
         public void PlayerConnect(IPlayer player, string reason)
         {
             Alt.Log($"{player.Name} connected.");
-            player.Emit("showLogin");
+            player.Emit("Ui:ShowRegisterLogin");
         }
     }
 }

@@ -24,6 +24,12 @@ namespace server.Commands
     {
         private static readonly Jail _jail = new Jail();
 
+        [Command("ff")]
+        public static void FaceFeaturesGui(IPlayer player)
+        {
+            player.Emit("Ui:ShowFaceFeatures");
+        }
+
         [Command("fly", RequiredAdminLevel = AdminLevel.Moderator)]
         public static void Fly(IPlayer player)
         {

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -27,14 +28,13 @@ namespace server.Util
             var settings = SettingsManager.ServerSettings.WotlabApi;
             var values = new Dictionary<string, string>
             {
-                {"method", "login"},
                 {"secret", settings.Secret},
                 {"username", username},
                 {"password", password}
             };
 
             var content = new FormUrlEncodedContent(values);
-            var response = await HttpClient.PostAsync(settings.Url, content);
+            var response = await HttpClient.PostAsync(settings.Url + "&method=login", content);
 
             var responseString = await response.Content.ReadAsStringAsync();
             if (PrintToConsole)
