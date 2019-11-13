@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using server.Util.Log;
 
 namespace server.Util
 {
     public class MethodIndexer
     {
+        private static readonly Logger<MethodIndexer> Logger = new Logger<MethodIndexer>();
+
         public void IndexWithAttribute<TAttribute, TMemberInfo>(Assembly target, Predicate<TMemberInfo> filter, Action<(TAttribute attribute, TMemberInfo memberInfo)> onFound)
             where TAttribute : Attribute
             where TMemberInfo : MemberInfo

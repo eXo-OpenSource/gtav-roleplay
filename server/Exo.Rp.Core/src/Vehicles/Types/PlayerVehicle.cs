@@ -1,13 +1,14 @@
 ﻿using AltV.Net;
-using server.Inventory.Inventories;
+using models.Enums;
+using server.Players;
 using IPlayer = server.Players.IPlayer;
 
 namespace server.Vehicles.Types
 {
     public class PlayerVehicle : Vehicle
     {
-        private VehicleInventory _inventory;
         private IPlayer _owner;
+        public IPlayer Owner => _owner ??= OwnerType == OwnerType.Player ? Core.GetService<PlayerManager>().GetClient(OwnerId) : null;
 
         public override void OnEnter(IPlayer client, int seat)
         {
