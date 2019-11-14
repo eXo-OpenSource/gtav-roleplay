@@ -14,6 +14,7 @@ using server.Shops;
 using server.Shops.Types;
 using server.Teams.State;
 using server.Util;
+using server.Util.Log;
 using server.Vehicles;
 using IPlayer = server.Players.IPlayer;
 using Player = server.Players.Player;
@@ -39,6 +40,21 @@ namespace server.Commands
                 player.GetCharacter().SetTemporarySkin(PedModel.Crow);
         }
 
+        [Command("skin", RequiredAdminLevel = AdminLevel.Moderator)]
+        public static void Skin(IPlayer player, string modelString)
+        {
+            if (!Enum.TryParse(modelString, out PedModel model))
+            {
+                Alt.Log("Model nicht gefunden!");
+                return;
+            }
+
+            if (player.Model == (uint)model)
+                player.GetCharacter().ResetSkin();
+            else
+                player.GetCharacter().SetTemporarySkin(model);
+        }
+
         [Command("save")]
         public static void Save(IPlayer player)
         {
@@ -47,19 +63,20 @@ namespace server.Commands
         }
         
         [Command("veh")]
-        public static void CreateVehicle(IPlayer player, VehicleModel model)
+        public static void CreateVehicle(IPlayer player, string modelString)
         {
-            if (!Enum.IsDefined(typeof(VehicleModel), model))
+            if (Enum.TryParse(modelString, out VehicleModel model))
             {
-                player.SendError("Fahrzeug nicht gefunden!");
+                var veh = Core.GetService<VehicleManager>().CreateTemporaryVehicle(model, player.Position, player.Rotation.Roll,
+                    General.GetRandomColor(), General.GetRandomColor(), "Admin");
+
+               Alt.Log("Fahrzeug gespawnt: " + veh.Model.ToString() + "!");
+                player.SetIntoVehicle(veh.handle, 0);
+            } else
+            {
+                Alt.Log("Fahrzeug nicht gefunden!");
                 return;
             }
-
-            var veh = Core.GetService<VehicleManager>().CreateTemporaryVehicle(model, player.Position, player.Rotation.Roll,
-                General.GetRandomColor(), General.GetRandomColor(), "Admin");
-
-            //NAPI.Chat.SendChatMessageToPlayer(player, "Fahrzeug gespawnt: " + vehicleName + "!");
-            player.SetIntoVehicle(veh.handle, -1);
         }
 
         //[Command("nveh")]
@@ -211,15 +228,6 @@ namespace server.Commands
             player.SetIntoVehicle(player.Vehicle, seat);
         }
 
-
-        [Command("skin")]
-        public static void Skin(IPlayer player, PedModel skin)
-        {
-            player.Model = (uint)skin;
-            player.SendInformation($"Du hast dir den Skin {skin.ToString()} gegeben!.");
-        }
-
- 
         [Command("inv")]
         public static void InventoryTest(IPlayer player)
         {
