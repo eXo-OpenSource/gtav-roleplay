@@ -4,6 +4,7 @@ using AltV.Net;
 using AltV.Net.Elements.Entities;
 using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
+using Sentry;
 using server.AutoMapper;
 using server.BankAccounts;
 using server.Commands;
@@ -31,9 +32,16 @@ namespace server
 
         private DatabaseCore _databaseCore;
         private static IServiceProvider _serviceProvider;
+        private IDisposable _sentry = null;
 
         public override void OnStart()
         {
+            // Initialize sentry
+            _sentry = SentrySdk.Init(opt =>
+                {
+                    opt.Dsn = new Dsn("https://044403acc1ad42d18782de1bb103d04d@sentry.exo.merx.dev/4");
+                });
+
             // Initialize database
             _databaseCore = new DatabaseCore();
 
@@ -105,6 +113,8 @@ namespace server
 
             Logger.Info("Committing changes to database...");
             DatabaseCore.SaveChangeToDatabase();
+
+            _sentry?.Dispose();
         }
 
         public override IEntityFactory<IPlayer> GetPlayerFactory()

@@ -21,6 +21,10 @@ namespace server.Util
                 var type = typeof(TMemberInfo);
                 if (type == typeof(MethodInfo))
                 {
+
+                    var f = 0;
+                    Console.WriteLine(1 / f);
+
                     memberInfos.AddRange(types.GetMethods().Cast<TMemberInfo>());
                 }
                 else if (type == typeof(FieldInfo))

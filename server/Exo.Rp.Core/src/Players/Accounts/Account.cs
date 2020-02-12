@@ -23,7 +23,7 @@ namespace server.Players.Accounts
 
         [Column(TypeName = "tinyint(1)")]
         public bool Autologin { get; set; }
-
+        
         public CultureInfo GetLanguage()
         {
             return new CultureInfo(Language);
