@@ -39,9 +39,9 @@ namespace server
             // Initialize sentry
             _sentry = SentrySdk.Init(opt =>
                 {
-                    opt.Dsn         = new Dsn("https://044403acc1ad42d18782de1bb103d04d@sentry.exo.merx.dev/4");
+                    opt.Dsn = new Dsn("https://044403acc1ad42d18782de1bb103d04d@sentry.exo.merx.dev/4");
                     opt.Environment = System.Environment.GetEnvironmentVariable("ENVIRONMENT");
-                    opt.Release     = System.Environment.GetEnvironmentVariable("RELEASE");
+                    opt.Release = System.Environment.GetEnvironmentVariable("RELEASE");
                 });
 
             // Initialize database
@@ -89,6 +89,10 @@ namespace server
             _serviceProvider.GetService<PlayerManager>();
             Logger.Info("Services | Loading Team manager...");
             _serviceProvider.GetService<TeamManager>();
+
+            var bug = 0;
+            Console.WriteLine(1 / bug);
+            
             Logger.Info("Services | Loading Vehicle manager...");
             _serviceProvider.GetService<VehicleManager>();
             Logger.Info("Services | Loading Bank Account manager...");
