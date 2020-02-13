@@ -39,7 +39,9 @@ namespace server
             // Initialize sentry
             _sentry = SentrySdk.Init(opt =>
                 {
-                    opt.Dsn = new Dsn("https://044403acc1ad42d18782de1bb103d04d@sentry.exo.merx.dev/4");
+                    opt.Dsn         = new Dsn("https://044403acc1ad42d18782de1bb103d04d@sentry.exo.merx.dev/4");
+                    opt.Environment = System.Environment.GetEnvironmentVariable("ENVIRONMENT");
+                    opt.Release     = System.Environment.GetEnvironmentVariable("RELEASE");
                 });
 
             // Initialize database

@@ -28,4 +28,8 @@ RUN rm _build/*.runtimeconfig.dev.json
 #RUN chmod +x entrypoint.sh
 
 # Entrypoint
+ARG _ENVIRONMENT=development
+ARG _RELEASE=norelease
+ENV ENVIRONMENT=${_ENVIRONMENT}
+ENV RELEASE=${_RELEASE}
 ENTRYPOINT ["/bin/sh", "entrypoint.sh"]
