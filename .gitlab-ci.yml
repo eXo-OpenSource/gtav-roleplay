@@ -9,7 +9,7 @@ build_job:
         - linux
         - dind
     script:
-        - docker build --build-arg CI_BUILD_REF_NAME="$CI_BUILD_REF_NAME" --build-arg _ENVIRONMENT="$CI_COMMIT_BRANCH" --build-arg _RELEASE="$CI_COMMIT_SHA" -t exo-rp-altv .
+        - docker build --build-arg CI_BUILD_REF_NAME="$CI_BUILD_REF_NAME" --build-arg _ENVIRONMENT="${CI_COMMIT_BRANCH//\//__}" --build-arg _RELEASE="$CI_COMMIT_SHA" -t exo-rp-altv .
         - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
         - docker tag exo-rp-altv $CI_REGISTRY_IMAGE:latest-$(echo $CI_BUILD_REF_NAME | tr -d /)
         - '[ "$CI_BUILD_REF_NAME" == "master" ] && docker tag exo-rp-altv $CI_REGISTRY_IMAGE:latest'
@@ -24,7 +24,7 @@ sentry_job:
     script:
         - sentry-cli releases new --project $SENTRY_PROJECT $CI_COMMIT_SHA
         - sentry-cli releases set-commits --auto $CI_COMMIT_SHA
-        - sentry-cli releases deploys $CI_COMMIT_SHA new --env $CI_COMMIT_BRANCH
+        - sentry-cli releases deploys $CI_COMMIT_SHA new --env ${CI_COMMIT_BRANCH//\//__}
     only:
         - master
         - release/production
