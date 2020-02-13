@@ -72,10 +72,3 @@ RUN rm resources/exov/*.runtimeconfig.dev.json
 
 # Add server config
 ADD build/server.cfg config/
-
-# Overwrite entrypoint with our own
-#RUN mv _build/entrypoint.sh entrypoint.sh
-#RUN chmod +x entrypoint.sh
-
-# Entrypoint
-ENTRYPOINT ["/bin/sh", "entrypoint.sh"]
