@@ -1,5 +1,6 @@
 stages:
     - build
+    - sentry
 #    - deploy
 
 build_job:
@@ -17,7 +18,18 @@ build_job:
     only:
         - master
         - release/production
-  
+
+sentry_develop:
+    image: getsentry/sentry-cli
+    stage: sentry
+    script:
+        - VERSION=$(sentry-cli releases propose-version)
+        - sentry-cli releases new -p "gtav-server" $VERSION
+        - sentry-cli releases set-commits --auto $VERSION
+        - sentry-cli releases deploys $VERSION new -e "develop"
+    only:
+        - master
+
 #  deploy_job_develop:
 #    image: ubuntu:latest
 #    tags:
