@@ -34,7 +34,7 @@ RUN cat config.unpatched.json | \
     cat >> config.json
 
 ## Runner
-FROM stivik/altv:stable
+FROM stivik/altv:beta
 
 # Add binaries
 COPY --from=builder         /app/bin                _build/
