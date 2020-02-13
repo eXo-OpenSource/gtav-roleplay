@@ -2,6 +2,7 @@
 using System.Linq;
 using AltV.Net;
 using models.Enums;
+using Sentry;
 using server.Database;
 using server.Players;
 using server.Players.Accounts;
@@ -61,6 +62,8 @@ namespace server.Events
             }
             catch (Exception e)
             {
+                SentrySdk.CaptureException(e);
+
                 Console.WriteLine(e.Message);
                 player.Emit("registerLogin:Error", "Unbekannter Fehler!");
             }

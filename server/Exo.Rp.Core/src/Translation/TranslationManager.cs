@@ -6,6 +6,7 @@ using System.Linq;
 using AltV.Net;
 using models.Enums.Translation;
 using NGettext;
+using Sentry;
 using server.Util.Log;
 
 namespace server.Translation
@@ -46,8 +47,10 @@ namespace server.Translation
 
                 return catalog.GetString(formatString, args);
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                SentrySdk.CaptureException(e);
+
                 Logger.Warn($"Translation of message '{formatString}' for '{lang}/{translationCatalog}' failed.");
                 return formatString;
             }
