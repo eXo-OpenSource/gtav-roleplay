@@ -46,6 +46,7 @@ namespace server.Events
                         $"A runtime exception occured during the execution of command: [{player.ToString()}: {msg}]");
 
                     player.SendError("Befehl konnte nicht ausgeführt werden.".Translate(player));
+                    throw e;
                 }
             }
             else
