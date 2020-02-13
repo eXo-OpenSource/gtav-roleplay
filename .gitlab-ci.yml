@@ -14,7 +14,7 @@ build_job:
         - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
         - docker tag exo-rp-altv $CI_REGISTRY_IMAGE:latest-$(echo $CI_BUILD_REF_NAME | tr -d /)
         - '[ "$CI_BUILD_REF_NAME" == "master" ] && docker tag exo-rp-altv $CI_REGISTRY_IMAGE:latest'
-        - docker push "$CI_REGISTRY_IMAGE
+        - docker push "$CI_REGISTRY_IMAGE"
 
 sentry_job:
     image: getsentry/sentry-cli
