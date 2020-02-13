@@ -14,7 +14,7 @@ RUN dotnet build --no-restore -c Release server/Exo.Rp.Core -o /app/bin
 # TODO
 
 ## Runner
-FROM docker.pkg.github.com/stiviik/altv/stable:latest
+FROM stivik/altv:stable
 
 # Add binaries
 COPY --from=builder /app/bin _build/
