@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <RuntimeIdentifiers>win10-x64;debian.9-x64</RuntimeIdentifiers>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
@@ -35,17 +35,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AltV.Net" Version="1.16.5" />
+    <PackageReference Include="AltV.Net" Version="1.27.2" />
     <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="InfluxDB.Collector" Version="1.1.1-dev-10109" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.0.0">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="3.0.0" />
-    <PackageReference Include="NGettext" Version="0.6.4" />
-    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.0.0-rc3.final" />
-    <PackageReference Include="Sentry" Version="2.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="3.1.1" />
+    <PackageReference Include="NGettext" Version="0.6.5" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.1.1" />
+    <PackageReference Include="Sentry" Version="2.0.3" />
   </ItemGroup>
 
   <ItemGroup>

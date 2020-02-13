@@ -33,8 +33,7 @@ namespace server.Extensions
 
         public static dynamic GetElementData(this Entity entity, string key)
         {
-            MValue data = new MValue();
-            entity.GetSyncedMetaData(key, ref data);
+            entity.GetSyncedMetaData(key, out var data); // TODO: Not sure if my fix was correct!
             return data;
         }
 
