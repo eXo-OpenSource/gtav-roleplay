@@ -89,10 +89,6 @@ namespace server
             _serviceProvider.GetService<PlayerManager>();
             Logger.Info("Services | Loading Team manager...");
             _serviceProvider.GetService<TeamManager>();
-
-            var bug = 0;
-            Console.WriteLine(1 / bug);
-            
             Logger.Info("Services | Loading Vehicle manager...");
             _serviceProvider.GetService<VehicleManager>();
             Logger.Info("Services | Loading Bank Account manager...");
