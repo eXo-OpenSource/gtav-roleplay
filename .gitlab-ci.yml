@@ -1,7 +1,6 @@
 stages:
     - build
-    - sentry
-#    - deploy
+    - deploy
 
 build_job:
     image: docker:latest
@@ -18,21 +17,39 @@ build_job:
 
 sentry_job:
     image: getsentry/sentry-cli
-    stage: sentry
+    stage: deploy
+    tags:
+        - linux
+        - dind
     script:
         - sentry-cli releases new --project $SENTRY_PROJECT $CI_COMMIT_SHA
         - sentry-cli releases set-commits --auto $CI_COMMIT_SHA
         - sentry-cli releases deploys $CI_COMMIT_SHA new --env $CI_COMMIT_BRANCH
+    only:
+        - master
+        - release/production
 
-#  deploy_job_develop:
-#    image: ubuntu:latest
-#    tags:
-#      - linux
-#      - dind
-#    stage: deploy
-#    script:
-#      - apt-get update && apt-get install -y curl
-#      - curl http://$DEPLOYRON_IP:6000/deploy/gta_develop?APISecret=$DEPLOY_API_SECRET_DEVELOP
-#    only:
-#      - master
+deploy_job_develop:
+    image: ubuntu:latest
+    tags:
+        - linux
+        - dind
+    stage: deploy
+    script:
+        - apt-get update && apt-get install -y curl
+    #    - curl http://$DEPLOYRON_IP:6000/deploy/gta_develop?APISecret=$DEPLOY_API_SECRET_DEVELOP
+    only:
+      - master
+
+deploy_job_production:
+    image: ubuntu:latest
+    tags:
+        - linux
+        - dind
+    stage: deploy
+    script:
+        - apt-get update && apt-get install -y curl
+    #    - curl http://$DEPLOYRON_IP:6000/deploy/gta_develop?APISecret=$DEPLOY_API_SECRET_DEVELOP
+    only:
+    - release/production
   
