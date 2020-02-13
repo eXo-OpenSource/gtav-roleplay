@@ -24,7 +24,6 @@ nupkg/
 [Rr]eleases/
 x64/
 x86/
-build/
 bld/
 [Bb]in/
 [Oo]bj/
@@ -38,3 +37,6 @@ msbuild.wrn
 
 # Node.JS
 node_modules/
+
+# Client
+client/build/

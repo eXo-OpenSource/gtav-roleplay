@@ -28,7 +28,7 @@ ARG SENTRY_DSN="https://invalid"
 ARG SENTRY_ENVIRONMENT="invalid"
 ARG SENTRY_RELEASE="invalid"
 
-ADD config.json.example config.unpatched.json
+ADD build/config.json.example config.unpatched.json
 RUN cat config.unpatched.json | \
     # Patch Sentry section
     jq --arg data "$SENTRY_DSN" '.Sentry.DSN |= $data' | \
@@ -40,10 +40,14 @@ RUN cat config.unpatched.json | \
 FROM runner
 
 # Add binaries
-COPY --from=builder         /app/bin                _build/
-COPY --from=configpatcher   /config/config.json     _build/
-RUN rm _build/*.runtimeconfig.dev.json
-RUN cat _build/config.json
+RUN mkdir -p resources/exov/
+COPY --from=builder         /app/bin                resources/exov/
+COPY --from=configpatcher   /config/config.json     resources/exov/
+RUN rm resources/exov/*.runtimeconfig.dev.json
+
+# Add server config
+RUN rm config/server.cfg
+ADD build/server.cfg config/
 
 # Add client resources
 # TODO
