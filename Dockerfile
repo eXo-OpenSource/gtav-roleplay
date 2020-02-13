@@ -14,7 +14,7 @@ ADD config.json.example config.unpatched.json
 RUN cat config.unpatched.json | \
     jq --arg data "$DSN" '.Sentry.DSN |= $data' | \
     jq --arg data "$SENTRY_ENVIRONMENT" '.Sentry.Environment |= $data' | \
-    jq --arg data "$RELEASENTRY_RELEASESE" '.Sentry.Release |= $data' >> config.json
+    jq --arg data "$SENTRY_RELEASE" '.Sentry.Release |= $data' >> config.json
 
 ## Builder
 FROM mcr.microsoft.com/dotnet/core/sdk:3.0 as builder
