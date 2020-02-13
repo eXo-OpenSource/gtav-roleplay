@@ -5,6 +5,8 @@ using AltV.Net.Elements.Entities;
 using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
 using Sentry;
+using Sentry.Infrastructure;
+using Sentry.Protocol;
 using server.AutoMapper;
 using server.BankAccounts;
 using server.Commands;
@@ -37,11 +39,13 @@ namespace server
         public override void OnStart()
         {
             // Initialize sentry
-            _sentry = SentrySdk.Init(opt =>
+            _sentry = SentrySdk.Init(o =>
                 {
-                    opt.Dsn = new Dsn("https://044403acc1ad42d18782de1bb103d04d@sentry.exo.merx.dev/4");
-                    opt.Environment = System.Environment.GetEnvironmentVariable("ENVIRONMENT");
-                    opt.Release = System.Environment.GetEnvironmentVariable("RELEASE");
+                    o.Dsn = new Dsn("https://044403acc1ad42d18782de1bb103d04d@sentry.exo.merx.dev/4");
+                    o.Environment = System.Environment.GetEnvironmentVariable("ENVIRONMENT");
+                    o.Release = System.Environment.GetEnvironmentVariable("RELEASE");
+                    o.Debug = true;
+                    o.DiagnosticLogger = new SentryLogger(SentryLevel.Debug);
                 });
 
             // Initialize database

@@ -1,19 +1,49 @@
 ﻿using System;
 using System.Reflection;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using models.Enums;
+using Sentry;
+using Sentry.Protocol;
 using server.Util.Settings;
 
 namespace server.Util.Log
 {
+    public class SentryLogger : Logger, Sentry.Extensibility.IDiagnosticLogger
+    {
+        private readonly SentryLevel _lowestLevel;
+        
+        public SentryLogger(SentryLevel lowestLevel = SentryLevel.Info) 
+            : base(typeof(SentrySdk))
+        {
+            _lowestLevel = lowestLevel;
+        }
+        
+        public bool IsEnabled(SentryLevel level)
+        {
+            return _lowestLevel >= level;
+        }
+
+        public void Log(SentryLevel logLevel, string message, Exception exception = null, params object[] args)
+        {
+            if (exception != default)
+            {
+                Error(exception.Message, args);
+                return;
+            }
+            
+            Debug(message, args);
+        }
+    }
+    
     public class Logger<TClass> : Logger
     {
 
         public Logger()
             : base(typeof(TClass))
-        {}
+        { }
     }
-
-    public class Logger
+    
+    public class Logger 
     {
         private readonly string _parent;
 
@@ -97,6 +127,5 @@ namespace server.Util.Log
         {
             SettingsManager.LogOutput.Add(logMessage);
         }
-
     }
 }
