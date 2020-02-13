@@ -10,17 +10,17 @@ namespace server.Util.Log
 {
     public class SentryLogger : Logger, Sentry.Extensibility.IDiagnosticLogger
     {
-        private readonly SentryLevel _lowestLevel;
+        private readonly SentryLevel _level;
         
-        public SentryLogger(SentryLevel lowestLevel = SentryLevel.Info) 
+        public SentryLogger(SentryLevel level = SentryLevel.Info) 
             : base(typeof(SentrySdk))
         {
-            _lowestLevel = lowestLevel;
+            _level = level;
         }
         
         public bool IsEnabled(SentryLevel level)
         {
-            return _lowestLevel >= level;
+            return _level.CompareTo(level) <= 0;
         }
 
         public void Log(SentryLevel logLevel, string message, Exception exception = null, params object[] args)
@@ -30,8 +30,28 @@ namespace server.Util.Log
                 Error(exception.Message, args);
                 return;
             }
-            
-            Debug(message, args);
+
+            switch (logLevel)
+            {
+                case SentryLevel.Debug:
+                    Debug(message, args);
+                    break;
+                case SentryLevel.Info:
+                    Info(message, args);
+                    break;
+                case SentryLevel.Warning:
+                    Warn(message, args);
+                    break;
+                case SentryLevel.Error:
+                    Error(message, args);
+                    break;
+                case SentryLevel.Fatal:
+                    Fatal(message, args);
+                    break;
+                default:
+                    Fatal(message, args);
+                    break;
+            }
         }
     }
     

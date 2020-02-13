@@ -2,6 +2,7 @@
 using System.IO;
 using models.Enums;
 using Newtonsoft.Json;
+using Sentry;
 using server.Util.Log;
 
 namespace server.Util.Settings
@@ -82,6 +83,13 @@ namespace server.Util.Settings
                     Secret = "jWTf6KBkVcJI$m0kP2tR_M",
                     OnlyBeta = true,
                     BetaGroupId = 7
+                },
+                Sentry = new SentrySettings()
+                {
+                    Dsn =  new Dsn("https://044403acc1ad42d18782de1bb103d04d@sentry.exo.merx.dev/4"),
+                    EnableDebug = true,
+                    Environment = "",
+                    Release = ""
                 }
             };
 

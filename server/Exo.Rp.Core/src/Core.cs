@@ -34,21 +34,10 @@ namespace server
 
         private DatabaseCore _databaseCore;
         private static IServiceProvider _serviceProvider;
-        private IDisposable _sentry = null;
 
         public override void OnStart()
         {
-            // Initialize sentry
-            _sentry = SentrySdk.Init(o =>
-                {
-                    o.Dsn = new Dsn("https://044403acc1ad42d18782de1bb103d04d@sentry.exo.merx.dev/4");
-                    o.Environment = System.Environment.GetEnvironmentVariable("ENVIRONMENT");
-                    o.Release = System.Environment.GetEnvironmentVariable("RELEASE");
-                    o.Debug = true;
-                    o.DiagnosticLogger = new SentryLogger(SentryLevel.Debug);
-                });
-
-            // Initialize database
+            // Initialize database  
             _databaseCore = new DatabaseCore();
 
             // Prepare service provider
@@ -68,14 +57,23 @@ namespace server
                 .AddSingleton<IplManager>()
                 .AddSingleton<JobManager>();
 
-            // Start loading database models
-            _databaseCore.OnResourceStartHandler(() =>
-            {
-                _serviceProvider = serviceCollection
-                    .AddSingleton(ContextFactory.Instance)
-                    .BuildServiceProvider();
-                LoadServices();
-            }); 
+            // Start loading database mode/ls
+            _databaseCore.OnResourceStartHandler(
+                configureSentry: (settings, options) =>
+                {
+                    options.Dsn = settings.Dsn;
+                    options.Environment = settings.Environment;
+                    options.Release = settings.Release;
+                    options.Debug = settings.EnableDebug;
+                    options.DiagnosticLogger = new SentryLogger(SentryLevel.Debug);
+                },
+                onDatabaseInitialized: () => {
+                    _serviceProvider = serviceCollection
+                        .AddSingleton(ContextFactory.Instance)
+                        .BuildServiceProvider();
+                    LoadServices();
+                }
+            ); 
         }
 
         private static void LoadServices()
@@ -119,8 +117,7 @@ namespace server
 
             Logger.Info("Committing changes to database...");
             DatabaseCore.SaveChangeToDatabase();
-
-            _sentry?.Dispose();
+            _databaseCore.OnResourceStopHandler();
         }
 
         public override IEntityFactory<IPlayer> GetPlayerFactory()

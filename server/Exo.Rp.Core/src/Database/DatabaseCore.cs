@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using AltV.Net;
@@ -7,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using models.Enums;
 using MySql.Data.MySqlClient;
+using Sentry;
 using server.Util.Log;
 using server.Util.Settings;
 
@@ -16,11 +18,10 @@ namespace server.Database
     {
         private static readonly Util.Log.Logger<DatabaseCore> Logger = new Util.Log.Logger<DatabaseCore>();
 
+        private IDisposable _sentry;
         private Stopwatch _lastUpdate;
 
-        public delegate void DatabaseInitialized();
-
-        public void OnResourceStartHandler(DatabaseInitialized? onDatabaseInitialized)
+        public void OnResourceStartHandler(Action<SentrySettings, SentryOptions>? configureSentry, Action? onDatabaseInitialized)
         {
             SettingsManager.LogOutput.Add(new LogMessage
             {
@@ -79,6 +80,8 @@ namespace server.Database
             if (!SetDatabaseConnection(settingsPath, logsPath))
                 return;
 
+            _sentry = SentrySdk.Init(o => configureSentry(SettingsManager.ServerSettings.Sentry, o));
+
             Logger.Info($"Database connection to server: {SettingsManager.ServerSettings.Database.Server}");
 
             var stopWatch = Stopwatch.StartNew();
@@ -136,6 +139,11 @@ namespace server.Database
 
             _lastUpdate = Stopwatch.StartNew();
             onDatabaseInitialized?.Invoke();
+        }
+
+        public void OnResourceStopHandler()
+        {
+            _sentry.Dispose();
         }
 
         public static bool SetDatabaseConnection(string settingsPath, string logsPath)

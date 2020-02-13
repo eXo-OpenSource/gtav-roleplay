@@ -23,5 +23,8 @@ namespace server.Util.Settings
 
         [JsonProperty("WotlabApi")] 
         public WotlabApiSettings WotlabApi { get; set; }
+
+        [JsonProperty("Sentry")]
+        public SentrySettings Sentry { get; set; }
     }
 }

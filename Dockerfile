@@ -1,3 +1,21 @@
+## Config Patcher
+FROM alpine as configpatcher
+WORKDIR /config
+
+# Install jq
+RUN apk add jq
+
+# Add and patch config
+ARG DSN="https://invalid"
+ARG SENTRY_ENVIRONMENT="invalid"
+ARG SENTRY_RELEASE="invalid"
+
+ADD config.json.example config.unpatched.json
+RUN cat config.unpatched.json | \
+    jq --arg data "$DSN" '.Sentry.DSN |= $data' | \
+    jq --arg data "$SENTRY_ENVIRONMENT" '.Sentry.Environment |= $data' | \
+    jq --arg data "$RELEASENTRY_RELEASESE" '.Sentry.Release |= $data' >> config.json
+
 ## Builder
 FROM mcr.microsoft.com/dotnet/core/sdk:3.0 as builder
 WORKDIR /app
@@ -17,8 +35,10 @@ RUN dotnet build --no-restore -c Release    server/Exo.Rp.Core -o /app/bin
 FROM stivik/altv:stable
 
 # Add binaries
-COPY --from=builder /app/bin _build/
+COPY --from=builder         /app/bin                _build/
+COPY --from=configpatcher   /config/config.json     _build/
 RUN rm _build/*.runtimeconfig.dev.json
+RUN cat _build/config.json
 
 # Add client resources
 # TODO
@@ -28,8 +48,4 @@ RUN rm _build/*.runtimeconfig.dev.json
 #RUN chmod +x entrypoint.sh
 
 # Entrypoint
-ARG _ENVIRONMENT=development
-ARG _RELEASE=norelease
-ENV ENVIRONMENT=${_ENVIRONMENT}
-ENV RELEASE=${_RELEASE}
 ENTRYPOINT ["/bin/sh", "entrypoint.sh"]
