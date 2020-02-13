@@ -42,7 +42,6 @@ deploy_job_develop:
         - dind
     stage: deploy
     script:
-        - apt-get update && apt-get install -y curl
     #    - curl http://$DEPLOYRON_IP:6000/deploy/gta_develop?APISecret=$DEPLOY_API_SECRET_DEVELOP
     only:
       - master
@@ -54,7 +53,6 @@ deploy_job_production:
         - dind
     stage: deploy
     script:
-        - apt-get update && apt-get install -y curl
     #    - curl http://$DEPLOYRON_IP:6000/deploy/gta_develop?APISecret=$DEPLOY_API_SECRET_DEVELOP
     only:
     - release/production

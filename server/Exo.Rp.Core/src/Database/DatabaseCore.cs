@@ -80,7 +80,11 @@ namespace server.Database
             if (!SetDatabaseConnection(settingsPath, logsPath))
                 return;
 
-            _sentry = SentrySdk.Init(o => configureSentry(SettingsManager.ServerSettings.Sentry, o));
+            // Initialize sentry
+            _sentry = SentrySdk.Init(sentryOptions => configureSentry(SettingsManager.ServerSettings.Sentry, sentryOptions));
+
+            if (!CreateDatabaseConnection())
+                return;
 
             Logger.Info($"Database connection to server: {SettingsManager.ServerSettings.Database.Server}");
 
@@ -160,6 +164,11 @@ namespace server.Database
             else
                 Logger.Debug($"Successfully loaded settings from \"{settingsPath}\".");
 
+            return true;
+        }
+
+        public static bool CreateDatabaseConnection()
+        {
             var connectionStringBuilder = new MySqlConnectionStringBuilder
             {
                 Server = SettingsManager.ServerSettings.Database.Server,
@@ -171,7 +180,7 @@ namespace server.Database
             };
 
             ContextFactory.SetConnectionString(connectionStringBuilder);
-            
+
 
             return ContextFactory.Instance != null;
         }

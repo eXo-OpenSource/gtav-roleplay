@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Reflection;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using models.Enums;
 using Sentry;
 using Sentry.Protocol;
@@ -10,17 +9,17 @@ namespace server.Util.Log
 {
     public class SentryLogger : Logger, Sentry.Extensibility.IDiagnosticLogger
     {
-        private readonly SentryLevel _level;
+        private readonly SentryLevel _lowestLevel;
         
-        public SentryLogger(SentryLevel level = SentryLevel.Info) 
+        public SentryLogger(SentryLevel lowestLevel = SentryLevel.Info) 
             : base(typeof(SentrySdk))
         {
-            _level = level;
+            _lowestLevel = lowestLevel;
         }
         
         public bool IsEnabled(SentryLevel level)
         {
-            return _level.CompareTo(level) <= 0;
+            return _lowestLevel.CompareTo(level) <= 0;
         }
 
         public void Log(SentryLevel logLevel, string message, Exception exception = null, params object[] args)
