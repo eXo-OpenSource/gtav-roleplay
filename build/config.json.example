@@ -30,7 +30,7 @@
     "BetaGroupId": 7
   },
   "Sentry": {
-    "DSN": "https://044403acc1ad42d18782de1bb103d04d@sentry.exo.merx.dev/4",
+    "DSN": "",
     "Environment": "",
     "Release": "",
     "Debug": "True"

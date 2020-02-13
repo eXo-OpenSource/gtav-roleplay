@@ -1,8 +1,10 @@
 ## Base Image
 FROM stivik/altv:beta as runner
 
-## Builder
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1 as builder
+
+
+## Builder Server
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1 as builder_server
 WORKDIR /app
 
 # Restore nuget packages and build binaries
@@ -13,8 +15,25 @@ ADD server/Exo.Rp.Serialization             server/Exo.Rp.Serialization
 RUN dotnet restore                          server/Exo.Rp.Core
 RUN dotnet build --no-restore -c Release    server/Exo.Rp.Core -o /app/bin
 
-## Client
-# TODO
+## Builder Client
+FROM node as builder_client
+WORKDIR /app
+
+# Add client files
+RUN mkdir -p client
+ADD client/cef          client/cef/
+ADD client/src          client/src/
+ADD client/*.cfg        client/
+ADD client/*.json       client/
+
+# Install typescript and compile project
+WORKDIR /app/client
+RUN npm install -g typescript
+RUN npm install
+RUN npm run build && \
+    npm run clean
+
+
 
 ## Config Patcher
 FROM alpine as configpatcher
@@ -36,21 +55,23 @@ RUN cat config.unpatched.json | \
     jq --arg data "$SENTRY_RELEASE" '.Sentry.Release |= $data' | \
     cat >> config.json
 
+
+
 ## Runner
 FROM runner
 
 # Add binaries
-RUN mkdir -p resources/exov/
-COPY --from=builder         /app/bin                resources/exov/
+RUN mkdir -p resources/exov/ && \
+    mkdir -p resources/exov-client/
+COPY --from=builder_server  /app/bin                resources/exov/
 COPY --from=configpatcher   /config/config.json     resources/exov/
+COPY --from=builder_client  /app/client             resources/exov-client/
+
+# Cleanup some files
 RUN rm resources/exov/*.runtimeconfig.dev.json
 
 # Add server config
-RUN rm config/server.cfg
 ADD build/server.cfg config/
-
-# Add client resources
-# TODO
 
 # Overwrite entrypoint with our own
 #RUN mv _build/entrypoint.sh entrypoint.sh

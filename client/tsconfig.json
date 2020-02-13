@@ -12,7 +12,6 @@
 		"preserveConstEnums": true,
 		"noImplicitAny": false,
 		"sourceMap": false,
-		"typeRoots": ["./node_modules/@types", "./typings"],
 		"outDir": "build"
 	},
 	"exclude": [
@@ -20,6 +19,6 @@
 		"cef"
 	], 
 	"include": [
-		"src/**.ts"
+		"src/**.ts", "src/typings/client.d.ts", "src/typings/natives.d.ts"
 	]
 }
