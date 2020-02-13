@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using AltV.Net;
+using Sentry;
 using server.Commands;
 using server.Players;
 using server.Translation;
@@ -40,13 +41,14 @@ namespace server.Events
                 }
                 catch (Exception e)
                 {
+                    SentrySdk.CaptureException(e);
+
                     var rootException = e.InnerException ?? e;
                     Logger.Error($"{rootException.Source}: {rootException.Message}\n{rootException.StackTrace}");
                     Logger.Error(
                         $"A runtime exception occured during the execution of command: [{player.ToString()}: {msg}]");
 
                     player.SendError("Befehl konnte nicht ausgeführt werden.".Translate(player));
-                    throw e;
                 }
             }
             else
