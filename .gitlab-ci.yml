@@ -36,24 +36,24 @@ sentry_job:
         - release/production
 
 deploy_job_develop:
-    image: ubuntu:latest
+    image: appropriate/curl
     tags:
         - linux
         - dind
     stage: deploy
     script:
-    #    - curl http://$DEPLOYRON_IP:6000/deploy/gta_develop?APISecret=$DEPLOY_API_SECRET_DEVELOP
+        - curl http://$DEPLOYRON_IP:6000/deploy/altv_develop?APISecret=$DEPLOY_API_SECRET_DEVELOP
     only:
       - master
 
-deploy_job_production:
-    image: ubuntu:latest
-    tags:
-        - linux
-        - dind
-    stage: deploy
-    script:
-    #    - curl http://$DEPLOYRON_IP:6000/deploy/gta_develop?APISecret=$DEPLOY_API_SECRET_DEVELOP
-    only:
-    - release/production
+# deploy_job_production:
+#     image: appropriate/curl
+#     tags:
+#         - linux
+#         - dind
+#     stage: deploy
+#     script:
+#         - curl http://$DEPLOYRON_IP:6000/deploy/altv_production?APISecret=$DEPLOY_API_SECRET_PRODUCTION
+#     only:
+#     - release/production
   
