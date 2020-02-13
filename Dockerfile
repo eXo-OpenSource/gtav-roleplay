@@ -1,3 +1,6 @@
+## Base Image
+FROM stivik/altv:beta as runner
+
 ## Builder
 FROM mcr.microsoft.com/dotnet/core/sdk:3.0 as builder
 WORKDIR /app
@@ -34,7 +37,7 @@ RUN cat config.unpatched.json | \
     cat >> config.json
 
 ## Runner
-FROM stivik/altv:beta
+FROM runner
 
 # Add binaries
 COPY --from=builder         /app/bin                _build/
