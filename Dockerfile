@@ -2,7 +2,7 @@
 FROM stivik/altv:beta as runner
 
 ## Builder
-FROM mcr.microsoft.com/dotnet/core/sdk:3.0 as builder
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1 as builder
 WORKDIR /app
 
 # Restore nuget packages and build binaries
