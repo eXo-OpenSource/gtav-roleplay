@@ -1,0 +1,42 @@
+stages:
+    - build
+#    - deploy
+  
+services:
+    - name: docker:dind
+      command: ["--experimental"]
+    
+  variables:
+    DOCKER_DRIVER: overlay2
+    DOCKER_HOST: tcp://docker:2375
+    GIT_SUBMODULE_STRATEGY: recursive
+  
+  build_job:
+    image: docker:latest
+    stage: build
+    tags:
+      - linux
+      - dind
+    stage: build
+    script:
+      - docker build --squash --build-arg CI_BUILD_REF_NAME="$CI_BUILD_REF_NAME" -t exo-rp-altv .
+      - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+      - docker tag exo-rp-altv $CI_REGISTRY_IMAGE:latest-$(echo $CI_BUILD_REF_NAME | tr -d /)
+      - '[ "$CI_BUILD_REF_NAME" == "master" ] && docker tag exo-rp-altv $CI_REGISTRY_IMAGE:latest'
+      - docker push "$CI_REGISTRY_IMAGE"
+    only:
+      - master
+      - release/production
+  
+#  deploy_job_develop:
+#    image: ubuntu:latest
+#    tags:
+#      - linux
+#      - dind
+#    stage: deploy
+#    script:
+#      - apt-get update && apt-get install -y curl
+#      - curl http://$DEPLOYRON_IP:6000/deploy/gta_develop?APISecret=$DEPLOY_API_SECRET_DEVELOP
+#    only:
+#      - master
+  
