@@ -25,6 +25,7 @@ ADD client/cef          client/cef/
 ADD client/src          client/src/
 ADD client/*.cfg        client/
 ADD client/*.json       client/
+ADD client/*.mjs        client/
 
 # Install typescript and compile project
 WORKDIR /app/client
