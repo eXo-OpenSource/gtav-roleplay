@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AltV.Net;
 using Sentry;
@@ -24,7 +25,7 @@ namespace server.Events
 
                 if (command.Length <= 0) return;
                 Logger.Debug($"Chat | {player.ToString()}: /{command}");
-
+                
                 try
                 {
                     switch (Core.GetService<CommandHandler>().Invoke(command, player, args))
@@ -41,6 +42,7 @@ namespace server.Events
                 }
                 catch (Exception e)
                 {
+                    SentrySdk.AddBreadcrumb("Command", null, "command", new Dictionary<string, string> { { "command", command }, { "player", player.Name }, { "args", string.Join(',', args) } });
                     SentrySdk.CaptureException(e);
 
                     var rootException = e.InnerException ?? e;
