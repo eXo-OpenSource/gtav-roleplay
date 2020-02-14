@@ -42,7 +42,7 @@ namespace server.Events
                 }
                 catch (Exception e)
                 {
-                    SentrySdk.AddBreadcrumb("Command", null, "command", new Dictionary<string, string> { { "command", command }, { "player", player.Name }, { "args", string.Join(',', args) } });
+                    SentrySdk.AddBreadcrumb(null, "Command", null, new Dictionary<string, string> { { "command", command }, { "player", player.Name }, { "args", string.Join(',', args) } });
                     SentrySdk.CaptureException(e);
 
                     var rootException = e.InnerException ?? e;
