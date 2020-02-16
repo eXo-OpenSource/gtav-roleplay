@@ -71,7 +71,7 @@ namespace server.Commands
                     General.GetRandomColor(), General.GetRandomColor(), "Admin");
 
                Alt.Log("Fahrzeug gespawnt: " + veh.Model.ToString() + "!");
-                player.SetIntoVehicle(veh.handle, 0);
+                player.SetIntoVehicle(veh.handle, -1);
             } else
             {
                 Alt.Log("Fahrzeug nicht gefunden!");
@@ -201,6 +201,8 @@ namespace server.Commands
                 player.SendChatMessage("#b#Spieler-Position:");
                 var pos = player.Position;
                 var rot = player.Rotation;
+                player.SendChatMessage($"{pos.X}, {pos.Y}, {pos.Z}");
+                player.SendChatMessage($"{rot.Roll}, {rot.Pitch} {rot.Yaw}");
                 OutputPosition(player, pos, rot);
             }
 

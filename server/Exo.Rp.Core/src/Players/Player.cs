@@ -91,7 +91,7 @@ namespace server.Players
 
         public void SetIntoVehicle(IVehicle veh, int seat)
         {
-
+            Emit("Vehicle:SetIntoVehicle", veh.Id, seat);
         }
     }
 }
