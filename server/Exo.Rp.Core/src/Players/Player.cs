@@ -86,7 +86,7 @@ namespace server.Players
 
         public void SendChatMessage(string msg)
         {
-
+            Emit("Chat:Message", null, msg);
         }
 
         public void SetIntoVehicle(IVehicle veh, int seat)

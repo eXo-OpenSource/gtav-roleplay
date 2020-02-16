@@ -11,9 +11,9 @@ let view = new alt.WebView('http://resource/cef/chat/index.html');
 
 function addMessage(name, text) {
 	if (name) {
-		view.emit('Chat:AddMessage', name, text);
+		view.emit('addMessage', name, text);
 	} else {
-		view.emit('Chat:AddString', text);
+		view.emit('addString', text);
 	}
 }
 

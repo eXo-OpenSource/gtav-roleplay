@@ -6,7 +6,7 @@ import { log } from "util";
 
 @Singleton
 export class Core {
-    private registerLoging: RegisterLogin = new RegisterLogin();
+    //private registerLoging: RegisterLogin = new RegisterLogin();
 
     constructor() {
         UiManager.loadEvents();
