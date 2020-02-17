@@ -51,7 +51,7 @@ namespace server.Events
                     Logger.Error(
                         $"A runtime exception occured during the execution of command: [{player.ToString()}: {msg}]");
 
-                    player.SendError("Befehl konnte nicht ausgeführt werden.\nCorrelation Id: %s".Translate(player, correlationId));
+                    player.SendError("Befehl konnte nicht ausgeführt werden. Correlation Id: {0}".Translate(player, correlationId));
                 }
             }
             else
