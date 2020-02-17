@@ -83,7 +83,6 @@ namespace server.Database
 
             // Initialize sentry
             _sentry = SentrySdk.Init(sentryOptions => configureSentry(SettingsManager.ServerSettings.Sentry, sentryOptions));
-            SentryDatabaseLogging.UseBreadcrumbs();
 
             if (!CreateDatabaseConnection())
                 return;
