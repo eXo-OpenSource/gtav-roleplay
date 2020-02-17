@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using AltV.Net;
 using models.Enums;
@@ -78,6 +78,13 @@ namespace server.Events
         {
             Alt.Log($"{player.Name} connected.");
             player.Emit("Ui:ShowRegisterLogin");
+        }
+
+        [ScriptEvent(ScriptEventType.PlayerDisconnect)]
+        public void PlayerDisconnect(IPlayer player, string reason)
+        {
+            Alt.Log($"{player.Name} disconnected.");
+            Core.GetService<PlayerManager>().OnDisconnect(player);
         }
     }
 }

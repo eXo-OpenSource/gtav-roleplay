@@ -35,18 +35,15 @@ namespace server.Players
         {
             return _players.ContainsKey(accountId);
         }
-
-        /*
+        
         public void OnDisconnect(IPlayer player)
         {
-            if (player.GetCharacter()?.IsJobActive() == true) player.GetCharacter()?.GetJob()?.StopJob(player);
+            //TODO Implement that back in
+            /*if (player.GetCharacter()?.IsJobActive() == true) player.GetCharacter()?.GetJob()?.StopJob(player);
             Logger.Info("Saved Data for " + player.Name);
-            player.GetCharacter()?.Logout();
-            Players.Remove(player.GetAccountModel().Id);
-            Accounts.Remove(player);
-            Characters.Remove(player);
+            player.GetCharacter()?.Logout();*/
+            _players.Remove(player.GetAccount().Id);
         }
-        */
         
         public void DoLogin(IPlayer player)
         {
