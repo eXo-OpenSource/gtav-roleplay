@@ -66,7 +66,6 @@ namespace server
                     options.Release = settings.Release;
                     options.Debug = settings.EnableDebug;
                     options.DiagnosticLogger = new SentryLogger(SentryLevel.Debug);
-                    options.AddEntityFramework();
                 },
                 onDatabaseInitialized: () => {
                     _serviceProvider = serviceCollection
