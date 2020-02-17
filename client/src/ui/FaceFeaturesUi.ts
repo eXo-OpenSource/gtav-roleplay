@@ -4,6 +4,7 @@ import { Singleton } from "../utils/Singleton";
 import { View } from "../utils/View";
 import { Ped } from "../systems/Ped";
 import { Camera } from "../utils/Camera";
+import { Vector3 } from "natives";
 
 export class FaceFeaturesUi {
     private url = 'http://resource/client/cef/faceFeatures/index.html';
@@ -59,7 +60,7 @@ export class FaceFeaturesUi {
         native.setPedHeadBlendData(this.ped.scriptID, 0, 0, 0, 0, 0, 0, 0, 0, 0, false);
 
         // Hide the player's model.
-        native.setEntityAlpha(alt.Player.local.scriptID, 0, 0);
+        native.setEntityAlpha(alt.Player.local.scriptID, 0, false);
 
         // Setup the ped camera point.
         this.camera = new Camera(this.cameraPoint, 28);
@@ -224,7 +225,7 @@ export class FaceFeaturesUi {
         this.ped.destroy();
     
         // Hide the player's model.
-        native.setEntityAlpha(alt.Player.local.scriptID, 255, 0);
+        native.setEntityAlpha(alt.Player.local.scriptID, 255, false);
     
         // Request the last location.
         alt.emitServer('utility:GoToLastLocation');

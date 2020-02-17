@@ -1,5 +1,6 @@
 import * as alt from 'alt';
 import * as native from 'natives';
+import { Vector3 } from "natives";
 
 // Get the distance between two vectors.
 export function distance(vector1: Vector3, vector2: Vector3): number {

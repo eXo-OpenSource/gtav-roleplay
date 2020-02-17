@@ -46,7 +46,7 @@ alt.on("keyup", (key) => {
         let nearestSeatDistance = Number.MAX_VALUE;
         let nearestSeat = 0;
         for (let i=0; i<= seatBones.length; i++) {
-            if(!native.isVehicleSeatFree(vehicle, i)) continue;
+            if(!native.isVehicleSeatFree(vehicle, i, false)) continue;
             
             const boneIndex = native.getEntityBoneIndexByName(vehicle, seatBones[i]);
             if(boneIndex == -1) continue;

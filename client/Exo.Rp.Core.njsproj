@@ -66,6 +66,7 @@
     <TypeScriptCompile Include="src\chat\Chat.ts" />
     <TypeScriptCompile Include="src\Core.ts" />
     <TypeScriptCompile Include="src\Index.ts" />
+    <TypeScriptCompile Include="src\systems\Notification.ts" />
     <TypeScriptCompile Include="src\systems\Ped.ts" />
     <TypeScriptCompile Include="src\systems\Vehicle.ts" />
     <TypeScriptCompile Include="src\ui\FaceFeaturesUi.ts" />

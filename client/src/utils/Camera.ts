@@ -1,5 +1,6 @@
 import * as alt from 'alt';
 import * as native from 'natives';
+import { Vector3 } from "natives";
 
 export class Camera {
     public cam: number;
@@ -35,7 +36,7 @@ export class Camera {
 
     fov(value) {
         native.setCamFov(this.cam, value);
-        native.renderScriptCams(true, false, 0, true, false);
+        native.renderScriptCams(true, false, 0, true, false, false);
     }
 
     pointAtBone(entity, bone, xOffset, yOffset, zOffset) {
@@ -48,41 +49,41 @@ export class Camera {
             zOffset,
             false
         );
-        native.renderScriptCams(true, false, 0, true, false);
+        native.renderScriptCams(true, false, 0, true, false, false);
     }
 
     pointAtEntity(entity, xOffset, yOffset, zOffset) {
         native.pointCamAtEntity(this.cam, entity, xOffset, yOffset, zOffset, false);
-        native.renderScriptCams(true, false, 0, true, false);
+        native.renderScriptCams(true, false, 0, true, false, false);
     }
 
     pointAtCoord(pos) {
         native.pointCamAtCoord(this.cam, pos.x, pos.y, pos.z);
-        native.renderScriptCams(true, false, 0, true, false);
+        native.renderScriptCams(true, false, 0, true, false, false);
     }
 
     position(x, y, z) {
         native.setCamCoord(this.cam, x, y, z);
-        native.renderScriptCams(true, false, 0, true, false);
+        native.renderScriptCams(true, false, 0, true, false, false);
     }
 
     rotate(pitch, roll, yaw) {
         native.setCamRot(this.cam, pitch, roll, yaw, 0);
-        native.renderScriptCams(true, false, 0, true, false);
+        native.renderScriptCams(true, false, 0, true, false, false);
     }
 
     unrender() {
-        native.renderScriptCams(false, false, 0, false, false);
+        native.renderScriptCams(false, false, 0, false, false, false);
     }
 
     render() {
-        native.renderScriptCams(true, false, 0, true, false);
+        native.renderScriptCams(true, false, 0, true, false, false);
     }
 
     destroy() {
         for (let i = 0; i < 25; i++) {
             native.destroyAllCams(true);
-            native.renderScriptCams(false, false, 0, false, false);
+            native.renderScriptCams(false, false, 0, false, false, false);
         }
 
         if (this.interval !== undefined) {
