@@ -4,8 +4,6 @@ using AltV.Net;
 using AltV.Net.Elements.Entities;
 using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
-using Sentry;
-using Sentry.Infrastructure;
 using Sentry.Protocol;
 using server.AutoMapper;
 using server.BankAccounts;

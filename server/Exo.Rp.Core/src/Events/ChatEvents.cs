@@ -42,15 +42,16 @@ namespace server.Events
                 }
                 catch (Exception e)
                 {
+                    SentrySdk.AddBreadcrumb(null, "User", null, new Dictionary<string, string> { { "id", player.Id.ToString() }, { "name", player.Name }, { "hardwareId", player.HardwareIdHash.ToString() } });
                     SentrySdk.AddBreadcrumb(null, "Command", null, new Dictionary<string, string> { { "command", command }, { "player", player.Name }, { "args", string.Join(',', args) } });
-                    SentrySdk.CaptureException(e);
+                    var correlationId = SentrySdk.CaptureException(e);
 
                     var rootException = e.InnerException ?? e;
                     Logger.Error($"{rootException.Source}: {rootException.Message}\n{rootException.StackTrace}");
                     Logger.Error(
                         $"A runtime exception occured during the execution of command: [{player.ToString()}: {msg}]");
 
-                    player.SendError("Befehl konnte nicht ausgeführt werden.".Translate(player));
+                    player.SendError("Befehl konnte nicht ausgeführt werden.\nCorrelation Id: %s".Translate(player, correlationId));
                 }
             }
             else
