@@ -9,7 +9,6 @@ using Microsoft.Extensions.Logging;
 using models.Enums;
 using MySql.Data.MySqlClient;
 using Sentry;
-using Sentry.EntityFramework;
 using server.Util.Log;
 using server.Util.Settings;
 
