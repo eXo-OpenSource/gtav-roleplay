@@ -13,7 +13,7 @@ build_job:
             docker build \
                 --build-arg CI_BUILD_REF_NAME="$CI_BUILD_REF_NAME" \
                 --build-arg SENTRY_DSN="$SENTRY_DSN" \
-                --build-arg SENTRY_ENVIRONMENT="${CI_COMMIT_BRANCH//\//__}" \
+                --build-arg SENTRY_ENVIRONMENT="${CI_COMMIT_BRANCH//\//-}" \
                 --build-arg SENTRY_RELEASE="${CI_COMMIT_SHA}" \
                 -t exo-rp-altv .
         - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
@@ -30,7 +30,7 @@ sentry_job:
     script:
         - sentry-cli releases new --project $SENTRY_PROJECT $CI_COMMIT_SHA
         - sentry-cli releases set-commits --auto $CI_COMMIT_SHA
-        - sentry-cli releases deploys $CI_COMMIT_SHA new --env ${CI_COMMIT_BRANCH//\//__}
+        - sentry-cli releases deploys $CI_COMMIT_SHA new --env ${CI_COMMIT_BRANCH//\//-}
     only:
         - master
         - release/production
