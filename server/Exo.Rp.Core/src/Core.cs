@@ -59,11 +59,20 @@ namespace server
             _databaseCore.OnResourceStartHandler(
                 configureSentry: (settings, options) =>
                 {
+                    var logger = new SentryLogger(SentryLevel.Debug);
                     options.Dsn = settings.Dsn;
                     options.Environment = settings.Environment;
                     options.Release = settings.Release;
                     options.Debug = settings.EnableDebug;
-                    options.DiagnosticLogger = new SentryLogger(SentryLevel.Debug);
+                    options.DiagnosticLogger = logger;
+                    options.AttachStacktrace = true;
+                    options.BeforeSend = e =>
+                    {
+                        logger.Log(SentryLevel.Info, "Sent event with Id {0}.", null, e.EventId);
+
+                        return e;
+                    };
+                    options.ServerName = settings.Environment;
                 },
                 onDatabaseInitialized: () => {
                     _serviceProvider = serviceCollection
