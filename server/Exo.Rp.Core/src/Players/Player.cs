@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
+using Sentry.Protocol;
 using server.Database;
 using server.Players.Accounts;
 using server.Players.Characters;
@@ -15,6 +17,8 @@ namespace server.Players
         
         private Account _account;
         private Account Account => _account ??= Core.GetService<DatabaseContext>().AccountModel.Local.FirstOrDefault(x => x.SocialClubId == SocialClubId);
+
+        public User SentryContext => new User { Id = SocialClubId.ToString(), IpAddress = Ip, Username = Name, Other = new Dictionary<string, string> { { "HardwareIdHash", HardwareIdHash.ToString() }, { "AccountId", Account?.Id.ToString() }, { "EMai", Account?.EMail } }};
 
         public Player(IntPtr nativePointer, ushort id) : base(nativePointer, id)
         {

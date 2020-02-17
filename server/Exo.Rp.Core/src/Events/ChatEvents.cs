@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AltV.Net;
 using Sentry;
+using Sentry.Protocol;
 using server.Commands;
 using server.Players;
 using server.Translation;
@@ -42,16 +43,20 @@ namespace server.Events
                 }
                 catch (Exception e)
                 {
-                    SentrySdk.AddBreadcrumb(null, "User", null, new Dictionary<string, string> { { "id", player.Id.ToString() }, { "name", player.Name }, { "hardwareId", player.HardwareIdHash.ToString() } });
-                    SentrySdk.AddBreadcrumb(null, "Command", null, new Dictionary<string, string> { { "command", command }, { "player", player.Name }, { "args", string.Join(',', args) } });
-                    var correlationId = SentrySdk.CaptureException(e);
+                    SentrySdk.WithScope(s =>
+                    {
+                        s.User = player.SentryContext;
 
-                    var rootException = e.InnerException ?? e;
-                    Logger.Error($"{rootException.Source}: {rootException.Message}\n{rootException.StackTrace}");
-                    Logger.Error(
-                        $"A runtime exception occured during the execution of command: [{player.ToString()}: {msg}]");
+                        SentrySdk.AddBreadcrumb(null, "Command", null, new Dictionary<string, string> { { "command", command }, { "player", player.Name }, { "args", string.Join(',', args) } });
+                        var correlationId = SentrySdk.CaptureException(e);
 
-                    player.SendError("Befehl konnte nicht ausgeführt werden. Correlation Id: {0}".Translate(player, correlationId));
+                        var rootException = e.InnerException ?? e;
+                        Logger.Error($"{rootException.Source}: {rootException.Message}\n{rootException.StackTrace}");
+                        Logger.Error(
+                            $"A runtime exception occured during the execution of command: [{player.ToString()}: {msg}]");
+
+                        player.SendError("Befehl konnte nicht ausgeführt werden. Correlation Id: {0}".Translate(player, correlationId));
+                    });
                 }
             }
             else

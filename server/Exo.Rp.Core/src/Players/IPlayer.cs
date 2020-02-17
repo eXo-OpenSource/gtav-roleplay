@@ -1,5 +1,6 @@
 ﻿using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
+using Sentry.Protocol;
 using server.Players.Accounts;
 using server.Players.Characters;
 
@@ -7,6 +8,8 @@ namespace server.Players
 {
     public interface IPlayer : AltV.Net.Elements.Entities.IPlayer
     {
+        public User SentryContext { get; }
+
         string ToString();
 
         int GetId();
