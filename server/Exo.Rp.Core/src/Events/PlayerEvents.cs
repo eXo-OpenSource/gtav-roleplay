@@ -62,10 +62,14 @@ namespace server.Events
             }
             catch (Exception e)
             {
-                SentrySdk.CaptureException(e);
+                SentrySdk.WithScope(s =>
+                {
+                    s.User = player.SentryContext;
+                    var correlationId = SentrySdk.CaptureException(e);
 
-                Console.WriteLine(e.Message);
-                player.Emit("registerLogin:Error", "Unbekannter Fehler!");
+                    Console.WriteLine(e.Message);
+                    player.Emit("registerLogin:Error", "Unbekannter Fehler! Correlation Id: {0}", correlationId);
+                });
             }
         }
 

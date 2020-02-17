@@ -49,6 +49,7 @@ namespace server.Translation
             }
             catch (Exception e)
             {
+                SentrySdk.AddBreadcrumb(null, "Translation", null, new Dictionary<string, string> { { "message", formatString }, { "language", lang.DisplayName }, { "catalog", translationCatalog.ToString() }, });
                 SentrySdk.CaptureException(e);
 
                 Logger.Warn($"Translation of message '{formatString}' for '{lang}/{translationCatalog}' failed.");
