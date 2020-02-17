@@ -1,4 +1,4 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">14.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -45,6 +45,7 @@
     <Content Include="cef\_assets\js\react.js" />
     <Content Include="package.json" />
     <Content Include="README.md" />
+    <Content Include="src\systems\Vehicle.ts" />
     <Content Include="tsconfig.json" />
   </ItemGroup>
   <ItemGroup>
@@ -66,6 +67,7 @@
     <TypeScriptCompile Include="src\Core.ts" />
     <TypeScriptCompile Include="src\Index.ts" />
     <TypeScriptCompile Include="src\systems\Ped.ts" />
+    <TypeScriptCompile Include="src\systems\Vehicle.ts" />
     <TypeScriptCompile Include="src\ui\FaceFeaturesUi.ts" />
     <TypeScriptCompile Include="src\ui\UiManager.ts" />
     <TypeScriptCompile Include="src\utils\Camera.ts" />
