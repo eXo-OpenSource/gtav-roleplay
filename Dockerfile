@@ -1,5 +1,5 @@
 ## Base Image
-FROM stivik/altv:beta as runner
+FROM stivik/altv:rc as runner
 
 
 

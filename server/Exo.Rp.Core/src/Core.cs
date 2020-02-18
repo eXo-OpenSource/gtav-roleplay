@@ -132,12 +132,10 @@ namespace server
             return new PlayerEntityFactory();
         }
 
-        /*
         public override IEntityFactory<IVehicle> GetVehicleFactory()
         {
             return new VehicleEntityFactory();
         }
-        */
 
         public override IBaseObjectFactory<IBlip> GetBlipFactory()
         {

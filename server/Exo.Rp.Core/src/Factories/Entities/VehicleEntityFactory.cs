@@ -8,7 +8,7 @@ namespace server.Factories.Entities
     {
         public IVehicle Create(IntPtr entityPointer, ushort id)
         {
-            throw new NotImplementedException();
+            return new Vehicle(entityPointer, id);
         }
     }
 }
