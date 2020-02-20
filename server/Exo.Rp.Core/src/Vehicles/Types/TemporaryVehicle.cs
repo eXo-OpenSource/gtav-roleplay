@@ -1,14 +1,23 @@
-﻿using AltV.Net;
+﻿using System;
+using AltV.Net;
+using server.Updateable;
+using server.Util.Log;
 using IPlayer = server.Players.IPlayer;
 
 namespace server.Vehicles.Types
 {
     public class TemporaryVehicle : Vehicle
     {
+        private static readonly Logger<TemporaryVehicle> Logger = new Logger<TemporaryVehicle>();
+
+        private DateTime LastUsed = DateTime.UtcNow;
+
         public override void OnEnter(IPlayer client, int seat)
         {
             base.OnEnter(client, seat);
             Alt.EmitAllClients("onIPlayerPlayerVehicleEnter", client, handle, seat);
+
+            LastUsed = DateTime.UtcNow;
         }
 
         public override void OnStartEnter(IPlayer client, int seat)

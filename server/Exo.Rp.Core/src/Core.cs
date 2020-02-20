@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Reflection;
 using AltV.Net;
 using AltV.Net.Elements.Entities;
 using AutoMapper;
@@ -18,6 +21,7 @@ using server.Players;
 using server.Shops;
 using server.Teams;
 using server.Translation;
+using server.Updateable;
 using server.Util;
 using server.Util.Log;
 using server.Vehicles;
@@ -53,7 +57,8 @@ namespace server
                 .AddSingleton<ItemManager>()
                 .AddSingleton<InventoryManager>()
                 .AddSingleton<IplManager>()
-                .AddSingleton<JobManager>();
+                .AddSingleton<JobManager>()
+                .AddSingleton<UpdateableManager>();
 
             // Start loading database mode/ls
             _databaseCore.OnResourceStartHandler(
@@ -83,7 +88,7 @@ namespace server
             ); 
         }
 
-        private static void LoadServices()
+        private void LoadServices()
         {
             Logger.Info("Loading services...");
             var stopWatch = Stopwatch.StartNew();
@@ -125,6 +130,11 @@ namespace server
             Logger.Info("Committing changes to database...");
             DatabaseCore.SaveChangeToDatabase();
             _databaseCore.OnResourceStopHandler();
+        }
+        
+        public override void OnTick()
+        {
+            GetService<UpdateableManager>().Tick(); // Todo, maybe save the instance to avoid the lookups
         }
 
         public override IEntityFactory<IPlayer> GetPlayerFactory()

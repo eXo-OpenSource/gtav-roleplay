@@ -6,7 +6,7 @@ using server.Util.Log;
 
 namespace server.Util
 {
-    public class MethodIndexer
+    public class MethodIndexer : IService
     {
         private static readonly Logger<MethodIndexer> Logger = new Logger<MethodIndexer>();
 
@@ -39,6 +39,32 @@ namespace server.Util
                     {
                         onFound((attribute, memberInfo));
                     }
+                }
+            }
+        }
+        
+        public void IndexImplementsInterface<TInterface>(Assembly target, Predicate<Type> filter, Action<Type> onFound)
+        {
+            foreach (var type in target.GetTypes())
+            {
+                foreach (var memberInfo in type.GetInterfaces())
+                {
+                    if (memberInfo == typeof(TInterface))
+                    {
+                        onFound(type);
+                    }
+                }
+            }
+        }
+
+        public void IndexMethods(Assembly target, string methodName, Predicate<MethodInfo> filter, Action<MethodInfo> onFound)
+        {
+            foreach (var type in target.GetTypes())
+            {
+                var method = type.GetMethod(methodName);
+                if (method != default && filter(method))
+                {
+                    onFound(method);
                 }
             }
         }
