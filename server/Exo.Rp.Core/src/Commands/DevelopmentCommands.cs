@@ -13,6 +13,7 @@ using server.Jobs;
 using server.Shops;
 using server.Shops.Types;
 using server.Teams.State;
+using server.Translation;
 using server.Util;
 using server.Util.Log;
 using server.Vehicles;
@@ -65,17 +66,16 @@ namespace server.Commands
         [Command("veh")]
         public static void CreateVehicle(IPlayer player, string modelString)
         {
-            if (Enum.TryParse(modelString, out VehicleModel model))
+            if (Enum.IsDefined(typeof(VehicleModel), modelString))
             {
-                var veh = Core.GetService<VehicleManager>().CreateTemporaryVehicle(model, player.Position, player.Rotation.Roll,
+                var veh = Core.GetService<VehicleManager>().CreateTemporaryVehicle(Enum.Parse<VehicleModel>(modelString), player.Position, player.Rotation.Roll,
                     General.GetRandomColor(), General.GetRandomColor(), "Admin");
 
                Alt.Log("Fahrzeug gespawnt: " + veh.Model.ToString() + "!");
                 player.SetIntoVehicle(veh.handle, -1);
             } else
             {
-                Alt.Log("Fahrzeug nicht gefunden!");
-                return;
+                player.SendError("Fahrzeug wurde nicht gefunden!".Translate(player));
             }
         }
 
