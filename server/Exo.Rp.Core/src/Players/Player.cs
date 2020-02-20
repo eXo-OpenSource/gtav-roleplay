@@ -23,7 +23,6 @@ namespace server.Players
         public Player(IntPtr nativePointer, ushort id) : base(nativePointer, id)
         {
             Logger.Debug($"{ToString()} has joined the server.");
-            Kick("lol");
         }
 
         public new string ToString()

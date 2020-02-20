@@ -88,7 +88,7 @@ namespace server.Util.Settings
                 },
                 Sentry = new SentrySettings()
                 {
-                    Dsn =  new Dsn("https://044403acc1ad42d18782de1bb103d04d@sentry.exo.merx.dev/4"),
+                    Dsn = new Dsn("https://044403acc1ad42d18782de1bb103d04d@sentry.exo.merx.dev/4"),
                     EnableDebug = true,
                     Environment = "",
                     Release = ""

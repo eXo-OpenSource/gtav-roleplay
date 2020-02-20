@@ -81,7 +81,8 @@ namespace server.Database
                 return;
 
             // Initialize sentry
-            _sentry = SentrySdk.Init(sentryOptions => configureSentry(SettingsManager.ServerSettings.Sentry, sentryOptions));
+            if (SettingsManager.ServerSettings.Sentry.Release.Length > 0)
+                _sentry = SentrySdk.Init(sentryOptions => configureSentry(SettingsManager.ServerSettings.Sentry, sentryOptions));
 
             if (!CreateDatabaseConnection())
                 return;
