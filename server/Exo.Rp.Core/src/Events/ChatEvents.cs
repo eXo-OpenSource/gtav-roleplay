@@ -48,7 +48,7 @@ namespace server.Events
                         s.User = player.SentryContext;
 
                         SentrySdk.AddBreadcrumb(null, "Command", null, new Dictionary<string, string> { { "command", command }, { "args", string.Join(',', args) } });
-                        var correlationId = SentrySdk.CaptureException(e);
+                        var correlationId = SentrySdk.CaptureException(e.InnerException ?? e);
 
                         var rootException = e.InnerException ?? e;
                         Logger.Error($"{rootException.Source}: {rootException.Message}\n{rootException.StackTrace}");
