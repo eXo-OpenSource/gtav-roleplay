@@ -42,10 +42,7 @@ namespace server.Translation
                     return string.Format(formatString, args);
 
                 catalogDict.TryGetValue(translationCatalog, out var catalog);
-                if (catalog == default)
-                    return string.Format(formatString, args);
-
-                return catalog.GetString(formatString, args);
+                return catalog == default ? string.Format(formatString, args) : catalog.GetString(formatString, args);
             }
             catch (Exception e)
             {
