@@ -15,7 +15,7 @@ namespace server.Commands
 
         private readonly List<(CommandAttribute command, MethodInfo method)> _commands;
 
-        public CommandHandler(MethodIndexer indexer)
+        public CommandHandler(RuntimeIndexer indexer)
         {
             _commands = new List<(CommandAttribute, MethodInfo)>();
             indexer.IndexWithAttribute<CommandAttribute, MethodInfo>(Assembly.GetExecutingAssembly(),

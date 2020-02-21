@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using AltV.Net;
 using AltV.Net.Elements.Entities;
 using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
+using Sentry;
 using Sentry.Protocol;
 using server.AutoMapper;
 using server.BankAccounts;
@@ -37,6 +39,8 @@ namespace server
         private DatabaseCore _databaseCore;
         private static IServiceProvider _serviceProvider;
 
+        private UpdateableManager _updateableManager;
+
         public override void OnStart()
         {
             // Initialize database  
@@ -45,7 +49,7 @@ namespace server
             // Prepare service provider
             var serviceCollection = new ServiceCollection()
                 .AddSingleton<IMapper>(AutoMapperConfiguration.GetMapper())
-                .AddSingleton<MethodIndexer>()
+                .AddSingleton<RuntimeIndexer>()
                 .AddSingleton<CommandHandler>()
                 .AddSingleton<MetricsCollector>()
                 .AddSingleton<TranslationManager>()
@@ -117,6 +121,8 @@ namespace server
             _serviceProvider.GetService<IplManager>();
             Logger.Info("Services | Loading Job manager...");
             _serviceProvider.GetService<JobManager>();
+            Logger.Info("Services | Loading Updateable manager...");
+            _updateableManager = _serviceProvider.GetService<UpdateableManager>();
 
             stopWatch.Stop();
             Logger.Debug($"Loaded services in {stopWatch.ElapsedMilliseconds} ms.");
@@ -134,7 +140,14 @@ namespace server
         
         public override void OnTick()
         {
-            GetService<UpdateableManager>().Tick(); // Todo, maybe save the instance to avoid the lookups
+            try
+            {
+                _updateableManager?.Tick();
+            }
+            catch (Exception e) // I think there will never land an exception here, but who knows :)
+            {
+                SentrySdk.CaptureException(e);
+            }
         }
 
         public override IEntityFactory<IPlayer> GetPlayerFactory()
@@ -161,6 +174,11 @@ namespace server
             where T : IService
         {
             return _serviceProvider.GetService<T>();
+        }
+        
+        public static object GetService(Type type)
+        {
+            return _serviceProvider.GetService(type);
         }
     }
 }

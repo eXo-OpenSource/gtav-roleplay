@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
@@ -9,13 +11,14 @@ using models.Enums;
 using server.Database;
 using server.Extensions;
 using server.Inventory.Inventories;
+using server.Updateable;
 using server.Util.Log;
 using server.Vehicles.Types;
 using IPlayer = server.Players.IPlayer;
 
 namespace server.Vehicles
 { 
-    internal class VehicleManager : IManager
+    internal class VehicleManager : IManager, IUpdateable
     {
         private static readonly Logger<VehicleManager> Logger = new Logger<VehicleManager>();
 
@@ -115,6 +118,7 @@ namespace server.Vehicles
             _databaseContext.VehicleModel.Local.Add(nVehicle);
             return nVehicle;
         }
+
         public TemporaryVehicle CreateTemporaryVehicle(VehicleModel hash, Position position, float heading,
             Rgba? color1T, Rgba? color2T, string plate = "Temporary")
         {
@@ -146,6 +150,11 @@ namespace server.Vehicles
             AddVehicle<TemporaryVehicle>(veh, true);
             _teamporaryVehicleId++;
             return veh;
+        }
+
+        public void Tick()
+        {
+            throw new NotImplementedException();
         }
     }
 }

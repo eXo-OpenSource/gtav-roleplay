@@ -10,7 +10,7 @@ namespace server.Vehicles.Types
     {
         private static readonly Logger<TemporaryVehicle> Logger = new Logger<TemporaryVehicle>();
 
-        private DateTime LastUsed = DateTime.UtcNow;
+        public DateTime LastUsed = DateTime.UtcNow;
 
         public override void OnEnter(IPlayer client, int seat)
         {
