@@ -165,15 +165,16 @@ namespace server.Commands
         }*/
 
         [Command("weapon")]
-        public static void WeaponCommand(IPlayer player, WeaponModel hash)
+        public static void WeaponCommand(IPlayer player, string name)
         {
-            if (!Enum.IsDefined(typeof(WeaponModel), hash))
+            if (Enum.IsDefined(typeof(WeaponModel), name))
             {
-                //NAPI.Chat.SendChatMessageToPlayer(player, "Waffe nicht gefunden!");
-                return;
+                player.GiveWeapon((uint)Enum.Parse<WeaponModel>(name), 500, true);
             }
-
-            player.GiveWeapon((uint)hash, 500, true);
+            else
+            {
+                player.SendError("Waffe wurde nicht gefunden!".Translate(player));
+            }
         }
 
         /*
