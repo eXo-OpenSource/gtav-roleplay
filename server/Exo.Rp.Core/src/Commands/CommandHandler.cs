@@ -46,6 +46,14 @@ namespace server.Commands
 
             // Flatten the args (https://stackoverflow.com/questions/21562326/flatten-an-array-of-objects-that-may-contain-arrays)
             var flattenArgs = args.SelectMany(x => x is Array array ? array.Cast<object>() : Enumerable.Repeat(x, 1)).ToArray();
+
+            // Check if the args match up
+            if (flattenArgs.Length != tuple.method.GetParameters().Length)
+            {
+                return CommandInvokeResult.ParameterCountMissmatch;
+            }
+
+            // Invoke the handler
             tuple.method.Invoke(null, flattenArgs);
             return CommandInvokeResult.Success;
         }

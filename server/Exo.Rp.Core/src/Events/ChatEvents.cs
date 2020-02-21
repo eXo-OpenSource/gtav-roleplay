@@ -39,6 +39,9 @@ namespace server.Events
                         case CommandInvokeResult.PermissionDenied:
                             player.SendError("Du bist nicht berechtigt diese Funktion zu nutzen.".Translate(player));
                             break;
+                        case CommandInvokeResult.ParameterCountMissmatch:
+                            player.SendError("Zuviel oder zu wenig Argumente.".Translate(player));
+                            break;
                     }
                 }
                 catch (Exception e)
