@@ -20,6 +20,8 @@ namespace server.Vehicles
         {
             handle = Alt.CreateVehicle(Model, Pos, new Rotation(0f, 0f, RotZ));
             handle.NumberplateText = Plate;
+            handle.PrimaryColorRgb = new Rgba((byte) (Color1 >> 24), (byte) (Color1 >> 16), (byte) (Color1 >> 8), (byte)Color1);
+            handle.SecondaryColorRgb = new Rgba((byte) (Color2 >> 24), (byte) (Color2 >> 16), (byte) (Color2 >> 8), (byte)Color2);
             handle.SetSyncedMetaData("OwnerType", (int)OwnerType);
             handle.SetSyncedMetaData("OwnerId", OwnerId);
             return handle;

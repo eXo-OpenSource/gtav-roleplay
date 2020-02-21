@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using AltV.Net;
 using models.Enums;
@@ -16,7 +16,7 @@ namespace server.Events
     {
         private static readonly Logger<PlayerEvents> Logger = new Logger<PlayerEvents>();
 
-        [Event("RegisterLogin:Login")]
+        [ClientEventAttribute("RegisterLogin:Login")]
         public void Login(IPlayer player, string username, string password)
         {
             try

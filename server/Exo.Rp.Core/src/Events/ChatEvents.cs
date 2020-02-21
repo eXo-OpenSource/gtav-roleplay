@@ -16,7 +16,7 @@ namespace server.Events
     {
         private static readonly Logger<ChatEvents> Logger = new Logger<ChatEvents>();
 
-        [Event("Chat:Message")]
+        [ClientEventAttribute("Chat:Message")]
         public void ChatMessage(IPlayer player, string msg)
         {
             if (msg?.Length > 0 && msg[0] == '/')
