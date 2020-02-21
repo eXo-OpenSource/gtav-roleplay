@@ -29,7 +29,7 @@ namespace server.Util.Settings
             }
             catch (JsonException ex)
             {
-                SentrySdk.CaptureException(ex);
+                ex.TrackOrThrow();
 
                 Logger.Error($"Error trying to load the settings file \"{path}\". Error message: {ex.Message}");
                 return false;

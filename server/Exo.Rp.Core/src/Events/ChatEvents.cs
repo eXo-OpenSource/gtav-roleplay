@@ -7,6 +7,7 @@ using Sentry.Protocol;
 using server.Commands;
 using server.Players;
 using server.Translation;
+using server.Util;
 using server.Util.Log;
 
 namespace server.Events
@@ -51,7 +52,7 @@ namespace server.Events
                         s.User = player.SentryContext;
 
                         SentrySdk.AddBreadcrumb(null, "Command", null, new Dictionary<string, string> { { "command", command }, { "args", string.Join(',', args) } });
-                        var correlationId = SentrySdk.CaptureException(e.InnerException ?? e);
+                        var correlationId = (e.InnerException ?? e).TrackOrThrow();
 
                         var rootException = e.InnerException ?? e;
                         Logger.Error($"{rootException.Source}: {rootException.Message}\n{rootException.StackTrace}");

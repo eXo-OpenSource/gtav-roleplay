@@ -7,6 +7,7 @@ using AltV.Net;
 using models.Enums.Translation;
 using NGettext;
 using Sentry;
+using server.Util;
 using server.Util.Log;
 
 namespace server.Translation
@@ -47,7 +48,7 @@ namespace server.Translation
             catch (Exception e)
             {
                 SentrySdk.AddBreadcrumb(null, "Translation", null, new Dictionary<string, string> { { "message", formatString }, { "language", lang.DisplayName }, { "catalog", translationCatalog.ToString() }, });
-                SentrySdk.CaptureException(e);
+                e.TrackOrThrow();
 
                 Logger.Warn($"Translation of message '{formatString}' for '{lang}/{translationCatalog}' failed.");
                 return formatString;

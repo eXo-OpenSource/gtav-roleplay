@@ -69,7 +69,7 @@ namespace server.Updateable
                 }
                 catch (Exception e)
                 {
-                    SentrySdk.CaptureException(e.InnerException ?? e);
+                    (e.InnerException ?? e).TrackOrThrow();
                 }
                 finally
                 {

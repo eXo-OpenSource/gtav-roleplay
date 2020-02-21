@@ -63,7 +63,7 @@ namespace server.Commands
             player.SendInformation("Dein Account wurde gespeichert!");
         }
         
-        [Command("veh")]
+        [Command("vehicle", Alias = "veh")]
         public static void CreateVehicle(IPlayer player, string modelString)
         {
             if (Enum.IsDefined(typeof(VehicleModel), modelString))

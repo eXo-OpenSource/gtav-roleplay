@@ -62,7 +62,7 @@ namespace server.Events
             }
             catch (Exception e)
             {
-                SentrySdk.WithScope(s =>
+                e.WithScopeOrThrow(s =>
                 {
                     s.User = player.SentryContext;
                     var correlationId = SentrySdk.CaptureException(e);

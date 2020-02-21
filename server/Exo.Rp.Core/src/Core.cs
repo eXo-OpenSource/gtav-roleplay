@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using AltV.Net;
 using AltV.Net.Elements.Entities;
@@ -146,7 +147,7 @@ namespace server
             }
             catch (Exception e) // I think there will never land an exception here, but who knows :)
             {
-                SentrySdk.CaptureException(e);
+                e.TrackOrThrow();
             }
         }
 

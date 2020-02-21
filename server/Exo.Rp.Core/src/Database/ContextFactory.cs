@@ -1,6 +1,7 @@
 ﻿using System;
 using MySql.Data.MySqlClient;
 using Sentry;
+using server.Util;
 using server.Util.Log;
 
 namespace server.Database
@@ -47,7 +48,7 @@ namespace server.Database
             }
             catch (MySqlException ex)
             {
-                SentrySdk.CaptureException(ex);
+                ex.TrackOrThrow();
 
                 Logger.Fatal($"MySql error: {ex.Message} ErrorCode: {ex.Number}");
                 return null;
