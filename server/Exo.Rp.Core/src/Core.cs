@@ -69,16 +69,16 @@ namespace server
             _databaseCore.OnResourceStartHandler(
                 configureSentry: (settings, options) =>
                 {
-                    var logger = new SentryLogger(SentryLevel.Debug);
+                    var logger = new SentryLogger(settings.LoggerLevel);
                     options.Dsn = settings.Dsn;
                     options.Environment = settings.Environment;
                     options.Release = settings.Release;
-                    options.Debug = settings.EnableDebug;
+                    options.Debug = settings.Debug;
                     options.DiagnosticLogger = logger;
                     options.AttachStacktrace = true;
                     options.BeforeSend = e =>
                     {
-                        logger.Log(SentryLevel.Info, "Sent event with Id {0}.", null, e.EventId);
+                        logger.Log(SentryLevel.Info, "Sending event with Id {0}.", null, e.EventId);
 
                         return e;
                     };

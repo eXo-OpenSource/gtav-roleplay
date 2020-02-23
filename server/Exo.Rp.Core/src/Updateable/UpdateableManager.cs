@@ -31,7 +31,7 @@ namespace server.Updateable
         {
             indexer.IndexImplementsInterface<IUpdateable>(Assembly.GetExecutingAssembly(), type =>
             {
-                if (type.GetInterface(typeof(IManager).Name) == default)
+                if (type.GetInterface(typeof(IManager).Name, true) == default)
                 {
                     throw new NotSupportedException("The IUpdateable interface may only be implemented on IManager classes.");
                 }
@@ -39,7 +39,7 @@ namespace server.Updateable
                 _updateables.Add(type);
             });
         }
-
+        
         public void Tick()
         {
             if ((DateTime.UtcNow - _lastTick).TotalMilliseconds < Throttle) return;

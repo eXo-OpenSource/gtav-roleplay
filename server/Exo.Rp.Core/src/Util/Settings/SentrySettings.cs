@@ -1,21 +1,22 @@
 ﻿using System;
 using Newtonsoft.Json;
 using Sentry;
+using Sentry.Protocol;
 
 namespace server.Util.Settings
 {
     public class SentrySettings
     {
         [JsonProperty("DSN")] 
-        private string DsnUrl;
+        private string _dsnUrl;
 
         [JsonIgnore]
         public Dsn Dsn
         {
-            get => new Dsn(DsnUrl);
-            set => DsnUrl = value.ToString();
+            get => new Dsn(_dsnUrl);
+            set => _dsnUrl = value?.ToString();
         }
-
+        
         [JsonProperty("Environment")] 
         public string Environment;
 
@@ -23,13 +24,16 @@ namespace server.Util.Settings
         public string Release;
 
         [JsonProperty("Debug")] 
-        private string Debug;
+        private string _debug;
 
         [JsonIgnore]
-        public bool EnableDebug
+        public bool Debug
         { 
-            get => Boolean.Parse(Debug);
-            set => Debug = value.ToString();
+            get => bool.Parse(_debug);
+            set => _debug = value.ToString();
         }
+
+        [JsonProperty("LoggerLevel")] 
+        public SentryLevel LoggerLevel;
     }
 }

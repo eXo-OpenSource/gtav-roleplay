@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using Microsoft.VisualBasic.CompilerServices;
 using models.Enums;
 using Newtonsoft.Json;
 using Sentry;
+using Sentry.Protocol;
 using server.Util.Log;
 
 namespace server.Util.Settings
@@ -86,12 +89,13 @@ namespace server.Util.Settings
                     OnlyBeta = true,
                     BetaGroupId = 7
                 },
-                Sentry = new SentrySettings()
+                Sentry = new SentrySettings
                 {
-                    Dsn = new Dsn("https://044403acc1ad42d18782de1bb103d04d@sentry.exo.merx.dev/4"),
-                    EnableDebug = true,
+                    Dsn = null,
+                    Debug = true,
                     Environment = "",
-                    Release = ""
+                    Release = "",
+                    LoggerLevel = SentryLevel.Debug
                 }
             };
 

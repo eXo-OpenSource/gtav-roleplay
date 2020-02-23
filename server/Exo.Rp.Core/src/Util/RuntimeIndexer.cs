@@ -47,12 +47,9 @@ namespace server.Util
         {
             foreach (var type in target.GetTypes())
             {
-                foreach (var memberInfo in type.GetInterfaces())
+                if (type.GetInterface(typeof(TInterface).Name, true) != default)
                 {
-                    if (memberInfo == typeof(TInterface))
-                    {
-                        onFound(type);
-                    }
+                    onFound(type);
                 }
             }
         }
