@@ -15,7 +15,7 @@ namespace server.Players
             foreach (var player in players)
             {
                 // Skip if list element is null
-                if (player == null) continue;
+                if (player?.GetAccount() == null) continue;
 
                 // If player name contains provided name
                 var playerName = player.Name;
