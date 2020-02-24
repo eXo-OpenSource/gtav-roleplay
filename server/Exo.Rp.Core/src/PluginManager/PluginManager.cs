@@ -12,6 +12,9 @@ namespace server.PluginManager
 {
     public class PluginManager : IManager, IUpdateable, IDisposable
     {
+        private static readonly string PluginsPath = Path.Combine(Directory.GetCurrentDirectory(), "resources", Alt.Server.Resource.Name,
+            "plugins");
+
         private readonly RuntimeIndexer _indexer;
         private readonly List<IPlugin> _plugins;
 
@@ -30,8 +33,11 @@ namespace server.PluginManager
 
         private void IndexPlugins()
         {
+            if (!Directory.Exists(PluginsPath))
+                return;
+
             var plugins = Directory
-                .GetFiles(Path.Combine(Directory.GetCurrentDirectory(), "resources", Alt.Server.Resource.Name, "plugins"), "*.plugin.dll", SearchOption.TopDirectoryOnly)
+                .GetFiles(PluginsPath, "*.plugin.dll", SearchOption.TopDirectoryOnly)
                 .ToList().Select(Alt.LoadAssemblyFromPath);
 
             foreach (var plugin in plugins)
