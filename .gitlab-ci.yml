@@ -12,6 +12,20 @@ build_job:
         - |
             docker build \
                 --build-arg CI_BUILD_REF_NAME="$CI_BUILD_REF_NAME" \
+                --build-arg DATABASE_SERVER="${DATABASE_SERVER}" \
+                --build-arg DATABASE_USER_ID="${DATABASE_USER_ID}" \
+                --build-arg DATABASE_PASSWORD="${DATABASE_PASSWORD}" \
+                --build-arg DATABASE_NAME="${DATABASE_NAME}" \
+                --build-arg DATABASE_PORT="${DATABASE_PORT}" \
+                --build-arg DATABASE_QUERYLOG="${DATABASE_QUERYLOG}" \
+                --build-arg METRICSCOLLECTOR_HOST="${METRICSCOLLECTOR_HOST}" \
+                --build-arg METRICSCOLLECTOR_DATABASE="${METRICSCOLLECTOR_DATABASE}" \
+                --build-arg METRICSCOLLECTOR_USER="${METRICSCOLLECTOR_USER}" \
+                --build-arg METRICSCOLLECTOR_PASSWORD="${METRICSCOLLECTOR_PASSWORD}" \
+                --build-arg WOTLABAPI_URL="${WOTLABAPI_URL}" \
+                --build-arg WOTLABAPI_SECRET="${WOTLABAPI_SECRET}" \
+                --build-arg WOTLABAPI_ONLYBETA="${WOTLABAPI_ONLYBETA}" \
+                --build-arg WOTLABAPI_BETAGROUPID="${WOTLABAPI_BETAGROUPID}" \
                 --build-arg SENTRY_DSN="$SENTRY_DSN" \
                 --build-arg SENTRY_ENVIRONMENT="${CI_COMMIT_BRANCH//\//-}" \
                 --build-arg SENTRY_RELEASE="${CI_COMMIT_SHA}" \

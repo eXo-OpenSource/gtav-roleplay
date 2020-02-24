@@ -45,9 +45,23 @@ WORKDIR /config
 RUN apk add jq
 
 # Add and patch config
-ARG SENTRY_DSN="https://invalid"
-ARG SENTRY_ENVIRONMENT="invalid"
-ARG SENTRY_RELEASE="invalid"
+ARG SENTRY_DSN
+ARG SENTRY_ENVIRONMENT
+ARG SENTRY_RELEASE
+ARG DATABASE_SERVER
+ARG DATABASE_USER_ID
+ARG DATABASE_PASSWORD
+ARG DATABASE_NAME
+ARG DATABASE_PORT
+ARG DATABASE_QUERYLOG
+ARG METRICSCOLLECTOR_HOST
+ARG METRICSCOLLECTOR_DATABASE
+ARG METRICSCOLLECTOR_USER
+ARG METRICSCOLLECTOR_PASSWORD
+ARG WOTLABAPI_URL
+ARG WOTLABAPI_SECRET
+ARG WOTLABAPI_ONLYBETA
+ARG WOTLABAPI_BETAGROUPID
 
 ADD build/config.json.example config.unpatched.json
 RUN cat config.unpatched.json | \
@@ -61,7 +75,7 @@ RUN cat config.unpatched.json | \
     # Patch Logger section
     jq --arg data "63" '.Logger.LogFileFlags |= $data' | \
     jq --arg data "resources\\exov\\logs" '.Logger.PathToLogFolder |= $data' | \
-    jq --arg data "\$\{0\}.log" '.Logger.FileName |= $data' | \
+    jq --arg data "\${0}.log" '.Logger.FileName |= $data' | \
     # Patch MetricsCollector section
     jq --arg data "600000.0" '.MetricsCollector.Interval |= $data' | \
     jq --arg data "$METRICSCOLLECTOR_HOST" '.MetricsCollector.host |= $data' | \
