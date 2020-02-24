@@ -8,7 +8,7 @@ using Timer = System.Timers.Timer;
 
 namespace server.Metrics
 {
-    public class MetricsCollector
+    public class MetricsCollector : IDisposable
     {
         private static readonly Logger<MetricsCollector> Logger = new Logger<MetricsCollector>();
 
@@ -31,7 +31,7 @@ namespace server.Metrics
             _timer.Enabled = true;
         }
 
-        public void Stop()
+        public void Dispose()
         {
             _timer.Enabled = false;
         }

@@ -63,7 +63,8 @@ namespace server
                 .AddSingleton<InventoryManager>()
                 .AddSingleton<IplManager>()
                 .AddSingleton<JobManager>()
-                .AddSingleton<UpdateableManager>();
+                .AddSingleton<UpdateableManager>()
+                .AddSingleton<PluginManager.PluginManager>();
 
             // Start loading database mode/ls
             _databaseCore.OnResourceStartHandler(
@@ -124,6 +125,8 @@ namespace server
             _serviceProvider.GetService<JobManager>();
             Logger.Info("Services | Loading Updateable manager...");
             _updateableManager = _serviceProvider.GetService<UpdateableManager>();
+            Logger.Info("Services | Loading Plugin manager...");
+            _serviceProvider.GetService<PluginManager.PluginManager>();
 
             stopWatch.Stop();
             Logger.Debug($"Loaded services in {stopWatch.ElapsedMilliseconds} ms.");
@@ -132,7 +135,8 @@ namespace server
         public override void OnStop()
         {
             Logger.Info("Stopping metrics collector...");
-            _serviceProvider.GetService<MetricsCollector>().Stop();
+            _serviceProvider.GetService<MetricsCollector>().Dispose();
+            _serviceProvider.GetService<PluginManager.PluginManager>().Dispose();
 
             Logger.Info("Committing changes to database...");
             DatabaseCore.SaveChangeToDatabase();

@@ -35,7 +35,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AltV.Net" Version="1.27.2" />
+    <PackageReference Include="AltV.Net" Version="1.27.3" />
     <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="InfluxDB.Collector" Version="1.1.1-dev-10109" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.1">
@@ -49,7 +49,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Exo.Rp.Plugins.Core\Exo.Rp.Plugins.Core.csproj" />
     <ProjectReference Include="..\Exo.Rp.Models\Exo.Rp.Models.csproj" />
+    <ProjectReference Include="..\Exo.Rp.Plugins.Core\Exo.Rp.Plugins.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

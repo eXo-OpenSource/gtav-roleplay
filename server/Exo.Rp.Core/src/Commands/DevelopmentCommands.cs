@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Numerics;
+using System.Text;
 using System.Threading;
 using AltV.Net;
+using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
 using models.Enums;
 using Newtonsoft.Json;
@@ -10,6 +12,7 @@ using server.Admin;
 using server.Database;
 using server.Extensions;
 using server.Jobs;
+using server.Players;
 using server.Shops;
 using server.Shops.Types;
 using server.Teams.State;
@@ -41,12 +44,12 @@ namespace server.Commands
                 player.GetCharacter().SetTemporarySkin(PedModel.Crow);
         }
 
-        [Command("skin", RequiredAdminLevel = AdminLevel.Moderator)]
+        [Command("skin", Alias = "char", RequiredAdminLevel = AdminLevel.Moderator)]
         public static void Skin(IPlayer player, string modelString)
         {
             if (!Enum.TryParse(modelString, out PedModel model))
             {
-                Alt.Log("Model nicht gefunden!");
+                player.SendError("Model nicht gefunden!");
                 return;
             }
 
@@ -76,6 +79,27 @@ namespace server.Commands
             } else
             {
                 player.SendError("Fahrzeug wurde nicht gefunden!".Translate(player));
+            }
+        }
+
+        [Command("weather", RequiredAdminLevel = AdminLevel.Administrator)]
+        public static void ChangeWeather(IPlayer player, string weatherName)
+        {
+            if (Enum.IsDefined(typeof(WeatherType), weatherName))
+            {
+                foreach (var _player in Alt.GetAllPlayers())
+                {
+                    _player.SetWeather(Enum.Parse<WeatherType>(weatherName));
+                }
+            } else
+            {
+                player.SendError("Wetter nicht gefunden!".Translate(player));
+
+                var builder = new StringBuilder();
+                foreach (var pos in Enum.GetNames(typeof(WeatherType))) builder.Append($"{pos}").Append(',').Append(' ');
+                var result = builder.ToString();
+                result = result.TrimEnd(' ').TrimEnd(',');
+                player.SendInformation("Moegliche Wetter sind: " + result);
             }
         }
 

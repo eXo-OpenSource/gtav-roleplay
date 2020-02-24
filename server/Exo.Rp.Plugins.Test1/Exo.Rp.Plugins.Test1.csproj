@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RuntimeIdentifiers>win10-x64;debian.9-x64</RuntimeIdentifiers>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <GenerateRuntimeConfigurationFiles>false</GenerateRuntimeConfigurationFiles>
+    <Platforms>x64</Platforms>
+    <AssemblyName>Exo.Rp.Plugins.Test1.plugin</AssemblyName>
+    <Authors>eXo Roleplay Developers</Authors>
+    <Company>eXo Roleplay</Company>
+    <Product>eXo Roleplay Server</Product>
+    <RootNamespace>plugins.Test1</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+    <OutputPath>..\bin\server\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <PlatformTarget>x64</PlatformTarget>
+    <Optimize>false</Optimize>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <OutputPath>..\bin\plugins</OutputPath>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <PlatformTarget>x64</PlatformTarget>
+    <DefineConstants></DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Exo.Rp.Plugins.Core\Exo.Rp.Plugins.Core.csproj" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="copy /b/v/y &quot;$(OutDir)/*&quot;  &quot;$(OutDir)/../../server/netcoreapp3.1/plugins/&quot;" />
+  </Target>
+
+</Project>
