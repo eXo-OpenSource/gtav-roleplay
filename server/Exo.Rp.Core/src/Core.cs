@@ -134,8 +134,9 @@ namespace server
         
         public override void OnStop()
         {
-            Logger.Info("Stopping metrics collector...");
+            Logger.Info("Disposing Metrics collector...");
             _serviceProvider.GetService<MetricsCollector>().Dispose();
+            Logger.Info("Disposing Plugin manager...");
             _serviceProvider.GetService<PluginManager.PluginManager>().Dispose();
 
             Logger.Info("Committing changes to database...");
