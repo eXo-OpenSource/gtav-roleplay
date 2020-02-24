@@ -1,33 +1,33 @@
 {
   "ServerConsoleFlags": 63,
   "Database": {
-    "Server": "148.251.132.111",
-    "UserId": "exoV",
-    "Password": "6LdyVn3uQJbfdSJJ",
-    "Database": "gtav_dev",
-    "Port": 6033,
-    "QueryLog": false
+    "Server": "",
+    "UserId": "",
+    "Password": "",
+    "Database": "",
+    "Port": null,
+    "QueryLog": null
   },
   "Logger": {
-    "LogFileFlags": 63,
-    "PathToLogFolder": "resources\\exov\\logs",
-    "FileName": "{0}.log"
+    "LogFileFlags": "",
+    "PathToLogFolder": "",
+    "FileName": ""
   },
   "DataSync": {
     "Interval": 500.0
   },
   "MetricsCollector": {
-    "Interval": 600000.0,
-    "host": "https://influxdb.merx.dev:443",
-    "database": "exov",
-    "user": "exov",
-    "password": "Cxv.oF73J!i8CtpebZvNFYuRHwW*!GCY"
+    "Interval": null,
+    "host": "",
+    "database": "",
+    "user": "",
+    "password": ""
   },
   "WotlabApi": {
-    "Url": "https://exo-roleplay.de/forum/?user-api",
-    "Secret": "jWTf6KBkVcJI$m0kP2tR_M",
-    "OnlyBeta": true,
-    "BetaGroupId": 7
+    "Url": "",
+    "Secret": "",
+    "OnlyBeta": null,
+    "BetaGroupId": null
   },
   "Sentry": {
     "DSN": "",

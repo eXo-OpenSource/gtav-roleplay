@@ -51,10 +51,33 @@ ARG SENTRY_RELEASE="invalid"
 
 ADD build/config.json.example config.unpatched.json
 RUN cat config.unpatched.json | \
+    # Patch Database section
+    jq --arg data "$DATABASE_SERVER" '.Database.Server |= $data' | \
+    jq --arg data "$DATABASE_USER_ID" '.Database.UserId |= $data' | \
+    jq --arg data "$DATABASE_PASSWORD" '.Database.Password |= $data' | \
+    jq --arg data "$DATABASE_NAME" '.Database.Database |= $data' | \
+    jq --arg data "$DATABASE_PORT" '.Database.Port |= $data' | \
+    jq --arg data "$DATABASE_QUERYLOG" '.Database.QueryLog |= $data' | \
+    # Patch Logger section
+    jq --arg data "63" '.Logger.LogFileFlags |= $data' | \
+    jq --arg data "resources\\exov\\logs" '.Logger.PathToLogFolder |= $data' | \
+    jq --arg data "\$\{0\}.log" '.Logger.FileName |= $data' | \
+    # Patch MetricsCollector section
+    jq --arg data "600000.0" '.MetricsCollector.Interval |= $data' | \
+    jq --arg data "$METRICSCOLLECTOR_HOST" '.MetricsCollector.host |= $data' | \
+    jq --arg data "$METRICSCOLLECTOR_DATABASE" '.MetricsCollector.database |= $data' | \
+    jq --arg data "$METRICSCOLLECTOR_USER" '.MetricsCollector.user |= $data' | \
+    jq --arg data "$METRICSCOLLECTOR_PASSWORD" '.MetricsCollector.password |= $data' | \
+    # Patch WotlabApi section
+    jq --arg data "$WOTLABAPI_URL" '.WotlabApi.Url |= $data' | \
+    jq --arg data "$WOTLABAPI_SECRET" '.WotlabApi.Secret |= $data' | \
+    jq --arg data "$WOTLABAPI_ONLYBETA" '.WotlabApi.OnlyBeta |= $data' | \
+    jq --arg data "$WOTLABAPI_BETAGROUPID" '.WotlabApi.BetaGroupId |= $data' | \
     # Patch Sentry section
     jq --arg data "$SENTRY_DSN" '.Sentry.DSN |= $data' | \
     jq --arg data "$SENTRY_ENVIRONMENT" '.Sentry.Environment |= $data' | \
     jq --arg data "$SENTRY_RELEASE" '.Sentry.Release |= $data' | \
+    # Write to config.json
     cat >> config.json
 
 
