@@ -8,3 +8,5 @@
 7. For the client type: `mklink /J "exov-client" "REPO_DIR/client"`
 8. In the repo root create a folder called `bin` and launch a command prompt in it
 9. Type: `mklink /J "altv" "ALTV_DIR/server"`
+10. Open `Exo Roleplay.sln` and build the project with `Ctrl+Shift+B`
+11. Start `altv-server.exe`
