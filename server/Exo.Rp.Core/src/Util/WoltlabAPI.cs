@@ -43,12 +43,13 @@ namespace server.Util
                 Logger.Debug(responseString);
             }
 
+            Logger.Info($"Received following response from Wotlab Api: {response.StatusCode} {responseString}");
+
             var result = JsonConvert.DeserializeObject<WbbLoginResponse>(responseString);
             if (result.status != null && result.status == 200)
                 return settings.OnlyBeta == false || CheckGroup(result.data.groups, settings.BetaGroupId)
                     ? LoginStatus.Success
                     : LoginStatus.NoBetaAccess;
-
 
             return LoginStatus.InvalidCredentials;
         }
