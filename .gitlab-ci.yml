@@ -58,8 +58,8 @@ deploy_job_develop:
     script:
         - curl http://$DEPLOYRON_IP:6000/deploy/altv_develop?APISecret=$DEPLOY_API_SECRET_DEVELOP
     environment:
-        name: MASTER
-        url: https://join.v.stivik.de
+        name: $CI_COMMIT_REF_NAME
+        url: https://join.v.stivik.de/$CI_COMMIT_REF_NAME
     only:
       - master
 
