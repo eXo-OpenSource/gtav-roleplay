@@ -87,7 +87,7 @@ namespace server.Util.Settings
                     Url = "https://exo-roleplay.de/forum/?user-api",
                     Secret = "jWTf6KBkVcJI$m0kP2tR_M",
                     OnlyBeta = true,
-                    BetaGroupId = 7
+                    BetaGroupId = 9
                 },
                 Sentry = new SentrySettings
                 {
