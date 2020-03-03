@@ -32,6 +32,10 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutputPath>..\bin\server\</OutputPath>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="AltV.Net" Version="1.27.3" />
     <PackageReference Include="AutoMapper" Version="9.0.0" />
