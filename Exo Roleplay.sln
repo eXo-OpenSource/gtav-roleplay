@@ -16,6 +16,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server.Components", "Server.Components", "{11EBF72F-83DF-48A9-9ABD-EBFBC5EB98E1}"
 EndProject
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "Exo.Rp.Core", "client\Exo.Rp.Core.njsproj", "{2E9A710B-12BA-4BD0-A162-1E858D7A8ECB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D0098DE3-4F60-4518-B50E-16C3F990E0C5} = {D0098DE3-4F60-4518-B50E-16C3F990E0C5}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client.Components", "Client.Components", "{CF991E32-5FB0-42B3-9A9F-92E9E76E005E}"
 EndProject
