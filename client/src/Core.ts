@@ -2,7 +2,7 @@ import * as alt from "alt";
 import { Singleton } from "./utils/Singleton";
 import { RegisterLogin } from './ui/RegisterLogin';
 import { UiManager } from './ui/UiManager';
-import { log } from "util";
+// import { log } from "util";
 import {Vehicle} from "./systems/Vehicle";
 import {Notification} from "./systems/Notification";
 
