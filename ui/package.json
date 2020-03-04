@@ -19,12 +19,14 @@
     "webpack-cli": "~3.1.2"
   },
   "scripts": {
-    "build": "webpack-cli src/index.jsx --config webpack-config.js"
+    "build": "webpack-cli src/index.jsx --config webpack-config-prod.js",
+    "dev": "webpack-dev-server --open --config webpack-config-dev.js"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",
     "@babel/preset-env": "^7.8.6",
     "@babel/preset-react": "^7.8.3",
-    "babel-loader": "^8.0.6"
+    "babel-loader": "^8.0.6",
+    "webpack-dev-server": "^3.10.3"
   }
 }

@@ -7,14 +7,19 @@ const APP_DIR = path.resolve(__dirname, "./src/");
 
 module.exports = {
     devtool: 'source-map',
-    entry: "../src/index.jsx",
     mode: "development",
+    watch: true,
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: "./app-bundle.js"
     },
     resolve: {
         extensions: ['.js', '.jsx']
+    },
+    devServer: {
+        contentBase: path.join(__dirname, 'dist'),
+        compress: true,
+        port: 9000
     },
     module: {
         rules: [
@@ -30,4 +35,4 @@ module.exports = {
     },
     plugins: [new HtmlWebpackPlugin({ title: 'eXo UI' }),
         new HtmlWebpackRootPlugin()]
-}
+};
