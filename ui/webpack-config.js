@@ -1,23 +1,29 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackRootPlugin = require('html-webpack-root-plugin');
+const path = require('path');
+
+
+const APP_DIR = path.resolve(__dirname, "./src/");
 
 module.exports = {
     devtool: 'source-map',
-    entry: "./app.tsx",
+    entry: "../src/index.jsx",
     mode: "development",
     output: {
+        path: path.resolve(__dirname, 'dist'),
         filename: "./app-bundle.js"
     },
     resolve: {
-        extensions: ['.Webpack.js', '.web.js', '.ts', '.js', '.jsx', '.tsx']
+        extensions: ['.js', '.jsx']
     },
     module: {
         rules: [
             {
-                test: /\.tsx$/,
-                exclude: /(node_modules|bower_components)/,
+                test: /\.(jsx)$/,
+                exclude: /node_modules/,
+                include: APP_DIR,
                 use: {
-                    loader: 'ts-loader'
+                    loader: "babel-loader"
                 }
             }
         ]
