@@ -15,3 +15,19 @@
 .btn-primary:hover {
     @apply bg-blue-700;
 }
+
+.card {
+    @apply rounded-lg shadow-lg;
+}
+
+.card-header {
+    @apply px-4 py-4 text-xl rounded-t-lg font-bold text-white text-center bg-blue-400;
+}
+
+.card-body {
+    @apply pt-2 px-6 pb-6 bg-gray-700-alpha-80 opacity-75;
+}
+
+.card-footer {
+    @apply px-6 py-4 card-footer bg-gray-700 rounded-b-lg;
+}
