@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Route } from "react-router-dom";
+import { HashRouter, Route } from "react-router-dom";
 import LoginForm from "./forms/login";
 
 import './root.css';
@@ -8,9 +8,9 @@ import './root.css';
 class App extends Component {
     render() {
         return (
-            <BrowserRouter>
+            <HashRouter>
                 <Route path="/login" component={LoginForm}/>
-            </BrowserRouter>
+            </HashRouter>
     );
     }
 }

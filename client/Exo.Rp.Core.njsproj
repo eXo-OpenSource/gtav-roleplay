@@ -35,14 +35,6 @@
     <Content Include="cef\chat\app.js" />
     <Content Include="cef\chat\index.html" />
     <Content Include="cef\chat\style.css" />
-    <Content Include="cef\login\app.js" />
-    <Content Include="cef\login\index.html" />
-    <Content Include="cef\_assets\css\bootstrap.min.css" />
-    <Content Include="cef\_assets\css\bootstrap.min.css.map" />
-    <Content Include="cef\_assets\css\style.css" />
-    <Content Include="cef\_assets\js\babel.min.js" />
-    <Content Include="cef\_assets\js\react.dom.js" />
-    <Content Include="cef\_assets\js\react.js" />
     <Content Include="package.json" />
     <Content Include="README.md" />
     <Content Include="src\systems\Vehicle.ts" />
@@ -51,10 +43,6 @@
   <ItemGroup>
     <Folder Include="cef\" />
     <Folder Include="cef\chat\" />
-    <Folder Include="cef\login\" />
-    <Folder Include="cef\_assets\" />
-    <Folder Include="cef\_assets\css\" />
-    <Folder Include="cef\_assets\js\" />
     <Folder Include="src\" />
     <Folder Include="src\chat\" />
     <Folder Include="src\systems\" />
@@ -70,6 +58,7 @@
     <TypeScriptCompile Include="src\systems\Ped.ts" />
     <TypeScriptCompile Include="src\systems\Vehicle.ts" />
     <TypeScriptCompile Include="src\ui\FaceFeaturesUi.ts" />
+    <TypeScriptCompile Include="src\ui\RegisterLogin.ts" />
     <TypeScriptCompile Include="src\ui\UiManager.ts" />
     <TypeScriptCompile Include="src\utils\Camera.ts" />
     <TypeScriptCompile Include="src\utils\Cursor.ts" />

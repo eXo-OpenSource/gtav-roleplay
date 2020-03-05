@@ -2,7 +2,7 @@ import * as alt from 'alt';
 import { View } from '../utils/View'
 import * as chat from '../chat/Chat';
 
-const url = 'http://resource/cef/login/index.html';
+const url = 'http://resource/cef/index.html#/login';
 
 export class RegisterLogin {
     private webview: View;
