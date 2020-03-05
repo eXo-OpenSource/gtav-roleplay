@@ -34,22 +34,15 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include=".babelrc">
-      <SubType>Code</SubType>
-    </Content>
+    <Content Include=".babelrc" />
     <Content Include="index.html" />
     <Content Include="package.json" />
     <Content Include="README.md" />
-    <Content Include="src\forms\login.jsx" />
-    <Content Include="src\index.jsx">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="src\root.css" />
+    <Content Include="src\**\*.jsx" />
+    <Content Include="src\**\*.css" />
     <Content Include="tailwind.config.js" />
     <Content Include="webpack-config-dev.js" />
-    <Content Include="webpack-config-prod.js">
-      <SubType>Code</SubType>
-    </Content>
+    <Content Include="webpack-config-prod.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="src\" />
