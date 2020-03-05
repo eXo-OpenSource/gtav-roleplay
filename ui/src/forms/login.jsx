@@ -43,19 +43,19 @@ class LoginForm extends Component {
     }
 
     render() {
-        return <div className="container">
-                   <div className="col-4" style={{ margin: "0 auto", marginTop: "20%" }}>
-                       <div className="card">
-                           <div className="card-header">Login</div>
+        return <div className="container mx-auto rounded shadow-lg max-w-md">
+                   <div className="" style={{ margin: "0 auto", marginTop: "20%" }}>
+                       <div className="px-6">
+                           <div className="px-4 py-4 text-xl">Login</div>
                            <div className="card-body">
-                               {this.state.error ? <div class="alert alert-danger">{this.state.error}</div> : null}
+                               {this.state.error ? <div className="alert alert-danger">{this.state.error}</div> : null}
                                <p>Benutzername:</p>
-                               <input className="form-control" value={this.state.name} name='user' onChange={this.onChange} type="text"></input>
+                               <input className="border rounded w-full appearance-none py-2" value={this.state.name} name='user' onChange={this.onChange} type="text"/>
                                <p>Passwort:</p>
-                               <input className="form-control" value={this.state.password} name="password" onChange={this.onChange} type="password"></input>
+                               <input className="form-control" value={this.state.password} name="password" onChange={this.onChange} type="password"/>
                            </div>
                            <div className="card-footer">
-                               <button class="btn btn-primary" onClick={this.onLoginClick}>Login</button>
+                               <button className="btn btn-primary" onClick={this.onLoginClick}>Login</button>
                            </div>
                        </div>
                    </div>

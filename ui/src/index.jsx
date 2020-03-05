@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter, Route } from "react-router-dom";
+import LoginForm from "./forms/login";
+
+import './root.css';
 
 class App extends Component {
     render() {
         return (
-            <div>
-                <h1>Welcome to React!!</h1>
-            </div>
+            <BrowserRouter>
+                <Route path="/login" component={LoginForm}/>
+            </BrowserRouter>
     );
     }
 }

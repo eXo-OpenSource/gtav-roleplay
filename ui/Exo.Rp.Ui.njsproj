@@ -44,6 +44,7 @@
     <Content Include="src\index.jsx">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="src\root.css" />
     <Content Include="webpack-config-dev.js" />
     <Content Include="webpack-config-prod.js">
       <SubType>Code</SubType>

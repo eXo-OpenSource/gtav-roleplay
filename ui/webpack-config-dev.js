@@ -19,7 +19,7 @@ module.exports = {
     devServer: {
         contentBase: path.join(__dirname, 'dist'),
         compress: true,
-        port: 9000
+        port: 8090
     },
     module: {
         rules: [
@@ -30,6 +30,29 @@ module.exports = {
                 use: {
                     loader: "babel-loader"
                 }
+            },
+            {
+                test: /\.(css)$/,
+                exclude: /node_modules/,
+                use: [
+                    {
+                        loader: 'style-loader',
+                    },
+                    {
+                        loader: 'css-loader',
+                        options: {importLoaders: 1},
+                    },
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            ident: 'postcss',
+                            plugins: [
+                                require('tailwindcss'),
+                                require('autoprefixer'),
+                            ],
+                        },
+                    }
+                ]
             }
         ]
     },
