@@ -10,3 +10,7 @@
 9. Type: `mklink /J "altv" "ALTV_DIR/server"`
 10. Open `Exo Roleplay.sln` and build the project with `Ctrl+Shift+B`
 11. Start `altv-server.exe`
+
+# UI Development To Knows
+* Development in Browser: `npm run dev`
+* Build vor Alt:V Server: `npm run build`
