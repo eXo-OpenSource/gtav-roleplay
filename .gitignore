@@ -40,3 +40,5 @@ node_modules/
 
 # Client
 client/build/
+app-bundle.js
+app-bundle.js.map
