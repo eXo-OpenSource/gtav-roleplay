@@ -35,7 +35,18 @@ RUN npm install
 RUN npm run build && \
     npm run clean
 
+# Add UI files
+RUN mkdir -p ui
+ADD ui/src          ui/src/
+ADD ui/*.babelrc    ui/
+ADD ui/*.js         ui/
+ADD ui/*.json       ui/
+ADD ui/*.html       ui/
 
+# Install typescript and compile project
+WORKDIR /app/ui
+RUN npm install
+RUN npm run build
 
 ## Config Patcher
 FROM alpine as configpatcher
