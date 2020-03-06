@@ -36,6 +36,7 @@ RUN npm run build && \
     npm run clean
 
 # Add UI files
+WORKDIR /app
 RUN mkdir -p ui
 ADD ui/src          ui/src/
 ADD ui/*.babelrc    ui/
