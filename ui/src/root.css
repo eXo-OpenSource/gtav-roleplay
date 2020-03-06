@@ -2,8 +2,6 @@
 
 @tailwind components;
 
-@tailwind utilities;
-
 .btn {
     @apply font-bold py-2 px-4 rounded;
 }
@@ -31,3 +29,5 @@
 .card-footer {
     @apply px-6 py-4 card-footer bg-gray-700 rounded-b-lg;
 }
+
+@tailwind utilities;

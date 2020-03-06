@@ -42,3 +42,4 @@ node_modules/
 client/build/
 app-bundle.js
 app-bundle.js.map
+index.html
