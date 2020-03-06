@@ -21,8 +21,7 @@ FROM node as builder_client
 WORKDIR /app
 
 # Add client files
-RUN mkdir -p client
-ADD client/cef          client/cef/
+RUN mkdir -p client/cef
 ADD client/src          client/src/
 ADD client/*.cfg        client/
 ADD client/*.json       client/
