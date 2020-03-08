@@ -11,7 +11,7 @@ import './root.css';
 class App extends Component {
     render() {
         return <div>
-            <Chat></Chat>
+            <Chat/>
 
             <HashRouter>
                 <Route path="/login" component={LoginForm} />
