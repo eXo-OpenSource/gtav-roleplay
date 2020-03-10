@@ -1,24 +1,25 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { HashRouter, Route, Switch, Link } from "react-router-dom";
+import { HashRouter as Router, Route, Switch, Link } from "react-router-dom";
 import Chat from "./hud/chat";
-import loadable from "@loadable/component";
+import loadable, { Options as LoadableOptions } from "@loadable/component";
 
 import './root.css';
 
-const LoadableLoginComponent = loadable(() => import("./forms/login"));
-const LoadableCharacterCreatorComponent = loadable(() => import("./forms/character-creator"));
+const loadableOptions = { };
+const LoadableLoginComponent = loadable(() => import("./forms/login"), loadableOptions);
+const LoadableCharacterCreatorComponent = loadable(() => import("./forms/character-creator"), loadableOptions);
 
 class App extends Component {
     render() {
         return (
 			<div>
-				<HashRouter>
+				<Router>
 					<Switch>
-						<Route exact path="/login" component={LoadableLoginComponent} />
-						<Route exact path="/charactercreator" component={LoadableCharacterCreatorComponent} />
+						<Route path="/login" component={LoadableLoginComponent} />
+						<Route path="/charactercreator" component={LoadableCharacterCreatorComponent} />
 					</Switch>
-				</HashRouter>
+				</Router>
 				<Chat/>
 			</div>
 		)

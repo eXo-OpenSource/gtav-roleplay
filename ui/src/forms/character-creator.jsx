@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
+import { Route } from 'react-router';
+import LoginForm from './login';
 
 class CharacterCreatorForm extends Component {
-    
+
     constructor(props) {
         super(props);
     }
-    
+
     componentDidMount() {
-        
+
     }
-    
+
     render() {
         return (
             <div className="container ml-auto mr-4 mt-12 max-w-md">
@@ -31,7 +33,7 @@ class CharacterCreatorForm extends Component {
                         </div>
                     </div>
                     <div className="card-footer">
-                        
+
                     </div>
                 </div>
             </div>
