@@ -7,17 +7,14 @@ import CharacterCreatorForm from "./forms/character-creator";
 
 import './root.css';
 
-
 class App extends Component {
     render() {
         return <div>
             <Chat/>
-
             <HashRouter>
                 <Route path="/login" component={LoginForm} />
                 <Route path="/charactercreator" component={CharacterCreatorForm} />
             </HashRouter>
-
        </div> 
     }
 }
