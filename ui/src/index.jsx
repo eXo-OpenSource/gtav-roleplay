@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { HashRouter, Route, Switch, Link } from "react-router-dom";
-import LoginForm from "./forms/login";
 import Chat from "./hud/chat";
-import CharacterCreatorForm from "./forms/character-creator";
+import loadable from "@loadable/component";
 
 import './root.css';
+
+const LoadableLoginComponent = loadable(() => import("./forms/login"));
+const LoadableCharacterCreatorComponent = loadable(() => import("./forms/character-creator"));
 
 class App extends Component {
     render() {
@@ -13,9 +15,12 @@ class App extends Component {
 			<div>
 				<HashRouter>
 					<Switch>
-						<Route exact path="/login" component={LoginForm} />
-						<Route exact path="/charactercreator" component={CharacterCreatorForm} />
+						<Route exact path="/login" component={LoadableLoginComponent} />
+						<Route exact path="/charactercreator" component={LoadableCharacterCreatorComponent} />
 					</Switch>
+
+					<Link to="/login">Login</Link><br/>
+					<Link to="/charactercreator">Character creator</Link>
 				</HashRouter>
 				<Chat/>
 			</div>

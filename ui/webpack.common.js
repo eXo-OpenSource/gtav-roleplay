@@ -1,18 +1,14 @@
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const HtmlWebpackRootPlugin = require("html-webpack-root-plugin");
 const path = require("path");
-
 
 const APP_DIR = path.resolve(__dirname, "./src/");
 
 module.exports = {
     devtool: "source-map",
-    entry: "../src/index.jsx",
-    mode: "development",
-    output: {
-        path: path.resolve(__dirname, "../client/cef/"),
-        filename: "./app-bundle.js"
-    },
+	entry: "./src/index.jsx",
+	output: {
+		filename: "[name].bundle.js",
+		chunkFilename: '[name].bundle.js',
+	},
     resolve: {
         extensions: [".js", ".jsx"]
     },
@@ -49,7 +45,5 @@ module.exports = {
                 ]
             }
         ]
-    },
-    plugins: [new HtmlWebpackPlugin({ title: "eXo UI" }),
-        new HtmlWebpackRootPlugin()]
+    }
 };
