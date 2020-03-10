@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-
 import SimpleBar from 'simplebar-react';
 import 'simplebar/dist/simplebar.min.css';
-
 
 class Chat extends Component {
 
@@ -27,8 +25,6 @@ class Chat extends Component {
                 { type: "chat", player: "gatno", msg: "Ja das stimmt!" },
                 { type: "chat", player: "gatno", msg: "Ja das stimmt!" },
                 { type: "chat", player: "gatno", msg: "Ja das stimmt!" },
-
-
             ],
             currentMessage: "",
             chatEnabled: true,
@@ -52,7 +48,7 @@ class Chat extends Component {
             this.scrollToBottom("auto");
         }, 50)
     }
-        
+
     setVisible(state) {
         this.setState({
             chatVisible: state
@@ -64,7 +60,7 @@ class Chat extends Component {
             });
         }
     }
-    
+
     setEnabled(state) {
         this.setState({
             chatEnabled: state,
@@ -76,17 +72,17 @@ class Chat extends Component {
             });
         }
     }
-    
+
     clear() {
         this.setState({
             messages: [],
         });
     }
-    
+
     scrollToBottom(behavior = "smooth") {
         this.msgEnd.scrollIntoView({ behavior: behavior });
     }
-    
+
     onKeyDown(event) {
         if (!this.state.chatEnabled) return;
 
@@ -140,30 +136,33 @@ class Chat extends Component {
 
     renderMessages() {
         return this.state.messages.map((value, key) => {
-            return (<div key={key} className="text-white" style={{ textShadow: "0px 0px 4px black" }}>
-                       <strong>{value.player}:</strong> {value.msg}
-                   </div>);
+            return (
+				<div key={key} className="text-white" style={{ textShadow: "0px 0px 4px black" }}>
+					<strong>{value.player}:</strong> {value.msg}
+				</div>
+			);
         });
     }
 
     render() {
-        return this.state.chatVisible
-            ? <div className="w-1/4 container rounded px-3 py-3">
-                  <SimpleBar style={{ maxHeight: 200 }}>
-                        {this.renderMessages()}
-                        <div ref={(msgEnd) => { this.msgEnd = msgEnd; }} />
-                  </SimpleBar>
-                  {this.state.chatBoxVisible
-                      ? <input
-                          ref={(input) => { this.chatInput = input; }}
-                          className="border rounded w-full appearance-none py-2"
-                          value={this.state.currentMessage}
-                          onChange={this.onChatInputChange.bind(this)}
-                          type="text"
-                        />
-                      : null}
-              </div>
-            : null;
+        return this.state.chatVisible ?
+			(
+				<div className="w-1/4 container rounded px-3 py-3">
+					<SimpleBar style={{ maxHeight: 200 }}>
+						{this.renderMessages()}
+						<div ref={(msgEnd) => { this.msgEnd = msgEnd; }} />
+					</SimpleBar>
+					{this.state.chatBoxVisible
+						? <input
+							ref={(input) => { this.chatInput = input; }}
+							className="border rounded w-full appearance-none py-2"
+							value={this.state.currentMessage}
+							onChange={this.onChatInputChange.bind(this)}
+							type="text"
+						/>
+						: null}
+				</div>
+			) : null;
     }
 }
 
