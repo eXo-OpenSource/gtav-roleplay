@@ -42,4 +42,7 @@ node_modules/
 client/build/
 *.bundle.js
 *.bundle.js.map
+*.bundle.js.gz
+*.bundle.js.map.gz
 index.html
+index.html.gz

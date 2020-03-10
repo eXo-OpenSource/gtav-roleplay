@@ -10,7 +10,7 @@ WORKDIR /app
 # Restore nuget packages and build binaries
 RUN mkdir -p server
 ADD server/Exo.Rp.Core                      server/Exo.Rp.Core
-ADD server/Exo.Rp.Models                    server/Exo.Rp.Models 
+ADD server/Exo.Rp.Models                    server/Exo.Rp.Models
 ADD server/Exo.Rp.Serialization             server/Exo.Rp.Serialization
 ADD server/Exo.Rp.Plugins.Core              server/Exo.Rp.Plugins.Core
 RUN dotnet restore                          server/Exo.Rp.Core
