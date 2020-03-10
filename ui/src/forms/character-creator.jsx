@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router';
-import LoginForm from './login';
 
 class CharacterCreatorForm extends Component {
 

@@ -47,6 +47,7 @@
   <ItemGroup>
     <Folder Include="src\" />
     <Folder Include="src\forms\" />
+    <Folder Include="src\hud\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
   <ProjectExtensions>
