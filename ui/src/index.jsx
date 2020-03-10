@@ -18,9 +18,6 @@ class App extends Component {
 						<Route exact path="/login" component={LoadableLoginComponent} />
 						<Route exact path="/charactercreator" component={LoadableCharacterCreatorComponent} />
 					</Switch>
-
-					<Link to="/login">Login</Link><br/>
-					<Link to="/charactercreator">Character creator</Link>
 				</HashRouter>
 				<Chat/>
 			</div>
