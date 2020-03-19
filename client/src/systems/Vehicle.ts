@@ -1,4 +1,4 @@
-import alt, {Player} from 'alt';
+import alt, {Entity, Player} from 'alt';
 import * as native from 'natives';
 import {distance} from "../utils/Vector";
 
@@ -61,10 +61,20 @@ alt.on("keyup", (key) => {
         } else {*/
             native.taskEnterVehicle(player.scriptID, vehicle, 5000, nearestSeat, 2, 1, 0);
         //}
-    } else if(key == 0x58) {
+    } else if(key == 0x58 && alt.gameControlsEnabled()) { //X
     	alt.emitServer("Vehicle:ToggleEngine")
+	} else if(key == 76 && alt.gameControlsEnabled()) { //L
+		alt.emitServer("Vehicle:ToggleLight")
 	}
 });
+
+alt.on("streamSyncedMetaChange", (entity: Entity, key: string, value: any) => {
+	if (entity.type == 1) {
+		if(key == "vehicle.Light") {
+			native.setVehicleLights(entity.scriptID, (value as boolean) ? 2 : 1);
+		}
+	}
+})
 
 //disable seat shuffling and engine key turning
 alt.everyTick(() => {

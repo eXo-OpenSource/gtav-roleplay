@@ -1,4 +1,4 @@
-﻿using AltV.Net;
+using AltV.Net;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
@@ -70,7 +70,7 @@ namespace server.Vehicles
         public virtual void ToggleLight()
         {
             _lightStatus = !_lightStatus;
-            handle.SetSyncedMetaData("vehicle.Light", _lightStatus);
+            handle.SetStreamSyncedMetaData("vehicle.Light", _lightStatus);
         }
 
         public virtual void ToggleSeatbelt(IPlayer client, bool state)

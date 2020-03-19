@@ -1,4 +1,4 @@
-﻿using AltV.Net;
+using AltV.Net;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
 using server.Util;
@@ -62,6 +62,13 @@ namespace server.Events.Vehicles
             {
                 vehicle.ToggleEngine(false);
             }
+        }
+
+        [ClientEvent("Vehicle:ToggleLight")]
+        public void OnVehicleLightSwitch(IPlayer client)
+        {
+	        var vehicle = Core.GetService<VehicleManager>().GetVehicleFromHandle<server.Vehicles.Vehicle>(client.Vehicle);
+	        vehicle.ToggleLight();
         }
 
         [Event("onVehicleLockSwitch")]
