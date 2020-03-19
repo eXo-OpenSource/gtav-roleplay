@@ -5,7 +5,7 @@ import {distance} from "../utils/Vector";
 alt.log('Loaded: client->utility->vehicle.mjs');
 
 export class Vehicle {
-    
+
 }
 
 alt.onServer("Vehicle:SetIntoVehicle", (veh, seat) => {
@@ -38,19 +38,19 @@ alt.on("keyup", (key) => {
     if(key == 0x47 && alt.gameControlsEnabled()) {
         const player = alt.Player.local;
         let vehicle = native.getClosestVehicle(player.pos.x, player.pos.y, player.pos.z, 5.0, 0, 70);
-        
+
         if(!vehicle) return;
-        
+
         if(!native.areAnyVehicleSeatsFree(vehicle)) return;
-        
+
         let nearestSeatDistance = Number.MAX_VALUE;
         let nearestSeat = 0;
         for (let i=0; i<= seatBones.length; i++) {
             if(!native.isVehicleSeatFree(vehicle, i, false)) continue;
-            
+
             const boneIndex = native.getEntityBoneIndexByName(vehicle, seatBones[i]);
             if(boneIndex == -1) continue;
-            
+
             const dist = distance(native.getWorldPositionOfEntityBone(vehicle, boneIndex), player.pos);
             if(dist > nearestSeatDistance) continue;
             nearestSeatDistance = dist;
@@ -61,11 +61,14 @@ alt.on("keyup", (key) => {
         } else {*/
             native.taskEnterVehicle(player.scriptID, vehicle, 5000, nearestSeat, 2, 1, 0);
         //}
-    }
+    } else if(key == 0x58) {
+    	alt.emitServer("Vehicle:ToggleEngine")
+	}
 });
 
-//disable seat shuffling
+//disable seat shuffling and engine key turning
 alt.everyTick(() => {
    if(alt.Player.local.vehicle == null) return;
    native.setPedConfigFlag(alt.Player.local.scriptID, 184, true);
+   native.setPedConfigFlag(alt.Player.local.scriptID, 429, true);
 });

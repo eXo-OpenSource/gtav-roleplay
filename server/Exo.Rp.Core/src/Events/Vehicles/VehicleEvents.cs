@@ -50,7 +50,7 @@ namespace server.Events.Vehicles
             vehicle?.OnStartExit(client);
         }
 
-        [Event("onVehicleEngineSwitchBind")]
+        [Event("Vehicle:ToggleEngine")]
         public void OnVehicleEngineSwitchBind(IPlayer client)
         {
             var vehicle = Core.GetService<VehicleManager>().GetVehicleFromHandle<server.Vehicles.Vehicle>(client.Vehicle);

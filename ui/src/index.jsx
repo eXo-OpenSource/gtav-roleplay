@@ -5,6 +5,7 @@ import Chat from "./hud/chat";
 import loadable, { Options as LoadableOptions } from "@loadable/component";
 
 import './root.css';
+import Speedometer from "./hud/speedometer";
 
 const loadableOptions = { };
 const LoadableLoginComponent = loadable(() => import("./forms/login"), loadableOptions);
@@ -21,6 +22,7 @@ class App extends Component {
 					</Switch>
 				</Router>
 				<Chat/>
+				<Speedometer />
 			</div>
 		)
     }

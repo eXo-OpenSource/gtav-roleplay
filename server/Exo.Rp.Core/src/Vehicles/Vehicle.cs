@@ -1,5 +1,4 @@
-﻿using System;
-using AltV.Net;
+﻿using AltV.Net;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
@@ -19,6 +18,7 @@ namespace server.Vehicles
         public virtual IVehicle Spawn()
         {
             handle = Alt.CreateVehicle(Model, Pos, new Rotation(0f, 0f, RotZ));
+            handle.ManualEngineControl = true;
             handle.NumberplateText = Plate;
             handle.PrimaryColorRgb = new Rgba((byte) (Color1 >> 24), (byte) (Color1 >> 16), (byte) (Color1 >> 8), (byte)Color1);
             handle.SecondaryColorRgb = new Rgba((byte) (Color2 >> 24), (byte) (Color2 >> 16), (byte) (Color2 >> 8), (byte)Color2);
@@ -36,7 +36,7 @@ namespace server.Vehicles
 
         public virtual void OnEnter(IPlayer client, int seat)
         {
-            if (seat == 0) client.SendInformation("Druecke ~b~X~w~ um den Motor zu starten!");
+	        if (seat == 1) client.SendInformation("Druecke ~b~X~w~ um den Motor zu starten!");
             Alt.EmitAllClients("onIPlayerVehicleEnter", client, handle, seat);
         }
 
@@ -86,7 +86,7 @@ namespace server.Vehicles
 
         public virtual void ToggleLocked(IPlayer client, bool? state = null)
         {
-            
+
           /*  var Locked = handle.LockState;
             handle.SetSyncedMetaData("vehicle.Locked", Locked);*/
         }

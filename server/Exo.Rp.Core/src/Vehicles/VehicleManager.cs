@@ -17,7 +17,7 @@ using server.Vehicles.Types;
 using IPlayer = server.Players.IPlayer;
 
 namespace server.Vehicles
-{ 
+{
     internal class VehicleManager : IManager
     {
         private static readonly Logger<VehicleManager> Logger = new Logger<VehicleManager>();
@@ -62,11 +62,11 @@ namespace server.Vehicles
             }
         }
 
-        private void AddVehicle<T>(Vehicle vehicle, bool spawn = true) 
+        private void AddVehicle<T>(Vehicle vehicle, bool spawn = true)
             where T : Vehicle
         {
+	        if (spawn) vehicle.Spawn();
             _vehicles.Add(_mapper.Map<T>(vehicle));
-            if (spawn) vehicle.Spawn();
         }
 
         public T GetVehicleFromHandle<T>(IVehicle vehicle)
