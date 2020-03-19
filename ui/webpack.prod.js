@@ -8,7 +8,7 @@ const HtmlWebpackRootPlugin = require("html-webpack-root-plugin");
 const CompressionPlugin = require('compression-webpack-plugin');
 const path = require("path");
 
-module.exports = merge(common, {
+module.exports = merge.smart(common, {
 	mode: "production",
 	output: {
         path: path.resolve(__dirname, "../client/cef/"),
@@ -37,6 +37,9 @@ module.exports = merge(common, {
 										'./src/**/*.html',
 										'./src/**/*.jsx',
 									],
+
+									// Add Simplebar to whitelist
+									whitelistPatterns: [/simplebar/],
 
 									// Include any special characters you're using in this regular expression
 									defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || []

@@ -18,7 +18,7 @@
   },
   "scripts": {
     "build": "webpack --config webpack.prod.js",
-    "dev": "webpack-dev-server --open --config webpack.prod.js",
+    "dev": "webpack-dev-server --open --config webpack.dev.js",
     "analyze": "source-map-explorer ../client/cef/*.bundle.js"
   },
   "devDependencies": {

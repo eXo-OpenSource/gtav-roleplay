@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const HtmlWebpackRootPlugin = require("html-webpack-root-plugin");
 const path = require("path");
 
-module.exports = merge(common, {
+module.exports = merge.smart(common, {
 	mode: "development",
 	output: {
         path: path.resolve(__dirname, "dist"),
