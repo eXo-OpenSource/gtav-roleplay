@@ -45,8 +45,8 @@ class Chat extends Component {
         document.addEventListener("keyup", this.onKeyDown.bind(this), false);
         this.scrollToBottom("auto");
         setInterval(() => {
-            this.scrollToBottom("auto");
-        }, 50)
+            this.scrollToBottom();
+        }, 5000)
     }
 
     setVisible(state) {
@@ -147,7 +147,7 @@ class Chat extends Component {
     render() {
         return this.state.chatVisible ?
 			(
-				<div className="w-1/4 container rounded px-3 py-3">
+				<div className="w-1/4 container rounded px-3 py-3 absolute top-0">
 					<SimpleBar style={{ maxHeight: 200 }}>
 						{this.renderMessages()}
 						<div ref={(msgEnd) => { this.msgEnd = msgEnd; }} />
