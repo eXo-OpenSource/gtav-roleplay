@@ -66,6 +66,7 @@ alt.on("keyup", (key) => {
 	} else if(key == 76 && alt.gameControlsEnabled()) { //L
 		alt.emitServer("Vehicle:ToggleLight")
 	}
+    //TODO Add Vehicle Lock functionality when interaction system is complete
 });
 
 alt.on("streamSyncedMetaChange", (entity: Entity, key: string, value: any) => {
