@@ -9,8 +9,12 @@
 8. In the repo root create a folder called `bin` and launch a command prompt in it
 9. Type: `mklink /J "altv" "ALTV_DIR/server"`
 10. Open `Exo Roleplay.sln` and build the project with `Ctrl+Shift+B`
-11. Start `altv-server.exe`
+11. Run `npm run build` in the folder called `REPO_DIR/client`
+12. Start `altv-server.exe`
 
 # UI Development To Knows
 * Development in Browser: `npm run dev`
 * Build vor Alt:V Server: `npm run build`
+
+# Errorshooting
+* Check if all node_modules are installed with `npm install -g npm-install-missing`
