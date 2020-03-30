@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="src\" />
+    <Folder Include="src\components\" />
     <Folder Include="src\forms\" />
     <Folder Include="src\hud\" />
   </ItemGroup>
