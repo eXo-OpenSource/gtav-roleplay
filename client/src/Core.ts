@@ -9,7 +9,7 @@ import {Notification} from "./systems/Notification";
 
 @Singleton
 export class Core {
-    //private registerLoging = new RegisterLogin();
+    private registerLogin = new RegisterLogin();
     private vehicle = new Vehicle();
     private notification = new Notification();
     private hud = new HUD();
