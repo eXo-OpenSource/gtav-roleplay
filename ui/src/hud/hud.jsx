@@ -35,6 +35,8 @@ class HUD extends Component {
 					<div className="absolute right-0 top-0 mx-12 my-12 w-32 text-center text-white text-sm italic">{this.state.date}</div>
 				</div>
 			)
+		} else {
+			return null
 		}
 	}
 }
