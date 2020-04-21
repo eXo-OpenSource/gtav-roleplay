@@ -10,7 +10,7 @@ class HUD extends Component {
 			location: "",
 			time: "",
 			date: "",
-			hidden: false,
+			hidden: true,
 		}
 	}
 
