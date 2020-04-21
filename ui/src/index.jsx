@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { HashRouter as Router, Route, Switch, Link } from "react-router-dom";
 import Chat from "./hud/chat";
+import HUD from "./hud/hud";
 import loadable, { Options as LoadableOptions } from "@loadable/component";
 
 import './root.css';
@@ -22,7 +23,8 @@ class App extends Component {
 					</Switch>
 				</Router>
 				<Chat/>
-				<Speedometer />
+				<HUD/>
+				{/* <Speedometer/> */}
 			</div>
 		)
     }
