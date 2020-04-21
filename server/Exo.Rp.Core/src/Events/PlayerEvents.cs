@@ -29,7 +29,7 @@ namespace server.Events
                             {
                                 Console.WriteLine("Login erfolgreich!");
                                 player.Emit("registerLogin:Success");
-                                player.Emit("HUD:Toggle", true);
+                                player.Emit("HUD:Hide", false);
                                 
                                 // Todo: Remove later
                                 if (player.GetAccount() == default)

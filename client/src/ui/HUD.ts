@@ -25,7 +25,7 @@ export class HUD {
             this.webview.emit("HUD:SetData", "time", date.toLocaleTimeString("de-DE"))
         }, 1000)
 
-        alt.onServer("HUD:Toggle", (isHidden) => {
+        alt.onServer("HUD:Hide", (isHidden) => {
             this.webview.emit("HUD:SetData", "hidden", isHidden)
         })
     }
