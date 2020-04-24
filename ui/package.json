@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "description": "ui",
   "main": "server.js",
+  "resolutions": {
+    "@babel/preset-env": "7.5.5"
+  },
   "author": {
     "name": ""
   },
@@ -23,7 +26,7 @@
     "analyze": "source-map-explorer ../client/cef/*.bundle.js"
   },
   "devDependencies": {
-    "@babel/compat-data": "^7.9.0",
+    "@babel/compat-data": "^7.8.0",
     "@babel/core": "^7.8.6",
     "@babel/preset-env": "^7.8.6",
     "@babel/preset-react": "^7.8.3",
