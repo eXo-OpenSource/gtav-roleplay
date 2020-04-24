@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Microsoft.VisualBasic.CompilerServices;
@@ -85,7 +85,7 @@ namespace server.Util.Settings
                 WotlabApi = new WotlabApiSettings
                 {
                     Url = "https://exo-roleplay.de/forum/?user-api",
-                    Secret = "jWTf6KBkVcJI$m0kP2tR_M",
+                    Secret = "jWTf6KBkVcJI__m0kP2tR_M",
                     OnlyBeta = true,
                     BetaGroupId = 9
                 },
