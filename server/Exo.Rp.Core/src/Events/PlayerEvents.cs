@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using AltV.Net;
 using models.Enums;
@@ -63,14 +63,14 @@ namespace server.Events
             }
             catch (Exception e)
             {
-                e.WithScopeOrThrow(s =>
+                /* e.WithScopeOrThrow(s =>
                 {
                     s.User = player.SentryContext;
                     var correlationId = SentrySdk.CaptureException(e);
 
                     Console.WriteLine(e.Message);
                     player.Emit("registerLogin:Error", "Unbekannter Fehler! Correlation Id: {0}", correlationId);
-                });
+                }); */
             }
         }
 
