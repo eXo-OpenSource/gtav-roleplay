@@ -46,18 +46,18 @@ class LoginForm extends Component {
         return (
             <div className="container mx-auto max-w-md" style={{ margin: "0 auto", marginTop: "10%" }}>
                 <div className="card">
-                    <div className="card-header">Login</div>
+                    <div className="card-header">Willkommen auf eXo:V!</div>
                     <div className="card-body">
                         {this.state.error ? <div className="mb-2 rounded bg-red-100 border-l-4 text-red-700 border-red-500 p-2">{this.state.error}</div> : null}
                         <div className="mb-6">
-                            <label htmlFor="user" className="block mb-2">Benutzername:</label>
+                            <label htmlFor="user" className="block mb-2 text-gray-200">Spielername:</label>
                             <input className="bg-gray-400 rounded w-full appearance-none py-2 px-3" value={this.state.user} id="user" name='user' onChange={this.onChange} type="text"/>
                         </div>
-                        <label htmlFor="password" className="block mb-2">Passwort:</label>
+                        <label htmlFor="password" className="block mb-2 text-gray-200">Passwort:</label>
                         <input className="bg-gray-400 rounded w-full appearance-none py-2 px-3" value={this.state.password} id="password" name="password" onChange={this.onChange} type="password"/>
                     </div>
                     <div className="card-footer">
-                        <button className="btn btn-primary" onClick={this.onLoginClick}>Login</button>
+                        <button className="btn btn-primary" onClick={this.onLoginClick}>Server betreten</button>
                     </div>
                 </div>
             </div>

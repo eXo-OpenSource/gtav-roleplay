@@ -20,15 +20,15 @@
 }
 
 .card-header {
-    @apply py-4 text-xl rounded-t-lg font-bold text-white text-center bg-blue-400;
+    @apply py-4 text-xl rounded-t-lg text-white text-center bg-blue-400;
 }
 
 .card-body {
-    @apply py-6 px-6 bg-gray-700-alpha-80 opacity-75;
+    @apply py-6 px-6 bg-gray-800 opacity-75;
 }
 
 .card-footer {
-    @apply px-6 py-4 card-footer bg-gray-700 rounded-b-lg;
+    @apply px-6 py-4 card-footer bg-gray-900 rounded-b-lg;
 }
 
 @tailwind utilities;
