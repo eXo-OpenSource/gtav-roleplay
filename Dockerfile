@@ -1,5 +1,5 @@
 ## Base Image
-FROM stivik/altv:rc as runner
+FROM eisengrind/altv-server:release-dotnet
 
 
 
