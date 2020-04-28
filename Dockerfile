@@ -121,4 +121,4 @@ COPY --from=builder_client  /app/client             resources/exov-client/
 RUN rm resources/exov/*.runtimeconfig.dev.json
 
 # Add server config
-ADD build/server.cfg config/
+ADD build/server.cfg .
