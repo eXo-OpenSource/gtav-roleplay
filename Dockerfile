@@ -32,7 +32,8 @@ WORKDIR /app/client
 RUN npm install -g typescript
 RUN npm install
 RUN npm run build && \
-    npm run clean
+    npm run clean && \
+    npm audit fix
 
 # Add UI files
 WORKDIR /app
@@ -47,6 +48,7 @@ ADD ui/*.html       ui/
 WORKDIR /app/ui
 RUN npm install
 RUN npm run build
+RUN npm audit fix
 
 ## Config Patcher
 FROM alpine as configpatcher
@@ -121,4 +123,7 @@ COPY --from=builder_client  /app/client             resources/exov-client/
 RUN rm resources/exov/*.runtimeconfig.dev.json
 
 # Add server config
-ADD build/server.cfg .
+ADD build/server.cfg server.cfg
+ADD build/entrypoint.sh /root/entrypoint.sh
+
+ENTRYPOINT [ "/root/entrypoint.sh" ]
