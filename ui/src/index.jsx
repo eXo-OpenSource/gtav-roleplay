@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { HashRouter as Router, Route, Switch, Link } from "react-router-dom";
 import Chat from "./hud/chat";
 import HUD from "./hud/hud";
+import CharacterCreatorForm from "./forms/character-creator";
 import loadable, { Options as LoadableOptions } from "@loadable/component";
 
 import './root.css';
@@ -22,8 +23,8 @@ class App extends Component {
 						<Route path="/charactercreator" component={LoadableCharacterCreatorComponent} />
 					</Switch>
 				</Router>
-				<Chat/>
-				<HUD/>
+				{/*<Chat/>
+				<HUD/>*/}
 				{/* <Speedometer/> */}
 			</div>
 		)

@@ -7,7 +7,7 @@ import { Camera } from "../utils/Camera";
 import { Vector3 } from "natives";
 
 export class FaceFeaturesUi {
-    private url = 'http://resource/client/cef/faceFeatures/index.html';
+    private url = 'http://resource/cef/index.html#/charactercreator';
     private webview: View;
     private ped: Ped;
     private camera: Camera;
@@ -43,7 +43,7 @@ export class FaceFeaturesUi {
         this.webview.on('updateEyes', this.updateEyes);
         this.webview.on('setPlayerFacialData', this.setPlayerFacialData);
         
-            // Setup a temporary teleport.
+        // Setup a temporary teleport.
         alt.emitServer('temporaryTeleport', this.offsetPoint);
 
         // Request these models if they're not already loaded.
@@ -51,8 +51,10 @@ export class FaceFeaturesUi {
         native.requestModel(native.getHashKey('mp_f_freemode_01'));
 
         // Create a pedestrian to customize.
-        this.ped = new Ped('mp_f_freemode_01', this.playerPoint);
-        alt.log(this.ped.scriptID);
+        if (!this.ped) {
+            this.ped = new Ped('mp_f_freemode_01', this.playerPoint);
+            alt.log(this.ped.scriptID);
+        }
 
         native.setPedComponentVariation(this.ped.scriptID, 6, 1, 0, 0);
 
@@ -76,9 +78,9 @@ export class FaceFeaturesUi {
             native.getHashKey('fm_hair_fuzz')
         );
 
-        alt.setTimeout(() => {
+        /* alt.setTimeout(() => {
             this.webview.emit('sexUpdated', 0);
-        }, 1000);
+        }, 1000); */
     }
     
     public clearPedBloodDamage() {
@@ -87,12 +89,13 @@ export class FaceFeaturesUi {
     
     // Player Sex Updates, for model changes.
     private updateSex(value) {
+        alt.log("Updating sex to " + value)
         if (value === 0) {
             this.resetCamera('mp_f_freemode_01');
-            this.webview.emit('sexUpdated', 0);
+            this.webview.emit('sexUpdated', value);
         } else {
             this.resetCamera('mp_m_freemode_01');
-            this.webview.emit('sexUpdated', 1);
+            this.webview.emit('sexUpdated', value);
         }
     }
     
