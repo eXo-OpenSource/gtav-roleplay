@@ -36,8 +36,8 @@ WORKDIR /app/client
 RUN npm install -g typescript
 RUN npm install
 RUN npm run build && \
-    npm run clean && \
-    npm audit fix
+    npm run clean
+#    npm audit fix
 
 # Add UI files
 WORKDIR /app
