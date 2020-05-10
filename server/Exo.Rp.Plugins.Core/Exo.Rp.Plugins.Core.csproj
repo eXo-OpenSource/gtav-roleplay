@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RuntimeIdentifiers>win10-x64;debian.9-x64</RuntimeIdentifiers>
+    <RuntimeIdentifiers>win10-x64;linux-x64</RuntimeIdentifiers>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <GenerateRuntimeConfigurationFiles>false</GenerateRuntimeConfigurationFiles>
