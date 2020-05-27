@@ -18,7 +18,7 @@ export class View {
         return currentView;
     }
 
-    open(url, killControls = true) {
+    open(url, killControls = true, overlay = false) {
         if (currentView.view) return;
         alt.Player.local.setMeta('viewOpen', true);
         alt.emit('chat:Toggle');
@@ -29,8 +29,10 @@ export class View {
         currentView.view.isVisible = true;
         currentView.view.focus();
         currentView.ready = true;
-        Cursor.show(true);
-        native.displayRadar(false);
+        if(!overlay) {
+			Cursor.show(true);
+			native.displayRadar(false);
+		}
         if (killControls) {
             currentView.gameControls = this.toggleGameControls.bind(this);
             currentView.interval = alt.setInterval(currentView.gameControls, 0);

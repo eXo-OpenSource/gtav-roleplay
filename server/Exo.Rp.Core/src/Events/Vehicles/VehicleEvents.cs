@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using AltV.Net;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
@@ -55,6 +55,7 @@ namespace server.Events.Vehicles
         public void OnVehicleEngineSwitchBind(IPlayer client)
         {
             var vehicle = Core.GetService<VehicleManager>().GetVehicleFromHandle<server.Vehicles.Vehicle>(client.Vehicle);
+            if (vehicle == null) return;
             if (client.Vehicle.EngineOn == false)
             {
                 if (vehicle.CanStartEngine(client)) vehicle.ToggleEngine(true);

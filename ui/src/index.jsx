@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { HashRouter as Router, Route, Switch, Link } from "react-router-dom";
+import {HashRouter as Router, Route, Switch, Link, withRouter} from "react-router-dom";
 import Chat from "./hud/chat";
 import HUD from "./hud/hud";
 import CharacterCreatorForm from "./forms/character-creator";
@@ -14,21 +14,40 @@ const LoadableLoginComponent = loadable(() => import("./forms/login"), loadableO
 const LoadableCharacterCreatorComponent = loadable(() => import("./forms/character-creator"), loadableOptions);
 
 class App extends Component {
+	constructor(props) {
+		super(props)
+		this.routerRef = React.createRef()
+	}
+
     render() {
         return (
 			<div>
-				<Router>
+				<Router ref={this.routerRef}>
 					<Switch>
 						<Route path="/login" component={LoadableLoginComponent} />
 						<Route path="/charactercreator" component={LoadableCharacterCreatorComponent} />
 					</Switch>
 				</Router>
-				{/*<Chat/>
-				<HUD/>*/}
+				<Chat/>
+				<HUD/>
 				{/* <Speedometer/> */}
 			</div>
 		)
     }
+
+    componentDidMount() {
+		if ("alt" in window) {
+			alt.on("locationChange", this.changeLocation.bind(this));
+			alt.emit("ready");
+		}
+	}
+
+	changeLocation(url) {
+    	alt.emit("logger", "debug")
+		this.routerRef.current.history.push(url)
+	}
 }
+
+const app = withRouter(App)
 
 ReactDOM.render(<App />, document.getElementById('root'));

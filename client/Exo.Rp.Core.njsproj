@@ -58,6 +58,7 @@
     <TypeScriptCompile Include="src\systems\Ped.ts" />
     <TypeScriptCompile Include="src\systems\Vehicle.ts" />
     <TypeScriptCompile Include="src\ui\FaceFeaturesUi.ts" />
+    <TypeScriptCompile Include="src\ui\HUD.ts" />
     <TypeScriptCompile Include="src\ui\RegisterLogin.ts" />
     <TypeScriptCompile Include="src\ui\UiManager.ts" />
     <TypeScriptCompile Include="src\utils\Camera.ts" />

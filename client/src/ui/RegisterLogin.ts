@@ -1,33 +1,33 @@
 import * as alt from 'alt';
 import { View } from '../utils/View'
-import * as chat from '../chat/Chat';
+import {UiManager} from "./UiManager";
 
 const url = 'http://resource/cef/index.html#/login';
 
 
 export class RegisterLogin {
-    private webview: View;
+    private uiManager: UiManager;
 
-    public constructor() {
-        
-        if (!this.webview) {
-            this.webview = new View();
-        }
-    
+    public constructor(uiManager) {
+
+    	this.uiManager = uiManager;
+
         // Setup Webview
-        chat.pushLine(url);
+        this.uiManager.writeChat(url);
 
-        this.webview.open(url, true);
-        this.webview.on('login', (username: string, password: string) => {
+		alt.toggleGameControls(false)
+        this.uiManager.navigate("/login", true)
+        this.uiManager.on('login', (username: string, password: string) => {
             alt.emitServer('RegisterLogin:Login', username, password);
         });
-        
+
         alt.onServer("registerLogin:Error", (error) => {
-            this.webview.emit("setError", error)
+            this.uiManager.emit("setError", error)
         });
-        
+
         alt.onServer("registerLogin:Success", () => {
-            this.webview.close();
+            this.uiManager.reset()
+			alt.toggleGameControls(true)
         });
     }
 }

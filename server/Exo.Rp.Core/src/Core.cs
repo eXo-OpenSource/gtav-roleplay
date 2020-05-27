@@ -44,7 +44,7 @@ namespace server
 
         public override void OnStart()
         {
-            // Initialize database  
+            // Initialize database
             _databaseCore = new DatabaseCore();
 
             // Prepare service provider
@@ -91,7 +91,7 @@ namespace server
                         .BuildServiceProvider();
                     LoadServices();
                 }
-            ); 
+            );
         }
 
         private void LoadServices()
@@ -131,7 +131,7 @@ namespace server
             stopWatch.Stop();
             Logger.Debug($"Loaded services in {stopWatch.ElapsedMilliseconds} ms.");
         }
-        
+
         public override void OnStop()
         {
             Logger.Info("Disposing Metrics collector...");
@@ -143,7 +143,7 @@ namespace server
             DatabaseCore.SaveChangeToDatabase();
             _databaseCore.OnResourceStopHandler();
         }
-        
+
         public override void OnTick()
         {
             try
@@ -181,7 +181,7 @@ namespace server
         {
             return _serviceProvider.GetService<T>();
         }
-        
+
         public static object GetService(Type type)
         {
             return _serviceProvider.GetService(type);

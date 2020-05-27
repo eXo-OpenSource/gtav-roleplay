@@ -30,7 +30,7 @@ namespace server.Events
                                 Console.WriteLine("Login erfolgreich!");
                                 player.Emit("registerLogin:Success");
                                 player.Emit("HUD:Hide", false);
-                                
+
                                 // Todo: Remove later
                                 if (player.GetAccount() == default)
                                 {
@@ -74,11 +74,17 @@ namespace server.Events
             }
         }
 
+        //Needed because SPA initlialization
+        [ClientEventAttribute("ready")]
+        public void PlayerReady(IPlayer player)
+        {
+	        player.Emit("Ui:ShowRegisterLogin");
+        }
+
         [ScriptEvent(ScriptEventType.PlayerConnect)]
         public void PlayerConnect(IPlayer player, string reason)
         {
             Alt.Log($"{player.Name} connected.");
-            player.Emit("Ui:ShowRegisterLogin");
         }
 
         [ScriptEvent(ScriptEventType.PlayerDisconnect)]

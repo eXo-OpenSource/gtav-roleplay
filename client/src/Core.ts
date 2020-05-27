@@ -9,20 +9,23 @@ import {Notification} from "./systems/Notification";
 
 @Singleton
 export class Core {
-    private registerLogin = new RegisterLogin();
     private vehicle = new Vehicle();
     private notification = new Notification();
-    private hud = new HUD();
+    private uiManager = new UiManager();
 
     constructor() {
-        UiManager.loadEvents();
-        
+
         alt.log('Loaded: client.mjs');
 
         alt.on('consoleCommand', () => {
             alt.log('consoleCommand');
             alt.emitServer("ClientConnectionComplete", "Test")
         })
-        
+
+		alt.on("logger", (log: string) => {
+			alt.log(log);
+		})
+
     }
 }
+

@@ -31,7 +31,7 @@ namespace server.Database
             SettingsManager.LogOutput.Add(new LogMessage
             {
                 Category = LogCat.None,
-                Messages = new []{ "=================================================" } 
+                Messages = new []{ "=================================================" }
             });
             SettingsManager.LogOutput.Add(new LogMessage
             {
@@ -90,13 +90,13 @@ namespace server.Database
             Logger.Info($"Database connection to server: {SettingsManager.ServerSettings.Database.Server}");
 
             var stopWatch = Stopwatch.StartNew();
-            
+
             ContextFactory.Instance.AccountModel.Load();
             Logger.Info($"Loaded {ContextFactory.Instance.AccountModel.Local.Count} accounts.");
 
             ContextFactory.Instance.CharacterModel.Load();
             Logger.Info($"Loaded {ContextFactory.Instance.CharacterModel.Local.Count} characters.");
-            
+
             ContextFactory.Instance.FaceFeaturesModel.Load();
 
             ContextFactory.Instance.VehicleModel.Load();
@@ -139,7 +139,7 @@ namespace server.Database
             Logger.Info($"Loaded {ContextFactory.Instance.WorldObjectsModels.Local.Count} world objects.");
 
             stopWatch.Stop();
-            
+
             Logger.Debug($"Loaded database in {stopWatch.ElapsedMilliseconds} ms.");
 
             _lastUpdate = Stopwatch.StartNew();
@@ -148,7 +148,8 @@ namespace server.Database
 
         public void OnResourceStopHandler()
         {
-            _sentry.Dispose();
+	        if (SettingsManager.ServerSettings.Sentry.Release.Length > 0)
+				_sentry.Dispose();
         }
 
         public static bool SetDatabaseConnection(string settingsPath, string logsPath)
