@@ -31,4 +31,13 @@
     @apply px-6 py-4 card-footer bg-gray-900 rounded-b-lg;
 }
 
+
+.gauge > .dial {
+	stroke-width: 6;
+}
+
+.gauge > .value {
+	stroke-width: 6;
+}
+
 @tailwind utilities;

@@ -30,7 +30,7 @@ class App extends Component {
 				</Router>
 				<Chat/>
 				<HUD/>
-				{/* <Speedometer/> */}
+				<Speedometer/>
 			</div>
 		)
     }
@@ -43,11 +43,9 @@ class App extends Component {
 	}
 
 	changeLocation(url) {
-    	alt.emit("logger", "debug")
+    	console.log("debug")
 		this.routerRef.current.history.push(url)
 	}
 }
-
-const app = withRouter(App)
 
 ReactDOM.render(<App />, document.getElementById('root'));

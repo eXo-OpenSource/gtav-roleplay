@@ -6,6 +6,7 @@ const defaultOptions = {
 	showValue: false,
 	initialValue: 0,
 	max: 9000,
+	value: 0,
 	dialStartAngle: 150,
 	dialEndAngle: 30,
 	// Put any other defaults you want. e.g. dialStartAngle, dialEndAngle, radius, etc.

@@ -5,6 +5,7 @@ import {View} from "../utils/View";
 import Chat from "../chat/Chat";
 import {Cursor} from "../utils/Cursor";
 import {HUD} from "./HUD";
+import Speedo from "./Speedo";
 
 const url = 'http://resource/cef/index.html#';
 
@@ -12,6 +13,7 @@ export class UiManager {
 	private mainView: View;
 	private chat: Chat;
 	private hud: HUD;
+	private speedo: Speedo;
 
 	constructor() {
 		this.mainView = new View()
@@ -19,6 +21,7 @@ export class UiManager {
 
 		this.chat = new Chat(this);
 		this.hud = new HUD(this);
+		this.speedo = new Speedo(this);
 		this.loadEvents()
 	}
 

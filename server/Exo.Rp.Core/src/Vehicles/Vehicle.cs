@@ -37,7 +37,13 @@ namespace server.Vehicles
 
         public virtual void OnEnter(IPlayer client, int seat)
         {
-	        if (seat == 1) client.SendInformation("Druecke ~b~X~w~ um den Motor zu starten!");
+	        if (seat == 1)
+	        {
+		        bool engineStatus;
+		        handle.GetSyncedMetaData("vehicle.Engine", out engineStatus);
+		        handle.EngineOn = engineStatus;
+		        client.SendInformation("Druecke ~b~X~w~ um den Motor zu starten!");
+	        }
             Alt.EmitAllClients("onIPlayerVehicleEnter", client, handle, seat);
         }
 

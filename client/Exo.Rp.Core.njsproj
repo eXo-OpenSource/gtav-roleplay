@@ -60,6 +60,7 @@
     <TypeScriptCompile Include="src\ui\FaceFeaturesUi.ts" />
     <TypeScriptCompile Include="src\ui\HUD.ts" />
     <TypeScriptCompile Include="src\ui\RegisterLogin.ts" />
+    <TypeScriptCompile Include="src\ui\Speedo.ts" />
     <TypeScriptCompile Include="src\ui\UiManager.ts" />
     <TypeScriptCompile Include="src\utils\Camera.ts" />
     <TypeScriptCompile Include="src\utils\Cursor.ts" />

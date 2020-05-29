@@ -22,10 +22,6 @@ export class Core {
             alt.emitServer("ClientConnectionComplete", "Test")
         })
 
-		alt.on("logger", (log: string) => {
-			alt.log(log);
-		})
-
     }
 }
 
