@@ -41,13 +41,14 @@ namespace server.Jobs
         {
             Alt.CreateBlip(BlipType.Cont, PedPosition);
 
-            var col = Alt.CreateColShapeSphere(PedPosition, 3);
-            /*col.OnEntityEnterColShape += OnColEnter;
-            col.OnEntityExitColShape += OnColExit;*/
+            var col = (Colshape.Colshape) Alt.CreateColShapeSphere(PedPosition, 3);
+            col.OnColShapeEnter += OnColEnter;
+            col.OnColShapeExit += OnColExit;
         }
 
-        public void OnColEnter(ColShape colshape, IPlayer player)
+        public void OnColEnter(IEntity entity)
         {
+	        if(!(entity is IPlayer player)) return;
             if (player.GetCharacter() == null) return;
 
             var interactionData = new InteractionData
@@ -59,14 +60,15 @@ namespace server.Jobs
                 .ShowInteraction("Job: " + Name, "onJobPedInteraction", interactionData: interactionData);
         }
 
-        public void OnColExit(ColShape colshape, IPlayer player)
+        public void OnColExit(IEntity entity)
         {
+	        if(!(entity is IPlayer player)) return;
             if (player.GetCharacter() == null) return;
 
             player.GetCharacter().HideInteraction();
         }
 
-        
+
         public void ShowJobMenu(IPlayer player, string subMenu = null)
         {
             var players = new Dictionary<int, string>(){};
@@ -78,7 +80,7 @@ namespace server.Jobs
                 leaderId = leader.GetId();
                 players = JobPlayers[leader];
             }
-            
+
 
             var data = new JobMenuDataDto
             {
@@ -98,7 +100,7 @@ namespace server.Jobs
 
             player.Emit("outputIPlayerConsole", JsonConvert.SerializeObject(data));
         }
-        
+
 
         public virtual void StartJobForPlayer(IPlayer player)
         {

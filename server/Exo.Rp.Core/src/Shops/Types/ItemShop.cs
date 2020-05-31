@@ -25,8 +25,9 @@ namespace server.Shops.Types
             LoadItems();
         }
 
-        protected override void OnPedColEnter(ColShape colshape, IPlayer player)
+        protected override void OnPedColEnter(IEntity entity)
         {
+	        if(!(entity is IPlayer player)) return;
             if (player.GetCharacter() == null) return;
             var interactionData = new InteractionData
             {
@@ -37,8 +38,9 @@ namespace server.Shops.Types
                 .ShowInteraction(PedModel.Name, "Shop:ItemInteraction", interactionData: interactionData);
         }
 
-        protected override void OnPedColExit(ColShape colshape, IPlayer player)
+        protected override void OnPedColExit(IEntity entity)
         {
+	        if(!(entity is IPlayer player)) return;
             if (player.GetCharacter() == null) return;
             player.GetCharacter().HideInteraction();
         }

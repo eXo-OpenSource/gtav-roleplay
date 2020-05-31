@@ -1,4 +1,5 @@
 ﻿using System;
+using AltV.Net;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using server.Players.Characters;
@@ -11,19 +12,20 @@ namespace server.Jobs.Jobs
         public Stone(Position stoneCenter)
         {
             Center = stoneCenter;
-            //Col = AltV.Net.Alt.Exo.RP.Server.CreateColShapeSphere(stoneCenter, 1);
-            //Col.OnEntityEnterColShape += OnEnterCol;
-            //Col.OnEntityExitColShape += OnExitCol;
+            Col = (Colshape.Colshape) Alt.CreateColShapeSphere(stoneCenter, 1);
+            Col.OnColShapeEnter += OnEnterCol;
+            Col.OnColShapeExit += OnExitCol;
             LastUsed = DateTime.Now.AddSeconds(-Miner.StoneCooldown);
         }
 
         public Position Center { get; set; }
-        public ColShape Col { get; set; }
+        public Colshape.Colshape Col { get; set; }
         public DateTime LastUsed { get; set; }
         public int InteractionId { get; set; }
 
-        private void OnEnterCol(ColShape shape, IPlayer player)
+        private void OnEnterCol(IEntity entity)
         {
+	        if(!(entity is IPlayer player)) return;
             if (player.GetCharacter() != null && player.GetCharacter().GetJob() is Miner &&
                 player.GetCharacter().IsJobActive())
             {
@@ -37,8 +39,9 @@ namespace server.Jobs.Jobs
             }
         }
 
-        private void OnExitCol(ColShape shape, IPlayer player)
+        private void OnExitCol(IEntity entity)
         {
+	        if(!(entity is IPlayer player)) return;
             if (player.GetCharacter() != null && player.GetCharacter().GetJob() is Miner &&
                 player.GetCharacter().IsJobActive())
                 if (InteractionId != -1)

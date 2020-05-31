@@ -16,6 +16,7 @@ using server.BankAccounts;
 using server.Commands;
 using server.Database;
 using server.Environment;
+using server.Factories.BaseObjects;
 using server.Factories.Entities;
 using server.Inventory;
 using server.Inventory.Items;
@@ -173,7 +174,7 @@ namespace server
 
         public override IBaseObjectFactory<IColShape> GetColShapeFactory()
         {
-            return base.GetColShapeFactory();
+            return new ColShapeBaseObjectFactory();
         }
 
         public static T GetService<T>()

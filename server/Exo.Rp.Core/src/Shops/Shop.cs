@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using AltV.Net;
 using AltV.Net.Elements.Entities;
 using IPlayer = server.Players.IPlayer;
 
@@ -7,7 +8,7 @@ namespace server.Shops
     public partial class Shop
     {
         [NotMapped]
-        protected ColShape pedCol;
+        protected Colshape.Colshape pedCol;
 
         public virtual void Load()
         {
@@ -19,9 +20,9 @@ namespace server.Shops
 
             if (PedModel == null) return;
 
-            /*pedCol = NAPI.ColShape.CreateSphereColShape(PedModel.Pos, 3);
-            pedCol.OnEntityEnterColShape += OnPedColEnter;
-            pedCol.OnEntityExitColShape += OnPedColExit;*/
+            pedCol = (Colshape.Colshape) Alt.CreateColShapeSphere(PedModel.Pos, 3);
+            pedCol.OnColShapeEnter += OnPedColEnter;
+            pedCol.OnColShapeExit += OnPedColExit;
         }
 
         public int GetMoney()
@@ -39,13 +40,15 @@ namespace server.Shops
             return BankAccount.TakeMoney(amount);
         }
 
-        protected virtual void OnPedColEnter(ColShape colshape, IPlayer player)
+        protected virtual void OnPedColEnter(IEntity entity)
         {
+	        if(!(entity is IPlayer player)) return;
             player.SendChatMessage("Entered Shop Col! " + Name);
         }
 
-        protected virtual void OnPedColExit(ColShape colshape, IPlayer player)
+        protected virtual void OnPedColExit(IEntity entity)
         {
+	        if(!(entity is IPlayer player)) return;
             player.SendChatMessage("Leaved Shop Col! " + Name);
         }
 

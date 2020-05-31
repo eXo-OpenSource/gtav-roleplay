@@ -1,4 +1,5 @@
 ﻿using System;
+using AltV.Net;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using server.Players.Characters;
@@ -11,19 +12,20 @@ namespace server.Jobs.Jobs
         public Tree(Position treeCenter)
         {
             Center = treeCenter;
-           /* Col = NAPI.ColShape.CreateSphereColShape(Center, 2f, 0);
-            Col.OnEntityEnterColShape += OnEnterCol;
-            Col.OnEntityExitColShape += OnExitCol;*/
+            Col = (Colshape.Colshape) Alt.CreateColShapeSphere(Center, 2);
+            Col.OnColShapeEnter += OnEnterCol;
+            Col.OnColShapeExit += OnExitCol;
             LastUsed = DateTime.Now.AddSeconds(-Farmer.TreeCooldown);
         }
 
         private Position Center { get; }
-        private ColShape Col { get; }
+        private Colshape.Colshape Col { get; }
         private DateTime LastUsed { get; set; }
         private int InteractionId { get; set; }
 
-        private void OnEnterCol(ColShape shape, IPlayer player)
+        private void OnEnterCol(IEntity entity)
         {
+	        if(!(entity is IPlayer player)) return;
             if (player.GetCharacter().IsJobCurrentAndActive<Farmer>()) return;
 
             var interactionData = new InteractionData
@@ -35,8 +37,9 @@ namespace server.Jobs.Jobs
                 interactionData: interactionData, text: "Drücke E um einen Apfel zu pflücken!");
         }
 
-        private void OnExitCol(ColShape shape, IPlayer player)
+        private void OnExitCol(IEntity entity)
         {
+	        if(!(entity is IPlayer player)) return;
             if (player.GetCharacter() == null || !(player.GetCharacter().GetJob() is Farmer) ||
                 !player.GetCharacter().IsJobActive()) return;
 

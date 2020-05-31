@@ -38,8 +38,9 @@ namespace server.Shops.Types
             LoadVehicles();
         }
 
-        protected override void OnPedColEnter(ColShape colshape, IPlayer player)
+        protected override void OnPedColEnter(IEntity entity)
         {
+	        if(!(entity is IPlayer player)) return;
            // player.SendChatMessage("Vehicle Shop Enter");
             if (player.GetCharacter() == null) return;
             var interactionData = new InteractionData
@@ -52,8 +53,9 @@ namespace server.Shops.Types
 
         }
 
-        protected override void OnPedColExit(ColShape colshape, IPlayer player)
+        protected override void OnPedColExit(IEntity entity)
         {
+	        if(!(entity is IPlayer player)) return;
             if (player.GetCharacter() == null) return;
             player.GetCharacter().HideInteraction();
         }
@@ -90,10 +92,10 @@ namespace server.Shops.Types
                     Name = vehicleM.ModelName,
                     Handle = nVehicle.handle
                 };
-                
+
                 _vehicleData.Add(vehicleM.Id, nVehicleData);
                 _vehicles.Add(vehicleM.Id, nVehicle);
-                
+
             }
         }
 

@@ -25,7 +25,7 @@ namespace server.Jobs.Jobs
         private int _currentWaypoint;
         private bool _emptying;
 
-        private ColShape _markerColShape;
+        private Colshape.Colshape _markerColShape;
         private LawnMower _mower;
 
         public LawnCaretaker(int jobId) : base(jobId)
