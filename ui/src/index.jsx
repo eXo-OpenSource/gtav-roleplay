@@ -8,6 +8,7 @@ import loadable, { Options as LoadableOptions } from "@loadable/component";
 
 import './root.css';
 import Speedometer from "./hud/speedometer";
+import Popup from "./hud/popup";
 
 const loadableOptions = { };
 const LoadableLoginComponent = loadable(() => import("./forms/login"), loadableOptions);
@@ -30,6 +31,7 @@ class App extends Component {
 				</Router>
 				<Chat/>
 				<HUD/>
+				<Popup/>
 				<Speedometer/>
 			</div>
 		)
@@ -43,7 +45,6 @@ class App extends Component {
 	}
 
 	changeLocation(url) {
-    	console.log("debug")
 		this.routerRef.current.history.push(url)
 	}
 }

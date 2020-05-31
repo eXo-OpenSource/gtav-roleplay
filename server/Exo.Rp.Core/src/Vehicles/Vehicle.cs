@@ -2,6 +2,7 @@ using AltV.Net;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
+using server.Util;
 using server.Util.Log;
 using IPlayer = server.Players.IPlayer;
 
@@ -39,8 +40,7 @@ namespace server.Vehicles
         {
 	        if (seat == 1)
 	        {
-		        bool engineStatus;
-		        handle.GetSyncedMetaData("vehicle.Engine", out engineStatus);
+		        handle.GetSyncedMetaData("vehicle.Engine", out bool engineStatus);
 		        handle.EngineOn = engineStatus;
 		        client.SendInformation("Druecke ~b~X~w~ um den Motor zu starten!");
 	        }

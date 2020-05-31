@@ -20,7 +20,7 @@ class Speedometer extends Component {
 			}
 		} else {
 			this.setState({
-				active: true
+				active: false
 			})
 
 			setInterval(() => {
@@ -52,9 +52,9 @@ class Speedometer extends Component {
 		return !this.state.active ? null :
 			<div className="absolute bottom-0 right-0 w-64">
 				<Gauge value={this.state.rpm} color={() => this.gaugeColor()}>
-					<div className="w-full absolute text-center" style={{top: "130px"}}>{this.state.rpm} rpm</div>
-					<div className="absolute w-full text-center text-lg" style={{top: "95px"}}>KM/H</div>
-					<div className="absolute w-full text-center text-3xl font-bold" style={{top: "40px"}}>&nbsp;{this.state.speed}</div>
+					<div className="w-full text-white absolute text-center" style={{top: "130px"}}>{this.state.rpm} rpm</div>
+					<div className="absolute w-full text-white text-center text-lg" style={{top: "95px"}}>KM/H</div>
+					<div className="absolute w-full text-white text-center text-4xl font-bold" style={{top: "40px"}}>&nbsp;{this.state.speed}</div>
 					<div className="absolute text-center font-bold bg-yellow-400 px-2 py-7" style={{left: "175px", top: "80px"}}>{this.state.gear}</div>
 				</Gauge>
 			</div>;

@@ -31,13 +31,26 @@
     @apply px-6 py-4 card-footer bg-gray-900 rounded-b-lg;
 }
 
+.popup-item {
+	@apply h-10 px-2 text-white font-bold leading-10 bg-gray-900
+}
 
+/* purgecss start ignore */
 .gauge > .dial {
+	stroke: #334455;
 	stroke-width: 6;
+	stroke-dasharray: 18 1;
+	fill: rgba(0,0,0,0);
+
 }
 
 .gauge > .value {
+	stroke: #334455;
 	stroke-width: 6;
+	stroke-dasharray: 18 1;
+	fill: rgba(0,0,0,0);
+
 }
+/* purgecss end ignore */
 
 @tailwind utilities;
