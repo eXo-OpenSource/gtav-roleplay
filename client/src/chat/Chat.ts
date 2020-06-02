@@ -27,7 +27,7 @@ export class Chat {
 			alt.toggleGameControls(true);
 		})
 
-		alt.onServer('Chat:Message', this.pushMessage);
+		alt.onServer('Chat:Message', this.pushMessage.bind(this));
 
 		alt.on('keyup', (key) => {
 			if (!this.loaded)

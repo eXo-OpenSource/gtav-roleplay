@@ -32,7 +32,60 @@
 }
 
 .popup-item {
-	@apply h-10 px-2 text-white font-bold leading-10 bg-gray-900
+	@apply h-10 px-2 text-white leading-10 bg-gray-900;
+	cursor: default;
+}
+
+.blue {
+	background: rgba(64, 143, 247, 0.4);
+}
+
+.blue:hover, .blue.selected
+{
+	color: #fff;
+	background: rgba(64, 143, 247, 1);
+	background: linear-gradient(to right, rgba(64, 143, 247,1) 0%, rgba(64, 143, 247,0.8) 100%);
+}
+
+.green
+{
+	background: rgba(195, 227, 143, 0.4);
+}
+
+.green:hover, .green.selected
+{
+	color: #fff;
+	background: rgba(115,166,40,1);
+	background: linear-gradient(to right, rgba(115,166,40,1) 0%, rgba(115,166,40,0.8) 100%);
+}
+
+
+.red
+{
+	background: rgba(247, 64, 77, 0.4);
+}
+
+.red:hover, .red.selected
+{
+	color: #fff;
+	background: rgba(242,67,67,1);
+	background: linear-gradient(to right, rgba(242,67,67,1) 0%, rgba(242,67,67,0.8) 100%);
+}
+
+
+@keyframes fadeIn {
+	0% {
+		opacity: 0;
+		transform: translateX(50%);
+	}
+	100% {
+		opacity: 0.75;
+		transform: translateX(0);
+	}
+}
+
+.toast-fade {
+	animation: 1s ease 0s 1 fadeIn;
 }
 
 /* purgecss start ignore */

@@ -32,7 +32,7 @@ namespace server.Events.Jobs
             player.GetCharacter().SetJob(job);
             player.SendSuccess("Job angenommen!");
 
-            player.Emit("Job:CloseJobMenu");
+            player.Emit("Popup:Close");
             job.ShowJobMenu(player);
         }
 
@@ -50,7 +50,7 @@ namespace server.Events.Jobs
             player.GetCharacter().SetJob(null);
             player.SendSuccess("Job gekündigt!");
 
-            player.Emit("Job:CloseJobMenu");
+            player.Emit("Popup:Close");
             job.ShowJobMenu(player);
         }
 
@@ -65,7 +65,7 @@ namespace server.Events.Jobs
 
             Core.GetService<JobManager>().GetJob(jobId).AddPlayerToJob(player, player, false);
             Core.GetService<JobManager>().GetJob(jobId).StartJob(player);
-            player.Emit("Job:CloseJobMenu");
+            player.Emit("Popup:Close");
         }
 
         [Event("Job:StartJobMultiplayer")]
@@ -78,7 +78,7 @@ namespace server.Events.Jobs
             }
 
             Core.GetService<JobManager>().GetJob(jobId).StartJob(player);
-            player.Emit("Job:CloseJobMenu");
+            player.Emit("Popup:Close");
         }
 
         [Event("Job:StopJob")]
@@ -91,7 +91,7 @@ namespace server.Events.Jobs
             }
 
             Core.GetService<JobManager>().GetJob(jobId).StopJob(player);
-            player.Emit("Job:CloseJobMenu");
+            player.Emit("Popup:Close");
         }
 
         [Event("Job:AskCoop")]
@@ -114,7 +114,7 @@ namespace server.Events.Jobs
                     (leader1, target1) =>
                     {
                         job.AddPlayerToJob(player, leader, true);
-                        leader.Emit("Job:CloseJobMenu");
+                        leader.Emit("Popup:Close");
                         job.ShowJobMenu(leader, "coop");
                     },
                     (leader1, target) => leader.SendError($"{player.Name} hat deine Job-Anfrage abgelehnt!")
@@ -141,7 +141,7 @@ namespace server.Events.Jobs
                 Logger.Info($"BUY Upgrade For Job {jobId} Cat: {categoryId} Upgrade: {upgradeId}");
 
                 player.SendSuccess("Upgrade gekauft!");
-                player.Emit("Job:CloseJobMenu");
+                player.Emit("Popup:Close");
                 job.ShowJobMenu(player, "upgrade");
             }
             else

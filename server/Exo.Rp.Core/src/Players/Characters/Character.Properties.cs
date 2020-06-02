@@ -20,10 +20,10 @@ namespace server.Players.Characters
 
         //Interation:
         [NotMapped]
-        public int LastInteractionId;
+        public string LastInteractionId;
 
         [NotMapped]
-        public Dictionary<int, InteractionData> InteractionData = new Dictionary<int, InteractionData>();
+        public Dictionary<string, InteractionData> InteractionData = new Dictionary<string, InteractionData>();
 
         //Money
         [NotMapped]

@@ -5,6 +5,7 @@ using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
 using models.Jobs;
+using models.Popup;
 using Newtonsoft.Json;
 using server.Players;
 using server.Players.Characters;
@@ -82,7 +83,7 @@ namespace server.Jobs
             }
 
 
-            var data = new JobMenuDataDto
+            /*var data = new JobMenuDataDto
             {
                 CurrentJobId = player.GetCharacter().GetJob()?.JobId ?? 0,
                 CurrentJobName = player.GetCharacter().GetJob()?.Name ?? "-keiner-",
@@ -95,8 +96,62 @@ namespace server.Jobs
                 Upgrades = JobUpgrades,
                 JobPoints = GetPlayerUpgradePoints(player),
                 PlayerUpgrades = GetPlayerUpgrades(player)
+            };*/
+            var data = new PopupMenuDto
+            {
+				Title = "Job",
+				Items = new List<PopupItemDto>
+				{
+					new PopupColLabelDto
+					{
+						LeftText = "Momentaner Job",
+						RightText = player.GetCharacter().GetJob()?.Name ?? "-keiner-"
+					},
+					player.GetCharacter().GetJob() != null ? new PopupButtonDto
+					{
+						Name = $"{Name}-Job kündigen",
+						Callback = "Job:DeclineJob",
+						CallbackArgs = new List<object>{JobId},
+						Color = "red"
+					} : null,
+					new PopupLabelDto
+					{
+						Name = ""
+					},
+					new PopupHeaderDto
+					{
+						LeftText = Name,
+						RightText = $"bis zu {MaxPlayers} Spieler"
+					}
+				}
             };
-            player.Emit("Job:ShowJobMenu", JsonConvert.SerializeObject(data), subMenu);
+            if (JobId == player.GetCharacter().GetJob()?.JobId)
+            {
+	            data.Items.Add(new PopupButtonDto
+	            {
+		            Name = "Alleine Arbeiten",
+		            Callback = "Job:StartJobSingle",
+		            CallbackArgs = new List<object>{JobId, "test"}
+	            });
+
+	            if (MaxPlayers > 1)
+	            {
+		            data.Items.Add(new PopupButtonDto
+		            {
+			            Name = "Team zusammenstellen",
+		            });
+	            }
+            } else if (player.GetCharacter().GetJob() == null)
+            {
+	            data.Items.Add(new PopupButtonDto
+	            {
+		            Name = "Job annehmen",
+		            Callback = "Job:AcceptJob",
+		            CallbackArgs = new List<object>{JobId}
+	            });
+            }
+
+            player.Emit("Popup:Show", data);
 
             player.Emit("outputIPlayerConsole", JsonConvert.SerializeObject(data));
         }

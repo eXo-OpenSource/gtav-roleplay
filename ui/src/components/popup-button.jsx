@@ -6,7 +6,7 @@ const PopupButton = props => {
 			alt.emit("Popup:Click", props.name)
 		}
 	}
-	return <div onClick={callback} className="popup-item hover:bg-blue-400 hover:text-black">{props.name}</div>;
+	return <div onClick={callback} className={(props.selected ? "selected" : null )+" popup-item blue font-bold "+props.color} >{props.name}</div>;
 };
 
 export default PopupButton;

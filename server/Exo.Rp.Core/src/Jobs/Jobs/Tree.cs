@@ -21,7 +21,7 @@ namespace server.Jobs.Jobs
         private Position Center { get; }
         private Colshape.Colshape Col { get; }
         private DateTime LastUsed { get; set; }
-        private int InteractionId { get; set; }
+        private string InteractionId { get; set; }
 
         private void OnEnterCol(IEntity entity)
         {
@@ -43,10 +43,10 @@ namespace server.Jobs.Jobs
             if (player.GetCharacter() == null || !(player.GetCharacter().GetJob() is Farmer) ||
                 !player.GetCharacter().IsJobActive()) return;
 
-            if (InteractionId == -1) return;
+            if (InteractionId == null) return;
 
             player.GetCharacter().HideInteraction(InteractionId);
-            InteractionId = -1;
+            InteractionId = null;
         }
 
         public bool IsUsable()

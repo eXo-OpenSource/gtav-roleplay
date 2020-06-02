@@ -9,6 +9,7 @@ import loadable, { Options as LoadableOptions } from "@loadable/component";
 import './root.css';
 import Speedometer from "./hud/speedometer";
 import Popup from "./hud/popup";
+import Toast from "./hud/toast";
 
 const loadableOptions = { };
 const LoadableLoginComponent = loadable(() => import("./forms/login"), loadableOptions);
@@ -31,6 +32,7 @@ class App extends Component {
 				</Router>
 				<Chat/>
 				<HUD/>
+				<Toast/>
 				<Popup/>
 				<Speedometer/>
 			</div>
