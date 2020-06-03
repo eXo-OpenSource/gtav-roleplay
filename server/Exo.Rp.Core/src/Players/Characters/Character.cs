@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using AltV.Net.Data;
@@ -236,7 +236,8 @@ namespace server.Players.Characters
 
         public void UpdateHud()
         {
-            _player.Emit("guiHUDUpdate", GetMoney(), GetWantedLevel());
+			_player.Emit("HUD:UpdateMoney", GetMoney());
+			_player.Emit("guiHUDUpdate", GetMoney(), GetWantedLevel());
         }
 
         public PlayerInventory GetInventory()

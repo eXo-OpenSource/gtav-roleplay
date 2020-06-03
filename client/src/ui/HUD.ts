@@ -12,6 +12,7 @@ export class HUD {
 
     public constructor(uiManager) {
 		this.uiManager = uiManager;
+		let money = 0
 
 		alt.everyTick(() => {
 			native.displayAmmoThisFrame(false) // hides amount of ammo
@@ -24,7 +25,7 @@ export class HUD {
 
 				this.uiManager.emit("HUD:SetData", "amount", ammoInClip + " / " + ammoInWeapon)
 			} else {
-				this.uiManager.emit("HUD:SetData", "amount", "$0")
+				this.uiManager.emit("HUD:SetData", "amount", "$ "+ money)
 			}
 
 			let date = new Date()
@@ -38,6 +39,10 @@ export class HUD {
 
 		alt.onServer("HUD:Hide", (isHidden) => {
             this.uiManager.emit("HUD:SetData", "hidden", isHidden)
-        })
+		})
+
+		alt.onServer("HUD:UpdateMoney", (amount) => {
+			money = amount
+		})
     }
 }
