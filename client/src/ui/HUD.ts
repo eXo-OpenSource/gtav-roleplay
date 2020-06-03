@@ -2,7 +2,7 @@ import * as alt from 'alt'
 import * as native from 'natives'
 import { View } from '../utils/View'
 import { Singleton } from '../utils/Singleton'
-import {UiManager} from "./UiManager";
+import { UiManager } from "./UiManager";
 
 const url = 'http://resource/cef/index.html#/hud'
 
@@ -12,20 +12,32 @@ export class HUD {
 
     public constructor(uiManager) {
 		this.uiManager = uiManager;
-        alt.setInterval(() => {
-            let date = new Date()
-            const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' }
-            let zone = native.getLabelText(native.getNameOfZone(alt.Player.local.pos.x, alt.Player.local.pos.y, alt.Player.local.pos.z))
 
-            this.uiManager.emit("HUD:SetData", "location", zone)
-            this.uiManager.emit("HUD:SetData", "date", date.toLocaleDateString("de-DE", dateOptions))
-            this.uiManager.emit("HUD:SetData", "time", date.toLocaleTimeString("de-DE"))
-        }, 1000)
+		alt.everyTick(() => {
+			native.displayAmmoThisFrame(false) // hides amount of ammo
+			native.hideHudComponentThisFrame(20) // hides weapon stats ui
 
-        alt.onServer("HUD:Hide", (isHidden) => {
+			if (native.isPedArmed(alt.Player.local.scriptID, 7)) {
+				let selectedWeapon = native.getSelectedPedWeapon(alt.Player.local.scriptID)
+				let ammoInWeapon = native.getAmmoInPedWeapon(alt.Player.local.scriptID, selectedWeapon)
+				let [_, ammoInClip] = native.getAmmoInClip(alt.Player.local.scriptID, selectedWeapon, ammoInWeapon)
+
+				this.uiManager.emit("HUD:SetData", "amount", ammoInClip + " / " + ammoInWeapon)
+			} else {
+				this.uiManager.emit("HUD:SetData", "amount", "$0")
+			}
+
+			let date = new Date()
+			const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' }
+			let zone = native.getLabelText(native.getNameOfZone(alt.Player.local.pos.x, alt.Player.local.pos.y, alt.Player.local.pos.z))
+
+			this.uiManager.emit("HUD:SetData", "location", zone)
+			this.uiManager.emit("HUD:SetData", "date", date.toLocaleDateString("de-DE", dateOptions))
+			this.uiManager.emit("HUD:SetData", "time", date.toLocaleTimeString("de-DE"))
+		})
+
+		alt.onServer("HUD:Hide", (isHidden) => {
             this.uiManager.emit("HUD:SetData", "hidden", isHidden)
         })
     }
-
-
 }
