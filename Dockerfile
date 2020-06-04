@@ -1,5 +1,5 @@
 ## Base Image
-FROM eisengrind/altv-server:release-dotnet as runner
+FROM eisengrind/altv-server:release-nodejs-dotnet as runner
 
 
 
