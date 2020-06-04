@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AltV.Net;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
+using models.Enums;
 using models.Jobs;
 using Newtonsoft.Json;
 using server.Database;
 using server.Extensions;
 using server.Players;
+using server.Streamer;
+using server.Streamer.Entities;
+using server.Streamer.Private;
 using IPlayer = server.Players.IPlayer;
 
 namespace server.Jobs.Jobs
@@ -82,15 +87,20 @@ namespace server.Jobs.Jobs
 
             veh.handle.SetData("MaxBins", GetJobUpgradeValue(player, 1));
 
-            TriggerEventForJobTeam(player, "JobTrash:SetVehicle", veh.handle, GetJobUpgradeValue(player, 1));
+            TriggerEventForJobTeam(player, "JobTrash:SetVehicle", veh.handle.Id, GetJobUpgradeValue(player, 1));
             if (GetJobTeam(player) == null) return;
             if (_bins == null) LoadWasteBins(); // Only for debug. Bins should load always later
 
             foreach (var jobPlayer in GetJobTeam(player))
             {
-                var coopPlayer = Core.GetService<PlayerManager>().GetClient(jobPlayer.Key);
-                coopPlayer.Emit("JobTrash:UpdateBlips", JsonConvert.SerializeObject(GetFullWastebinPositions()),
-                    GetJobUpgradeValue(player, 2));
+	            var coopPlayer = Core.GetService<PlayerManager>().GetClient(jobPlayer.Key);
+
+	            foreach (var bin in _bins.Values)
+	            {
+		            bin.Blip.AddVisibleEntity(coopPlayer.Id);
+	            }
+	            //coopPlayer.Emit("JobTrash:UpdateBlips", JsonConvert.SerializeObject(GetFullWastebinPositions()),
+                //    GetJobUpgradeValue(player, 2));
             }
         }
 
@@ -98,23 +108,27 @@ namespace server.Jobs.Jobs
         {
             base.StopJob(player);
             player.SendInformation(Name + "-Job beendet!");
+            foreach (var bin in _bins.Values)
+            {
+	            bin.Blip.RemoveVisibleEntity(player.Id);
+            }
             if (!IsJobLeader(player)) return;
             DestroyJobVehicle(player);
         }
 
         public void OnVehicleMarkerHit(IPlayer player, IVehicle vehicle)
         {
-            if (player.GetSyncedMetaData("WasteBin", out WasteBin bin))
+            if (player.GetData("WasteBin", out WasteBin bin))
             {
-                if (bin.BinObject.Exists)
+                if (bin.BinObject != null)
                 {
                     bin.Destroy();
-                    player.SetMetaData("WasteBin", false);
+                    player.DeleteData("WasteBin");
                     player.StopAnimation();
                     _vehicleBins[vehicle] = _vehicleBins[vehicle] + 1;
                     player.SendSuccess($"Container #{_vehicleBins[vehicle]} eingeladen!");
 
-                    vehicle.GetMetaData("MaxBins", out int maxBins);
+                    vehicle.GetData("MaxBins", out int maxBins);
                     var percent = Math.Round(_vehicleBins[vehicle] / (float)maxBins, 2);
                     TriggerEventForJobTeam(player, "JobTrash:SetProgress", (float)percent);
                     GivePlayerUpgradePoints(player, 1);
@@ -166,22 +180,25 @@ namespace server.Jobs.Jobs
 
         public void CreateWasteBin(int id, Position pos, Position rot)
         {
-            /*var nBin = new WasteBin
+	        var nBin = new WasteBin
             {
-                BinObject = NAPI.Object.CreateObject((uint)Objects.WasteBin, pos, rot, dimension: 0),
-                Col = NAPI.ColShape.CreateSphereColShape(pos, 2, 0),
-                Full = true
+                BinObject = new StreamObject(new Position(pos.X, pos.Y, pos.Z), 0, 520){Model = (uint)Objects.WasteBin}/*Alt.CreateObject((uint)Objects.WasteBin, pos, rot, dimension: 0)*/,
+                Col = (Colshape.Colshape) Alt.CreateColShapeSphere(pos, 2),
+                Full = true,
+                Blip = new PrivateBlip( pos, 0, 300){Sprite = 364, Name = "Mülleimer"}
             };
-            if (_blipsEnabled) NAPI.Blip.CreateBlip(364, pos, 1, 76, "Muell", 255, 200f, true, 0, 0);
+	        Core.GetService<PrivateStreamer>().AddEntity(nBin.Blip);
+	        Core.GetService<ObjectStreamer>().Add(nBin.BinObject);
 
             nBin.Col.SetData("WasteBin", nBin);
-            //nBin.Col.OnEntityEnterColShape += OnBinColEnter;
-            _bins.Add(id, nBin);*/
+            nBin.Col.OnColShapeEnter += OnBinColEnter;
+            _bins.Add(id, nBin);
         }
 
-        public void OnBinColEnter(ColShape shape, IPlayer player)
+        public void OnBinColEnter(Colshape.Colshape colshape, IEntity entity)
         {
-            /*if (player.GetCharacter() == null || player.GetCharacter().GetJob() != this ||
+	        if(!(entity is IPlayer player)) return;
+            if (player.GetCharacter() == null || player.GetCharacter().GetJob() != this ||
                 !player.GetCharacter().IsJobActive()) return;
             if (player.HasData("WasteBin"))
             {
@@ -189,13 +206,14 @@ namespace server.Jobs.Jobs
                 return;
             }
 
-            WasteBin binData = shape.GetData("WasteBin");
-            player.AttachObject(binData.BinObject, 6286, new Position(0f, 0.9f, -0.9f), new Position(0, 0, 180));
+            colshape.GetData("WasteBin", out WasteBin binData);
+            binData.BinObject.SetData("attachToEntity", entity.Id);
+            //player.AttachObject(binData.BinObject, 6286, new Position(0f, 0.9f, -0.9f), new Position(0, 0, 180));
 
             player.SetData("WasteBin", binData);
             player.SendInformation("WasteColHit");
             player.PlayAnimation("anim@mp_ferris_wheel", "idle_a_player_one",
-                (int) (AnimationFlags.Loop | AnimationFlags.OnlyAnimateUpperBody | AnimationFlags.AllowPlayerControl));*/
+                (int) (AnimationFlags.Loop | AnimationFlags.OnlyAnimateUpperBody | AnimationFlags.AllowPlayerControl));
         }
 
         public Dictionary<int, string> GetFullWastebinPositions()
@@ -205,7 +223,8 @@ namespace server.Jobs.Jobs
             foreach (var bin in _bins)
             {
                 if (bin.Value.Full == false) continue;
-                var pos = bin.Value.BinObject.Position.Serialize();
+                var pos = new Position(bin.Value.BinObject.Position.X, bin.Value.BinObject.Position.Y,
+	                bin.Value.BinObject.Position.Z).Serialize();
                 binData.Add(bin.Key, pos);
             }
 

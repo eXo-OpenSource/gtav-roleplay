@@ -14,7 +14,7 @@ namespace server.Players
     public partial class Player : AltV.Net.Elements.Entities.Player, IPlayer
     {
         private static readonly Logger<Player> Logger = new Logger<Player>();
-        
+
         private Account _account;
         private Account Account => _account ??= Core.GetService<DatabaseContext>().AccountModel.Local.FirstOrDefault(x => x.SocialClubId == SocialClubId);
 
@@ -81,11 +81,11 @@ namespace server.Players
 
         public void StopAnimation()
         {
-
+			Emit("Animation:Clear");
         }
         public void PlayAnimation(string animation, string v, int flag)
         {
-
+			Emit("Animation:Start", v, animation, flag);
         }
 
         public void SendChatMessage(string msg)

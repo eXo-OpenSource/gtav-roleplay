@@ -6,8 +6,8 @@ namespace server.Colshape
 	public class Colshape : AltV.Net.Elements.Entities.ColShape
 	{
 
-		public delegate void ColShapeEnter(IEntity entity);
-		public delegate void ColShapeExit(IEntity entity);
+		public delegate void ColShapeEnter(Colshape colshape, IEntity entity);
+		public delegate void ColShapeExit(Colshape colshape, IEntity entity);
 
 		public event ColShapeEnter OnColShapeEnter;
 		public event ColShapeExit OnColShapeExit;
@@ -18,12 +18,12 @@ namespace server.Colshape
 
 		public void TriggerEnter(IEntity entity)
 		{
-			OnColShapeEnter?.Invoke(entity);
+			OnColShapeEnter?.Invoke(this, entity);
 		}
 
 		public void TriggerExit(IEntity entity)
 		{
-			OnColShapeExit?.Invoke(entity);
+			OnColShapeExit?.Invoke(this, entity);
 		}
 	}
 }

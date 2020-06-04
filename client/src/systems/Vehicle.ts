@@ -9,8 +9,20 @@ export class Vehicle {
 }
 
 alt.onServer("Vehicle:SetIntoVehicle", (veh, seat) => {
-    alt.setTimeout(() => native.setPedIntoVehicle(Player.local.scriptID, alt.Vehicle.getByID(veh).scriptID, seat),
-        300);
+	let cleared = false;
+	const interval = alt.setInterval(() => {
+		const vehicleScriptId = alt.Vehicle.getByID(veh).scriptID;
+		if (vehicleScriptId) {
+			native.setPedIntoVehicle(alt.Player.local.scriptID, vehicleScriptId, seat);
+			alt.clearInterval(interval);
+			cleared = true;
+		}
+	}, 10);
+	alt.setTimeout(() => {
+		if (!cleared) {
+			alt.clearInterval(interval);
+		}
+	}, 5000);
 });
 
 const seatBones: string[] = [

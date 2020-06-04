@@ -52,22 +52,22 @@ namespace server.Players.Characters
 
         [ForeignKey("FaceFeatures")]
         public int FaceFeaturesId { get; set; }
-        
+
         public FaceFeatures FaceFeatures { get; set; }
 
         [NotMapped]
-        public CharacterJobData JobData { get; set; }
+        public CharacterJobData JobData {
+	        get => string.IsNullOrEmpty(JobLevelsSerialized)
+			        ? new CharacterJobData()
+			        : JsonConvert.DeserializeObject<CharacterJobData>(JobLevelsSerialized);
+
+	        set => JobLevelsSerialized = JsonConvert.SerializeObject(value);
+        }
 
         private PlayerInventory _playerInventory { get; set; }
 
         [Column("JobLevels")]
-        public string JobLevelsSerialized
-        {
-            get => JsonConvert.SerializeObject(JobData);
-            set => JobData = string.IsNullOrEmpty(value)
-                ? new CharacterJobData()
-                : JsonConvert.DeserializeObject<CharacterJobData>(value);
-        }
+        public string JobLevelsSerialized { get; set; }
 
         [NotMapped]
         public PedModel Skin

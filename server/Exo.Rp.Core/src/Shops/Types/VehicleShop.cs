@@ -38,7 +38,7 @@ namespace server.Shops.Types
             LoadVehicles();
         }
 
-        protected override void OnPedColEnter(IEntity entity)
+        protected override void OnPedColEnter(Colshape.Colshape colshape, IEntity entity)
         {
 	        if(!(entity is IPlayer player)) return;
            // player.SendChatMessage("Vehicle Shop Enter");
@@ -53,7 +53,7 @@ namespace server.Shops.Types
 
         }
 
-        protected override void OnPedColExit(IEntity entity)
+        protected override void OnPedColExit(Colshape.Colshape colshape, IEntity entity)
         {
 	        if(!(entity is IPlayer player)) return;
             if (player.GetCharacter() == null) return;

@@ -49,7 +49,7 @@ namespace server.Players.Characters
                 UserName = _account.Username,
                 Gender = Gender
             });
-            
+
             PedManager.SendToIPlayer(_player);
             */
             InventoryModel.Load();
@@ -210,12 +210,12 @@ namespace server.Players.Characters
             Pos = _player.Position;
             Health = _player.Health;
             Skin = DefaultSkin;
-            
+
         }
 
         public void LoadTeams()
         {
-           
+
 
     }
 
@@ -357,13 +357,13 @@ namespace server.Players.Characters
 
         public Job GetJob()
         {
-            //return Enums.JobId > 0 ? JobManager.GetJob(Enums.JobId) : null; // Todo WTF?
-            return null; 
+            return JobId > 0 ? Core.GetService<JobManager>().GetJob(JobId) : null; // Todo WTF?
+            return null;
         }
 
         public void SetJob(Job job)
         {
-            //Enums.JobId = job?.JobId ?? 0; // Todo WTF?
+            JobId = job?.JobId ?? 0; // Todo WTF?
             Save();
         }
 

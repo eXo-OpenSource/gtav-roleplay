@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using AltV.Net;
+using AltV.Net.Data;
 using models.Enums;
 using Sentry;
 using server.Database;
@@ -86,6 +87,7 @@ namespace server.Events
         public void PlayerConnect(IPlayer player, string reason)
         {
             Alt.Log($"{player.Name} connected.");
+            player.Position = new Position(0,0,75);
         }
 
         [ScriptEvent(ScriptEventType.PlayerDisconnect)]

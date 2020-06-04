@@ -23,7 +23,7 @@ namespace server.Jobs.Jobs
         public DateTime LastUsed { get; set; }
         public string InteractionId { get; set; }
 
-        private void OnEnterCol(IEntity entity)
+        private void OnEnterCol(Colshape.Colshape colshape, IEntity entity)
         {
 	        if(!(entity is IPlayer player)) return;
             if (player.GetCharacter() != null && player.GetCharacter().GetJob() is Miner &&
@@ -39,7 +39,7 @@ namespace server.Jobs.Jobs
             }
         }
 
-        private void OnExitCol(IEntity entity)
+        private void OnExitCol(Colshape.Colshape colshape, IEntity entity)
         {
 	        if(!(entity is IPlayer player)) return;
             if (player.GetCharacter() != null && player.GetCharacter().GetJob() is Miner &&

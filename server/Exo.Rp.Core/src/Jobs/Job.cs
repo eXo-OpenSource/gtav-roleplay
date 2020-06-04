@@ -47,7 +47,7 @@ namespace server.Jobs
             col.OnColShapeExit += OnColExit;
         }
 
-        public void OnColEnter(IEntity entity)
+        public void OnColEnter(Colshape.Colshape colshape, IEntity entity)
         {
 	        if(!(entity is IPlayer player)) return;
             if (player.GetCharacter() == null) return;
@@ -61,7 +61,7 @@ namespace server.Jobs
                 .ShowInteraction("Job: " + Name, "onJobPedInteraction", interactionData: interactionData);
         }
 
-        public void OnColExit(IEntity entity)
+        public void OnColExit(Colshape.Colshape colshape, IEntity entity)
         {
 	        if(!(entity is IPlayer player)) return;
             if (player.GetCharacter() == null) return;
@@ -127,18 +127,33 @@ namespace server.Jobs
             };
             if (JobId == player.GetCharacter().GetJob()?.JobId)
             {
-	            data.Items.Add(new PopupButtonDto
-	            {
-		            Name = "Alleine Arbeiten",
-		            Callback = "Job:StartJobSingle",
-		            CallbackArgs = new List<object>{JobId, "test"}
-	            });
-
-	            if (MaxPlayers > 1)
+	            if (!player.GetCharacter().IsJobActive())
 	            {
 		            data.Items.Add(new PopupButtonDto
 		            {
-			            Name = "Team zusammenstellen",
+			            Name = "Alleine Arbeiten",
+			            Callback = "Job:StartJobSingle",
+			            CallbackArgs = new List<object> {JobId}
+		            });
+
+		            if (MaxPlayers > 1)
+		            {
+			            data.Items.Add(new PopupButtonDto
+			            {
+				            Name = "Team zusammenstellen",
+				            Callback = "Job:OpenCoop",
+				            CallbackArgs = new List<object>{JobId}
+			            });
+		            }
+	            }
+	            else
+	            {
+		            data.Items.Add(new PopupButtonDto
+		            {
+			            Name = "Arbeit beenden",
+			            Color = "red",
+			            Callback = "Job:StopJob",
+			            CallbackArgs = new List<object>{JobId}
 		            });
 	            }
             } else if (player.GetCharacter().GetJob() == null)
@@ -212,6 +227,7 @@ namespace server.Jobs
 
         public virtual void DestroyJobVehicle(IPlayer player)
         {
+	        Alt.Log("destroy job");
             if (JobVehicles.ContainsKey(player))
             {
                 JobVehicles[player].handle.Remove();
@@ -262,8 +278,20 @@ namespace server.Jobs
             if (player.GetCharacter() == null) return 0;
             var jobData = player.GetCharacter().JobData;
             if (jobData != null && jobData.Upgrades.ContainsKey(JobId))
-                if (jobData.Upgrades[JobId].ContainsKey(categoryId))
-                    return jobData.Upgrades[JobId][categoryId];
+            {
+	            if (jobData.Upgrades[JobId].ContainsKey(categoryId))
+		            return jobData.Upgrades[JobId][categoryId];
+            }
+            else if(jobData != null)
+            {
+	            var startUpgrades = new Dictionary<int, int>();
+	            foreach (var category in JobUpgrades)
+	            {
+		            startUpgrades.Add(category.Id, 0);
+	            }
+	            jobData.Upgrades.Add(JobId, startUpgrades);
+	            return GetJobUpgradeId(player, categoryId);
+            }
 
             Logger.Debug("UpgradeId not Found!");
 
@@ -347,15 +375,14 @@ namespace server.Jobs
             return null;
         }
 
-        public void TriggerEventForJobTeam(IPlayer player, string eventName, object data, object data2 = null,
-            object data3 = null)
+        public void TriggerEventForJobTeam(IPlayer player, string eventName, params object[] data)
         {
             var leader = GetJobLeader(player);
             if (leader == null || !JobPlayers.ContainsKey(leader)) return;
             foreach (var jobPlayer in JobPlayers[leader])
             {
                 var coopPlayer = Core.GetService<PlayerManager>().GetClient(jobPlayer.Key);
-                coopPlayer.Emit(eventName, data, data2, data3);
+                coopPlayer.Emit(eventName, data);
             }
         }
 

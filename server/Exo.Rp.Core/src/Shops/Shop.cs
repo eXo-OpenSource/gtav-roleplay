@@ -40,13 +40,13 @@ namespace server.Shops
             return BankAccount.TakeMoney(amount);
         }
 
-        protected virtual void OnPedColEnter(IEntity entity)
+        protected virtual void OnPedColEnter(Colshape.Colshape colshape, IEntity entity)
         {
 	        if(!(entity is IPlayer player)) return;
             player.SendChatMessage("Entered Shop Col! " + Name);
         }
 
-        protected virtual void OnPedColExit(IEntity entity)
+        protected virtual void OnPedColExit(Colshape.Colshape colshape, IEntity entity)
         {
 	        if(!(entity is IPlayer player)) return;
             player.SendChatMessage("Leaved Shop Col! " + Name);

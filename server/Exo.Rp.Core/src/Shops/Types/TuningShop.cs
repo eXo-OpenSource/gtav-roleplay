@@ -11,7 +11,7 @@ namespace server.Shops.Types
             // new Position(-1149.536, -1994.828, 12.76826)
         }
 
-        protected override void OnPedColEnter(IEntity entity)
+        protected override void OnPedColEnter(Colshape.Colshape colshape, IEntity entity)
         {
 	        if(!(entity is IPlayer player)) return;
             if (player.GetCharacter() == null) return;

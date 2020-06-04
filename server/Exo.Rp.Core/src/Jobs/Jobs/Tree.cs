@@ -23,7 +23,7 @@ namespace server.Jobs.Jobs
         private DateTime LastUsed { get; set; }
         private string InteractionId { get; set; }
 
-        private void OnEnterCol(IEntity entity)
+        private void OnEnterCol(Colshape.Colshape colshape, IEntity entity)
         {
 	        if(!(entity is IPlayer player)) return;
             if (player.GetCharacter().IsJobCurrentAndActive<Farmer>()) return;
@@ -37,7 +37,7 @@ namespace server.Jobs.Jobs
                 interactionData: interactionData, text: "Drücke E um einen Apfel zu pflücken!");
         }
 
-        private void OnExitCol(IEntity entity)
+        private void OnExitCol(Colshape.Colshape colshape, IEntity entity)
         {
 	        if(!(entity is IPlayer player)) return;
             if (player.GetCharacter() == null || !(player.GetCharacter().GetJob() is Farmer) ||
