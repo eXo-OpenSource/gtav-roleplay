@@ -1,14 +1,21 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using AltV.Net;
+using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
+using AltV.Net.EntitySync;
+using AltV.Net.EntitySync.ServerEvent;
+using AltV.Net.EntitySync.SpatialPartitions;
 using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Sentry;
 using Sentry.Protocol;
 using server.AutoMapper;
@@ -16,6 +23,7 @@ using server.BankAccounts;
 using server.Commands;
 using server.Database;
 using server.Environment;
+using server.Extensions;
 using server.Factories.BaseObjects;
 using server.Factories.Entities;
 using server.Inventory;
@@ -23,6 +31,9 @@ using server.Inventory.Items;
 using server.Jobs;
 using server.Players;
 using server.Shops;
+using server.Streamer;
+using server.Streamer.Grid;
+using server.Streamer.Private;
 using server.Teams;
 using server.Translation;
 using server.Updateable;
@@ -65,7 +76,9 @@ namespace server
                 .AddSingleton<IplManager>()
                 .AddSingleton<JobManager>()
                 .AddSingleton<UpdateableManager>()
-                .AddSingleton<PluginManager.PluginManager>();
+                .AddSingleton<PluginManager.PluginManager>()
+                .AddSingleton<PrivateStreamer>()
+                .AddSingleton<ObjectStreamer>();
 
             // Start loading database mode/ls
             _databaseCore.OnResourceStartHandler(
@@ -100,6 +113,34 @@ namespace server
             Logger.Info("Loading services...");
             var stopWatch = Stopwatch.StartNew();
 
+            Logger.Info("Services | Loading Streamer managers...");
+            _serviceProvider.GetService<PrivateStreamer>().Init(1, 500,
+	            (threadCount, repo) => new ServerEventNetworkLayer(threadCount, repo),
+	            (entity, threadCount) => entity.Type,
+	            (entityId, entityType, threadCount) => entityType,
+	            (threadid) => new LimitedPrivateGrid3(50_000, 50_000, 75, 10_000, 10_000,  500)
+	            , new IdProvider());
+            _serviceProvider.GetService<ObjectStreamer>();
+            AltEntitySync.Init(3, 250,
+	            (threadCount, repository) => new ServerEventNetworkLayer(threadCount, repository),
+	            (entity, threadCount) => entity.Type,
+	            (entityId, entityType, threadCount) => entityType,
+	            (threadId) =>
+	            {
+		            if (threadId == 1)
+		            {
+			            return new LimitedGrid3(50_000, 50_000, 125, 10_000, 10_000, 1000);
+		            }
+		            /*//THREAD PED
+		            else if (threadId == 3){
+		                 return new LimitedGrid3(50_000, 50_000, 175, 10_000, 10_000, 64);
+		            }*/
+		            else
+		            {
+			            return new LimitedGrid3(50_000, 50_000, 175, 10_000, 10_000, 300);
+		            }
+	            },
+	            Core.GetService<PrivateStreamer>().idProvider);
             Logger.Info("Services | Loading Command handler...");
             _serviceProvider.GetService<CommandHandler>();
             Logger.Info("Services | Loading Metrics collector...");
