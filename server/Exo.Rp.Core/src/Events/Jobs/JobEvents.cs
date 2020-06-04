@@ -196,14 +196,14 @@ namespace server.Events.Jobs
 		        {
 			        LeftText = "Spieler hinzufügen", RightText = ""
 		        });
-		        foreach (var online in Alt.GetAllPlayers())
+		        foreach (Player online in Alt.GetAllPlayers())
 		        {
 			        if(online == player) continue;
 			        data.Items.Add(new PopupButtonDto
 			        {
 				        Name = online.Name,
 				        Callback = "Job:AskCoop",
-				        CallbackArgs = new List<object>{jobId, online.Id}
+				        CallbackArgs = new List<object>{jobId, online.GetAccount().Id}
 			        });
 		        }
 	        }
