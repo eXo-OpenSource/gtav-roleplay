@@ -13,6 +13,7 @@ namespace server.Events.Jobs
         [Event("JobTrash:onVehicleMarkerHit")]
         public void OnVehicleMarkerHit(IPlayer player, IVehicle vehicle)
         {
+	        Alt.Log(player.GetCharacter().FullName);
             var job = player.GetCharacter().GetJob();
             if (job.JobId != (int) JobId.WasteCollector) return;
             var wasteJob = (WasteCollector) job;

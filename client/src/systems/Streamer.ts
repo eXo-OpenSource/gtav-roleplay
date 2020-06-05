@@ -123,7 +123,7 @@ alt.onServer("entitySync:updateData", (entityId: number, entityType, newData) =>
 		let data = entities.find(value => value.id === entityId && value.type == entityType).data;
 		alt.log(JSON.stringify(data))
 		natives.attachEntityToEntity(<number>entities.find(value => value.id === entityId && value.type == entityType).handle, alt.Player.getByID(data.attachToEntity).scriptID,
-			6286, 0, 0.9, -0.9, 0, 0, 180, true, false, false, true, 0, true)
+			natives.getPedBoneIndex(alt.Player.local.scriptID, 57005), 0.12, 0, 0, 25, 270, 180, true, false, false, true, 1, true)
 	}
 });
 
@@ -137,7 +137,7 @@ alt.onServer("Animation:Start",(anim, dict, flag) => {
 	if(!natives.hasAnimDictLoaded(dict)) natives.requestAnimDict(dict)
 	const interval = alt.setInterval(() => {
 		if(natives.hasAnimDictLoaded(dict)) {
-			natives.taskPlayAnim(alt.Player.local.scriptID, dict, anim, 8, -1, -1, flag, 1, false, false, false)
+			natives.taskPlayAnim(alt.Player.local.scriptID, dict, anim, 1, -1, -1, flag, 1, false, false, false)
 			alt.clearInterval(interval);
 		}
 	}, 10);

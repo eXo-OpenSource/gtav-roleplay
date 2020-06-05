@@ -198,8 +198,10 @@ namespace server.Jobs.Jobs
         public void OnBinColEnter(Colshape.Colshape colshape, IEntity entity)
         {
 	        if(!(entity is IPlayer player)) return;
+	        Alt.Log(player.GetCharacter().IsJobActive()+"");
             if (player.GetCharacter() == null || player.GetCharacter().GetJob() != this ||
                 !player.GetCharacter().IsJobActive()) return;
+            Alt.Log("colshapehit");
             if (player.HasData("WasteBin"))
             {
                 player.SendError("Du hast bereits eine Muelltonne dabei!");
