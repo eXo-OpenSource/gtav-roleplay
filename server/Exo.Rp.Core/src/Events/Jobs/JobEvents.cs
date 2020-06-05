@@ -154,6 +154,7 @@ namespace server.Events.Jobs
         public void OpenCoopMenu(IPlayer player, int jobId)
         {
 	        var job = Core.GetService<JobManager>().GetJob(jobId);
+	        var currentPlayers = job.JobPlayers.ContainsKey(player) ? job.JobPlayers.Count : 1;
 	        var data = new PopupMenuDto
 	        {
 		        Title = "Job",
@@ -162,7 +163,7 @@ namespace server.Events.Jobs
 			        new PopupHeaderDto
 			        {
 				        LeftText = "Aktuell im Team:",
-				        RightText = $"1/{job.MaxPlayers}"
+				        RightText = $"{currentPlayers}/{job.MaxPlayers}"
 			        }
 		        }
 	        };

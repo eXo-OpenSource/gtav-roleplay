@@ -183,7 +183,8 @@ namespace server.Jobs
             if (!JobPlayers.ContainsKey(leader))
             {
                 JobPlayers.Add(leader, new Dictionary<int, string>());
-                AddPlayerToJob(player, leader, multiplayer);
+                AddPlayerToJob(leader, leader, multiplayer);
+                if(multiplayer) AddPlayerToJob(player, leader, true);
             }
 
             if (JobPlayers[leader].ContainsKey(player.GetId())) return;
