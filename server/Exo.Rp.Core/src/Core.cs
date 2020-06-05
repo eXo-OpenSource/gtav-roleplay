@@ -115,7 +115,7 @@ namespace server
 
             Logger.Info("Services | Loading Streamer managers...");
             _serviceProvider.GetService<PrivateStreamer>().Init(1, 500,
-	            (threadCount, repo) => new ServerEventNetworkLayer(threadCount, repo),
+	            (threadCount, repo) => new BetterServerEventNetworkLayer(threadCount, repo),
 	            (entity, threadCount) => entity.Type,
 	            (entityId, entityType, threadCount) => entityType,
 	            (threadid) => new LimitedPrivateGrid3(50_000, 50_000, 75, 10_000, 10_000,  500)
@@ -172,6 +172,27 @@ namespace server
 
             stopWatch.Stop();
             Logger.Debug($"Loaded services in {stopWatch.ElapsedMilliseconds} ms.");
+
+            /*var binsPath = Path.Combine("resources", Alt.Server.Resource.Name, "worldBinsDumpsters.json");
+            var bins = JsonConvert.DeserializeObject<List<Bin>>(File.ReadAllText(binsPath));
+
+            foreach (var bin in bins)
+            {
+	            if(!bin.Name.Contains("dumpster")) continue;
+	            var pos = new Position(bin.Position.X, bin.Position.Y, bin.Position.Z);
+				var rot = new Position(bin.Rotation.X, bin.Rotation.Y, bin.Rotation.Z);
+				var nModel = new WorldObjects.WorldObject()
+				{
+					Position = pos.Serialize(),
+					Rotation = rot.Serialize(),
+					Type = models.Enums.WorldObjects.WasteBin,
+					PlacedBy = 1,
+					Date = DateTime.Now
+				};
+				var factory = GetService<DatabaseContext>().WorldObjectsModels.Local;
+				factory.Add(nModel);
+				Logger.Debug($"{bin.Name}");
+            }*/
         }
 
         public override void OnStop()
@@ -228,5 +249,29 @@ namespace server
         {
             return _serviceProvider.GetService(type);
         }
+    }
+
+    class Vector
+    {
+	    [JsonProperty("X")]
+	    public float X { get; set; }
+
+	    [JsonProperty("Y")]
+	    public float Y { get; set; }
+
+	    [JsonProperty("Z")]
+	    public float Z { get; set; }
+    }
+
+    class Bin
+    {
+	    [JsonProperty("Name")]
+	    public string Name { get; set; }
+
+	    [JsonProperty("Position")]
+	    public Vector Position { get; set; }
+
+	    [JsonProperty("Rotation")]
+	    public Vector Rotation { get; set; }
     }
 }

@@ -227,8 +227,7 @@ namespace server.Jobs
 
         public virtual void DestroyJobVehicle(IPlayer player)
         {
-	        Alt.Log("destroy job");
-            if (JobVehicles.ContainsKey(player))
+	        if (JobVehicles.ContainsKey(player))
             {
                 JobVehicles[player].handle.Remove();
                 JobVehicles[player] = null;
@@ -290,6 +289,7 @@ namespace server.Jobs
 		            startUpgrades.Add(category.Id, 0);
 	            }
 	            jobData.Upgrades.Add(JobId, startUpgrades);
+	            player.GetCharacter().JobData = jobData;
 	            return GetJobUpgradeId(player, categoryId);
             }
 
@@ -335,6 +335,7 @@ namespace server.Jobs
             else
                 jobData.Points.Add(JobId, points);
 
+            player.GetCharacter().JobData = jobData;
             player.SendSuccess("Du hast " + points + " " + Name + "-Punkt/e erhalten!");
         }
 

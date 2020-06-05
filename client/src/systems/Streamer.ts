@@ -4,24 +4,36 @@ import * as natives from "natives";
 
 let entities: StreamedEntity[] = [];
 
+let currentlyLoading = false;
+
 async function loadModel(model) {
 	return new Promise(resolve => {
 
 		if (!natives.isModelValid(model))
 			return resolve(false);
 
-		if (natives.hasModelLoaded(model))
-			return resolve(true);
-
-		natives.requestModel(model);
-
-		let interval = alt.setInterval(() => {
+		const int = alt.setInterval(() => {
+			if(!currentlyLoading) {
 				if (natives.hasModelLoaded(model)) {
-					resolve(true);
-					alt.clearInterval(interval);
+					alt.clearInterval(int)
+					return resolve(true);
 				}
-			},
-			5);
+
+				alt.log("only once?")
+				natives.requestModel(model);
+				currentlyLoading = true;
+
+				let interval = alt.setInterval(() => {
+						if (natives.hasModelLoaded(model)) {
+							resolve(true);
+							currentlyLoading = false;
+							alt.clearInterval(int)
+							alt.clearInterval(interval);
+						}
+					},
+					5);
+			}
+		}, 100);
 	});
 }
 
@@ -52,6 +64,7 @@ alt.onServer("entitySync:create", (entityId, entityType, position, currEntityDat
 				handle: blip
 			})
 		} else if(entityType === 1) {
+			alt.log("create collaborate and listen")
 			loadModel(currEntityData.model).then(() => {
 				let handle = natives.createObject( currEntityData.model, position.x, position.y,
 					position.z, false, false, false );
@@ -62,7 +75,7 @@ alt.onServer("entitySync:create", (entityId, entityType, position, currEntityDat
 					data: currEntityData,
 					handle: handle
 				})
-				alt.log("Handle:" +handle)
+				//alt.log("Handle:" +handle)
 				natives.setEntityVisible(handle, true, false)
 				natives.setObjectTextureVariation(handle, 0)
 			});
