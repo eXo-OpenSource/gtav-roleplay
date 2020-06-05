@@ -189,7 +189,7 @@ namespace server.Jobs
 
             if (JobPlayers[leader].ContainsKey(player.GetId())) return;
 
-            JobPlayers[leader].Add(player.GetId(), player.Name);
+            JobPlayers[leader].Add(player.GetAccount().Id, player.Name);
 
             if (multiplayer)
                 player.SendInformation("Du wurdest zum " + Name + "-Team von " +

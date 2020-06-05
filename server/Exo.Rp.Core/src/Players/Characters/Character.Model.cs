@@ -57,7 +57,7 @@ namespace server.Players.Characters
 
         [NotMapped]
         public CharacterJobData JobData {
-	        get => string.IsNullOrEmpty(JobLevelsSerialized)
+	        get => string.IsNullOrEmpty(JobLevelsSerialized) || JobLevelsSerialized == "null"
 			        ? new CharacterJobData()
 			        : JsonConvert.DeserializeObject<CharacterJobData>(JobLevelsSerialized);
 

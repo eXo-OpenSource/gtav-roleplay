@@ -154,7 +154,7 @@ namespace server.Events.Jobs
         public void OpenCoopMenu(IPlayer player, int jobId)
         {
 	        var job = Core.GetService<JobManager>().GetJob(jobId);
-	        var currentPlayers = job.JobPlayers.ContainsKey(player) ? job.JobPlayers.Count : 1;
+	        var currentPlayers = job.JobPlayers.ContainsKey(player) ? job.JobPlayers[player].Count : 1;
 	        var data = new PopupMenuDto
 	        {
 		        Title = "Job",

@@ -182,7 +182,7 @@ namespace server.Jobs.Jobs
         {
 	        var nBin = new WasteBin
             {
-                BinObject = new StreamObject(new Position(pos.X, pos.Y, pos.Z), 0, 520){Model = (uint)Objects.WasteBin}/*Alt.CreateObject((uint)Objects.WasteBin, pos, rot, dimension: 0)*/,
+                BinObject = new StreamObject(new Position(pos.X, pos.Y, pos.Z), 0, 520){Model = Alt.Hash("hei_prop_heist_binbag")}/*Alt.CreateObject((uint)Objects.WasteBin, pos, rot, dimension: 0)*/,
                 Col = (Colshape.Colshape) Alt.CreateColShapeSphere(pos, 2),
                 Full = true,
                 Blip = new PrivateBlip( pos, 0, 300){Sprite = 364, Name = "Mülleimer"}
@@ -212,7 +212,7 @@ namespace server.Jobs.Jobs
 
             player.SetData("WasteBin", binData);
             player.SendInformation("WasteColHit");
-            player.PlayAnimation("anim@mp_ferris_wheel", "idle_a_player_one",
+            player.PlayAnimation("anim@heists@narcotics@trash", "walk",
                 (int) (AnimationFlags.Loop | AnimationFlags.OnlyAnimateUpperBody | AnimationFlags.AllowPlayerControl));
         }
 
