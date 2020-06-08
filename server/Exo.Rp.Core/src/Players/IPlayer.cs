@@ -21,7 +21,7 @@ namespace server.Players
         void SendWarning(string text);
         void SendError(string text);
         void SendSuccess(string text);
-        void StopAnimation();
+        void StopAnimation(bool force = false);
         void PlayAnimation(string animation, string v, int flag);
         void SendChatMessage(string msg);
         void SetIntoVehicle(IVehicle veh, int seat);

@@ -78,6 +78,7 @@ alt.onServer("entitySync:create", (entityId, entityType, position, currEntityDat
 				//alt.log("Handle:" +handle)
 				natives.setEntityVisible(handle, true, false)
 				natives.setObjectTextureVariation(handle, 0)
+				natives.setEntityCollision(handle, false, true);
 			});
 		}
 	} else {
@@ -93,6 +94,7 @@ alt.onServer("entitySync:create", (entityId, entityType, position, currEntityDat
 				thisEntity.handle = handle;
 				natives.setEntityVisible(handle, true, false)
 				natives.setObjectTextureVariation(handle, 0)
+				natives.setEntityCollision(handle, false, true);
 			});
 		}
 	}
@@ -143,11 +145,19 @@ alt.onServer("Animation:Start",(anim, dict, flag) => {
 	}, 10);
 })
 
+alt.onServer("Scenario:Start",(scenario) => {
+	natives.taskStartScenarioInPlace(alt.Player.local.scriptID, scenario, 0, true)
+})
+
 alt.onServer("Animation:Clear", () => {
 	natives.clearPedTasks(alt.Player.local.scriptID);
 	if(!alt.Player.local.vehicle) {
 		natives.clearPedSecondaryTask(alt.Player.local.scriptID)
 	}
+})
+
+alt.onServer("Animation:ForceClear", () => {
+	natives.clearPedTasksImmediately(alt.Player.local.scriptID);
 })
 
 export default Streamer;

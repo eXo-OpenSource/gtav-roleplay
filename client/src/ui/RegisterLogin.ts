@@ -13,7 +13,7 @@ export class RegisterLogin {
     	this.uiManager = uiManager;
 
         // Setup Webview
-        this.uiManager.writeChat(url);
+        //this.uiManager.writeChat(url);
 
 		alt.toggleGameControls(false)
         this.uiManager.navigate("/login", true)

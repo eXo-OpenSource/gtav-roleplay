@@ -49,7 +49,7 @@ alt.on("keyup", (key) => {
     // G
     if(key == 0x47 && alt.gameControlsEnabled()) {
         const player = alt.Player.local;
-        let vehicle = native.getClosestVehicle(player.pos.x, player.pos.y, player.pos.z, 5.0, 0, 70);
+        let vehicle = native.getClosestVehicle(player.pos.x, player.pos.y, player.pos.z, 7.5, 0, 70);
 
         if(!vehicle) return;
 
@@ -57,21 +57,27 @@ alt.on("keyup", (key) => {
 
         let nearestSeatDistance = Number.MAX_VALUE;
         let nearestSeat = 0;
-        for (let i=0; i<= seatBones.length; i++) {
-            if(!native.isVehicleSeatFree(vehicle, i, false)) continue;
+        let dif = 0;
+        for (let i=0; i< seatBones.length; i++) {
+        	//index in array is not equal to boneIndex. On Trash, seat_dside_r1 is 2
+            //if(!native.isVehicleSeatFree(vehicle, i, false)) continue;
 
             const boneIndex = native.getEntityBoneIndexByName(vehicle, seatBones[i]);
-            if(boneIndex == -1) continue;
+			alt.log(seatBones[i], boneIndex);
+            if(boneIndex == -1) {
+            	dif += 1
+				continue;
+			}
 
             const dist = distance(native.getWorldPositionOfEntityBone(vehicle, boneIndex), player.pos);
             if(dist > nearestSeatDistance) continue;
             nearestSeatDistance = dist;
-            nearestSeat = i;
+            nearestSeat = i-dif;
         }
         /*if(nearestSeat > 3) {
             native.taskWarpPedIntoVehicle(player.scriptID, vehicle, nearestSeat);
         } else {*/
-            native.taskEnterVehicle(player.scriptID, vehicle, 5000, nearestSeat, 2, 1, 0);
+            native.taskEnterVehicle(player.scriptID, vehicle, 5000, nearestSeat, 1, 1, 0);
         //}
     } else if(key == 0x58 && alt.gameControlsEnabled()) { //X
     	alt.emitServer("Vehicle:ToggleEngine")

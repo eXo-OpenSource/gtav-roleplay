@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AltV.Net;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
@@ -46,7 +47,7 @@ namespace server.Jobs.Jobs
                 Description = "Nehme mehr Mülltonnen in deinem LKW auf",
                 Upgrades = new List<JobUpgradeDto>
                 {
-                    new JobUpgradeDto {Id = 0, Points = 0, Text = "5 Tonnen", Value = 0},
+                    new JobUpgradeDto {Id = 0, Points = 0, Text = "5 Tonnen", Value = 10},
                     new JobUpgradeDto {Id = 1, Points = 50, Text = "10 Tonnen", Value = 10},
                     new JobUpgradeDto {Id = 2, Points = 100, Text = "15 Tonnen", Value = 15},
                     new JobUpgradeDto {Id = 3, Points = 150, Text = "20 Tonnen", Value = 20},
@@ -88,6 +89,9 @@ namespace server.Jobs.Jobs
             veh.handle.SetData("MaxBins", GetJobUpgradeValue(player, 1));
 
             TriggerEventForJobTeam(player, "JobTrash:SetVehicle", veh.handle.Id, GetJobUpgradeValue(player, 1));
+            TriggerEventForJobTeam(player, "Progress:Text", $"Müllwagen-Füllstand - max. {GetJobUpgradeValue(player, 1)}");
+            TriggerEventForJobTeam(player, "Progress:Set", 0);
+            TriggerEventForJobTeam(player, "Progress:Active", true);
             if (GetJobTeam(player) == null) return;
             if (_bins == null) LoadWasteBins(); // Only for debug. Bins should load always later
 
@@ -108,6 +112,7 @@ namespace server.Jobs.Jobs
         {
             base.StopJob(player);
             player.SendInformation(Name + "-Job beendet!");
+            player.Emit("Progress:Active", false);
             foreach (var bin in _bins.Values)
             {
 	            bin.Blip.RemoveVisibleEntity(player.Id);
@@ -126,17 +131,17 @@ namespace server.Jobs.Jobs
                     player.DeleteData("WasteBin");
                     player.StopAnimation();
                     _vehicleBins[vehicle] = _vehicleBins[vehicle] + 1;
-                    player.SendSuccess($"Container #{_vehicleBins[vehicle]} eingeladen!");
+                    player.SendSuccess($"Sack #{_vehicleBins[vehicle]} eingeladen!");
 
                     vehicle.GetData("MaxBins", out int maxBins);
                     var percent = Math.Round(_vehicleBins[vehicle] / (float)maxBins, 2);
-                    TriggerEventForJobTeam(player, "JobTrash:SetProgress", (float)percent);
+                    TriggerEventForJobTeam(player, "Progress:Set", (float)percent);
                     GivePlayerUpgradePoints(player, 1);
                     return;
                 }
             }
 
-            player.SendError("Hole erst einen Müllcontainer!");
+            //player.SendError("Hole erst einen Müllcontainer!");
         }
 
         #region WasteBins
@@ -183,9 +188,9 @@ namespace server.Jobs.Jobs
 	        var nBin = new WasteBin
             {
                 BinObject = new StreamObject(new Position(pos.X, pos.Y, pos.Z), 0, 520){Model = Alt.Hash("hei_prop_heist_binbag")}/*Alt.CreateObject((uint)Objects.WasteBin, pos, rot, dimension: 0)*/,
-                Col = (Colshape.Colshape) Alt.CreateColShapeSphere(pos, 2),
+                Col = (Colshape.Colshape) Alt.CreateColShapeSphere(pos, 1.9f),
                 Full = true,
-                Blip = new PrivateBlip( pos, 0, 300){Sprite = 364, Name = "Mülleimer"}
+                Blip = new PrivateBlip( pos, 0, 300){Sprite = 364, Name = "Mülltonne"}
             };
 	        Core.GetService<PrivateStreamer>().AddEntity(nBin.Blip);
 	        Core.GetService<ObjectStreamer>().Add(nBin.BinObject);
@@ -198,24 +203,30 @@ namespace server.Jobs.Jobs
         public void OnBinColEnter(Colshape.Colshape colshape, IEntity entity)
         {
 	        if(!(entity is IPlayer player)) return;
-	        Alt.Log(player.GetCharacter().IsJobActive()+"");
-            if (player.GetCharacter() == null || player.GetCharacter().GetJob() != this ||
-                !player.GetCharacter().IsJobActive()) return;
-            Alt.Log("colshapehit");
-            if (player.HasData("WasteBin"))
+	        if (player.GetCharacter() == null || player.GetCharacter().GetJob() != this ||
+	            !player.GetCharacter().IsJobActive()) return;
+	        if (player.HasData("WasteBin"))
             {
-                player.SendError("Du hast bereits eine Muelltonne dabei!");
+                player.SendError("Du hast bereits einen Muellsack dabei!");
                 return;
             }
 
-            colshape.GetData("WasteBin", out WasteBin binData);
-            binData.BinObject.SetData("attachToEntity", entity.Id);
-            //player.AttachObject(binData.BinObject, 6286, new Position(0f, 0.9f, -0.9f), new Position(0, 0, 180));
+	        player.Emit("Scenario:Start", "PROP_HUMAN_BUM_BIN");
+	        colshape.GetData("WasteBin", out WasteBin binData);
+	        binData.Col.Remove();
 
-            player.SetData("WasteBin", binData);
-            player.SendInformation("WasteColHit");
-            player.PlayAnimation("anim@heists@narcotics@trash", "walk",
-                (int) (AnimationFlags.Loop | AnimationFlags.OnlyAnimateUpperBody | AnimationFlags.AllowPlayerControl));
+	        Task.Delay(3000).ContinueWith(_ =>
+	        {
+		        player.StopAnimation();
+		        binData.BinObject.SetData("attachToEntity", entity.Id);
+		        Core.GetService<PrivateStreamer>().RemoveEntity(binData.Blip);
+		        //player.AttachObject(binData.BinObject, 6286, new Position(0f, 0.9f, -0.9f), new Position(0, 0, 180));
+
+		        player.SetData("WasteBin", binData);
+		        //player.SendInformation("WasteColHit");
+		        player.PlayAnimation("anim@heists@narcotics@trash", "walk",
+			        (int) (AnimationFlags.Loop | AnimationFlags.OnlyAnimateUpperBody | AnimationFlags.AllowPlayerControl));
+	        });
         }
 
         public Dictionary<int, string> GetFullWastebinPositions()

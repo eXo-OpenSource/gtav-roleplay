@@ -10,6 +10,7 @@ import './root.css';
 import Speedometer from "./hud/speedometer";
 import Popup from "./hud/popup";
 import Toast from "./hud/toast";
+import Progress from "./hud/progress";
 
 const loadableOptions = { };
 const LoadableLoginComponent = loadable(() => import("./forms/login"), loadableOptions);
@@ -35,6 +36,7 @@ class App extends Component {
 				<Toast/>
 				<Popup/>
 				<Speedometer/>
+				<Progress />
 			</div>
 		)
     }

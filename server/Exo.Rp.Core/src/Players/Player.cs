@@ -79,9 +79,16 @@ namespace server.Players
             SendNotification("~g~Erfolgreich~w~: " + text);
         }
 
-        public void StopAnimation()
+        public void StopAnimation(bool force)
         {
-			Emit("Animation:Clear");
+	        if (force)
+	        {
+		        Emit("Animation:ForceClear");
+	        }
+	        else
+	        {
+		        Emit("Animation:Clear");
+	        }
         }
         public void PlayAnimation(string animation, string v, int flag)
         {

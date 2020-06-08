@@ -19,8 +19,7 @@ namespace server.Jobs.Jobs
         {
 	        if (Col.Exists) Col.Remove();
 	        Core.GetService<ObjectStreamer>().Remove(BinObject);
-	        Core.GetService<PrivateStreamer>().RemoveEntity(Blip);
-            Full = false;
+	        Full = false;
         }
     }
 }

@@ -107,6 +107,7 @@ namespace server.Events.Jobs
 
 	        var job = (Job) player.GetCharacter().GetInteractionData().SourceObject;
 	        var leader = (IPlayer)player.GetCharacter().GetInteractionData().CallBack;
+	        if(player.GetCharacter().GetJob() != job) player.GetCharacter().SetJob(job);
 	        job.AddPlayerToJob(player, leader, true);
 	        leader.Emit("Popup:Close");
 	        OpenCoopMenu(leader, job.JobId);

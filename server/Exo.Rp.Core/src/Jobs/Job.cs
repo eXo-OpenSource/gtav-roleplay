@@ -175,7 +175,7 @@ namespace server.Jobs
         public virtual void StartJobForPlayer(IPlayer player)
         {
             player.Emit("Job:StartJob", JobId);
-            player.SetSyncedMetaData("Job:Active", true);
+            player.GetCharacter().SetJobActive(true);
         }
 
         public void AddPlayerToJob(IPlayer player, IPlayer leader, bool multiplayer)
@@ -187,7 +187,7 @@ namespace server.Jobs
                 if(multiplayer) AddPlayerToJob(player, leader, true);
             }
 
-            if (JobPlayers[leader].ContainsKey(player.GetId())) return;
+            if (JobPlayers[leader].ContainsKey(player.GetAccount().Id)) return;
 
             JobPlayers[leader].Add(player.GetAccount().Id, player.Name);
 
@@ -231,7 +231,7 @@ namespace server.Jobs
 	        if (JobVehicles.ContainsKey(player))
             {
                 JobVehicles[player].handle.Remove();
-                JobVehicles[player] = null;
+                JobVehicles.Remove(player);
             }
         }
 
@@ -384,7 +384,7 @@ namespace server.Jobs
             foreach (var jobPlayer in JobPlayers[leader])
             {
                 var coopPlayer = Core.GetService<PlayerManager>().GetClient(jobPlayer.Key);
-                coopPlayer.Emit(eventName, data);
+                coopPlayer?.Emit(eventName, data);
             }
         }
 
@@ -402,7 +402,7 @@ namespace server.Jobs
             StartJobForPlayer(leader); // Start Job for Leader at first
             if (JobPlayers[leader].Count > 1)
                 foreach (var jobPlayer in JobPlayers[leader])
-                    if (jobPlayer.Key != leader.GetId())
+                    if (jobPlayer.Key != leader.GetAccount().Id)
                         StartJobForPlayer(Core.GetService<PlayerManager>().GetClient(jobPlayer.Key));
         }
 

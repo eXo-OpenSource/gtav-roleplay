@@ -41,6 +41,18 @@ export class UiManager {
 		alt.onServer("Toast:AddTimed", (name, text, time) => {
 			this.insertTimedToast(name, text, time)
 		})
+
+		alt.onServer("Progress:Set", (val) => {
+			this.emit("Progress:Set", val)
+		})
+
+		alt.onServer("Progress:Text", (text) => {
+			this.emit("Progress:Text", text)
+		})
+
+		alt.onServer("Progress:Active", (toggle) => {
+			this.emit("Progress:Active", toggle)
+		})
     }
 
     reset() {
