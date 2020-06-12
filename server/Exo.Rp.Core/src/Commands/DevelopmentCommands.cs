@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Text;
@@ -28,6 +28,12 @@ namespace server.Commands
     internal class DevelopmentCommands : IScript
     {
         private static readonly Jail _jail = new Jail();
+
+        [Command("respawn")]
+        public static void RespawnPlayer(IPlayer player)
+        {
+			player.Spawn(player.Position);
+        }
 
         [Command("ff")]
         public static void FaceFeaturesGui(IPlayer player)
@@ -264,15 +270,15 @@ namespace server.Commands
         [Command("loadipl")]
         public static void LoadIpl(IPlayer player, string ipl)
         {
-            player.Emit("loadIPL", JsonConvert.SerializeObject(new List<string> {ipl}));
-            player.SendInformation("Trying to load IPL: " + ipl);
+	        player.RequestIpl(new[] {ipl});
+	        player.SendInformation("Trying to load IPL: " + ipl);
         }
 
         [Command("unloadipl")]
         public static void UnloadIpl(IPlayer player, string ipl)
         {
-            player.Emit("unloadIPL", JsonConvert.SerializeObject(new List<string> {ipl}));
-            player.SendInformation("Trying to unload IPL: " + ipl);
+			player.RemoveIpl(new[] { ipl });
+			player.SendInformation("Trying to unload IPL: " + ipl);
         }
 
         [Command("money")]
@@ -430,7 +436,7 @@ namespace server.Commands
         [Command("deathstop")]
         public static void DeathEnd(IPlayer player)
         {
-            player.Emit("PlayerDeathEnd");
+            player.Emit(" ");
         }
     }
 }

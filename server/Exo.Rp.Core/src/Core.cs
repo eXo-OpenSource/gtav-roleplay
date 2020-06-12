@@ -40,6 +40,7 @@ using server.Updateable;
 using server.Util;
 using server.Util.Log;
 using server.Vehicles;
+using server.World;
 using MetricsCollector = server.Metrics.MetricsCollector;
 using IPlayer = AltV.Net.Elements.Entities.IPlayer;
 
@@ -61,24 +62,24 @@ namespace server
 
             // Prepare service provider
             var serviceCollection = new ServiceCollection()
-                .AddSingleton<IMapper>(AutoMapperConfiguration.GetMapper())
-                .AddSingleton<RuntimeIndexer>()
-                .AddSingleton<CommandHandler>()
-                .AddSingleton<MetricsCollector>()
-                .AddSingleton<TranslationManager>()
-                .AddSingleton<PlayerManager>()
-                .AddSingleton<TeamManager>()
-                .AddSingleton<VehicleManager>()
-                .AddSingleton<BankAccountManager>()
-                .AddSingleton<ShopManager>()
-                .AddSingleton<ItemManager>()
-                .AddSingleton<InventoryManager>()
-                .AddSingleton<IplManager>()
-                .AddSingleton<JobManager>()
-                .AddSingleton<UpdateableManager>()
-                .AddSingleton<PluginManager.PluginManager>()
-                .AddSingleton<PrivateStreamer>()
-                .AddSingleton<ObjectStreamer>();
+	            .AddSingleton<IMapper>(AutoMapperConfiguration.GetMapper())
+	            .AddSingleton<RuntimeIndexer>()
+	            .AddSingleton<CommandHandler>()
+	            .AddSingleton<MetricsCollector>()
+	            .AddSingleton<TranslationManager>()
+	            .AddSingleton<PlayerManager>()
+	            .AddSingleton<TeamManager>()
+	            .AddSingleton<VehicleManager>()
+	            .AddSingleton<BankAccountManager>()
+	            .AddSingleton<ShopManager>()
+	            .AddSingleton<ItemManager>()
+	            .AddSingleton<InventoryManager>()
+	            .AddSingleton<IplManager>()
+	            .AddSingleton<JobManager>()
+	            .AddSingleton<UpdateableManager>()
+	            .AddSingleton<PluginManager.PluginManager>()
+	            .AddSingleton<PrivateStreamer>()
+	            .AddSingleton<ObjectStreamer>();
 
             // Start loading database mode/ls
             _databaseCore.OnResourceStartHandler(

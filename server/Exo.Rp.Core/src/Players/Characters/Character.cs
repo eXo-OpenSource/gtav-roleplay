@@ -203,11 +203,13 @@ namespace server.Players.Characters
             Logger.Debug("APPLY FACEFEATURES to " + _player.Name);
             //_player.SetElementData("player:FaceFeatures", FaceFeatures);
             // EntityExtensions.TriggerElementDatas(player);
+
+            _player.RequestDefaulIpls();
         }
 
         public void Save()
         {
-            Pos = _player.Position;
+	        Pos = _player.Position;
             Health = _player.Health;
             Skin = DefaultSkin;
 

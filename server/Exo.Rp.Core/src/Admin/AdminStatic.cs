@@ -1,4 +1,4 @@
-﻿using models.Enums;
+using models.Enums;
 using server.Translation;
 using IPlayer = server.Players.IPlayer;
 

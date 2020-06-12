@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,6 +16,7 @@ using server.Streamer;
 using server.Streamer.Entities;
 using server.Streamer.Private;
 using IPlayer = server.Players.IPlayer;
+using WorldObject = server.World.WorldObject;
 
 namespace server.Jobs.Jobs
 {
@@ -161,7 +162,7 @@ namespace server.Jobs.Jobs
 
         public void AddWastebin(IPlayer player, Position pos, Position rot)
         {
-            var nModel = new WorldObjects.WorldObject()
+            var nModel = new WorldObject()
             {
                 Position = pos.Serialize(),
                 Rotation = rot.Serialize(),

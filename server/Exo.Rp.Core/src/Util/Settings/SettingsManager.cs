@@ -57,11 +57,11 @@ namespace server.Util.Settings
                 ServerConsoleFlags = LogCat.None | LogCat.Debug | LogCat.Info | LogCat.Warn | LogCat.Error | LogCat.Fatal | LogCat.AltV,
                 Database = new DatabaseSettings
                 {
-                    Server = "51.254.83.208",
+                    Server = "51.254.83.209",
                     Database = "gtav_dev",
                     UserId = "exoV",
                     Password = "6LdyVn3uQJbfdSJJ",
-                    Port = 6033,
+                    Port = 3306,
                     QueryLog = false,
                 },
                 Logger = new LoggerSettings

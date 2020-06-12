@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using System.Reflection;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +10,7 @@ using TeamModel = server.Teams.Team;
 using ShopModel = server.Shops.Shop;
 using BankAccountModel = server.BankAccounts.BankAccount;
 using PedModel = server.Peds.Ped;
-using WorldObjectsModel = server.WorldObjects.WorldObject;
+using WorldObjectsModel = server.World.WorldObject;
 using VehicleShopVehicleModel = server.Vehicles.VehicleShopVehicle;
 using VehicleModel = server.Vehicles.Vehicle;
 using ItemModel = server.Inventory.Items.Item;

@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using Sentry.Protocol;
@@ -8,6 +9,7 @@ using server.Database;
 using server.Players.Accounts;
 using server.Players.Characters;
 using server.Util.Log;
+using server.World;
 
 namespace server.Players
 {
@@ -103,6 +105,21 @@ namespace server.Players
         public void SetIntoVehicle(IVehicle veh, int seat)
         {
             Emit("Vehicle:SetIntoVehicle", veh.Id, seat);
+        }
+
+        public void RequestIpl(IEnumerable<string> ipls)
+        {
+	        Core.GetService<IplManager>().RequestIpl(this, ipls);
+        }
+
+        public void RemoveIpl(IEnumerable<string> ipls)
+        {
+	        Core.GetService<IplManager>().RemoveIpl(this, ipls);
+        }
+
+        public void RequestDefaulIpls()
+        {
+	        Core.GetService<IplManager>().LoadDefaultIpls(this);
         }
     }
 }

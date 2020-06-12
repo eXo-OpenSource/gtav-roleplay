@@ -7,6 +7,7 @@ import {Notification} from "./systems/Notification";
 import Interaction from "./systems/Interaction";
 import Streamer from "./systems/Streamer";
 import WasteCollector from "./jobs/WasteCollector";
+import IPLManager from "./world/IPLManager";
 
 @Singleton
 export class Core {
@@ -15,7 +16,8 @@ export class Core {
     private uiManager = new UiManager();
     private interaction = new Interaction(this.uiManager);
     private streamer = new Streamer();
-    private waste = new WasteCollector();
+	private waste = new WasteCollector();
+	private iplManager = new IPLManager()
 
     constructor() {
 

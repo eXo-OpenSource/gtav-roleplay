@@ -25,7 +25,7 @@ export class Speedo {
 				const veh = alt.Player.local.vehicle;
 
 				this.uiManager.emit("Speedo:SetData", "rpm", Math.round(veh.rpm*8000));
-				this.uiManager.emit("Speedo:SetData", "speed", Math.round(native.getEntitySpeed(veh.scriptID)*3.6));
+				this.uiManager.emit("Speedo:SetData", "speed", Math.round(native.getEntitySpeed(veh.scriptID)*3.65));
 				this.uiManager.emit("Speedo:SetData", "gear", veh.gear);
 			}
 		})

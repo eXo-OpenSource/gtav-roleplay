@@ -1,4 +1,6 @@
-﻿using AltV.Net.Data;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using Sentry.Protocol;
 using server.Players.Accounts;
@@ -25,5 +27,8 @@ namespace server.Players
         void PlayAnimation(string animation, string v, int flag);
         void SendChatMessage(string msg);
         void SetIntoVehicle(IVehicle veh, int seat);
+        void RequestIpl(IEnumerable<string> ipls);
+        void RemoveIpl(IEnumerable<string> ipls);
+        void RequestDefaulIpls();
     }
 }

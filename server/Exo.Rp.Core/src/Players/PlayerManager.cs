@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
+using AltV.Net;
+using AltV.Net.Enums;
 using server.Database;
 using server.Extensions;
 using server.Translation;
@@ -19,6 +21,13 @@ namespace server.Players
             _databaseContext = databaseContext;
 
             _players = new Dictionary<int, IPlayer>();
+        }
+
+        public IEnumerable<IPlayer> GetLoggedInPlayers()
+        {
+	        return Alt.GetAllPlayers()
+		        .Select(p => p as IPlayer)
+		        .Where(p => p?.GetCharacter()?.IsLoggedIn == true);
         }
 
         public IPlayer GetClient(int accountId)
