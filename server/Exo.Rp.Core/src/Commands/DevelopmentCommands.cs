@@ -20,6 +20,7 @@ using server.Translation;
 using server.Util;
 using server.Util.Log;
 using server.Vehicles;
+using static System.Int32;
 using IPlayer = server.Players.IPlayer;
 using Player = server.Players.Player;
 
@@ -77,8 +78,7 @@ namespace server.Commands
         {
             if (Enum.IsDefined(typeof(VehicleModel), modelString))
             {
-                var veh = Core.GetService<VehicleManager>().CreateTemporaryVehicle(Enum.Parse<VehicleModel>(modelString), player.Position, player.Rotation.Roll,
-                    General.GetRandomColor(), General.GetRandomColor(), "Admin");
+                var veh = Core.GetService<VehicleManager>().CreateTemporaryVehicle(Enum.Parse<VehicleModel>(modelString), player.Position, player.Rotation.Roll, null, null, "Admin");
 
                Alt.Log("Fahrzeug gespawnt: " + veh.Model.ToString() + "!");
                 player.SetIntoVehicle(veh.handle, -1);
@@ -108,6 +108,24 @@ namespace server.Commands
                 player.SendInformation("Moegliche Wetter sind: " + result);
             }
         }
+
+        [Command("time", RequiredAdminLevel = AdminLevel.Administrator)]
+        public static void ChangeTime(IPlayer player, string _hh, string _mm)
+        {
+			var hh = Parse(_hh);
+			var mm = Parse(_mm);
+	        if (hh < 0 || hh > 60 || mm < 0 || mm > 60)
+	        {
+				player.SendError($"{hh}:{mm} ist eine ungültige Zeit!");
+				return;
+	        }
+
+	        foreach (var _player in Alt.GetAllPlayers())
+	        {
+		        var date = DateTime.Now;
+		        _player.SetDateTime(date.Day, date.Month, date.Year, hh, mm, 0);
+	        }
+		}
 
         //[Command("nveh")]
         /*public void CreateVehicleNew(IPlayer player, string vehicleName)

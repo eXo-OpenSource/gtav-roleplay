@@ -23,12 +23,18 @@ export class HUD {
 				let ammoInWeapon = native.getAmmoInPedWeapon(alt.Player.local.scriptID, selectedWeapon)
 				let [_, ammoInClip] = native.getAmmoInClip(alt.Player.local.scriptID, selectedWeapon, ammoInWeapon)
 
-				this.uiManager.emit("HUD:SetData", "amount", ammoInClip + " / " + ammoInWeapon)
+				this.uiManager.emit("HUD:SetData", "amount", ammoInClip + " / " + (ammoInWeapon - ammoInClip))
 			} else {
 				this.uiManager.emit("HUD:SetData", "amount", "$ "+ money)
 			}
 
 			let date = new Date()
+			date.setHours(native.getClockHours())
+			date.setMinutes(native.getClockMinutes())
+			date.setSeconds(native.getClockSeconds())
+			date.setFullYear(native.getClockYear(), native.getClockMonth())
+			date.setDate(native.getClockDayOfMonth())
+
 			const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' }
 			let zone = native.getLabelText(native.getNameOfZone(alt.Player.local.pos.x, alt.Player.local.pos.y, alt.Player.local.pos.z))
 
