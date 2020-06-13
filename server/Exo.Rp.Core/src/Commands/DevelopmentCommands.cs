@@ -20,6 +20,7 @@ using server.Translation;
 using server.Util;
 using server.Util.Log;
 using server.Vehicles;
+using server.World;
 using static System.Int32;
 using IPlayer = server.Players.IPlayer;
 using Player = server.Players.Player;
@@ -254,8 +255,23 @@ namespace server.Commands
                 player.SendChatMessage($"{rot.Roll}, {rot.Pitch} {rot.Yaw}");
                 OutputPosition(player, pos, rot);
             }
+        }
 
-            
+        [Command("setpos", Alias = "sp")]
+        public static void SetPosition(IPlayer player, string _x, string _y, string _z)
+        {
+	        var x = float.Parse(_x);
+	        var y = float.Parse(_y);
+	        var z = float.Parse(_z);
+			
+			if (player.IsInVehicle)
+	        {
+		        player.Vehicle.SetPosition(x, y, z);
+	        }
+			else
+			{
+				player.SetPosition(x, y, z);
+			}
         }
 
         private static void OutputPosition(IPlayer player, Vector3 pos, Vector3 rot)
@@ -408,6 +424,16 @@ namespace server.Commands
             });
             player.SendSuccess("Fahrzeug hinzugefügt!");
 
+        }
+
+        [Command("toogleDoor", Alias = "td")]
+        public static void ToggleDoorState(IPlayer player, string _hash, string _state)
+        {
+	        var hash = Parse(_hash);
+	        var state = bool.Parse(_state);
+			player.SendInformation($"Trying to set door state of {hash} to {state.ToString()}");
+
+			Core.GetService<DoorManager>().SetDoorState(hash, state);
         }
 
         [Event("Debug:onObjectPlaced")]

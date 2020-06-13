@@ -8,6 +8,7 @@ import Interaction from "./systems/Interaction";
 import Streamer from "./systems/Streamer";
 import WasteCollector from "./jobs/WasteCollector";
 import IPLManager from "./world/IPLManager";
+import DoorManager from "./world/Doormanager";
 
 @Singleton
 export class Core {
@@ -18,6 +19,7 @@ export class Core {
     private streamer = new Streamer();
 	private waste = new WasteCollector();
 	private iplManager = new IPLManager()
+	private doorManager = new DoorManager();
 
     constructor() {
 

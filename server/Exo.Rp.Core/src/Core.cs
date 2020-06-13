@@ -79,7 +79,8 @@ namespace server
 	            .AddSingleton<UpdateableManager>()
 	            .AddSingleton<PluginManager.PluginManager>()
 	            .AddSingleton<PrivateStreamer>()
-	            .AddSingleton<ObjectStreamer>();
+	            .AddSingleton<ObjectStreamer>()
+	            .AddSingleton<DoorManager>();
 
             // Start loading database mode/ls
             _databaseCore.OnResourceStartHandler(

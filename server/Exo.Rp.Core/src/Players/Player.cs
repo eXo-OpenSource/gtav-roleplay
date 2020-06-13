@@ -6,6 +6,7 @@ using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using Sentry.Protocol;
 using server.Database;
+using server.Environment;
 using server.Players.Accounts;
 using server.Players.Characters;
 using server.Util.Log;
