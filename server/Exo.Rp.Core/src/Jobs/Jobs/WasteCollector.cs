@@ -152,7 +152,7 @@ namespace server.Jobs.Jobs
             _binPositions = new Dictionary<int, Position[]>();
             _bins = new Dictionary<int, WasteBin>();
 
-            var worldObjects = Core.GetService<DatabaseContext>().WorldObjectsModels.Local.Where(x => x.Type == models.Enums.WorldObjects.WasteBin);
+            var worldObjects = Core.GetService<DatabaseContext>().WorldObjectsModels.Local.Where(x => x.Type == WorldObjects.WasteBin);
             foreach (var model in worldObjects)
                 _binPositions.Add(model.Id,
                     new[] { model.Position.DeserializeVector(), model.Rotation.DeserializeVector() });

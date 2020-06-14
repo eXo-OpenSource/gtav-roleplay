@@ -169,7 +169,11 @@ namespace server
             _serviceProvider.GetService<JobManager>();
             Logger.Info("Services | Loading Updateable manager...");
             _updateableManager = _serviceProvider.GetService<UpdateableManager>();
-            Logger.Info("Services | Loading Plugin manager...");
+            Logger.Info("Services | Loading Ipl manager...");
+	        _serviceProvider.GetService<IplManager>();
+	        Logger.Info("Services | Loading Door manager...");
+	        _serviceProvider.GetService<DoorManager>();
+			Logger.Info("Services | Loading Plugin manager...");
             _serviceProvider.GetService<PluginManager.PluginManager>();
 
             stopWatch.Stop();
