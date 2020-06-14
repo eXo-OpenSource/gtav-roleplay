@@ -1,4 +1,4 @@
-[submodule "translations"]
+[submodule "translations_server"]
 	path = server/Exo.Rp.Core/translations
 	url = ../translations/server.git
 	branch = master
