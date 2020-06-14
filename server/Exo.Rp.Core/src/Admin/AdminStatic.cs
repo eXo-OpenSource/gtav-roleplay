@@ -10,7 +10,7 @@ namespace server.Admin
         {
             if (player.GetAccount()?.AdminLvl >= adminLevel) return true;
 
-            if (notification) player.SendError("Du bist nicht berechtigt diese Funktion zu nutzen!".Translate(player));
+            if (notification) player.SendError(T._("Du bist nicht berechtigt diese Funktion zu nutzen!", player));
             return false;
         }
     }

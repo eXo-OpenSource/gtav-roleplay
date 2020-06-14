@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using Microsoft.Extensions.Logging;
 using MySql.Data.MySqlClient;
 using Sentry;
 using server.Util;
@@ -49,7 +50,6 @@ namespace server.Database
             catch (MySqlException ex)
             {
                 ex.TrackOrThrow();
-
                 Logger.Fatal($"MySql error: {ex.Message} ErrorCode: {ex.Number}");
                 return null;
             }

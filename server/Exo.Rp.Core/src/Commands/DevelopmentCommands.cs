@@ -85,7 +85,7 @@ namespace server.Commands
                 player.SetIntoVehicle(veh.handle, -1);
             } else
             {
-                player.SendError("Fahrzeug wurde nicht gefunden!".Translate(player));
+	            player.SendError(T._("Fahrzeug wurde nicht gefunden!", player));
             }
         }
 
@@ -100,7 +100,7 @@ namespace server.Commands
                 }
             } else
             {
-                player.SendError("Wetter nicht gefunden!".Translate(player));
+                player.SendError(T._("Wetter nicht gefunden!", player));
 
                 var builder = new StringBuilder();
                 foreach (var pos in Enum.GetNames(typeof(WeatherType))) builder.Append($"{pos}").Append(',').Append(' ');
@@ -222,7 +222,7 @@ namespace server.Commands
             }
             else
             {
-                player.SendError("Waffe wurde nicht gefunden!".Translate(player));
+                player.SendError(T._("Waffe wurde nicht gefunden!", player));
             }
         }
 

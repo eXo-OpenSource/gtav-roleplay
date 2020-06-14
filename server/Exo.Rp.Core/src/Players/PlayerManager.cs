@@ -58,13 +58,13 @@ namespace server.Players
         {
             if (_databaseContext.AccountModel.Local.Count(account => account.HardwareId == player.HardwareIdHash) > 1)
             {
-                player.Emit("registerLogin:Error", "Es wurden mehrere Accounts mit deiner HardwareId gefunden!".Translate(player));
+                player.Emit("registerLogin:Error", T._("Es wurden mehrere Accounts mit deiner HardwareId gefunden!", player));
                 return;
             }
 
             if (player.GetAccount() == default || player.GetCharacter() == default)
             {
-                player.Emit("registerLogin:Error", "Account / Character wurde nicht gefunden.".Translate(player));
+                player.Emit("registerLogin:Error", T._("Account / Character wurde nicht gefunden.", player));
                 return;
             }
 

@@ -35,13 +35,13 @@ namespace server.Events
                         case CommandInvokeResult.Success:
                             break;
                         case CommandInvokeResult.NotFound:
-                            player.SendError("Befehl wurde nicht gefunden.".Translate(player));
+                            player.SendError(T._("Befehl wurde nicht gefunden.", player));
                             break;
                         case CommandInvokeResult.PermissionDenied:
-                            player.SendError("Du bist nicht berechtigt diese Funktion zu nutzen.".Translate(player));
+                            player.SendError(T._("Du bist nicht berechtigt diese Funktion zu nutzen.", player));
                             break;
                         case CommandInvokeResult.ParameterCountMissmatch:
-                            player.SendError("Zuviel oder zu wenig Argumente.".Translate(player));
+                            player.SendError(T._("Zuviel oder zu wenig Argumente.", player));
                             break;
                     }
                 }
@@ -59,7 +59,7 @@ namespace server.Events
                         Logger.Error(
                             $"A runtime exception occured during the execution of command: [{player.ToString()}: {msg}]");
 
-                        player.SendError("Befehl konnte nicht ausgeführt werden. Correlation Id: {0}".Translate(player, correlationId));
+                        player.SendError(T._("Befehl konnte nicht ausgeführt werden. Correlation Id: {0}", player, correlationId));
                     });
                 }
             }
