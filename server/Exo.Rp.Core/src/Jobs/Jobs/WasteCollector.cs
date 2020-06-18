@@ -22,8 +22,7 @@ namespace server.Jobs.Jobs
 {
     internal class WasteCollector : Job
     {
-        private readonly bool _blipsEnabled = false;
-        private readonly Position _trashSpawnPos;
+	    private readonly Position _trashSpawnPos;
         private readonly float _trashSpawnRot;
         private Dictionary<int, Position[]> _binPositions;
         private Dictionary<int, WasteBin> _bins;
@@ -188,7 +187,7 @@ namespace server.Jobs.Jobs
         {
 	        var nBin = new WasteBin
             {
-                BinObject = new StreamObject(new Position(pos.X, pos.Y, pos.Z), 0, 520){Model = Alt.Hash("hei_prop_heist_binbag")}/*Alt.CreateObject((uint)Objects.WasteBin, pos, rot, dimension: 0)*/,
+                BinObject = new StreamObject(new Position(pos.X, pos.Y, pos.Z), 0, 520){Model = Alt.Hash("hei_prop_heist_binbag")},
                 Col = (Colshape.Colshape) Alt.CreateColShapeSphere(pos, 1.9f),
                 Full = true,
                 Blip = new PrivateBlip( pos, 0, 300){Sprite = 364, Name = "Mülltonne"}
@@ -205,14 +204,14 @@ namespace server.Jobs.Jobs
         {
 	        if(!(entity is IPlayer player)) return;
 	        if (player.GetCharacter() == null || player.GetCharacter().GetJob() != this ||
-	            !player.GetCharacter().IsJobActive()) return;
+	            !player.GetCharacter().IsJobActive() || player.IsInVehicle) return;
 	        if (player.HasData("WasteBin"))
             {
                 player.SendError("Du hast bereits einen Muellsack dabei!");
                 return;
             }
 
-	        player.Emit("Scenario:Start", "PROP_HUMAN_BUM_BIN");
+	        player.StartScenario("PROP_HUMAN_BUM_BIN");
 	        colshape.GetData("WasteBin", out WasteBin binData);
 	        binData.Col.Remove();
 

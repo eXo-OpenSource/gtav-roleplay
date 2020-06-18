@@ -122,5 +122,10 @@ namespace server.Players
         {
 	        Core.GetService<IplManager>().LoadDefaultIpls(this);
         }
+
+        public void StartScenario(string name)
+        {
+	        Emit("Scenario:Start", name);
+        }
     }
 }

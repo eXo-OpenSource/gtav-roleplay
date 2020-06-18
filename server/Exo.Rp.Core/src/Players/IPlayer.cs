@@ -27,6 +27,7 @@ namespace server.Players
         void PlayAnimation(string animation, string v, int flag);
         void SendChatMessage(string msg);
         void SetIntoVehicle(IVehicle veh, int seat);
+        void StartScenario(string name);
         void RequestIpl(IEnumerable<string> ipls);
         void RemoveIpl(IEnumerable<string> ipls);
         void RequestDefaulIpls();
