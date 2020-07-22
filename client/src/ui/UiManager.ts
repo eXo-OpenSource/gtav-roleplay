@@ -32,7 +32,7 @@ export class UiManager {
         alt.log('Loaded: UI Manager Events');
 
 
-        alt.onServer('Ui:ShowFaceFeatures', () => new FaceFeaturesUi());
+        alt.onServer('Ui:ShowFaceFeatures', () => new FaceFeaturesUi(this));
 
         alt.onServer('Ui:ShowRegisterLogin', () => new RegisterLogin(this));
 

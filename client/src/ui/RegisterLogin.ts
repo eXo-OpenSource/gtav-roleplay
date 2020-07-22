@@ -1,5 +1,4 @@
 import * as alt from 'alt';
-import { View } from '../utils/View'
 import {UiManager} from "./UiManager";
 
 const url = 'http://resource/cef/index.html#/login';

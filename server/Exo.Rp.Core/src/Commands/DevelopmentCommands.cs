@@ -41,6 +41,7 @@ namespace server.Commands
         public static void FaceFeaturesGui(IPlayer player)
         {
             player.Emit("Ui:ShowFaceFeatures");
+			player.Emit("HUD:Hide", true);
         }
 
         [Command("fly", RequiredAdminLevel = AdminLevel.Moderator)]
