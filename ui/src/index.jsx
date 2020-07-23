@@ -32,8 +32,8 @@ class App extends Component {
 					</Switch>
 				</Router>
 				<Chat/>
+				<CharacterCreatorForm/>
 				<HUD/>
-				<Toast/>
 				<Popup/>
 				<Speedometer/>
 				<Progress />
