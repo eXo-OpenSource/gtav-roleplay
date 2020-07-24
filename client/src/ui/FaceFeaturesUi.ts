@@ -36,7 +36,6 @@ export class FaceFeaturesUi {
     private skin = 0.5
     private look = 0.5
     private moleID = 0
-    private blushID = 0
     private eyeColor = 0
     private hairID = 0
     private hairColor = 0
@@ -83,7 +82,7 @@ export class FaceFeaturesUi {
         this.model = value == 0 ? "mp_f_freemode_01" : "mp_m_freemode_01"
         this.gender = value
         this.resetCamera(this.model)
-        this.updateHeadOverlay()
+        this.updateHeadOverlay(this.testPed.scriptID)
     }
 
     // Update parent
@@ -93,40 +92,38 @@ export class FaceFeaturesUi {
         this.skin = _skin
         this.look = _look
         this.resetCamera(this.model)
-        this.updateHeadOverlay()
+        this.updateHeadOverlay(this.testPed.scriptID)
     }
     
-    private updateHeadOverlay() {
-        native.setPedHeadOverlay(this.testPed.scriptID, 9, this.moleID, 255)
-        native.setPedHeadOverlay(this.testPed.scriptID, 9, this.blushID, 255)
-        native.setPedEyeColor(this.testPed.scriptID, this.eyeColor)
-        native.setPedComponentVariation(this.testPed.scriptID, 2, this.hairID, 0, 0)
-        native.setPedHairColor(this.testPed.scriptID, this.hairColor, this.hairHighlight)
-        native.setPedHeadOverlay(this.testPed.scriptID, 2, this.eyebrowID, 255)
-        native.setPedHeadOverlayColor(this.testPed.scriptID, 2, 1, this.eyebrowColor, this.eyebrowColor)
-        native.setPedHeadOverlay(this.testPed.scriptID, 3, this.age, 255)
-        if (this.gender == 1) {
-            native.setPedHeadOverlay(this.testPed.scriptID, 1, this.beard, 255)
-            native.setPedHeadOverlayColor(this.testPed.scriptID, 1, 1, this.beardColor, this.beardColor)
-        }
-        native.setPedHeadBlendData(this.testPed.scriptID, 
+    private updateHeadOverlay(ped) {
+        native.setPedHeadOverlay(ped, 9, this.moleID, 255)
+        native.setPedEyeColor(ped, this.eyeColor)
+        native.setPedComponentVariation(ped, 2, this.hairID, 0, 0)
+        native.setPedHairColor(ped, this.hairColor, this.hairHighlight)
+        native.setPedHeadOverlay(ped, 2, this.eyebrowID, 255)
+        native.setPedHeadOverlayColor(ped, 2, 1, this.eyebrowColor, this.eyebrowColor)
+        native.setPedHeadOverlay(ped, 3, this.age, 255)
+        native.setPedHeadBlendData(ped, 
             this.fatherID, this.motherID, 0,
             this.fatherID, this.motherID, 0, this.skin,
             this.look, 0, false
         )
+        if (this.gender == 1) {
+            native.setPedHeadOverlay(ped, 1, this.beard, 255)
+            native.setPedHeadOverlayColor(ped, 1, 1, this.beardColor, this.beardColor)
+        }
     }
 
     // Update moles & freckles
-    private updateMoles(_moleID, _blushID) {
+    private updateMoles(_moleID) {
         this.moleID = _moleID
-        this.blushID = _blushID
-        this.updateHeadOverlay()
+        this.updateHeadOverlay(this.testPed.scriptID)
     }
 
     // Update eye color
     private updateEyeColor(_eyeColor) {
         this.eyeColor = _eyeColor
-        this.updateHeadOverlay()
+        this.updateHeadOverlay(this.testPed.scriptID)
     }
 
     // Update hairs
@@ -136,63 +133,28 @@ export class FaceFeaturesUi {
         this.hairHighlight = _hairHighlight
         this.eyebrowID = _eyebrowID
         this.eyebrowColor = _eyebrowColor
-        this.updateHeadOverlay()
+        this.updateHeadOverlay(this.testPed.scriptID)
     }
 
     // Update ageing
     private updateAgeing(_age) {
         this.age = _age
-        this.updateHeadOverlay()
+        this.updateHeadOverlay(this.testPed.scriptID)
     }
 
     // Update beard
     private updateBeard(_beard, _beardColor) {
         this.beard = _beard
         this.beardColor = _beardColor
-        this.updateHeadOverlay()
-    }
-    
-    // Get ped head blend data
-    private getPedHeadBlendData(ped) {
-        const buffer = new alt.MemoryBuffer(77);
-
-        native.getPedHeadBlendData(ped, buffer);
-        
-        const data = [
-            buffer.int(0),
-            // padding 4
-            buffer.int(8),
-            // padding 4
-            buffer.int(16),
-            // padding 4
-            buffer.int(24),
-            // padding 4
-            buffer.int(32),
-            // padding 4
-            buffer.int(40),
-            // padding 4
-            Float.read(buffer, 48),
-            // padding 4
-            Float.read(buffer, 56),
-            // padding 4
-            Float.read(buffer, 64)
-            // padding 4
-            // bool isParent
-            // padding 4
-        ]
-
-        buffer.free()
-    
-        return data
+        this.updateHeadOverlay(this.testPed.scriptID)
     }
     
     // Apply data
     private applyData() {
+        this.uiManager.reset()
+        this.camera.destroy()
         alt.emitServer("FaceFeatures:ApplyData", this.name, this.surname)
-
-        const [shapeFirst, shapeSecond, shapeThird, skinFirst, skinSecond, skinThird, shapeMix, skinMix, thirdMix] = this.getPedHeadBlendData(this.testPed.scriptID)
-
-        alt.log("[Charactercreator] Applied " + shapeFirst, shapeSecond, shapeThird, skinFirst, skinSecond, skinThird, shapeMix, skinMix, thirdMix) // 1 1 1 5 1 1 0.25 0.5 1 
+        this.updateHeadOverlay(alt.Player.local.scriptID)
     }
 
     // Finished

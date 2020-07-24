@@ -51,7 +51,7 @@ class CharacterCreatorForm extends Component {
 
     updateMoles(event) {
         this.setState({ moles: event.target.value - 1})
-        alt.emit("FaceFeatures:UpdateMoles", this.state.moles, this.state.blush)
+        alt.emit("FaceFeatures:UpdateMoles", this.state.moles)
     }
 
     updateSex(event) {
@@ -157,28 +157,29 @@ class CharacterCreatorForm extends Component {
                             <div className="card-header italic"><b>Charaktererstellung</b> - Allgemein</div>
                             <div className="card-body overflow-y-hidden max-h-screen">
                                 {/* Select gender */}
-                                <p className="text-center uppercase font-bold mt-4 mb-3 flex">Mein Geschlecht ist...</p>
+                                <p className="text-center font-bold mt-4 mb-3 flex">Mein Geschlecht ist...</p>
                                 <div className="flex">
                                     <button className="w-2/4 bg-indigo-400 py-5 rounded-md rounded-r-none text-white text-center" data-arg="1" onClick={this.updateSex.bind(this)}>Männlich</button>
                                     <button className="w-2/4 bg-gray-700 py-5 rounded rounded-l-none text-white text-center" data-arg="0" onClick={this.updateSex.bind(this)}>Weiblich</button> 
                                 </div>
-                                <p className="text-center uppercase font-bold mt-4 mb-3 flex">Wie alt willst du im Gesicht aussehen?</p>
+                                <p className="font-bold mt-4 mb-3">Wie alt willst du im Gesicht aussehen?</p>
                                 <input type="range" min="1" max={maxAgeing} class="slider" className="w-full rounded-lg bg-blue-700" data-arg="ageing" onChange={this.updateAgeing.bind(this)}></input>
-                                <p className="text-center uppercase font-bold mt-4 mb-3 flex">Dein Vater ist {this.state.fatherName}</p>
+                                <p className="font-bold mt-4 mb-3">Dein Vater ist {this.state.fatherName}</p>
                                 <input type="range" min="1" max={fathers.length} class="slider" className="w-full rounded-lg bg-blue-700" data-arg="father" onChange={this.updateParent.bind(this)}></input>
-                                <p className="text-center uppercase font-bold mt-4 mb-3 flex">Deine Mutter ist {this.state.motherName}</p>
+                                <p className="font-bold mt-4 mb-3">Deine Mutter ist {this.state.motherName}</p>
                                 <input type="range" min="1" max={mothers.length} class="slider" className="w-full rounded-lg bg-blue-700" data-arg="mother" onChange={this.updateParent.bind(this)}></input>
-                                <p className="text-center uppercase font-bold mt-4 mb-3 flex">Passe dein Aussehen an! {this.state.skinInheritance}</p>
+                                <p className="font-bold mt-4">Passe dein Aussehen an</p>
+                                <p className="text-sm mb-4">Das Aussehen regelst Du indem du zum Elternteil ziehst. </p>
                                 <div className="flex">
-                                    <p className="uppercase font-bold mt-4 mb-3 flex px-6">← Mutter </p>
-                                    <input type="range" min="1" max="100" class="slider" className="rounded-lg bg-blue-700 content-center mx-3" data-arg="skinInheritance" onChange={this.updateInheritance.bind(this)}></input>
-                                    <p className="uppercase font-bold mt-4 mb-3 flex px-6">Vater →</p>
+                                    <p className="font-bold mt-4 mb-3 flex px-6">← Mutter </p>
+                                    <input type="range" min="1" max="100" class="slider" className="rounded-lg bg-blue-700 content-center mx-5" data-arg="skinInheritance" onChange={this.updateInheritance.bind(this)}></input>
+                                    <p className="font-bold mt-4 mb-3 flex px-6">Vater →</p>
                                 </div>
-                                <p className="text-center uppercase font-bold mt-4 mb-3 flex">Passe deine Hautfarbe an! {this.state.lookInheritance}</p>
+                                <p className="font-bold mt-4 mb-3">Passe deine Hautfarbe an</p>
                                 <div className="flex">
-                                    <p className="uppercase font-bold mt-4 mb-3 flex px-6">← Mutter</p>
-                                    <input type="range" min="1" max="100" class="slider" className="rounded-lg bg-blue-700 content-center mx-3" data-arg="lookInheritance" onChange={this.updateInheritance.bind(this)}></input>
-                                    <p className="uppercase font-bold mt-4 mb-3 flex px-6">Vater →</p>
+                                    <p className="font-bold mt-4 mb-3 flex px-6">← Mutter</p>
+                                    <input type="range" min="1" max="100" class="slider" className="rounded-lg bg-blue-700 content-center mx-5" data-arg="lookInheritance" onChange={this.updateInheritance.bind(this)}></input>
+                                    <p className="font-bold mt-4 mb-3 flex px-6">Vater →</p>
                                 </div>
                             </div>
                             <div className="card-footer">
@@ -195,28 +196,39 @@ class CharacterCreatorForm extends Component {
                     <div className="card">
                         <div className="card-header italic"><b>Charaktererstellung</b> - Behaarung</div>
                         <div className="card-body overflow-y-hidden max-h-screen">
-                            <p className="uppercase font-bold mt-4 mb-3 text-center">Haare: {hairList[this.state.gender][this.state.hairID].Name}</p>
+                        <p className="text-sm">In der Charaktererstellung geht es um das natürliche Aussehen.</p>
+                        <p className="text-sm mb-4">Make-Up und andere Accessoires sind im Spielverlauf anpassbar.</p>
+                            <p className="font-bold mt-4 mb-3">Haare: {hairList[this.state.gender][this.state.hairID].Name}</p>
                             <input type="range" min="1" max={hairList[this.state.gender].length - 1} class="slider" className="w-full rounded-lg bg-blue-700" data-arg="hairs" onChange={this.updateHairs.bind(this)}></input>
-                            <p className="uppercase font-bold mt-4 mb-3 text-center">Haarfarbe {"&"} Highlights:</p>
                             <div className="flex">
-                                <input type="range" min="1" max={maxHairColor} class="slider" className="w-1/2 rounded-lg bg-blue-700 content-center mx-3" data-arg="hairColor" onChange={this.updateHairs.bind(this)}></input>
-                                <input type="range" min="1" max={maxHairColor} class="slider" className="w-1/2 rounded-lg bg-blue-700 content-center mx-3" data-arg="hairHighlights" onChange={this.updateHairs.bind(this)}></input>
+                                <p className="mt-4 mb-3 font-bold w-1/2 rounded-lg content-center mr-8">Haarfarbe</p>
+                                <p className="mt-4 mb-3 font-bold w-1/2 rounded-lg content-center">Highlights</p>
                             </div>
-                            <p className="uppercase font-bold mt-4 mb-3 text-center">Passe deine Augenbrauen an:</p>
                             <div className="flex">
-                                <input type="range" min="1" max={maxEyeColor} class="slider" className="w-1/2 rounded-lg bg-blue-700 content-center mx-3" data-arg="eyebrows" onChange={this.updateHairs.bind(this)}></input>
-                                <input type="range" min="1" max={maxHairColor} class="slider" className="w-1/2 rounded-lg bg-blue-700 content-center mx-3" data-arg="eyebrowColor" onChange={this.updateHairs.bind(this)}></input>
+                                <input type="range" min="1" max={maxHairColor} class="slider" className="w-1/2 rounded-lg bg-blue-700 content-center mr-8" data-arg="hairColor" onChange={this.updateHairs.bind(this)}></input>
+                                <input type="range" min="1" max={maxHairColor} class="slider" className="w-1/2 rounded-lg bg-blue-700 content-center" data-arg="hairHighlights" onChange={this.updateHairs.bind(this)}></input>
                             </div>
-                            <p className="uppercase font-bold mt-4 mb-3 text-center">Welche Augenfarbe darf"s sein?</p>
+                            <div className="flex">
+                                <p className="mt-4 mb-3 font-bold w-1/2 rounded-lg content-center mr-8">Augenbrauen</p>
+                                <p className="mt-4 mb-3 font-bold w-1/2 rounded-lg content-center">Farbe</p>
+                            </div>
+                            <div className="flex">
+                                <input type="range" min="1" max={maxEyebrows} class="slider" className="w-1/2 rounded-lg bg-blue-700 content-center mr-8" data-arg="eyebrows" onChange={this.updateHairs.bind(this)}></input>
+                                <input type="range" min="1" max={maxHairColor} class="slider" className="w-1/2 rounded-lg bg-blue-700 content-center" data-arg="eyebrowColor" onChange={this.updateHairs.bind(this)}></input>
+                            </div>
+                            <p className="font-bold mt-4 mb-3">Suche eine Augenfarbe aus</p>
                             <input type="range" min="1" max={maxEyeColor} class="slider" className="w-full rounded-lg bg-blue-700" data-arg="eyes" onChange={this.updateEyeColor.bind(this)}></input>
-                            <p className="uppercase font-bold mt-4 mb-3 text-center">Wähle den Bart deiner Wünsche aus:</p>
                             <div className="flex">
-                                <input type="range" min="1" max={maxBeards} class="slider" className="w-1/2 rounded-lg bg-blue-700 content-center mx-3" data-arg="beards" onChange={this.updateBeard.bind(this)}></input>
-                                <input type="range" min="1" max={maxHairColor} class="slider" className="w-1/2 rounded-lg bg-blue-700 content-center mx-3" data-arg="beardColor" onChange={this.updateBeard.bind(this)}></input>
+                                <p className="mt-4 mb-3 font-bold w-1/2 rounded-lg content-center mr-8">Bart</p>
+                                <p className="mt-4 mb-3 font-bold w-1/2 rounded-lg content-center">Farbe</p>
                             </div>
-                            <p className="uppercase font-bold mt-4 mb-3 text-center">Hat dein Charakter Gesichtsmerkmale?</p>
                             <div className="flex">
-                                <input type="range" min="1" max={maxMoles} class="slider" className="w-full rounded-lg bg-blue-700 content-center mx-3" data-arg="moles" onChange={this.updateMoles.bind(this)}></input>
+                                <input type="range" min="1" max={maxBeards} class="slider" className="w-1/2 rounded-lg bg-blue-700 content-center mr-8" data-arg="beards" onChange={this.updateBeard.bind(this)}></input>
+                                <input type="range" min="1" max={maxHairColor} class="slider" className="w-1/2 rounded-lg bg-blue-700 content-center" data-arg="beardColor" onChange={this.updateBeard.bind(this)}></input>
+                            </div>
+                            <p className="font-bold mt-4 mb-3">Gesichtsmerkmale</p>
+                            <div className="flex">
+                                <input type="range" min="1" max={maxMoles} class="slider" className="w-full rounded-lg bg-blue-700 content-center" data-arg="moles" onChange={this.updateMoles.bind(this)}></input>
                             </div>
                         </div>
                         <div className="card-footer">
@@ -234,11 +246,11 @@ class CharacterCreatorForm extends Component {
                     <div className="card">
                         <div className="card-header italic"><b>Charaktererstellung</b> - Über dich</div>
                         <div className="card-body overflow-y-hidden max-h-screen">
-                            <div className="mb-2 rounded bg-red-100 border-l-4 text-red-700 border-red-500 p-2">Bei der Wahl eines Charakternamens ist es ausdrücklich verboten Namen von realen Personen, Schauspielern oder Künstlern zu verwenden. Genauso ist jeder Name verboten, welcher gegen die Verhaltensnormen von eXo Roleplay verstößt!</div>
-                            <p className="uppercase font-bold mt-4 mb-3 italic">Dein Vorname</p>
-                            <input className="bg-gray-400 rounded w-full appearance-none py-2 px-3" pattern="[A-Za-z]" value={this.state.name} id="name" name="name" onChange={this.onChangeName.bind(this)} type="text"/>
-                            <p className="uppercase font-bold mt-4 mb-3 italic">Dein Nachname</p>
-                            <input className="bg-gray-400 rounded w-full appearance-none py-2 px-3" pattern="[A-Za-z]" value={this.state.surname} id="surname" name="surname" onChange={this.onChangeName.bind(this)} type="text"/>
+                            <div className="mb-2 rounded bg-red-100 border-l-4 text-red-700 border-red-500 p-2">Bei der Wahl eines Charakternamens ist es ausdrücklich verboten Namen von realen Personen, Schauspielern oder Künstlern zu verwenden. Genauso ist jeder Name verboten, welcher gegen die Verhaltensnormen von eXo Roleplay verstößt! Wir empfehlen genau so nicht den echten Namen zu verwenden.</div>
+                            <p className="font-bold mt-4 mb-3 italic">Dein Vorname</p>
+                            <input className="bg-gray-400 text-gray-900 rounded w-full appearance-none py-2 px-3" pattern="[A-Za-z]" value={this.state.name} id="name" name="name" onChange={this.onChangeName.bind(this)} type="text"/>
+                            <p className="font-bold mt-4 mb-3 italic">Dein Nachname</p>
+                            <input className="bg-gray-400 text-gray-900 rounded w-full appearance-none py-2 px-3" pattern="[A-Za-z]" value={this.state.surname} id="surname" name="surname" onChange={this.onChangeName.bind(this)} type="text"/>
                             <p className="text-sm mt-6">Mit dem Klick auf "Fortfahren" bestätigst Du, dass du das Regelwerk von eXo-Roleplay gelesen hast.</p>
                         </div>
                         <div className="card-footer">
@@ -249,7 +261,7 @@ class CharacterCreatorForm extends Component {
                 </div>
             </div>
             )
-        }
+        } else { return null }
     }
 }
 

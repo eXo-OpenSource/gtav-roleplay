@@ -209,12 +209,14 @@ namespace server.Players.Characters
         }
 
 		[Event("FaceFeatures:ApplyData")]
-		public void ApplyFaceFeatures()
+		public void ApplyFaceFeatures(string name, string surname)
 		{
-			
+			FirstName = name;
+			LastName = surname;
+			Alt.Log($"[Charactercreator] {FirstName} + {LastName} ist erschienen!");
 		}
 
-        public void Save()
+		public void Save()
         {
 	        Pos = _player.Position;
             Health = _player.Health;
