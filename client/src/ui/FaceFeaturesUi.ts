@@ -96,6 +96,11 @@ export class FaceFeaturesUi {
     }
     
     private updateHeadOverlay(ped) {
+        native.setPedHeadBlendData(ped, 
+            this.fatherID, this.motherID, 0,
+            this.fatherID, this.motherID, 0, this.look,
+            this.skin, 0, false
+        )
         native.setPedHeadOverlay(ped, 9, this.moleID, 255)
         native.setPedEyeColor(ped, this.eyeColor)
         native.setPedComponentVariation(ped, 2, this.hairID, 0, 0)
@@ -103,11 +108,6 @@ export class FaceFeaturesUi {
         native.setPedHeadOverlay(ped, 2, this.eyebrowID, 255)
         native.setPedHeadOverlayColor(ped, 2, 1, this.eyebrowColor, this.eyebrowColor)
         native.setPedHeadOverlay(ped, 3, this.age, 255)
-        native.setPedHeadBlendData(ped, 
-            this.fatherID, this.motherID, 0,
-            this.fatherID, this.motherID, 0, this.skin,
-            this.look, 0, false
-        )
         if (this.gender == 1) {
             native.setPedHeadOverlay(ped, 1, this.beard, 255)
             native.setPedHeadOverlayColor(ped, 1, 1, this.beardColor, this.beardColor)
@@ -151,10 +151,11 @@ export class FaceFeaturesUi {
     
     // Apply data
     private applyData() {
-        this.uiManager.reset()
-        this.camera.destroy()
         alt.emitServer("FaceFeatures:ApplyData", this.name, this.surname)
         this.updateHeadOverlay(alt.Player.local.scriptID)
+        this.testPed.destroy()
+        this.uiManager.reset()
+        this.camera.destroy()
     }
 
     // Finished

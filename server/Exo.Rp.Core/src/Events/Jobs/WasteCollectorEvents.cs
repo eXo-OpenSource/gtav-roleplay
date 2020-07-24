@@ -1,4 +1,4 @@
-﻿using AltV.Net;
+using AltV.Net;
 using AltV.Net.Elements.Entities;
 using models.Enums;
 using server.Extensions;
