@@ -4,6 +4,7 @@ import { UiManager } from "./UiManager"
 import { Ped } from "../systems/Ped"
 import { Camera } from "../utils/Camera"
 import { Vector3 } from "natives"
+import { Float } from "../utils/Float"
 
 const url = "http://resource/cef/index.html#/charactercreator"
 
@@ -70,7 +71,7 @@ export class FaceFeaturesUi {
             this.testPed = new Ped(this.model, this.playerPoint)
         }
         
-        alt.emitServer("temporaryTeleport", this.teleportPosition)
+        // alt.emitServer("temporaryTeleport", this.teleportPosition)
         
         this.camera = new Camera(this.cameraPoint, 28)
         this.camera.pointAtBone(this.testPed.scriptID, 31086, 0.05, 0, 0)
@@ -150,11 +151,58 @@ export class FaceFeaturesUi {
         this.beardColor = _beardColor
         this.updateHeadOverlay()
     }
+    
+    // Get ped head blend data
+    private getPedHeadBlendData(ped) {
+        const buffer = new alt.MemoryBuffer(77);
+
+        native.getPedHeadBlendData(ped, buffer);
+        
+        const data = [
+            buffer.int(0),
+            // padding 4
+            buffer.int(8),
+            // padding 4
+            buffer.int(16),
+            // padding 4
+            buffer.int(24),
+            // padding 4
+            buffer.int(32),
+            // padding 4
+            buffer.int(40),
+            // padding 4
+            Float.read(buffer, 48),
+            // padding 4
+            Float.read(buffer, 56),
+            // padding 4
+            Float.read(buffer, 64)
+            // padding 4
+            // bool isParent
+            // padding 4
+        ]
+
+        buffer.free()
+    
+        return data
+    }
+    
+    // Apply data
+    private applyData() {
+        alt.emitServer("FaceFeatures:ApplyData", this.name, this.surname)
+
+        const [shapeFirst, shapeSecond, shapeThird, skinFirst, skinSecond, skinThird, shapeMix, skinMix, thirdMix] = this.getPedHeadBlendData(this.testPed.scriptID)
+
+        alt.log("[Charactercreator] Applied " + shapeFirst, shapeSecond, shapeThird, skinFirst, skinSecond, skinThird, shapeMix, skinMix, thirdMix) // 1 1 1 5 1 1 0.25 0.5 1 
+    }
 
     // Finished
     private finished(_name, _surname) {
         this.name = _name
         this.surname = _surname
+
+        alt.setTimeout(() => {
+            this.applyData()
+        }, 2500)
     }
 
     private resetCamera(modelToUse) {

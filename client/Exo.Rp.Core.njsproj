@@ -64,6 +64,7 @@
     <TypeScriptCompile Include="src\ui\Speedo.ts" />
     <TypeScriptCompile Include="src\ui\UiManager.ts" />
     <TypeScriptCompile Include="src\utils\Camera.ts" />
+    <TypeScriptCompile Include="src\utils\FloatLE.ts" />
     <TypeScriptCompile Include="src\utils\Cursor.ts" />
     <TypeScriptCompile Include="src\utils\Raycast.ts" />
     <TypeScriptCompile Include="src\utils\Singleton.ts" />

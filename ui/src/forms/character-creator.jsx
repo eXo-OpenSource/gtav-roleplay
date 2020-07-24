@@ -131,21 +131,24 @@ class CharacterCreatorForm extends Component {
         this.state.step = event.target.getAttribute("step")
         this.forceUpdate()
         if (this.state.step == 4) {
-            alt.emit("FaceFeatures:Finished", this.state.name, this.state.surname)
+            if (this.state.name.length >= 3 && this.state.surname.length >= 3) {
+                alt.emit("FaceFeatures:Finished", this.state.name, this.state.surname)
+            }
         }
     }
 
     onChangeName(event) {
         let editfield = event.target.getAttribute("name")
+        let input = event.target.value.replace(/[^A-Za-z]/ig, "")
         if (editfield == "name") {
-            this.setState({ name: event.target.value })
-            return
+            this.setState({ name: input })
+        } else {
+            this.setState({ surname: input })
         }
-        this.setState({ surname: event.target.value })
     }
 
     render() {
-        if (this.state.step == "1") {
+        if (this.state.step === "1") {
             return (
                 <div>
                     <p>{this.state.step}</p>
@@ -185,7 +188,7 @@ class CharacterCreatorForm extends Component {
                     </div>
                 </div>
             )
-        } else if (this.state.step == "2") {
+        } else if (this.state.step === "2") {
             return (
                 <div>
                 <div className="container ml-auto mr-4 mt-12 max-w-md text-gray-200">
@@ -224,7 +227,7 @@ class CharacterCreatorForm extends Component {
                 </div>
             </div>
             )
-        } else if (this.state.step == "3") {
+        } else if (this.state.step === "3") {
             return (
                 <div>
                 <div className="container ml-auto mr-4 mt-12 max-w-md text-gray-200">
@@ -232,10 +235,10 @@ class CharacterCreatorForm extends Component {
                         <div className="card-header italic"><b>Charaktererstellung</b> - Über dich</div>
                         <div className="card-body overflow-y-hidden max-h-screen">
                             <div className="mb-2 rounded bg-red-100 border-l-4 text-red-700 border-red-500 p-2">Bei der Wahl eines Charakternamens ist es ausdrücklich verboten Namen von realen Personen, Schauspielern oder Künstlern zu verwenden. Genauso ist jeder Name verboten, welcher gegen die Verhaltensnormen von eXo Roleplay verstößt!</div>
+                            <p className="uppercase font-bold mt-4 mb-3 italic">Dein Vorname</p>
+                            <input className="bg-gray-400 rounded w-full appearance-none py-2 px-3" pattern="[A-Za-z]" value={this.state.name} id="name" name="name" onChange={this.onChangeName.bind(this)} type="text"/>
                             <p className="uppercase font-bold mt-4 mb-3 italic">Dein Nachname</p>
-                            <input className="bg-gray-400 rounded w-full appearance-none py-2 px-3" value={this.state.name} id="name" name="name" onChange={this.onChangeName.bind(this)} type="text"/>
-                            <p className="uppercase font-bold mt-4 mb-3 italic">Dein Nachname</p>
-                            <input className="bg-gray-400 rounded w-full appearance-none py-2 px-3" value={this.state.surname} id="surname" name="surname" onChange={this.onChangeName.bind(this)} type="text"/>
+                            <input className="bg-gray-400 rounded w-full appearance-none py-2 px-3" pattern="[A-Za-z]" value={this.state.surname} id="surname" name="surname" onChange={this.onChangeName.bind(this)} type="text"/>
                             <p className="text-sm mt-6">Mit dem Klick auf "Fortfahren" bestätigst Du, dass du das Regelwerk von eXo-Roleplay gelesen hast.</p>
                         </div>
                         <div className="card-footer">

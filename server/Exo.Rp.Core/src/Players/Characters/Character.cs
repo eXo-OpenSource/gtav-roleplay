@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using AltV.Net;
 using AltV.Net.Data;
 using AltV.Net.Enums;
 using models.Enums;
@@ -207,6 +208,12 @@ namespace server.Players.Characters
             _player.RequestDefaulIpls();
         }
 
+		[Event("FaceFeatures:ApplyData")]
+		public void ApplyFaceFeatures()
+		{
+			
+		}
+
         public void Save()
         {
 	        Pos = _player.Position;
@@ -219,7 +226,7 @@ namespace server.Players.Characters
         {
 
 
-    }
+		}
 
         public string GetNormalizedName(bool swap = false)
         {
