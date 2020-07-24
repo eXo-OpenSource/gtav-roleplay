@@ -151,7 +151,6 @@ class CharacterCreatorForm extends Component {
         if (this.state.step === "1") {
             return (
                 <div>
-                    <p>{this.state.step}</p>
                     <div className="container ml-auto mr-4 mt-12 max-w-md text-gray-200">
                         <div className="card">
                             <div className="card-header italic"><b>Charaktererstellung</b> - Allgemein</div>
