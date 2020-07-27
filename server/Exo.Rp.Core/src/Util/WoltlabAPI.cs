@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -39,7 +39,7 @@ namespace server.Util
             var responseString = await response.Content.ReadAsStringAsync();
             if (PrintToConsole)
             {
-                Logger.Debug("Response from WBB:");
+                Logger.Debug("Response from WBB1:");
                 Logger.Debug(responseString);
             }
 
@@ -71,7 +71,7 @@ namespace server.Util
             var responseString = await response.Content.ReadAsStringAsync();
             if (PrintToConsole)
             {
-                Logger.Debug("Response from WBB:");
+                Logger.Debug("Response from WBB2:");
                 Logger.Debug(responseString);
             }
 
@@ -101,7 +101,7 @@ namespace server.Util
             var responseString = await response.Content.ReadAsStringAsync();
             if (PrintToConsole)
             {
-                Logger.Debug("Response from WBB:");
+                Logger.Debug("Response from WBB3:");
                 Logger.Debug(responseString);
             }
 

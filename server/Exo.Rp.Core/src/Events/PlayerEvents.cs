@@ -1,8 +1,13 @@
 using System;
+using System.Globalization;
+using System.Collections.Generic;
 using System.Linq;
 using AltV.Net;
 using AltV.Net.Data;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using models.Enums;
+using MySql.Data.MySqlClient;
+using Newtonsoft.Json;
 using Sentry;
 using server.Database;
 using server.Players;
@@ -17,7 +22,7 @@ namespace server.Events
     {
         private static readonly Logger<PlayerEvents> Logger = new Logger<PlayerEvents>();
 
-        [ClientEventAttribute("RegisterLogin:Login")]
+        [ClientEvent("RegisterLogin:Login")]
         public void Login(IPlayer player, string username, string password)
         {
             try
@@ -31,7 +36,7 @@ namespace server.Events
                                 Console.WriteLine("Login erfolgreich!");
                                 player.Emit("registerLogin:Success");
                                 player.Emit("HUD:Hide", false);
-								player.Emit("HUD:UpdateMoney", "penis");
+								
 
 								// Todo: Remove later
 							if (player.GetAccount() == default)
@@ -77,13 +82,47 @@ namespace server.Events
         }
 
         //Needed because SPA initlialization
-        [ClientEventAttribute("ready")]
+        [ClientEvent("ready")]
         public void PlayerReady(IPlayer player)
         {
 	        player.Emit("Ui:ShowRegisterLogin");
         }
 
-        [ScriptEvent(ScriptEventType.PlayerConnect)]
+		[ClientEvent("FaceFeatures:ApplyData")]
+		public void ApplyFaceFeatures(IPlayer player, string _data)
+		{
+			var data = JsonConvert.DeserializeObject<List<object>>(_data);
+			var ff = player.GetCharacter().FaceFeatures;
+
+			player.GetCharacter().FirstName = data[0].ToString();
+			player.GetCharacter().LastName = data[1].ToString();
+
+			// Different variant used instead of simple casting because otherwise the server would crash
+			ff.Gender = int.Parse(data[2].ToString());
+			ff.ShapeFirst = int.Parse(data[3].ToString());
+			ff.ShapeSecond = int.Parse(data[4].ToString());
+			ff.ShapeThird = 0;
+			ff.SkinFirst = int.Parse(data[3].ToString());
+			ff.SkinSecond = int.Parse(data[4].ToString());
+			ff.SkinThird = 0;
+			ff.ShapeMix = Convert.ToDouble(float.Parse(data[5].ToString(), NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture));
+			ff.SkinMix = Convert.ToDouble(float.Parse(data[6].ToString(), NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture));
+			ff.Freckles = int.Parse(data[7].ToString());
+			ff.EyeColor = int.Parse(data[8].ToString());
+			ff.Hair = int.Parse(data[9].ToString());
+			ff.HairColor = int.Parse(data[10].ToString());
+			ff.HairColorHighlight = int.Parse(data[11].ToString());
+			ff.Eyebrows = int.Parse(data[12].ToString());
+			ff.EyebrowsColor1 = int.Parse(data[13].ToString());
+			ff.Ageing = int.Parse(data[14].ToString());
+			ff.FacialHair = int.Parse(data[15].ToString());
+			ff.FacialHairColor1 = int.Parse(data[16].ToString());
+
+			player.Emit("HUD:Hide", false);
+			Alt.Log($"{player.GetCharacter().FirstName} {player.GetCharacter().LastName} ist erschienen!");
+		}
+		
+		[ScriptEvent(ScriptEventType.PlayerConnect)]
         public void PlayerConnect(IPlayer player, string reason)
         {
             Alt.Log($"{player.Name} connected.");

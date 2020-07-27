@@ -1,5 +1,6 @@
 using System;
 using Microsoft.Extensions.Logging;
+
 using MySql.Data.MySqlClient;
 using Sentry;
 using server.Util;

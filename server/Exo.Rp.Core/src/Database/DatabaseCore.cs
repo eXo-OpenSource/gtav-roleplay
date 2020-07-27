@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
@@ -94,8 +94,8 @@ namespace server.Database
             ContextFactory.Instance.AccountModel.Load();
             Logger.Info($"Loaded {ContextFactory.Instance.AccountModel.Local.Count} accounts.");
 
-            ContextFactory.Instance.CharacterModel.Load();
-            Logger.Info($"Loaded {ContextFactory.Instance.CharacterModel.Local.Count} characters.");
+			ContextFactory.Instance.CharacterModel.Load();
+			Logger.Info($"Loaded {ContextFactory.Instance.CharacterModel.Local.Count} characters.");
 
             ContextFactory.Instance.FaceFeaturesModel.Load();
 

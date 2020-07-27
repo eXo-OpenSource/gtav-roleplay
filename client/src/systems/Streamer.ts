@@ -64,7 +64,7 @@ alt.onServer("entitySync:create", (entityId, entityType, position, currEntityDat
 				handle: blip
 			})
 		} else if(entityType === 1) {
-			alt.log("create collaborate and listen")
+			// alt.log("create collaborate and listen")
 			loadModel(currEntityData.model).then(() => {
 				let handle = natives.createObject( currEntityData.model, position.x, position.y,
 					position.z, false, false, false );
@@ -90,7 +90,7 @@ alt.onServer("entitySync:create", (entityId, entityType, position, currEntityDat
 			loadModel(thisEntity.data.model).then(() => {
 				let handle = natives.createObject( thisEntity.data.model, thisEntity.position.x, thisEntity.position.y,
 					position.z, false, false, false );
-				alt.log("Handle:" +handle)
+				// alt.log("Handle:" +handle)
 				thisEntity.handle = handle;
 				natives.setEntityVisible(handle, true, false)
 				natives.setObjectTextureVariation(handle, 0)
@@ -107,7 +107,7 @@ alt.onServer("entitySync:remove", (entityId, entityType) => {
 		let handle:BaseObject = <BaseObject>entity.handle;
 		handle.destroy()
 	} else if(entityType === 1) {
-		alt.log(JSON.stringify(entity))
+		// alt.log(JSON.stringify(entity))
 		natives.deleteObject(<number>entity.handle)
 	}
 	entity.handle = null;
@@ -123,7 +123,7 @@ alt.onServer("entitySync:updateData", (entityId: number, entityType, newData) =>
 	}
 	if(entityType === 1) {
 		let data = entities.find(value => value.id === entityId && value.type == entityType).data;
-		alt.log(JSON.stringify(data))
+		// alt.log(JSON.stringify(data))
 		natives.attachEntityToEntity(<number>entities.find(value => value.id === entityId && value.type == entityType).handle, alt.Player.getByID(data.attachToEntity).scriptID,
 			natives.getPedBoneIndex(alt.Player.local.scriptID, 57005), 0.12, 0, 0, 25, 270, 180, true, false, false, true, 1, true)
 	}

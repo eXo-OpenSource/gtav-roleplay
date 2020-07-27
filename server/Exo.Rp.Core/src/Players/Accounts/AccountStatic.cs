@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Globalization;
 using AltV.Net.Enums;
 using models.Enums;
@@ -14,38 +14,38 @@ namespace server.Players.Accounts
     {
         public static bool CreateAccount(this IPlayer player, string username, string mail, AdminLevel adminLvl)
         {
-            var accountData = new Account
-            {
-                Username = username,
-                EMail = mail,
-                AdminLvl = adminLvl,
-                SocialClubId = player.SocialClubId,
-                HardwareId = player.HardwareIdHash,
-                Language = "de-DE",
-                Character = new Character()
-                {
-                    FirstName = "Fred",
-                    LastName = "Feuerstein",
-                    Skin = PedModel.FreemodeMale01,
-                    Gender = Gender.Male,
-                    Health = 100,
-                    Money = 3000,
-                    PosX = -1040.907f,
-                    PosY = -2743.189f,
-                    PosZ = 13.94503f,
-                    BankAccount = new BankAccount
-                    {
-                        OwnerType = OwnerType.Player,
-                        Money = 0
-                    },
-                    InventoryModel = new PlayerInventory()
-                    {
-                        OwnerType = OwnerType.Player,
-                        Type = InventoryType.Player,
-                        Bags = new Dictionary<BagNames, BagModel>()
-                    },
-                    FaceFeatures = new FaceFeatures()
-                    {
+			var accountData = new Account
+			{
+				Username = username,
+				EMail = mail,
+				AdminLvl = adminLvl,
+				SocialClubId = player.SocialClubId,
+				HardwareId = player.HardwareIdHash,
+				Language = "de-DE",
+				Character = new Character()
+				{
+					FirstName = "Fred",
+					LastName = "Feuerstein",
+					Skin = PedModel.FreemodeMale01,
+					Gender = Gender.Male,
+					Health = 100,
+					Money = 3000,
+					PosX = -1040.907f,
+					PosY = -2743.189f,
+					PosZ = 13.94503f,
+					BankAccount = new BankAccount
+					{
+						OwnerType = OwnerType.Player,
+						Money = 0
+					},
+					InventoryModel = new PlayerInventory()
+					{
+						OwnerType = OwnerType.Player,
+						Type = InventoryType.Player,
+						Bags = new Dictionary<BagNames, BagModel>()
+					},
+					FaceFeatures = new FaceFeatures()
+					{
 
                     }
                     

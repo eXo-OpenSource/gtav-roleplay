@@ -5,6 +5,7 @@ import { Ped } from "../systems/Ped"
 import { Camera } from "../utils/Camera"
 import { Vector3 } from "natives"
 import { Float } from "../utils/Float"
+import { stringify } from "querystring"
 
 const url = "http://resource/cef/index.html#/charactercreator"
 
@@ -149,11 +150,23 @@ export class FaceFeaturesUi {
         this.updateHeadOverlay(this.testPed.scriptID)
     }
     
-    // Apply data
-    private applyData() {
-        alt.emitServer("FaceFeatures:ApplyData", this.name, this.surname)
+    // Load data after login
+    loadData(data) {
         this.updateHeadOverlay(alt.Player.local.scriptID)
+    }
+
+    // Apply data in charcreator
+    private applyData() {
+        const data = [
+            this.name, this.surname,
+            this.gender, this.fatherID, this.motherID, this.skin.toFixed(1), this.look.toFixed(1),
+            this.moleID, this.eyeColor, this.hairID, this.hairColor, this.hairHighlight,
+            this.eyebrowID, this.eyebrowColor, this.age, this.beard, this.beardColor
+        ]
+
+        alt.emitServer("FaceFeatures:ApplyData", JSON.stringify(data))
         this.testPed.destroy()
+        this.updateHeadOverlay(alt.Player.local.scriptID)
         this.uiManager.reset()
         this.camera.destroy()
     }
@@ -194,3 +207,22 @@ export class FaceFeaturesUi {
         this.camera.playerControlsEntity(this.testPed.scriptID, true)
     }
 }
+
+alt.onServer("FaceFeatures:LoadData", (_data) => {
+    var data = JSON.parse(_data)
+
+    native.setPedHeadBlendData(alt.Player.local.scriptID, 
+        data[1], data[2], 0,
+        data[4], data[5], 0, data[7],
+        data[8], 0, false
+    )   
+    native.setPedHeadOverlay(alt.Player.local.scriptID, 9, data[9], 255)
+    native.setPedEyeColor(alt.Player.local.scriptID, data[10])
+    native.setPedComponentVariation(alt.Player.local.scriptID, 2, data[11], 0, 0)
+    native.setPedHairColor(alt.Player.local.scriptID, data[12], data[13])
+    native.setPedHeadOverlay(alt.Player.local.scriptID, 2, data[14], 255)
+    native.setPedHeadOverlayColor(alt.Player.local.scriptID, 2, 1, data[15], data[15])
+    native.setPedHeadOverlay(alt.Player.local.scriptID, 3, data[16], 255)
+    native.setPedHeadOverlay(alt.Player.local.scriptID, 1, data[17], 255)
+    native.setPedHeadOverlayColor(alt.Player.local.scriptID, 1, 1, data[18], data[18])
+})

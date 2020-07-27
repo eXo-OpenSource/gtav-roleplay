@@ -30,7 +30,7 @@ class CharacterCreatorForm extends Component {
             lookInheritance: 0.50,
             hairID: 0,
             hairColor: 0,
-            hairHighlight: 0,
+            hairHighlights: 0,
             eyebrowID: 18,
             eyebrowColor: 0,
             eyebrowHighlight: 0,
@@ -44,67 +44,67 @@ class CharacterCreatorForm extends Component {
         }
     }
 
-    updateAgeing(event) {
-        this.setState({ ageing: event.target.value - 1})
+    updateAgeing(e) {
+        this.setState({ ageing: e.target.value - 1})
         alt.emit("FaceFeatures:UpdateAgeing", this.state.ageing)
     }
 
-    updateMoles(event) {
-        this.setState({ moles: event.target.value - 1})
+    updateMoles(e) {
+        this.setState({ moles: e.target.value - 1})
         alt.emit("FaceFeatures:UpdateMoles", this.state.moles)
     }
 
-    updateSex(event) {
-        let gender = parseInt(event.target.getAttribute("data-arg"))
+    updateSex(e) {
+        let gender = parseInt(e.target.getAttribute("data-arg"))
         this.setState({ gender: gender })
         alt.emit("FaceFeatures:UpdateSex", gender)
     }
 
-    updateEyeColor(event) {
-        this.setState({ eyeColor: event.target.value - 1})
+    updateEyeColor(e) {
+        this.setState({ eyeColor: e.target.value - 1})
         alt.emit("FaceFeatures:UpdateEyes", this.state.eyeColor)
     }
 
-    updateBeard(event) {
-        let slider = event.target.getAttribute("data-arg")
+    updateBeard(e) {
+        let slider = e.target.getAttribute("data-arg")
         if (slider == "beards") {
-            this.setState({ beardID: event.target.value - 1 })
+            this.setState({ beardID: e.target.value - 1 })
         } else {
-            this.setState({ beardColor: event.target.value - 1 })
+            this.setState({ beardColor: e.target.value - 1 })
         }
         alt.emit("FaceFeatures:UpdateBeard", this.state.beardID, this.state.beardColor)
     }
 
-    updateHairs(event) {
-        let slider = event.target.getAttribute("data-arg")
+    updateHairs(e) {
+        let slider = e.target.getAttribute("data-arg")
         if (slider == "hairs") {
-            this.setState({ hairID: event.target.value - 1 })
+            this.setState({ hairID: e.target.value - 1 })
         } else if (slider == "hairColor") {
-            this.setState({ hairColor: event.target.value - 1 })
+            this.setState({ hairColor: e.target.value - 1 })
         } else if (slider == "hairHighlights") {
-            this.setState({ hairHighlight: event.target.value - 1 })
+            this.setState({ hairHighlights: e.target.value - 1 })
         } else if (slider == "eyebrows") {
-            this.setState({ eyebrowID: event.target.value - 1 })
+            this.setState({ eyebrowID: e.target.value - 1 })
         } else if (slider == "eyebrowColor") {
-            this.setState({ eyebrowColor: event.target.value - 1 })
+            this.setState({ eyebrowColor: e.target.value - 1 })
         }
 
         alt.emit("FaceFeatures:UpdateHairs", this.state.hairID,
-            this.state.hairColor, this.state.hairHighlight, this.state.eyebrowID,
+            this.state.hairColor, this.state.hairHighlights, this.state.eyebrowID,
             this.state.eyebrowColor, this.state.eyebrowHighlight
         )
     }
     
-    updateParent(event) {
-        let parentType = event.target.getAttribute("data-arg")
+    updateParent(e) {
+        let parentType = e.target.getAttribute("data-arg")
         if (parentType == "father") {
-            let father = fatherNames[event.target.value - 1]
+            let father = fatherNames[e.target.value - 1]
             this.setState({ fatherName: father })
-            this.setState({ fatherID: event.target.value - 1 })
+            this.setState({ fatherID: e.target.value - 1 })
         } else {
-            let mother = motherNames[event.target.value - 1]
+            let mother = motherNames[e.target.value - 1]
             this.setState({ motherName: mother })
-            this.setState({ motherID: event.target.value - 1 })
+            this.setState({ motherID: e.target.value - 1 })
         }
         alt.emit("FaceFeatures:UpdateParent", this.state.fatherID,
             this.state.motherID, this.state.skinInheritance,
@@ -112,13 +112,13 @@ class CharacterCreatorForm extends Component {
         )
     }
 
-    updateInheritance(event) {
-        let slider = event.target.getAttribute("data-arg")
+    updateInheritance(e) {
+        let slider = e.target.getAttribute("data-arg")
         if (slider == "skinInheritance") {
-            let skin = event.target.value
+            let skin = e.target.value
             this.setState({ skinInheritance: parseFloat(skin) / 100.0 })
         } else {
-            let look = event.target.value
+            let look = e.target.value
             this.setState({ lookInheritance: parseFloat(look) / 100.0 })
         }
         alt.emit("FaceFeatures:UpdateParent", this.state.fatherID, 
@@ -127,8 +127,8 @@ class CharacterCreatorForm extends Component {
         )
     }
 
-    onChangeSiteClick(event) {
-        this.state.step = event.target.getAttribute("step")
+    onChangeSiteClick(e) {
+        this.state.step = e.target.getAttribute("step")
         this.forceUpdate()
         if (this.state.step == 4) {
             if (this.state.name.length >= 3 && this.state.surname.length >= 3) {
@@ -137,14 +137,10 @@ class CharacterCreatorForm extends Component {
         }
     }
 
-    onChangeName(event) {
-        let editfield = event.target.getAttribute("name")
-        let input = event.target.value.replace(/[^A-Za-z]/ig, "")
-        if (editfield == "name") {
-            this.setState({ name: input })
-        } else {
-            this.setState({ surname: input })
-        }
+    onChangeName(e) {
+        var currentState = this.state
+        currentState[e.target.name] = e.target.value.replace(/[^A-Za-z]/ig, "")
+        this.setState({ data: currentState })
     }
 
     render() {

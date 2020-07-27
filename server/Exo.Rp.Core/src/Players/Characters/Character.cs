@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography.X509Certificates;
 using AltV.Net;
 using AltV.Net.Data;
 using AltV.Net.Enums;
 using models.Enums;
+using Newtonsoft.Json;
 using server.Extensions;
 using server.Inventory.Inventories;
 using server.Jobs;
@@ -195,6 +197,7 @@ namespace server.Players.Characters
             //_player.Name = GetNormalizedName();
 
             UpdateHud();
+			UpdateFaceFeatures();
 
             Logger.Debug("SEND TEAMS to " + _player.Name);
             // PedManager.Instance.SendToIPlayer(player);
@@ -207,14 +210,6 @@ namespace server.Players.Characters
 
             _player.RequestDefaulIpls();
         }
-
-		[Event("FaceFeatures:ApplyData")]
-		public void ApplyFaceFeatures(string name, string surname)
-		{
-			FirstName = name;
-			LastName = surname;
-			Alt.Log($"[Charactercreator] {FirstName} + {LastName} ist erschienen!");
-		}
 
 		public void Save()
         {
@@ -250,6 +245,20 @@ namespace server.Players.Characters
 			_player.Emit("HUD:UpdateMoney", GetMoney());
 			_player.Emit("guiHUDUpdate", GetMoney(), GetWantedLevel());
         }
+
+		public void UpdateFaceFeatures()
+		{
+			var ff = _player.GetCharacter().FaceFeatures;
+
+			object[] data = {
+				ff.Gender, ff.ShapeFirst, ff.ShapeSecond, ff.ShapeThird,
+				ff.SkinFirst, ff.SkinSecond, ff.SkinThird, ff.ShapeMix, ff.SkinMix,
+				ff.Freckles, ff.EyeColor, ff.Hair, ff.HairColor, ff.HairColorHighlight,
+				ff.Eyebrows, ff.EyebrowsColor1, ff.Ageing, ff.FacialHair, ff.FacialHairColor1
+			};
+
+			_player.Emit("FaceFeatures:LoadData", JsonConvert.SerializeObject(data));
+		}
 
         public PlayerInventory GetInventory()
         {
