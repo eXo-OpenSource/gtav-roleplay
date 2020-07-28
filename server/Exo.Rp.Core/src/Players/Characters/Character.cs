@@ -197,7 +197,7 @@ namespace server.Players.Characters
             //_player.Name = GetNormalizedName();
 
             UpdateHud();
-			UpdateFaceFeatures();
+			SyncFaceFeatures();
 
             Logger.Debug("SEND TEAMS to " + _player.Name);
             // PedManager.Instance.SendToIPlayer(player);
@@ -246,7 +246,7 @@ namespace server.Players.Characters
 			_player.Emit("guiHUDUpdate", GetMoney(), GetWantedLevel());
         }
 
-		public void UpdateFaceFeatures()
+		public void SyncFaceFeatures()
 		{
 			var ff = _player.GetCharacter().FaceFeatures;
 

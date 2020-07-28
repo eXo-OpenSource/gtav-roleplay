@@ -16,6 +16,7 @@ import Progress from "./hud/progress";
 const loadableOptions = { };
 const LoadableLoginComponent = loadable(() => import("./forms/login"), loadableOptions);
 const LoadableCharacterCreatorComponent = loadable(() => import("./forms/character-creator"), loadableOptions);
+const LoadableVehicleUIComponent = loadable(() => import("./hud/vehicle-ui"), loadableOptions);
 
 class App extends Component {
 	constructor(props) {
@@ -30,6 +31,7 @@ class App extends Component {
 					<Switch>
 						<Route path="/login" component={LoadableLoginComponent} />
 						<Route path="/charactercreator" component={LoadableCharacterCreatorComponent} />
+						<Route path="/vehicleui" component={LoadableVehicleUIComponent} />
 					</Switch>
 				</Router>
 				<Chat/>

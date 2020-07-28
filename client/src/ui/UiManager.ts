@@ -2,7 +2,6 @@ import * as alt from 'alt';
 import { FaceFeaturesUi } from './FaceFeaturesUi';
 import { RegisterLogin } from './RegisterLogin';
 import { View } from "../utils/View";
-import { Float } from "../utils/Float";
 import Chat from "../chat/Chat";
 import { Cursor } from "../utils/Cursor";
 import { HUD } from "./HUD";

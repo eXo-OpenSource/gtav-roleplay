@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using AltV.Net;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
@@ -66,7 +66,7 @@ namespace server.Events.Vehicles
             }
         }
 
-        [ClientEvent("Vehicle:ToggleLight")]
+        [Event("Vehicle:ToggleLight")]
         public void OnVehicleLightSwitch(IPlayer client)
         {
 			var vehicle = Core.GetService<VehicleManager>().GetVehicleFromHandle<server.Vehicles.Vehicle>(client.Vehicle);
@@ -95,7 +95,7 @@ namespace server.Events.Vehicles
             }
         }
 
-        [Event("vehicle:ToggleDoor")]
+        [Event("Vehicle:ToggleDoor")]
         public void ToggleVehicleDoor(IPlayer client, IVehicle networkVehicle, byte door)
         {
             var vehicle = Core.GetService<VehicleManager>().GetVehicleFromHandle<Vehicle>(networkVehicle);
@@ -122,5 +122,15 @@ namespace server.Events.Vehicles
                 client.SendChatMessage("Vehicle not found! ");
             }
         }
-    }
+
+		[Event("Vehicle:GetInfo")]
+		public void GetVehicleInfos(IPlayer client, IVehicle networkVehicle)
+		{
+			var vehicle = Core.GetService<VehicleManager>().GetVehicleFromHandle<Vehicle>(networkVehicle);
+			client.SendChatMessage("Fahrzeuginformationen:");
+			client.SendChatMessage($"ID: {vehicle.Id}");
+			client.SendChatMessage($"Kennzeichen: {vehicle.Plate}");
+			client.SendChatMessage($"Modell: {vehicle.Model}");
+		}
+	}
 }

@@ -11,6 +11,7 @@ export class Vehicle {
 alt.onServer("Vehicle:SetIntoVehicle", (veh, seat) => {
 	let cleared = false;
 	const interval = alt.setInterval(() => {
+        if (!veh) return;
 		const vehicleScriptId = alt.Vehicle.getByID(veh).scriptID;
 		if (vehicleScriptId) {
 			native.setPedIntoVehicle(alt.Player.local.scriptID, vehicleScriptId, seat);
@@ -79,12 +80,7 @@ alt.on("keyup", (key) => {
         } else {*/
             native.taskEnterVehicle(player.scriptID, vehicle, 5000, nearestSeat, 1, 1, 0);
         //}
-    } else if(key == 0x58 && alt.gameControlsEnabled()) { //X
-    	alt.emitServer("Vehicle:ToggleEngine")
-	} else if(key == 76 && alt.gameControlsEnabled()) { //L
-		alt.emitServer("Vehicle:ToggleLight")
-	}
-    //TODO Add Vehicle Lock functionality when interaction system is complete
+    }
 });
 
 alt.on("streamSyncedMetaChange", (entity: Entity, key: string, value: any) => {
