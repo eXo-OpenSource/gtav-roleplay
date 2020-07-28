@@ -257,7 +257,7 @@ namespace server.Players.Characters
 				ff.Eyebrows, ff.EyebrowsColor1, ff.Ageing, ff.FacialHair, ff.FacialHairColor1
 			};
 
-			_player.Emit("FaceFeatures:LoadData", JsonConvert.SerializeObject(data));
+			_player.SetSyncedMetaData("faceFeatures.Data", JsonConvert.SerializeObject(data));
 		}
 
         public PlayerInventory GetInventory()

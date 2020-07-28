@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import {HashRouter as Router, Route, Switch, Link, withRouter} from "react-router-dom";
 import Chat from "./hud/chat";
 import HUD from "./hud/hud";
+import VehUI from "./hud/vehicle-ui"
 import CharacterCreatorForm from "./forms/character-creator";
 import loadable, { Options as LoadableOptions } from "@loadable/component";
 

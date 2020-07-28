@@ -6,6 +6,7 @@ import { Float } from "../utils/Float";
 import Chat from "../chat/Chat";
 import { Cursor } from "../utils/Cursor";
 import { HUD } from "./HUD";
+import { VehicleUI } from "./VehicleUI";
 import Speedo from "./Speedo";
 import Popup from "./Popup";
 
@@ -17,6 +18,7 @@ export class UiManager {
 	private hud: HUD;
 	private speedo: Speedo;
 	private popup: Popup;
+	private vehicleUI: VehicleUI;
 
 	constructor() {
 		this.mainView = new View()
@@ -26,6 +28,7 @@ export class UiManager {
 		this.hud = new HUD(this);
 		this.speedo = new Speedo(this);
 		this.popup = new Popup(this);
+		this.vehicleUI = new VehicleUI(this);
 		this.loadEvents()
 	}
 

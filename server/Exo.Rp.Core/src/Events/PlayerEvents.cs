@@ -119,6 +119,7 @@ namespace server.Events
 			ff.FacialHairColor1 = int.Parse(data[16].ToString());
 
 			player.Emit("HUD:Hide", false);
+			player.GetCharacter().UpdateFaceFeatures();
 			Alt.Log($"{player.GetCharacter().FirstName} {player.GetCharacter().LastName} ist erschienen!");
 		}
 		
