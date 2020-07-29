@@ -64,12 +64,15 @@ class VehicleUI extends Component {
                     </div>
                     <p className="relative mt-6 text-center text-bold text-gray-200 text-3xl mx-auto">{this.state.currentSelection}</p>
                     <div className="flex">
-                        <div type="engine" className="ml-auto mr-64 w-32 h-32 bg-blue-500 rounded-full border-4 border-blue-500 opacity-75 shadow-xl hover:border-4 hover:border-gray-200" onMouseOver={this.hover}>
-                            <img className="w-20 h-20 mx-auto mt-5" src="https://exocentral.de/vehicle/engine.png"></img>
+                        <div type="lock" className="ml-auto mr-64 w-32 h-32 bg-blue-500 rounded-full border-4 border-blue-500 opacity-75 shadow-xl hover:border-4 hover:border-gray-200" onMouseOver={this.hover}>
+                            <img className="w-20 h-20 mx-auto mt-5" src="https://exocentral.de/vehicle/key.png"></img>
                         </div>
-                        <div type="close" className="mr-auto w-32 h-32 bg-blue-500 rounded-full border-4 border-blue-500 opacity-75 shadow-xl hover:border-4 hover:border-gray-200" onMouseOver={this.hover}>
-                            <img className="w-24 h-24 mx-auto mt-2" src="https://exocentral.de/vehicle/close.png"></img>
+                        <div type="engine" className="mr-auto w-32 h-32 bg-blue-500 rounded-full border-4 border-blue-500 opacity-75 shadow-xl hover:border-4 hover:border-gray-200" onMouseOver={this.hover}>
+                            <img className="w-24 h-24 mx-auto mt-2" src="https://exocentral.de/vehicle/engine.png"></img>
                         </div>
+                    </div>
+                    <div type="close" className="mx-auto w-32 h-32 bg-blue-500 rounded-full border-4 border-blue-500 opacity-75 shadow-xl hover:border-4 hover:border-gray-200" onMouseOver={this.hover}>
+                        <img className="mx-auto w-24 h-24 mt-3" src="https://exocentral.de/vehicle/close.png"></img>
                     </div>
                 </div>
             )
