@@ -14,7 +14,7 @@ namespace server.Events.Vehicles
         [ScriptEvent(ScriptEventType.PlayerEnterVehicle)]
         public void OnPlayerEnterVehicle(IVehicle networkVehicle, IPlayer client, byte seat)
         {
-            var vehicle = Core.GetService<VehicleManager>().GetVehicleFromHandle<server.Vehicles.Vehicle>(networkVehicle);
+            var vehicle = Core.GetService<VehicleManager>().GetVehicleFromHandle<Vehicle>(networkVehicle);
             if (vehicle == null) return;
             if (vehicle.CanEnter(client, seat)) vehicle.OnEnter(client, seat);
         }
@@ -22,7 +22,7 @@ namespace server.Events.Vehicles
         [ScriptEvent(ScriptEventType.PlayerEnterVehicle)]
         public void OnPlayerEnterVehicleAttempt(IVehicle networkVehicle, IPlayer client, byte seat)
         {
-            var vehicle = Core.GetService<VehicleManager>().GetVehicleFromHandle<server.Vehicles.Vehicle>(networkVehicle);
+            var vehicle = Core.GetService<VehicleManager>().GetVehicleFromHandle<Vehicle>(networkVehicle);
             if (vehicle != null)
             {
                 if (vehicle.CanEnter(client, seat))
@@ -40,21 +40,21 @@ namespace server.Events.Vehicles
         [ScriptEvent(ScriptEventType.PlayerLeaveVehicle)]
         public void OnPlayerExitVehicle(IVehicle networkVehicle, IPlayer client, byte seat)
         {
-            var vehicle = Core.GetService<VehicleManager>().GetVehicleFromHandle<server.Vehicles.Vehicle>(networkVehicle);
+            var vehicle = Core.GetService<VehicleManager>().GetVehicleFromHandle<Vehicle>(networkVehicle);
             vehicle?.OnExit(client);
         }
 
         [ScriptEvent(ScriptEventType.PlayerLeaveVehicle)]
         public void OnPlayerExitVehicleAttempt(IVehicle networkVehicle, IPlayer client, byte seat)
         {
-            var vehicle = Core.GetService<VehicleManager>().GetVehicleFromHandle<server.Vehicles.Vehicle>(networkVehicle);
+            var vehicle = Core.GetService<VehicleManager>().GetVehicleFromHandle<Vehicle>(networkVehicle);
             vehicle?.OnStartExit(client);
         }
 
         [Event("Vehicle:ToggleEngine")]
         public void OnVehicleEngineSwitchBind(IPlayer client)
         {
-            var vehicle = Core.GetService<VehicleManager>().GetVehicleFromHandle<server.Vehicles.Vehicle>(client.Vehicle);
+            var vehicle = Core.GetService<VehicleManager>().GetVehicleFromHandle<Vehicle>(client.Vehicle);
             if (vehicle == null) return;
             if (client.Vehicle.EngineOn == false)
             {
@@ -69,7 +69,7 @@ namespace server.Events.Vehicles
         [Event("Vehicle:ToggleLight")]
         public void OnVehicleLightSwitch(IPlayer client)
         {
-			var vehicle = Core.GetService<VehicleManager>().GetVehicleFromHandle<server.Vehicles.Vehicle>(client.Vehicle);
+			var vehicle = Core.GetService<VehicleManager>().GetVehicleFromHandle<Vehicle>(client.Vehicle);
 
 			if (vehicle == null) return;
 			if (vehicle.CanEnter(client, 0))
@@ -79,19 +79,19 @@ namespace server.Events.Vehicles
         }
 
         [Event("Vehicle:ToggleLock")]
-        public void OnVehicleLockSwitch(IPlayer client, IVehicle networkVehicle, byte state)
+        public void OnVehicleLockSwitch(IPlayer client, IVehicle networkVehicle)
         {
-            var vehicle = Core.GetService<VehicleManager>().GetVehicleFromHandle<server.Vehicles.Vehicle>(networkVehicle);
-            if (vehicle == null) return;
-            if (vehicle.CanEnter(client, 0))
+			var vehicle = Core.GetService<VehicleManager>().GetVehicleFromHandle<Vehicle>(networkVehicle);
+			if (vehicle == null) return;
+
+			if (vehicle.CanEnter(client, 0))
             {
-                vehicle.ToggleLocked(client);
+				vehicle.ToggleLocked(client);
                 client.SendInformation($"Du hast das Fahrzeug {(vehicle.handle.LockState == VehicleLockState.Locked ? "zugesperrt" : "aufgesperrt")}!");
             }
             else
             {
-                //NAPI.Player.ClearPlayerTasks(client);
-                client.SendError("Du hast keinen Schluessel fuer dieses Fahrzeug!");
+				client.SendError("Du hast keinen Schluessel fuer dieses Fahrzeug!");
             }
         }
 

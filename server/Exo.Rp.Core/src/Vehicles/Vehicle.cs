@@ -42,7 +42,7 @@ namespace server.Vehicles
 	        {
 		        handle.GetSyncedMetaData("vehicle.Engine", out bool engineStatus);
 		        handle.EngineOn = engineStatus;
-		        client.SendInformation("Druecke ~b~X~w~ um den Motor zu starten!");
+		        client.SendInformation("Druecke ~b~X~w~ um mit dem Fahrzeug zu interagieren!");
 	        }
             Alt.EmitAllClients("onIPlayerVehicleEnter", client, handle, seat);
         }
@@ -78,9 +78,9 @@ namespace server.Vehicles
         {
             _lightStatus = !_lightStatus;
             handle.SetStreamSyncedMetaData("vehicle.Light", _lightStatus);
-        }
+		}
 
-        public virtual void ToggleSeatbelt(IPlayer client, bool state)
+		public virtual void ToggleSeatbelt(IPlayer client, bool state)
         {
             /*client.se = state;
             handle.SetSyncedMetaData("vehicle.Seatbellt", client.Seatbelt);*/
@@ -102,7 +102,7 @@ namespace server.Vehicles
             if (handle.LockState == VehicleLockState.Locked)
             {
                 player.SendError("Dieses Fahrzeug ist abgeschlossen!");
-                return;;
+				return;;
             }
             handle.SetDoorState(door, (byte)VehicleDoorState.Closed);
 

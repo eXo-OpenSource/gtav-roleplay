@@ -92,7 +92,12 @@ namespace server.Vehicles
             return _vehicles.Where(veh => veh.OwnerType == OwnerType.Player && veh.OwnerId == player.GetCharacter().Id).ToList();
         }
 
-        public PlayerVehicle CreatePlayerVehicle(IPlayer owner, VehicleModel model, Position position, float rotation)
+		internal object GetVehicle<T>(IVehicle networkVehicle)
+		{
+			throw new NotImplementedException();
+		}
+
+		public PlayerVehicle CreatePlayerVehicle(IPlayer owner, VehicleModel model, Position position, float rotation)
         {
             var nVehicle = new PlayerVehicle()
             {
