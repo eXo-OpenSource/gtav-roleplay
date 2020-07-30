@@ -9,7 +9,12 @@ class Speedometer extends Component {
 			rpm: 7000,
 			speed: 116,
 			gear: 1,
-			active: false,
+			indicatorLeft: 0,
+			indicatorRight: 0,
+			seatbelt: 0,
+			lights: 0,
+			fuel: 0,
+			active: false
 		}
 	}
 
@@ -32,17 +37,18 @@ class Speedometer extends Component {
 	}
 
 	setData(key, value) {
-		this.setState({ [key]: value})
+		this.setState({ [key]: value })
+		this.forceUpdate()
 	}
 
 	gaugeColor() {
-		if(this.state.rpm < 7000) {
+		if (this.state.rpm < 7000) {
 			return "#5ee432"; // green
-		}else if(this.state.rpm < 8000) {
+		} else if (this.state.rpm < 8000) {
 			return "#fffa50"; // yellow
-		}else if(this.state.rpm < 9000) {
+		} else if (this.state.rpm < 9000) {
 			return "#ef4655"; // orange
-		}else {
+		} else {
 			return "#ef4655"; // red
 		}
 
@@ -50,12 +56,20 @@ class Speedometer extends Component {
 
 	render() {
 		return !this.state.active ? null :
-			<div className="absolute bottom-0 right-0 w-64">
+			<div className="absolute bottom-0 right-0 w-64 select-none">
 				<Gauge value={this.state.rpm} color={() => this.gaugeColor()}>
-					<div className="w-full text-white absolute text-center" style={{top: "130px"}}>{this.state.rpm} rpm</div>
-					<div className="absolute w-full text-white text-center text-lg" style={{top: "95px"}}>KM/H</div>
-					<div className="absolute w-full text-white text-center text-4xl font-bold" style={{top: "40px"}}>&nbsp;{this.state.speed}</div>
-					<div className="absolute text-center font-bold bg-yellow-400 px-2 py-7" style={{left: "175px", top: "80px"}}>{this.state.gear}</div>
+					{/*<div className="w-full text-gray-100 absolute text-center" style={{top: "130px"}}>{this.state.rpm} rpm</div>*/}
+					<div className="absolute w-full text-gray-100 text-center text-lg" style={{top: "90px"}}>&nbsp;KM/H</div>
+					<div className="absolute w-full text-gray-100 text-center text-5xl font-bold" style={{top: "35px"}}>{this.state.speed}</div>
+					<div className="absolute text-center font-bold bg-yellow-400 px-2 py-1 shadow-md" style={{left: "175px", top: "90px"}}>{this.state.gear}</div>
+					<img className="absolute w-6 h-6" src={"https://exocentral.de/vehicle/seatbelt" + this.state.seatbelt + ".png"} data-arg="seatbelt" style={{left: "61px", top: "130px"}}></img>
+					<img className="absolute w-6 h-6" src={"https://exocentral.de/vehicle/carlights" + this.state.lights + ".png"} data-arg="lights" style={{left: "91px", top: "130px"}}></img>
+					<img className="absolute w-6 h-6" src={"https://exocentral.de/vehicle/left_arrow" + this.state.indicatorLeft + ".png"} data-arg="indicatorLeft" style={{left: "121px", top: "130px"}}></img>
+					<img className="absolute w-6 h-6" src={"https://exocentral.de/vehicle/right_arrow" + this.state.indicatorRight + ".png"} data-arg="indicatorRight" style={{left: "148px", top: "130px"}}></img>
+					<img className="absolute w-6 h-6" src={"https://exocentral.de/vehicle/fuel" + this.state.fuel + ".png"} data-arg="fuel" style={{left: "172px", top: "130px"}}></img>
+					<div className="absolute bg-gray-700 w-32 bg-grey-light mt-6 shadow" style={{left: "65px", top: "140px", outlineStyle: "solid", outlineWidth: "1px"}}>
+						<div className="bg-yellow-500 text-xs leading-none py-1 h-3 text-center text-gray-100" style={{width: "50px"}}></div>
+					</div>
 				</Gauge>
 			</div>;
 	}

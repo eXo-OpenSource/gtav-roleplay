@@ -10,7 +10,6 @@ export class Speedo {
 
 	public constructor(uiManager) {
 		this.uiManager = uiManager;
-
 		alt.everyTick(() => {
 			if(alt.Player.local.vehicle == null) {
 				if(this.active) {
@@ -28,6 +27,10 @@ export class Speedo {
 				this.uiManager.emit("Speedo:SetData", "speed", Math.round(native.getEntitySpeed(veh.scriptID)*3.65));
 				this.uiManager.emit("Speedo:SetData", "gear", veh.gear);
 			}
+		})
+		
+		alt.on("Speedo:EmitData", (key, value) => {
+			this.uiManager.emit("Speedo:SetData", key, value)
 		})
 	}
 }

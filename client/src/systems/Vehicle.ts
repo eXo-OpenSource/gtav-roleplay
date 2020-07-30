@@ -1,6 +1,7 @@
 import alt, {Entity, Player} from 'alt';
 import * as native from 'natives';
 import {distance} from "../utils/Vector";
+import Speedo from '../ui/Speedo';
 
 alt.log('Loaded: client->utility->vehicle.mjs');
 
@@ -86,8 +87,11 @@ alt.on("keyup", (key) => {
 alt.on("streamSyncedMetaChange", (entity: Entity, key: string, value: any) => {
 	if (entity.type == 1) {
 		if(key == "vehicle.Light") {
-			native.setVehicleLights(entity.scriptID, (value as boolean) ? 2 : 1);
-		}
+            native.setVehicleLights(entity.scriptID, (value as boolean) ? 2 : 1)
+            alt.emit("Speedo:EmitData", "lights", (value as boolean) ? 1 : 0)
+		} else if (key == "vehicle.Engine") {
+            alt.emit("Speedo:EmitData", "fuel", (value as boolean) ? 1 : 0)
+        }
 	}
 })
 

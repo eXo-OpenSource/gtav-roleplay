@@ -82,11 +82,11 @@ namespace server.Vehicles
 
 		public virtual void ToggleSeatbelt(IPlayer client, bool state)
         {
-            /*client.se = state;
+			/*client.Seatbelt = state;
             handle.SetSyncedMetaData("vehicle.Seatbellt", client.Seatbelt);*/
-        }
+		}
 
-        public virtual bool CanStartEngine(IPlayer client)
+		public virtual bool CanStartEngine(IPlayer client)
         {
             return true;
         }
