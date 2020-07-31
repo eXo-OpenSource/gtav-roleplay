@@ -138,6 +138,7 @@ class Chat extends Component {
             msg: msg
         });
         this.setState({ messages: messages});
+        this.scrollToBottom();
     }
 
     onChatInputChange(event) {

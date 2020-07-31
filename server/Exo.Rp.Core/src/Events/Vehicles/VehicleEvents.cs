@@ -127,10 +127,10 @@ namespace server.Events.Vehicles
 		public void GetVehicleInfos(IPlayer client, IVehicle networkVehicle)
 		{
 			var vehicle = Core.GetService<VehicleManager>().GetVehicleFromHandle<Vehicle>(networkVehicle);
-			client.SendChatMessage("Fahrzeuginformationen:");
-			client.SendChatMessage($"ID: {vehicle.Id}");
+			client.SendChatMessage($"Fahrzeuginformationen von {vehicle.Model}");
 			client.SendChatMessage($"Kennzeichen: {vehicle.Plate}");
-			client.SendChatMessage($"Modell: {vehicle.Model}");
+			client.SendChatMessage($"Zustand: {(vehicle.Locked ? "Verschlossen" : "Geöffnet")}");
+
 		}
 	}
 }

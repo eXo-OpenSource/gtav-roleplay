@@ -37,7 +37,11 @@ export class VehicleUI {
                 var vehicle = native.getClosestVehicle(alt.Player.local.pos.x, alt.Player.local.pos.y, alt.Player.local.pos.z, 5, 0, 70)
                 if (player.vehicle || vehicle) {
                     if (option == 'Fahrzeuginfo') {
-                        alt.emitServer('Vehicle:GetInfo')
+                        if (player.vehicle) {
+                            alt.emitServer('Vehicle:GetInfo', alt.Entity.getByScriptID(player.vehicle.scriptID))
+                        } else if (vehicle) {
+                            alt.emitServer('Vehicle:GetInfo', alt.Entity.getByScriptID(vehicle))
+                        }
                     } else if (option == 'Licht an/aus') {
                         alt.emitServer('Vehicle:ToggleLight')
                     } else if (option == 'Motor an/aus') {
