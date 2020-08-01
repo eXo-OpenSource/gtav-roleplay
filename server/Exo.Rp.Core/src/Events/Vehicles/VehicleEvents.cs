@@ -2,6 +2,7 @@ using System;
 using AltV.Net;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
+using server.Players;
 using server.Util;
 using server.Vehicles;
 using IPlayer = server.Players.IPlayer;

@@ -86,13 +86,21 @@ alt.on("keyup", (key) => {
 
 alt.on("streamSyncedMetaChange", (entity: Entity, key: string, value: any) => {
 	if (entity.type == 1) {
-		if(key == "vehicle.Light") {
+		if (key == "vehicle.Light") {
+            alt.log("0")
             native.setVehicleLights(entity.scriptID, (value as boolean) ? 2 : 1)
             alt.emit("Speedo:EmitData", "lights", (value as boolean) ? 1 : 0)
-		} else if (key == "vehicle.Engine") {
-            alt.emit("Speedo:EmitData", "fuel", (value as boolean) ? 1 : 0)
         }
-	}
+    }
+})
+
+alt.on("syncedMetaChange", (entity: Entity, key: string, value: any) => {
+    if (entity.type == 1) {
+        if (key == "vehicle.Engine") {
+            alt.emit("Speedo:EmitData", "fuel", (value as boolean) ? 1 : 0)
+            alt.log("0 - ENGINE ")
+        }
+    }
 })
 
 //disable seat shuffling and engine key turning

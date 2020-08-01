@@ -1,15 +1,26 @@
 import * as alt from 'alt';
-import {UiManager} from "./UiManager";
+import { Vector3 } from "natives"
+import { UiManager } from "./UiManager";
+import { Camera } from "../utils/Camera"
 
 const url = 'http://resource/cef/index.html#/login';
 
 
 export class RegisterLogin {
     private uiManager: UiManager;
+    private camera: Camera;
+
+    private cameraPoint: Vector3 = {
+        x: -80,
+        y: -825.03,
+        z: 328.67
+    }
 
     public constructor(uiManager) {
 
-    	this.uiManager = uiManager;
+        this.uiManager = uiManager;
+        this.camera = new Camera(this.cameraPoint, 17)
+        this.camera.pointAtCoord(this.cameraPoint)
 
         // Setup Webview
         //this.uiManager.writeChat(url);
@@ -26,6 +37,7 @@ export class RegisterLogin {
 
         alt.onServer("registerLogin:Success", () => {
             this.uiManager.reset()
+            this.camera.destroy()
 			alt.toggleGameControls(true)
         });
     }

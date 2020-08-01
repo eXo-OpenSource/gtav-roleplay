@@ -12,6 +12,7 @@ import Speedometer from "./hud/speedometer";
 import Popup from "./hud/popup";
 import Toast from "./hud/toast";
 import Progress from "./hud/progress";
+import LoginForm from './forms/login';
 
 const loadableOptions = { };
 const LoadableLoginComponent = loadable(() => import("./forms/login"), loadableOptions);
@@ -36,6 +37,7 @@ class App extends Component {
 				</Router>
 				<Chat/>
 				<HUD/>
+				<LoginForm/>
 				<Popup/>
 				<Speedometer/>
 				<Progress />

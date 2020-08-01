@@ -2,6 +2,7 @@ import * as alt from 'alt'
 import * as native from 'natives'
 import {Singleton} from "../utils/Singleton";
 import {UiManager} from "./UiManager";
+import { isNumber, isBoolean } from 'util';
 
 @Singleton
 export class Speedo {
@@ -30,7 +31,9 @@ export class Speedo {
 		})
 		
 		alt.on("Speedo:EmitData", (key, value) => {
+			alt.log("1")
 			this.uiManager.emit("Speedo:SetData", key, value)
+			alt.log("2")
 		})
 	}
 }

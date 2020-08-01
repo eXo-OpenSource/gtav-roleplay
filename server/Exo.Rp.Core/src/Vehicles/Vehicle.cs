@@ -43,8 +43,10 @@ namespace server.Vehicles
 		        handle.GetSyncedMetaData("vehicle.Engine", out bool engineStatus);
 		        handle.EngineOn = engineStatus;
 		        client.SendInformation("Druecke ~b~X~w~ um mit dem Fahrzeug zu interagieren!");
-	        }
-            Alt.EmitAllClients("onIPlayerVehicleEnter", client, handle, seat);
+				handle.SetStreamSyncedMetaData("vehicle.Light", _lightStatus);
+				handle.SetSyncedMetaData("vehicle.Engine", engineStatus);
+			}
+			Alt.EmitAllClients("onIPlayerVehicleEnter", client, handle, seat);
         }
 
         public virtual void OnStartEnter(IPlayer client, int seat)
@@ -72,9 +74,9 @@ namespace server.Vehicles
         {
             handle.EngineOn = state;
             handle.SetSyncedMetaData("vehicle.Engine", state);
-        }
+		}
 
-        public virtual void ToggleLight()
+		public virtual void ToggleLight()
         {
             _lightStatus = !_lightStatus;
             handle.SetStreamSyncedMetaData("vehicle.Light", _lightStatus);

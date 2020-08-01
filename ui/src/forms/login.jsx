@@ -44,7 +44,7 @@ class LoginForm extends Component {
 
     render() {
         return (
-            <div className="container mx-auto max-w-md" style={{ margin: "0 auto", marginTop: "10%" }}>
+            <div className="container mx-auto max-w-md" style={{ margin: "0 auto", marginTop: "12.5%" }}>
                 <div className="card">
                     <div className="card-header">Willkommen auf eXo:V!</div>
                     <div className="card-body">
