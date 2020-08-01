@@ -31,9 +31,7 @@ export class Speedo {
 		})
 		
 		alt.on("Speedo:EmitData", (key, value) => {
-			alt.log("1")
 			this.uiManager.emit("Speedo:SetData", key, value)
-			alt.log("2")
 		})
 	}
 }

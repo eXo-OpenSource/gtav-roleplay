@@ -31,6 +31,14 @@
     @apply px-6 py-4 card-footer bg-gray-900 rounded-b-lg;
 }
 
+.edit {
+	@apply bg-gray-400 rounded w-full appearance-none py-2 px-3;
+}
+
+.edit:hover {
+	@apply bg-gray-300;
+}
+
 .popup-item {
 	@apply h-10 px-2 text-white leading-10 bg-gray-900;
 	cursor: default;

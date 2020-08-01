@@ -37,7 +37,6 @@ class App extends Component {
 				</Router>
 				<Chat/>
 				<HUD/>
-				<LoginForm/>
 				<Popup/>
 				<Speedometer/>
 				<Progress />
