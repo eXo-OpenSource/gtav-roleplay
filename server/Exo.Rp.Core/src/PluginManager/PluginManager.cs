@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using AltV.Net;
-using server.plugins.core;
+using Exo.Rp.Sdk;
+using Microsoft.Extensions.DependencyInjection;
+using server.Players;
 using server.Updateable;
 using server.Util;
 using Directory = System.IO.Directory;
@@ -18,12 +20,12 @@ namespace server.PluginManager
         private readonly RuntimeIndexer _indexer;
         private readonly List<IPlugin> _plugins;
 
-        public PluginManager(RuntimeIndexer indexer)
+        public PluginManager(IServiceProvider serviceProvider, RuntimeIndexer indexer)
         {
             _indexer = indexer;
             _plugins = new List<IPlugin>();
             IndexPlugins();
-            LoadPlugins();
+            LoadPlugins(serviceProvider);
         }
 
         public void Dispose()
@@ -49,9 +51,9 @@ namespace server.PluginManager
             }
         }
 
-        private void LoadPlugins()
+        private void LoadPlugins(IServiceProvider serviceProvider)
         {
-            _plugins.ForEach(plugin => plugin.Load());
+            _plugins.ForEach(plugin => plugin.Load(serviceProvider));
         }
 
         public void Tick()

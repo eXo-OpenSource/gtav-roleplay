@@ -7,11 +7,10 @@
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <GenerateRuntimeConfigurationFiles>false</GenerateRuntimeConfigurationFiles>
     <Platforms>x64</Platforms>
-    <AssemblyName>Exo.Rp.Plugins.Core</AssemblyName>
     <Authors>eXo Roleplay Developers</Authors>
     <Company>eXo Roleplay</Company>
     <Product>eXo Roleplay Server</Product>
-    <RootNamespace>server.plugins.core</RootNamespace>
+    <RootNamespace>Exo.Rp.Sdk</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">

@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace server.plugins.core
+namespace Exo.Rp.Sdk
 {
     public interface IPlugin : IDisposable
     {
-        public void Load();
+	    public void Load(IServiceProvider serviceProvider);
         public void Tick();
     }
 }
