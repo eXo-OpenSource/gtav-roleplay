@@ -51,8 +51,8 @@ export class Chat {
 
 			if (key == 0x76) {
 				this.hidden = !this.hidden;
-				natives.displayHud(!this.hidden);
-				natives.displayRadar(!this.hidden);
+				// natives.displayHud(!this.hidden);
+				// natives.displayRadar(!this.hidden);
 				this.uiManager.emit('Chat:Visible', this.hidden);
 			}
 		});

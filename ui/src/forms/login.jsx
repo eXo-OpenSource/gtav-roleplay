@@ -57,7 +57,7 @@ class LoginForm extends Component {
                         <p className="mt-4 text-white-alpha-80">Willkommen auf eXo:V!<br></br>Fülle das unten stehende Formular zum Anmelden aus.<br></br></p>
                         <div className="mt-6 mb-6">
                             <label htmlFor="user" className="block mb-2 text-gray-200">Spielername:</label>
-                            <input className="edit" value={this.state.user} id="user" name='user' onChange={this.onChange} type="text" placeholder="z.B. FiNAL"/>
+                            <input className="edit" value={this.state.user} id="user" name='user' onChange={this.onChange} type="text" placeholder="Forumname"/>
                         </div>
                         <label htmlFor="password" className="block mb-2 text-gray-200">Passwort:</label>
                         <input className="edit" value={this.state.password} id="password" name="password" onChange={this.onChange} type="password" placeholder="***********"/>

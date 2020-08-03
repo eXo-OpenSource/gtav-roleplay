@@ -1,6 +1,5 @@
 import * as alt from 'alt';
-import * as native from 'natives';
-import { Vector3, ugcGetContentRatingNegativeCount } from "natives"
+import { Vector3 } from "natives"
 import { UiManager } from "./UiManager";
 import { Camera } from "../utils/Camera"
 
@@ -25,9 +24,8 @@ export class RegisterLogin {
 
         // Setup Webview
         //this.uiManager.writeChat(url);
-        
-        native.displayRadar(false)
-        alt.toggleGameControls(false)
+
+		alt.toggleGameControls(false)
         this.uiManager.navigate("/login", true)
         this.uiManager.on('login', (username: string, password: string) => {
             alt.emitServer('RegisterLogin:Login', username, password);
@@ -40,7 +38,6 @@ export class RegisterLogin {
         alt.onServer("registerLogin:Success", () => {
             this.uiManager.reset()
             this.camera.destroy()
-            native.displayRadar(true)
 			alt.toggleGameControls(true)
         });
     }

@@ -45,6 +45,7 @@ namespace server.Vehicles
 		        client.SendInformation("Druecke ~b~X~w~ um mit dem Fahrzeug zu interagieren!");
 				handle.SetStreamSyncedMetaData("vehicle.Light", _lightStatus);
 				handle.SetSyncedMetaData("vehicle.Engine", engineStatus);
+				// Alt.Emit("HUD:ShowRadar", true);
 			}
 			Alt.EmitAllClients("onIPlayerVehicleEnter", client, handle, seat);
         }
@@ -58,9 +59,10 @@ namespace server.Vehicles
         public virtual void OnExit(IPlayer client)
         {
             Alt.EmitAllClients("onIPlayerVehicleExit", client, handle);
-        }
+			// Alt.Emit("HUD:ShowRadar", false);
+		}
 
-        public virtual void OnStartExit(IPlayer client)
+		public virtual void OnStartExit(IPlayer client)
         {
             Alt.EmitAllClients("onIPlayerVehicleStartExit", client, handle);
         }

@@ -50,5 +50,9 @@ export class HUD {
 		alt.onServer("HUD:UpdateMoney", (amount) => {
 			money = amount
 		})
+
+		//alt.onServer("HUD:ShowRadar", (show) => {
+		// 	native.displayRadar(show)
+		//})
     }
 }

@@ -31,7 +31,7 @@ export class View {
         currentView.ready = true;
         if(!overlay) {
 			Cursor.show(true);
-			native.displayRadar(false);
+			// native.displayRadar(false);
 		}
         if (killControls) {
             currentView.gameControls = this.toggleGameControls.bind(this);
@@ -49,7 +49,7 @@ export class View {
         });
 
         Cursor.show(false);
-        native.displayRadar(true);
+        // native.displayRadar(true);
         currentView.view.off('close', currentView.close);
         currentView.view.unfocus();
         currentView.view.destroy();
