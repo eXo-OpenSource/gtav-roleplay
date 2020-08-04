@@ -57,6 +57,7 @@ namespace server.Events.Vehicles
         {
             var vehicle = Core.GetService<VehicleManager>().GetVehicleFromHandle<Vehicle>(client.Vehicle);
             if (vehicle == null) return;
+
             if (client.Vehicle.EngineOn == false)
             {
                 if (vehicle.CanStartEngine(client)) vehicle.ToggleEngine(true);
@@ -71,8 +72,8 @@ namespace server.Events.Vehicles
         public void OnVehicleLightSwitch(IPlayer client)
         {
 			var vehicle = Core.GetService<VehicleManager>().GetVehicleFromHandle<Vehicle>(client.Vehicle);
-
 			if (vehicle == null) return;
+
 			if (vehicle.CanEnter(client, 0))
 			{
 				vehicle.ToggleLight();
@@ -84,7 +85,7 @@ namespace server.Events.Vehicles
         {
 			var vehicle = Core.GetService<VehicleManager>().GetVehicleFromHandle<Vehicle>(networkVehicle);
 			if (vehicle == null) return;
-
+			
 			if (vehicle.CanEnter(client, 0))
             {
 				vehicle.ToggleLocked(client);
@@ -97,18 +98,18 @@ namespace server.Events.Vehicles
         }
 
         [Event("Vehicle:ToggleDoor")]
-        public void ToggleVehicleDoor(IPlayer client, IVehicle networkVehicle, byte door)
+        public void ToggleVehicleDoor(IPlayer client, IVehicle networkVehicle, int door)
         {
-            var vehicle = Core.GetService<VehicleManager>().GetVehicleFromHandle<Vehicle>(networkVehicle);
+			var vehicle = Core.GetService<VehicleManager>().GetVehicleFromHandle<Vehicle>(networkVehicle);
             if (vehicle != null)
             {
-                vehicle.ToggleVehicleDoor(client, door);
-            }
-            else
+                vehicle.ToggleVehicleDoor(client, (byte)door);
+			}
+			else
             {
-                networkVehicle.ToggleDoor(door);
-            }
-        }
+                networkVehicle.ToggleDoor((byte)door);
+			}
+		}
 
         [Event("vehicle:OpenVehicleMenu")]
         public void OpenVehicleMenu(IPlayer client, IVehicle veh)
@@ -128,10 +129,10 @@ namespace server.Events.Vehicles
 		public void GetVehicleInfos(IPlayer client, IVehicle networkVehicle)
 		{
 			var vehicle = Core.GetService<VehicleManager>().GetVehicleFromHandle<Vehicle>(networkVehicle);
-			client.SendChatMessage($"Fahrzeuginformationen von {vehicle.Model}");
-			client.SendChatMessage($"Kennzeichen: {vehicle.Plate}");
-			client.SendChatMessage($"Zustand: {(vehicle.Locked ? "Verschlossen" : "Geöffnet")}");
 
+			client.SendInformation($"Fahrzeug: {vehicle.Model}");
+			client.SendInformation($"Kennzeichen: {vehicle.Plate}");
+			client.SendInformation($"Zustand: {(vehicle.Locked ? "Verschlossen" : "Geöffnet")}");
 		}
 	}
 }
