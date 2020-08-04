@@ -52,7 +52,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Exo.Rp.Models\Exo.Rp.Models.csproj" />
-    <ProjectReference Include="..\Exo.Rp.Plugins.Core\Exo.Rp.Plugins.Core.csproj" />
+    <ProjectReference Include="..\Exo.Rp.Sdk\Exo.Rp.Sdk.csproj" />
   </ItemGroup>
 
   <ItemGroup>

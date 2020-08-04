@@ -1,13 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Reflection.Metadata;
-using System.Threading.Tasks;
 using AltV.Net;
-using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.EntitySync;
 using AltV.Net.EntitySync.ServerEvent;
@@ -15,15 +8,11 @@ using AltV.Net.EntitySync.SpatialPartitions;
 using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Sentry;
 using Sentry.Protocol;
 using server.AutoMapper;
 using server.BankAccounts;
 using server.Commands;
 using server.Database;
-using server.Environment;
-using server.Extensions;
 using server.Factories.BaseObjects;
 using server.Factories.Entities;
 using server.Inventory;
@@ -169,9 +158,7 @@ namespace server
             _serviceProvider.GetService<JobManager>();
             Logger.Info("Services | Loading Updateable manager...");
             _updateableManager = _serviceProvider.GetService<UpdateableManager>();
-            Logger.Info("Services | Loading Ipl manager...");
-	        _serviceProvider.GetService<IplManager>();
-	        Logger.Info("Services | Loading Door manager...");
+            Logger.Info("Services | Loading Door manager...");
 	        _serviceProvider.GetService<DoorManager>();
 			Logger.Info("Services | Loading Plugin manager...");
             _serviceProvider.GetService<PluginManager.PluginManager>();
@@ -248,7 +235,7 @@ namespace server
         public static T GetService<T>()
             where T : IService
         {
-            return _serviceProvider.GetService<T>();
+	        return _serviceProvider.GetService<T>();
         }
 
         public static object GetService(Type type)

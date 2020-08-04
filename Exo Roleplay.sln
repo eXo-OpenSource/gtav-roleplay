@@ -26,7 +26,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{DF26
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Exo.Rp.Plugins.Test1", "server\Exo.Rp.Plugins.Test1\Exo.Rp.Plugins.Test1.csproj", "{FBC1D2A7-3147-49C2-BDD7-9E507DC4322E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Exo.Rp.Plugins.Core", "server\Exo.Rp.Plugins.Core\Exo.Rp.Plugins.Core.csproj", "{4D283F5A-2735-4B19-8FCE-63EE421B14A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Exo.Rp.Sdk", "server\Exo.Rp.Sdk\Exo.Rp.Sdk.csproj", "{4D283F5A-2735-4B19-8FCE-63EE421B14A0}"
 EndProject
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "Exo.Rp.Ui", "ui\Exo.Rp.Ui.njsproj", "{D0098DE3-4F60-4518-B50E-16C3F990E0C5}"
 EndProject
