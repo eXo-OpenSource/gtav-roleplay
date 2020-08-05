@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations.Schema;
 using AltV.Net;
 using AltV.Net.Elements.Entities;
 using IPlayer = server.Players.IPlayer;
@@ -14,18 +14,20 @@ namespace server.Shops
         {
             if (Blip > 0)
             {
-               /* var blip = NAPI.Blip.CreateBlip((uint)Blip, PedModel.Pos, 1, (byte)BlipColor.Shop, BlipText,
-                    255, 500, false, 0, 0);*/
-            }
+				Alt.CreateBlip(BlipType.Cont, PedModel.Pos);
+				/* var blip = NAPI.Blip.CreateBlip((uint)Blip, PedModel.Pos, 1, (byte)BlipColor.Shop, BlipText,
+					 255, 500, false, 0, 0);*/
+			}
 
-            if (PedModel == null) return;
+			// if (PedModel == null) return;
 
             pedCol = (Colshape.Colshape) Alt.CreateColShapeSphere(PedModel.Pos, 3);
             pedCol.OnColShapeEnter += OnPedColEnter;
             pedCol.OnColShapeExit += OnPedColExit;
-        }
+			Alt.Log("Loaded");
+		}
 
-        public int GetMoney()
+		public int GetMoney()
         {
             return BankAccount.GetMoney();
         }

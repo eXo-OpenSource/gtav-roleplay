@@ -40,7 +40,7 @@ namespace server.Vehicles
         {
 	        if (seat == 1)
 	        {
-				client.GetCharacter().ShowRadar(true);
+				client.ShowRadar(true);
 				client.SendInformation("Druecke ~b~X~w~ um mit dem Fahrzeug zu interagieren!");
 				handle.GetSyncedMetaData("vehicle.Engine", out bool engineStatus);
 		        handle.EngineOn = engineStatus;
@@ -58,7 +58,7 @@ namespace server.Vehicles
 
         public virtual void OnExit(IPlayer client)
         {
-			client.GetCharacter().ShowRadar(false);
+			client.ShowRadar(false);
 			Alt.EmitAllClients("onIPlayerVehicleExit", client, handle);
 		}
 

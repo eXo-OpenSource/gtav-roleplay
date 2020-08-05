@@ -196,19 +196,20 @@ namespace server.Players.Characters
             //_player.Nametag = GetNormalizedName();
             //_player.Name = GetNormalizedName();
 
-            UpdateHud();
 			SyncFaceFeatures();
 
-            Logger.Debug("SEND TEAMS to " + _player.Name);
+			Logger.Debug("SEND TEAMS to " + _player.Name);
             // PedManager.Instance.SendToIPlayer(player);
             Logger.Debug("SEND IPL's to " + _player.Name);
             //Logger.Debug("SEND INVENTORY to " + _player.Name);
             //InventoryModel.SyncInventory(_player);
             Logger.Debug("APPLY FACEFEATURES to " + _player.Name);
-            //_player.SetElementData("player:FaceFeatures", FaceFeatures);
-            // EntityExtensions.TriggerElementDatas(player);
+			//_player.SetElementData("player:FaceFeatures", FaceFeatures);
+			// EntityExtensions.TriggerElementDatas(player);
 
-            _player.RequestDefaulIpls();
+			_player.UpdateHud();
+			_player.ShowRadar(false);
+			_player.RequestDefaulIpls();
         }
 
 		public void Save()
@@ -238,17 +239,6 @@ namespace server.Players.Characters
         public List<Team> GetTeams()
         {
             return Core.GetService<TeamManager>().GetTeamsForPlayer(this);
-        }
-
-		public void ShowRadar(bool state)
-		{
-			_player.Emit("HUD:ShowRadar", state);
-		}
-
-        public void UpdateHud()
-        {
-			_player.Emit("HUD:UpdateMoney", GetMoney());
-			_player.Emit("guiHUDUpdate", GetMoney(), GetWantedLevel());
         }
 
 		public void SyncFaceFeatures()
@@ -329,7 +319,7 @@ namespace server.Players.Characters
             if (bank) return BankAccount.GiveMoney(amount);
 
             Money = GetMoney() + amount;
-            UpdateHud();
+			_player.UpdateHud();
             return true;
         }
 
@@ -341,7 +331,7 @@ namespace server.Players.Characters
             if (Money < amount) return false;
 
             Money = GetMoney() - amount;
-            UpdateHud();
+            _player.UpdateHud();
             return true;
         }
 

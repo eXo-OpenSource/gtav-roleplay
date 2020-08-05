@@ -127,5 +127,16 @@ namespace server.Players
         {
 	        Emit("Scenario:Start", name);
         }
-    }
+
+		public void ShowRadar(bool state)
+		{
+			Emit("HUD:ShowRadar", state);
+		}
+
+		public void UpdateHud()
+		{
+			Emit("HUD:UpdateMoney", GetCharacter().GetMoney());
+		}
+
+	}
 }

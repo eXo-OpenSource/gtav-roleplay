@@ -31,5 +31,7 @@ namespace server.Players
         void RequestIpl(IEnumerable<string> ipls);
         void RemoveIpl(IEnumerable<string> ipls);
         void RequestDefaulIpls();
+		void UpdateHud();
+		void ShowRadar(bool state);
     }
 }
