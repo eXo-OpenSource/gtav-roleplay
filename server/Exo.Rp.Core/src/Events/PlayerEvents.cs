@@ -36,9 +36,10 @@ namespace server.Events
                                 Console.WriteLine("Login erfolgreich!");
                                 player.Emit("registerLogin:Success");
                                 player.Emit("HUD:Hide", false);
-								
+								player.GetCharacter().ShowRadar(false);
 
-								// Todo: Remove later
+
+							// Todo: Remove later
 							if (player.GetAccount() == default)
                                 {
                                     Logger.Debug($"Creating new account for {player.Name}");

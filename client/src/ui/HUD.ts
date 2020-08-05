@@ -51,8 +51,10 @@ export class HUD {
 			money = amount
 		})
 
-		//alt.onServer("HUD:ShowRadar", (show) => {
-		// 	native.displayRadar(show)
-		//})
+		alt.onServer("HUD:ShowRadar", (show) => {
+			alt.nextTick(() => {
+				native.displayRadar(show)
+			})
+		})
     }
 }

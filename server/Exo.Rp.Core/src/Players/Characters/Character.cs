@@ -240,6 +240,11 @@ namespace server.Players.Characters
             return Core.GetService<TeamManager>().GetTeamsForPlayer(this);
         }
 
+		public void ShowRadar(bool state)
+		{
+			_player.Emit("HUD:ShowRadar", state);
+		}
+
         public void UpdateHud()
         {
 			_player.Emit("HUD:UpdateMoney", GetMoney());

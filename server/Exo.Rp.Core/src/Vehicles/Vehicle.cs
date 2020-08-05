@@ -40,12 +40,12 @@ namespace server.Vehicles
         {
 	        if (seat == 1)
 	        {
-		        handle.GetSyncedMetaData("vehicle.Engine", out bool engineStatus);
+				client.SendInformation("Druecke ~b~X~w~ um mit dem Fahrzeug zu interagieren!");
+				client.GetCharacter().ShowRadar(true);
+				handle.GetSyncedMetaData("vehicle.Engine", out bool engineStatus);
 		        handle.EngineOn = engineStatus;
-		        client.SendInformation("Druecke ~b~X~w~ um mit dem Fahrzeug zu interagieren!");
 				handle.SetStreamSyncedMetaData("vehicle.Light", _lightStatus);
 				handle.SetSyncedMetaData("vehicle.Engine", engineStatus);
-				// Alt.Emit("HUD:ShowRadar", true);
 			}
 			Alt.EmitAllClients("onIPlayerVehicleEnter", client, handle, seat);
         }
@@ -58,8 +58,9 @@ namespace server.Vehicles
 
         public virtual void OnExit(IPlayer client)
         {
-            Alt.EmitAllClients("onIPlayerVehicleExit", client, handle);
-			// Alt.Emit("HUD:ShowRadar", false);
+			client.GetCharacter().ShowRadar(false);
+			Alt.EmitAllClients("onIPlayerVehicleExit", client, handle);
+			Alt.Emit("HUD:ShowRadar", false);
 		}
 
 		public virtual void OnStartExit(IPlayer client)
@@ -113,13 +114,13 @@ namespace server.Vehicles
 			{
 				handle.SetDoorState(door, (open ? (byte)VehicleDoorState.OpenedLevel4 : (byte)VehicleDoorState.Closed));
 				handle.SetStreamSyncedMetaData("vehicle.EngineHood", open);
-				player.SendNotification($"Motorhaube {(open ? "geöffnet" : "geschlossen")}!");
+				player.SendInformation($"Motorhaube erfolgreich {(open ? "geöffnet" : "geschlossen")}!");
 			}
 			else
 			{
 				handle.SetDoorState(door, (open ? (byte)VehicleDoorState.OpenedLevel5 : (byte)VehicleDoorState.Closed));
 				handle.SetStreamSyncedMetaData("vehicle.Trunk", open);
-				player.SendNotification($"Kofferraum {(open ? "geöffnet" : "geschlossen")}!");
+				player.SendInformation($"Kofferraum erfolgreich {(open ? "geöffnet" : "geschlossen")}!");
 			}
 		}
     }
