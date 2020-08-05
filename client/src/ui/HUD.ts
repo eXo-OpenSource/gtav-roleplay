@@ -13,6 +13,7 @@ export class HUD {
     public constructor(uiManager) {
 		this.uiManager = uiManager;
 		let money = 0
+		let radar = false
 
 		alt.everyTick(() => {
 			native.displayAmmoThisFrame(false) // hides amount of ammo

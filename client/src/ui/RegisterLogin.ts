@@ -1,4 +1,5 @@
 import * as alt from 'alt';
+import * as native from 'natives';
 import { Vector3 } from "natives"
 import { UiManager } from "./UiManager";
 import { Camera } from "../utils/Camera"
@@ -40,5 +41,9 @@ export class RegisterLogin {
             this.camera.destroy()
 			alt.toggleGameControls(true)
         });
+
+        alt.nextTick(() => {
+            native.displayRadar(false)
+        })
     }
 }

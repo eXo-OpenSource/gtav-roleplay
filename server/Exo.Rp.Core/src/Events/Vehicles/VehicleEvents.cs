@@ -5,6 +5,7 @@ using AltV.Net.Enums;
 using server.Players;
 using server.Util;
 using server.Vehicles;
+using server.Players.Characters;
 using IPlayer = server.Players.IPlayer;
 using Vehicle = server.Vehicles.Vehicle;
 
