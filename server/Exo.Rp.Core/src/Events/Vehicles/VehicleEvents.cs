@@ -98,12 +98,12 @@ namespace server.Events.Vehicles
         }
 
         [Event("Vehicle:ToggleDoor")]
-        public void ToggleVehicleDoor(IPlayer client, IVehicle networkVehicle, int door)
+        public void ToggleVehicleDoor(IPlayer client, IVehicle networkVehicle, int door, bool open)
         {
 			var vehicle = Core.GetService<VehicleManager>().GetVehicleFromHandle<Vehicle>(networkVehicle);
             if (vehicle != null)
             {
-                vehicle.ToggleVehicleDoor(client, (byte)door);
+                vehicle.ToggleVehicleDoor(client, (byte)door, open);
 			}
 			else
             {

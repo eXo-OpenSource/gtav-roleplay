@@ -1,8 +1,6 @@
 import * as alt from 'alt'
 import * as native from 'natives'
 import { UiManager } from './UiManager'
-import { Vector3 } from 'natives'
-import { Singleton } from '../utils/Singleton'
 
 const url = 'http://resource/cef/index.html#/vehicleui'
 
@@ -35,13 +33,13 @@ export class VehicleUI {
 
         alt.on('keyup', (key) => {
             if (key === 0x58) {
-                native.playSoundFrontend(-1, 'EXIT', 'HUD_FRONTEND_DEFAULT_SOUNDSET', true)
-                alt.toggleGameControls(true)
-                this.uiManager.reset()
-
                 var vehicle = native.getClosestVehicle(player.pos.x, player.pos.y, player.pos.z, 5, 0, 70) || player.vehicle.scriptID
 
                 if (vehicle) {
+                    alt.toggleGameControls(true)
+                    this.uiManager.reset()
+                    native.playSoundFrontend(-1, 'EXIT', 'HUD_FRONTEND_DEFAULT_SOUNDSET', true)
+    
                     switch(option) {
                         case 'Fahrzeuginfo':
                             alt.emitServer('Vehicle:GetInfo', (player.vehicle ? entity.getByScriptID(player.vehicle.scriptID) : entity.getByScriptID(vehicle)))
@@ -53,10 +51,18 @@ export class VehicleUI {
                             alt.emitServer('Vehicle:ToggleEngine')
                             break;
                         case 'Motorhaube auf/zu':
-                            alt.emitServer('Vehicle:ToggleDoor', entity.getByScriptID(vehicle), 4)
+                            if (native.getVehicleDoorAngleRatio(vehicle, 4) >= 0.1) {
+                                alt.emitServer('Vehicle:ToggleDoor', entity.getByScriptID(vehicle), 4, false)
+                            } else {
+                                alt.emitServer('Vehicle:ToggleDoor', entity.getByScriptID(vehicle), 4, true)
+                            }
                             break;
                         case 'Kofferraum auf/zu':
-                            alt.emitServer('Vehicle:ToggleDoor', entity.getByScriptID(vehicle), 5)
+                            if (native.getVehicleDoorAngleRatio(vehicle, 5) >= 0.1) {
+                                alt.emitServer('Vehicle:ToggleDoor', entity.getByScriptID(vehicle), 5, false)
+                            } else {
+                                alt.emitServer('Vehicle:ToggleDoor', entity.getByScriptID(vehicle), 5, true)
+                            }
                             break;
                         case 'Auf-/Zuschließen':
                             alt.emitServer('Vehicle:ToggleLock', (player.vehicle ? entity.getByScriptID(player.vehicle.scriptID) : entity.getByScriptID(vehicle)))

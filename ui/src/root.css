@@ -112,6 +112,10 @@
 	fill: rgba(0,0,0,0);
 
 }
+.shadow-img {
+	filter: drop-shadow(0px 3px 10px rgba(0, 0, 0, 0.3));
+}
+
 /* purgecss end ignore */
 
 @tailwind utilities;

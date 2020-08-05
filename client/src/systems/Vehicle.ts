@@ -97,10 +97,11 @@ alt.on("streamSyncedMetaChange", (entity: Entity, key: string, value: any) => {
                     native.setVehicleDoorOpen(entity.scriptID, 5, true, true)
                 } else {
                     native.setVehicleDoorShut(entity.scriptID, 5, true)
+
                 }
                 break;
             case "vehicle.EngineHood":
-                if (value == 1) {
+                if (value == true) {
                     native.setVehicleDoorOpen(entity.scriptID, 4, true, true)
                 } else {
                     native.setVehicleDoorShut(entity.scriptID, 4, true)

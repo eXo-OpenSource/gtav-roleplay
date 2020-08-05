@@ -101,15 +101,26 @@ namespace server.Vehicles
 	        handle.LockState = newState ? VehicleLockState.Locked : VehicleLockState.Unlocked;
         }
 
-        public virtual void ToggleVehicleDoor(IPlayer player, byte door)
+        public virtual void ToggleVehicleDoor(IPlayer player, byte door, bool open)
         {
             if (handle.LockState == VehicleLockState.Locked)
             {
                 player.SendError("Dieses Fahrzeug ist abgeschlossen!");
 				return;;
             }
-            handle.SetDoorState(door, (byte)VehicleDoorState.Closed);
 
-        }
+			if (door == (byte)VehicleDoor.Hood)
+			{
+				handle.SetDoorState(door, (open ? (byte)VehicleDoorState.OpenedLevel4 : (byte)VehicleDoorState.Closed));
+				handle.SetStreamSyncedMetaData("vehicle.EngineHood", open);
+				player.SendNotification($"Motorhaube {(open ? "geöffnet" : "geschlossen")}!");
+			}
+			else
+			{
+				handle.SetDoorState(door, (open ? (byte)VehicleDoorState.OpenedLevel5 : (byte)VehicleDoorState.Closed));
+				handle.SetStreamSyncedMetaData("vehicle.Trunk", open);
+				player.SendNotification($"Kofferraum {(open ? "geöffnet" : "geschlossen")}!");
+			}
+		}
     }
 }
