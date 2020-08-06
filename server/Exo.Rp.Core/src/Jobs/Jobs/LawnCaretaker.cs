@@ -1,4 +1,5 @@
-﻿using AltV.Net.Data;
+using AltV.Net;
+using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using models.Enums;
 using server.Util.Log;
@@ -55,17 +56,18 @@ namespace server.Jobs.Jobs
             CreateMarker(player, (Position) _waypoints.GetValue(_currentWaypoint));
         }
 
-        public void OnMarkerColEnter(ColShape shape, IPlayer player)
+		[ClientEvent("JobLawn:OnMarkerHit")]
+        public void OnMarkerColEnter(IPlayer client)
         {
-            if (player.GetCharacter() != null && player.GetCharacter().GetJob() == this &&
-                player.GetCharacter().IsJobActive())
+            if (client.GetCharacter() != null && client.GetCharacter().GetJob() == this &&
+				client.GetCharacter().IsJobActive())
             {
                 /// Successfull job
                 if (_emptying)
                 {
                     _mower.DoRtb();
                     _emptying = false;
-                    player.SendInformation("You successfully emptied your lawn mower!");
+					client.SendInformation("Du hast erfolgreich dein Rasenmäher entleert!");
                 }
                 else
                 {
@@ -76,20 +78,20 @@ namespace server.Jobs.Jobs
 
                 if (_currentWaypoint >= _waypoints.Length) _currentWaypoint = 0;
                 if (_mower.Capacity + 1 <= _mower.MaxCapacity)
-                    CreateMarker(player, (Position) _waypoints.GetValue(_currentWaypoint));
+                    CreateMarker(client, (Position) _waypoints.GetValue(_currentWaypoint));
                 if (_mower.Capacity >= _mower.MaxCapacity)
                 {
-                    CreateMarker(player, (Position) _emptyPoints.GetValue(0));
+                    CreateMarker(client, (Position) _emptyPoints.GetValue(0));
                     _emptying = true;
                     if (_emptying)
                         Logger.Debug("emptying = true");
                     else
                         Logger.Debug("emptying = false");
-                    player.SendInformation("Your Lawn Mower is full. Please empty it!");
+					client.SendInformation("Dein Rasenmäher ist voll! Geh ihn leeren.");
                 }
                 else
                 {
-                    player.SendInformation("Lawn Mower capacity: " + _mower.Capacity);
+					client.SendInformation("Rasenmäher-Kapazität: " + _mower.Capacity);
                 }
             }
         }
