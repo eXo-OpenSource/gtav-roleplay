@@ -8,6 +8,7 @@ export default class LawnMower {
     private marker: Marker
     private hit = false
     private mower = null
+    private sprint = true
 
     constructor() {
         this.setWayPoint = this.setWayPoint.bind(this)
@@ -18,30 +19,43 @@ export default class LawnMower {
             alt.onServer("JobLawn:SetWaypoint", this.setWayPoint)
             alt.onServer("JobLawn:DelWaypoint", this.deleteWayPoint)
 
+            this.sprint = false
+            alt.everyTick(this.enableSprint.bind(this))
             alt.setInterval(this.onMarkerHit, 300)
         })
 
         alt.onServer("JobLawn:StopJob", () => {
+            this.sprint = true
+
             alt.offServer("JobLawn:SetWaypoint", this.setWayPoint)
             alt.offServer("JobLawn:DelWaypoint", this.deleteWayPoint)
 
+            alt.setTimeout(() => alt.clearEveryTick(this.enableSprint.bind(this)), 200)
             alt.clearInterval(this.onMarkerHit.bind(this))
         })
 
-        // Sync mower
         alt.on("syncedMetaChange", (player: Player, key: string, value: any) => {
             if (key == "lawnJob.syncMower") {
-                native.requestModel(447976993)
-                alt.setTimeout(() => {
-                    this.mower = native.createObject(447976993, player.pos.x, player.pos.y, player.pos.z, true, true, false)
-                    native.attachEntityToEntity(this.mower, player.scriptID, native.getPedBoneIndex(player.scriptID, alt.hash("0x0")), 0, 1, -1, 0, 0, 180, false, false, true, true, 2, true)
-                }, 300)
+                if (value == "attach") {
+                    native.requestModel(447976993)
+                    alt.setTimeout(() => {
+                        this.mower = native.createObject(447976993, player.pos.x, player.pos.y, player.pos.z, true, true, false)
+                        native.attachEntityToEntity(this.mower, player.scriptID, native.getPedBoneIndex(player.scriptID, 0x0), 0, 1, -1, 0, 0, 180, false, false, true, true, 2, true)
+                    }, 300)
+                } else {
+                    native.detachEntity(this.mower, false, false)
+                    native.deleteObject(this.mower)        
+                }
             }
         })
     }
 
-    setWayPoint(x, y, z) {
-        this.marker = Marker.createMarker(1, new Vector3(x, y, z), 1, {r: 25, g: 175, b: 0, a: 225})
+    enableSprint() {
+        this.sprint ? native.enableControlAction(0, 21, true) : native.disableControlAction(0, 21, true)
+    }
+
+    setWayPoint(x: number, y: number, z: number) {
+        this.marker = Marker.createMarker(30, new Vector3(x, y, z), 1, {r: 25, g: 175, b: 0, a: 225})
         native.setNewWaypoint(x, y)
     }
 
@@ -51,10 +65,10 @@ export default class LawnMower {
 
     onMarkerHit() {
         if (!this.player || !this.player.valid || !this.marker) return
-        if (distance(this.marker.pos, this.player.pos) < 1 && !this.hit) {
+
+        if (distance(this.marker.pos, this.player.pos) < 1 && !this.hit)
             alt.emitServer("JobLawn:OnMarkerHit")
-        } else {
+        else
             if (this.hit) this.hit = false
-        }
     }
 }

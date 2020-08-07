@@ -60,10 +60,8 @@ namespace server.Jobs.Jobs
 
 		public void OnMarkerColEnter(IPlayer player)
 		{
-			if (player.GetCharacter() != null && player.GetCharacter().GetJob() == this &&
-				player.GetCharacter().IsJobActive())
+			if (player.GetCharacter() != null && player.GetCharacter().GetJob() == this && player.GetCharacter().IsJobActive())
 			{
-				/// Successfull job
 				if (Emptying)
 				{
 					Mower.DoRtb();
@@ -87,10 +85,6 @@ namespace server.Jobs.Jobs
 				{
 					CreateMarker(player, (Position)EmptyPoints.GetValue(0));
 					Emptying = true;
-					if (Emptying)
-						Logger.Debug("emptying = true");
-					else
-						Logger.Debug("emptying = false");
 
 					player.SendError("Dein Rasenmäher ist voll! Geh ihn leeren.");
 				}
@@ -105,13 +99,14 @@ namespace server.Jobs.Jobs
 		{
 			base.StopJob(player);
 			player.StopAnimation();
+			player.SetSyncedMetaData("lawnJob.syncMower", "detach");
 			Mower.Destroy();
 			DeleteMarker(player);
 
 			Emptying = false;
 			CurrentWayPoint = 0;
 
-			player.Emit("JobLawn:StobJob");
+			player.Emit("JobLawn:StopJob");
 			player.SendInformation(Name + "-Job beendet!");
 		}
 
