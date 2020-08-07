@@ -93,19 +93,16 @@ alt.on("streamSyncedMetaChange", (entity: Entity, key: string, value: any) => {
                 alt.emit("Speedo:EmitData", "lights", (value as boolean) ? 1 : 0)    
                 break;
             case "vehicle.Trunk":
-                if (value == 1) {
+                if (value == 1)
                     native.setVehicleDoorOpen(entity.scriptID, 5, true, true)
-                } else {
+                else
                     native.setVehicleDoorShut(entity.scriptID, 5, true)
-
-                }
                 break;
             case "vehicle.EngineHood":
-                if (value == true) {
+                if (value == true)
                     native.setVehicleDoorOpen(entity.scriptID, 4, true, true)
-                } else {
+                else
                     native.setVehicleDoorShut(entity.scriptID, 4, true)
-                }
                 break;
         }
     }

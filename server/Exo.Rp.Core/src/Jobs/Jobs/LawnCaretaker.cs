@@ -11,23 +11,22 @@ namespace server.Jobs.Jobs
     {
         private static readonly Logger<LawnCaretaker> Logger = new Logger<LawnCaretaker>();
 
-        private readonly Position[] _emptyPoints =
+        private readonly Position[] EmptyPoints =
         {
             new Position(-1350.036f, 140.7969f, 56.26493f)
         };
 
-        private readonly Position[] _waypoints =
+        private readonly Position[] WayPoints =
         {
             new Position(-1335.306f, 120.917f, 56.66932f),
             new Position(-1328.986f, 131.1318f, 57.05902f),
             new Position(-1331.685f, 142.3194f, 57.45047f)
         };
 
-        private int _currentWaypoint;
-        private bool _emptying;
+        private int CurrentWayPoint;
+        private bool Emptying;
 
-        private Colshape.Colshape _markerColShape;
-        private LawnMower _mower;
+        private LawnMower Mower;
 
         public LawnCaretaker(int jobId) : base(jobId)
         {
@@ -39,59 +38,65 @@ namespace server.Jobs.Jobs
 
         public override void StartJobForPlayer(IPlayer player)
         {
-            base.StartJobForPlayer(player);
+			player.Emit("JobLawn:StartJob");
+			player.SetSyncedMetaData("lawnJob.syncMower", "attach");
+			base.StartJobForPlayer(player);
             player.SendInformation(Name + "-Job gestartet!");
-            _mower = new LawnMower
+
+            Mower = new LawnMower
             {
                 LawnMowerObject = false,
-                    //NAPI.Object.CreateObject((int) Objects.LawnMover, player.Position, player.Rotation, dimension: 0),
                 Capacity = 0,
                 MaxCapacity = 10, // TODO: MaxCapacity should depend on Job Level
                 Rtb = 0
             };
-            //player.AttachObject(_mower.LawnMowerObject, 6286, new Position(0, 1.05, -0.963), new Position(0, 0, 180), fixedRot:true);
+
             player.PlayAnimation("veh@boat@speed@fps@", "sit_slow",
                 (int) (AnimationFlags.Loop | AnimationFlags.OnlyAnimateUpperBody | AnimationFlags.AllowPlayerControl));
-            player.SetData("LawnMower", _mower);
-            CreateMarker(player, (Position) _waypoints.GetValue(_currentWaypoint));
+
+            player.SetData("LawnMower", Mower);
+            CreateMarker(player, (Position) WayPoints.GetValue(CurrentWayPoint));
         }
 
-		[ClientEvent("JobLawn:OnMarkerHit")]
-        public void OnMarkerColEnter(IPlayer client)
+        public void OnMarkerColEnter(IPlayer player)
         {
-            if (client.GetCharacter() != null && client.GetCharacter().GetJob() == this &&
-				client.GetCharacter().IsJobActive())
+            if (player.GetCharacter() != null && player.GetCharacter().GetJob() == this &&
+				player.GetCharacter().IsJobActive())
             {
                 /// Successfull job
-                if (_emptying)
+                if (Emptying)
                 {
-                    _mower.DoRtb();
-                    _emptying = false;
-					client.SendInformation("Du hast erfolgreich dein Rasenmäher entleert!");
+                    Mower.DoRtb();
+                    Emptying = false;
+					player.SendSuccess("Du hast erfolgreich dein Rasenmäher entleert!");
                 }
                 else
                 {
-                    _mower.Capacity++;
-                }
+                    Mower.Capacity++;
+				}
 
-                _currentWaypoint++;
+				DeleteMarker(player);
 
-                if (_currentWaypoint >= _waypoints.Length) _currentWaypoint = 0;
-                if (_mower.Capacity + 1 <= _mower.MaxCapacity)
-                    CreateMarker(client, (Position) _waypoints.GetValue(_currentWaypoint));
-                if (_mower.Capacity >= _mower.MaxCapacity)
+				CurrentWayPoint++;
+                if (CurrentWayPoint >= WayPoints.Length) CurrentWayPoint = 0;
+                if (Mower.Capacity + 1 <= Mower.MaxCapacity)
+                    CreateMarker(player, (Position) WayPoints.GetValue(CurrentWayPoint));
+					player.SendInformation("Nächster Marker wurde erstellt!");
+
+				if (Mower.Capacity >= Mower.MaxCapacity)
                 {
-                    CreateMarker(client, (Position) _emptyPoints.GetValue(0));
-                    _emptying = true;
-                    if (_emptying)
+					CreateMarker(player, (Position) EmptyPoints.GetValue(0));
+                    Emptying = true;
+                    if (Emptying)
                         Logger.Debug("emptying = true");
                     else
                         Logger.Debug("emptying = false");
-					client.SendInformation("Dein Rasenmäher ist voll! Geh ihn leeren.");
+
+					player.SendError("Dein Rasenmäher ist voll! Geh ihn leeren.");
                 }
                 else
                 {
-					client.SendInformation("Rasenmäher-Kapazität: " + _mower.Capacity);
+					player.SendInformation("Rasenmäher-Kapazität: " + Mower.Capacity);
                 }
             }
         }
@@ -100,43 +105,24 @@ namespace server.Jobs.Jobs
         {
             base.StopJob(player);
             player.StopAnimation();
-            _mower.Destroy();
+            Mower.Destroy();
             DeleteMarker(player);
 
-            _emptying = false;
-            _currentWaypoint = 0;
-            _markerColShape = null;
+            Emptying = false;
+            CurrentWayPoint = 0;
 
+			player.Emit("JobLawn:StobJob");
             player.SendInformation(Name + "-Job beendet!");
         }
 
         private void CreateMarker(IPlayer player, Position waypoint)
         {
-            try
-            {
-              //  _markerColShape.Delete();
-            }
-            catch
-            {
-                //
-            }
-
             player.Emit("JobLawn:SetWaypoint", waypoint.X, waypoint.Y, waypoint.Z);
-           // _markerColShape = NAPI.ColShape.CreateSphereColShape(waypoint, 2, 0);
-            //_markerColShape.OnEntityEnterColShape += OnMarkerColEnter;
         }
 
         private void DeleteMarker(IPlayer player)
         {
             player.Emit("JobLawn:DelWaypoint");
-            try
-            {
-             //   _markerColShape.Delete();
-            }
-            catch
-            {
-                //
-            }
         }
     }
 }
