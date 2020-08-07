@@ -41,6 +41,9 @@ export class HUD {
 			this.uiManager.emit("HUD:SetData", "location", zone)
 			this.uiManager.emit("HUD:SetData", "date", date.toLocaleDateString("de-DE", dateOptions))
 			this.uiManager.emit("HUD:SetData", "time", date.toLocaleTimeString("de-DE"))
+			this.uiManager.emit("HUD:SetData", "kevlar", native.getPedArmour(alt.Player.local.scriptID))
+			this.uiManager.emit("HUD:SetData", "health", native.getEntityHealth(alt.Player.local.scriptID)/2)
+			this.uiManager.emit("HUD:SetData", "hunger", "75") // need hunger-system
 		})
 
 		alt.onServer("HUD:Hide", (isHidden) => {

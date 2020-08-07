@@ -15,22 +15,25 @@ class ProgressCircle extends Component {
         const strokeDashoffset = this.circumference - progress / 100 * this.circumference
       
         return (
-          <svg
-            height={radius * 2}
-            width={radius * 2}
-            >
-            <circle
-              stroke="red"
-              fill="transparent"
-              strokeWidth={stroke}
-              strokeDasharray={this.circumference + " " + this.circumference}
-              style={{strokeDashoffset}}
-              stroke-width={stroke}
-              r={this.normalizedRadius}
-              cx={radius}
-              cy={radius}
-              />
-          </svg>
+            <svg
+                className="absolute"
+                style={{marginLeft: "-0.4rem", marginTop: "-0.4rem"}}
+                height={radius * 2}
+                width={radius * 2}
+                >
+                <circle
+                    className="absolute"
+                    stroke="#1F85DE"
+                    fill="transparent"
+                    strokeWidth={stroke}
+                    strokeDasharray={this.circumference + " " + this.circumference}
+                    style={{strokeDashoffset}}
+                    stroke-width={stroke}
+                    r={this.normalizedRadius}
+                    cx={radius}
+                    cy={radius}
+                />
+            </svg>
         )
       }
 }
