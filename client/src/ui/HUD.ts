@@ -55,6 +55,7 @@ export class HUD {
 		alt.onServer("HUD:ShowRadar", (show) => {
 			alt.nextTick(() => {
 				native.displayRadar(show)
+				native.drawRect(0, 0, 0, 0, 0, 0, 0, 0, false)
 			})
 		})
     }

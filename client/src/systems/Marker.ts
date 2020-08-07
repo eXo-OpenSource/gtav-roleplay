@@ -32,6 +32,7 @@ alt.everyTick(() => {
 			native.drawMarker(marker.type, marker.pos.x, marker.pos.y, marker.pos.z, 0, 0, 0, 0, 0, 0,
 				marker.scale, marker.scale, marker.scale,marker.color.r, marker.color.b, marker.color.g, marker.color.a,
 				true, true, 2, false, null, null, false)
+			native.drawRect(0, 0, 0, 0, 0, 0, 0, 0, false)
 		}
 	})
 })

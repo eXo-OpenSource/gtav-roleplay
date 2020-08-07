@@ -27,6 +27,17 @@ export default class LawnMower {
 
             alt.clearInterval(this.onMarkerHit.bind(this))
         })
+
+        // Sync mower
+        alt.on("syncedMetaChange", (player: Player, key: string, value: any) => {
+            if (key == "lawnJob.syncMower") {
+                native.requestModel(447976993)
+                alt.setTimeout(() => {
+                    this.mower = native.createObject(447976993, player.pos.x, player.pos.y, player.pos.z, true, true, false)
+                    native.attachEntityToEntity(this.mower, player.scriptID, native.getPedBoneIndex(player.scriptID, alt.hash("0x0")), 0, 1, -1, 0, 0, 180, false, false, true, true, 2, true)
+                }, 300)
+            }
+        })
     }
 
     setWayPoint(x, y, z) {
@@ -47,15 +58,3 @@ export default class LawnMower {
         }
     }
 }
-
-// Sync mower
-
-alt.on("syncedMetaChange", (player: Player, key: string, value: any) => {
-    if (key == "lawnJob.syncMower") {
-        native.requestModel(447976993)
-        alt.setTimeout(() => {
-            let object = native.createObject(447976993, player.pos.x, player.pos.y, player.pos.z, true, true, false)
-            native.attachEntityToEntity(object, player.scriptID, native.getPedBoneIndex(player.scriptID, alt.hash("0x0")), 0, 1, -1, 0, 0, 180, false, false, true, true, 2, true)
-        }, 300)
-    }
-})

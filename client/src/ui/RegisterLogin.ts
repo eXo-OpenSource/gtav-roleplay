@@ -44,6 +44,7 @@ export class RegisterLogin {
 
         alt.nextTick(() => {
             native.displayRadar(false)
+            native.drawRect(0, 0, 0, 0, 0, 0, 0, 0, false)
         })
     }
 }
