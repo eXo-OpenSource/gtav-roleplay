@@ -32,21 +32,30 @@ export default class LawnMower {
     setWayPoint(x, y, z) {
         this.marker = Marker.createMarker(1, new Vector3(x, y, z), 1, {r: 25, g: 175, b: 0, a: 225})
         native.setNewWaypoint(x, y)
-        alt.log("[LawnMower]: Waypoint set")
     }
 
     deleteWayPoint() {
         this.marker.visible = false
-        alt.log("[LawnMower]: Waypoint deleted")
     }
 
     onMarkerHit() {
         if (!this.player || !this.player.valid || !this.marker) return
         if (distance(this.marker.pos, this.player.pos) < 1 && !this.hit) {
-            alt.log("[LawnMower]: Hit")
             alt.emitServer("JobLawn:OnMarkerHit")
         } else {
             if (this.hit) this.hit = false
         }
     }
 }
+
+// Sync mower
+
+alt.on("syncedMetaChange", (player: Player, key: string, value: any) => {
+    if (key == "lawnJob.syncMower") {
+        native.requestModel(447976993)
+        alt.setTimeout(() => {
+            let object = native.createObject(447976993, player.pos.x, player.pos.y, player.pos.z, true, true, false)
+            native.attachEntityToEntity(object, player.scriptID, native.getPedBoneIndex(player.scriptID, alt.hash("0x0")), 0, 1, -1, 0, 0, 180, false, false, true, true, 2, true)
+        }, 300)
+    }
+})
