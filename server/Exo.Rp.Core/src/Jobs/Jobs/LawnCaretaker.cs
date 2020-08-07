@@ -80,7 +80,7 @@ namespace server.Jobs.Jobs
 			{
 				LawnMowerObject = false,
 				Capacity = 0,
-				MaxCapacity = 5, // Should depend on job-level | 5 in debug - change later to 25
+				MaxCapacity = 20, // Should depend later on job-level
 				Rtb = 0
 			};
 
