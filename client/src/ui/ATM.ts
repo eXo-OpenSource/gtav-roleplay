@@ -8,6 +8,7 @@ export class ATM {
     public constructor(uiManager) {
         this.uiManager = uiManager;
         this.uiManager.navigate("/atm", true)
+        alt.toggleGameControls(false)
 
         this.uiManager.on("ATM:Logout", this.logOut.bind(this))
         this.uiManager.on("ATM:CashIn", this.cashIn.bind(this))
@@ -25,5 +26,6 @@ export class ATM {
     logOut() {
         alt.log("LogOut")
         this.uiManager.reset()
+        alt.toggleGameControls(true)
     }
 }

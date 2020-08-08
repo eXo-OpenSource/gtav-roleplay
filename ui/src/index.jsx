@@ -39,6 +39,7 @@ class App extends Component {
 				<Toast/>
 				<Popup/>
 				<HUD/>
+				<ATM/>
 				<Speedometer/>
 				<Progress />
 			</div>
