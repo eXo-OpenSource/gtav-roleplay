@@ -15,6 +15,8 @@ using server.Players.Accounts;
 using server.Util;
 using server.Util.Log;
 using IPlayer = server.Players.IPlayer;
+using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 
 namespace server.Events
 {
@@ -80,21 +82,61 @@ namespace server.Events
             }
         }
 
-        //Needed because SPA initlialization
-        [ClientEvent("ready")]
-        public void PlayerReady(IPlayer player)
-        {
-	        player.Emit("Ui:ShowRegisterLogin");
-        }
+		//Needed because SPA initlialization
+		[ClientEvent("ready")]
+		public void PlayerReady(IPlayer player)
+		{
+			player.Emit("Ui:ShowRegisterLogin");
+		}
+
+		[ClientEvent("BankAccount:RefreshData")]
+		public void RefreshData(IPlayer client)
+		{
+			client.Emit("BankAccount:UpdateData", client.GetCharacter().GetMoney(true), client.GetCharacter().GetMoney(false));
+		}
+
+		[ClientEvent("BankAccount:CashIn")]
+		public void CashIn(IPlayer client, int amount)
+		{
+			if (client.GetCharacter().GetMoney() < amount)
+			{
+				client.SendError("Du hast nicht genug Geld bei dir.");
+				return;
+			}
+
+			RefreshData(client);
+
+			client.GetCharacter().GiveMoney(amount, "Maze Bank Einzahlung", true);
+			client.GetCharacter().TakeMoney(amount, "Maze Bank Einzahlung", false);
+			client.SendSuccess($"Du hast ${amount} eingezahlt!");
+			client.SendNotification($"-${amount}");
+		}
+
+		[ClientEvent("BankAccount:CashOut")]
+		public void CashOut(IPlayer client, int amount)
+		{
+			if (client.GetCharacter().BankAccount.GetMoney() < amount)
+			{
+				client.SendError("Du verfügst nicht über genügend Geld auf der Bank.");
+				return;
+			}
+
+			RefreshData(client);
+
+			client.GetCharacter().GiveMoney(amount, "Maze Bank Auszahlung", false);
+			client.GetCharacter().TakeMoney(amount, "Maze Bank Auszahlung", true);
+			client.SendSuccess($"Du hast ${amount} eingezahlt!");
+			client.SendNotification($"-${amount}");
+		}
 
 		[ClientEvent("FaceFeatures:ApplyData")]
-		public void ApplyFaceFeatures(IPlayer player, string _data)
+		public void ApplyFaceFeatures(IPlayer client, string _data)
 		{
 			var data = JsonConvert.DeserializeObject<List<object>>(_data);
-			var ff = player.GetCharacter().FaceFeatures;
+			var ff = client.GetCharacter().FaceFeatures;
 
-			player.GetCharacter().FirstName = data[0].ToString();
-			player.GetCharacter().LastName = data[1].ToString();
+			client.GetCharacter().FirstName = data[0].ToString();
+			client.GetCharacter().LastName = data[1].ToString();
 
 			// Different variant used instead of simple casting because otherwise the server would crash
 			ff.Gender = int.Parse(data[2].ToString());
@@ -117,9 +159,9 @@ namespace server.Events
 			ff.FacialHair = int.Parse(data[15].ToString());
 			ff.FacialHairColor1 = int.Parse(data[16].ToString());
 
-			player.Emit("HUD:Hide", false);
-			player.GetCharacter().SyncFaceFeatures();
-			Alt.Log($"{player.GetCharacter().FirstName} {player.GetCharacter().LastName} ist erschienen!");
+			client.Emit("HUD:Hide", false);
+			client.GetCharacter().SyncFaceFeatures();
+			Alt.Log($"{client.GetCharacter().FirstName} {client.GetCharacter().LastName} ist erschienen!");
 		}
 		
 		[ScriptEvent(ScriptEventType.PlayerConnect)]
