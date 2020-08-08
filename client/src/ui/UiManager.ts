@@ -6,6 +6,7 @@ import Chat from "../chat/Chat";
 import { Cursor } from "../utils/Cursor";
 import { HUD } from "./HUD";
 import { VehicleUI } from "./VehicleUI";
+import { ATM } from "./ATM"
 import Speedo from "./Speedo";
 import Popup from "./Popup";
 
@@ -34,7 +35,7 @@ export class UiManager {
     loadEvents() {
         alt.log('Loaded: UI Manager Events');
 
-
+		alt.on("consoleCommand", (cmd, ...arg) => new ATM(this))
         alt.onServer('Ui:ShowFaceFeatures', () => new FaceFeaturesUi(this));
 
         alt.onServer('Ui:ShowRegisterLogin', () => new RegisterLogin(this));

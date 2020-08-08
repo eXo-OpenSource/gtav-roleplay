@@ -260,4 +260,4 @@ class CharacterCreatorForm extends Component {
     }
 }
 
-export default CharacterCreatorForm;
+export default CharacterCreatorForm

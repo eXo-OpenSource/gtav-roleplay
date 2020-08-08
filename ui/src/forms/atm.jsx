@@ -1,0 +1,166 @@
+import React, {Component} from "react"
+
+class ATM extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            page: "home",
+            name: "Kenzo Johnson",
+            money: "750",
+            bankmoney: "3500"
+        }
+    }
+
+    changePage(e) {
+        let page = e.target.getAttribute("data-arg")
+        if (!page) return
+        this.setState({ page: page })
+        console.log(page)
+    }
+
+    cashInEditBox(e) {
+        if ("alt" in window) {
+            alt.emit("ATM:CashIn", e.target.value)
+        }
+    }
+
+    cashOutEditBox(e) {
+        if ("alt" in window) {
+            alt.emit("ATM:CashOut", e.target.value)
+        }
+    }
+
+    logOut(e) {
+        if ("alt" in window) {
+            alt.emit("ATM:Logout")
+        }
+    }
+
+    render() {
+        if (this.state.page == "home") {
+            return (
+                <div className="flex">
+                    <div className="text-center mr-0 pl-0 mt-64 w-48 text-gray-200 bg-gray-700" style={{marginLeft: "32.5%"}}>
+                        <img className="mx-auto mt-6 rounded-full w-32 h-32 border-2 border-blue-500" src="https://exocentral.de/atm/mazebank.jpg"></img>
+                        <p className="mt-4 text-xl">{this.state.name}</p>
+                        <button className="btn btn-primary mt-8 rounded-sm font-normal" onClick={this.logOut.bind(this)}>Ausloggen</button>
+                    </div>
+                    <div className="container mt-64 max-w-md text-gray-200">
+                        <div className="card">
+                            <ul className="flex border-b-2 border-gray-300">
+                            <li className="flex-1 mr-2">
+                                <a className="text-center block border border-blue-500 py-2 px-4 bg-blue-500 hover:bg-blue-700 text-white" href="#" data-arg="home" onClick={this.changePage.bind(this)}>Home</a>
+                            </li>
+                            <li className="flex-1 mr-2">
+                                <a className="text-center block border border-white hover:border-gray-200 text-blue-500 hover:bg-gray-200 py-2 px-4" href="#" data-arg="cashout" onClick={this.changePage.bind(this)}>Auszahlen</a>
+                            </li>
+                            <li className="flex-1 mr-2">
+                                <a className="text-center block border border-white hover:border-gray-200 text-blue-500 hover:bg-gray-200 py-2 px-4" href="#" data-arg="cashin" onClick={this.changePage.bind(this)}>Einzahlen</a>
+                            </li>
+                            <li className="text-center flex-1">
+                                <a className="block py-2 px-4 text-gray-400 cursor-not-allowed" onClick={this.changePage.bind(this)}>Kontoauszug</a>
+                            </li>
+                            </ul>
+                            <div className="card-body max-h-screen bg-gray-200 h-64">
+                                <p className="ml-1 text-gray-600 text-1xl">Willkommen zurück, {this.state.name}.</p>
+                                <p className="ml-1 mt-2 text-gray-600 text-2xl">Aktueller Kontostand</p>
+                                <hr></hr>
+                                <p className="ml-1 mt-1 text-green-600 text-2xl">${this.state.bankmoney}</p>
+                                <p className="ml-1 mt-4 text-gray-600 text-2xl">Bargeld</p>
+                                <hr></hr>
+                                <p className="ml-1 text-green-600 text-2xl">${this.state.money}</p>
+                                <p className="ml-56 text-gray-600 text-sm">San Andreas Maze Bank</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )
+        } else if (this.state.page == "cashout") {
+            return (
+                <div className="flex">
+                    <div className="text-center mr-0 pl-0 mt-64 w-48 text-gray-200 bg-gray-700" style={{marginLeft: "32.5%"}}>
+                        <img className="mx-auto mt-6 rounded-full w-32 h-32 border-2 border-blue-500" src="https://exocentral.de/atm/mazebank.jpg"></img>
+                        <p className="mt-4 text-xl">{this.state.name}</p>
+                        <button className="btn btn-primary mt-8 rounded-sm font-normal" onClick={this.logOut.bind(this)}>Ausloggen</button>
+                    </div>
+                    <div className="container mt-64 max-w-md text-gray-200">
+                        <div className="card">
+                            <ul className="flex border-b-2 border-gray-300">
+                            <li className="flex-1 mr-2">
+                                <a className="text-center block border border-white hover:border-gray-200 text-blue-500 hover:bg-gray-200 py-2 px-4" href="#" data-arg="home" onClick={this.changePage.bind(this)}>Home</a>
+                            </li>
+                            <li className="flex-1 mr-2">
+                                <a className="text-center block border border-blue-500 py-2 px-4 bg-blue-500 hover:bg-blue-700 text-white" href="#" data-arg="cashout" onClick={this.changePage.bind(this)}>Auszahlen</a>
+                            </li>
+                            <li className="flex-1 mr-2">
+                                <a className="text-center block border border-white hover:border-gray-200 text-blue-500 hover:bg-gray-200 py-2 px-4" href="#" data-arg="cashin" onClick={this.changePage.bind(this)}>Einzahlen</a>
+                            </li>
+                            <li className="text-center flex-1">
+                                <a className="block py-2 px-4 text-gray-400 cursor-not-allowed" onClick={this.changePage.bind(this)}>Kontoauszug</a>
+                            </li>
+                            </ul>
+                            <div className="card-body max-h-screen bg-gray-200 h-64">
+                                <p className="ml-1 text-gray-600 text-1xl">Bitte geben sie einen Betrag zum Einzahlen an.</p>
+                                <p className="ml-1 mt-2 text-gray-600 text-2xl">Auszahlungsbetrag</p>
+                                <hr></hr>
+                                <div className="flex">
+                                    <input type="edit" placeholder="500" className="edit w-32 ml-1 h-8 mt-2"></input>
+                                    <p className="ml-1 mt-2 text-gray-600 text-xl" onChange={this.cashInEditBox.bind(this)}>$</p>
+                                    <button className="btn btn-primary rounded-sm mt-2 ml-16 h-8 py-0 font-normal">Einzahlen</button>
+                                </div>
+                                <p className="ml-1 mt-4 text-gray-600 text-2xl">Kontostand</p>
+                                <hr></hr>
+                                <p className="ml-1 text-green-600 text-2xl">${this.state.bankmoney}</p>
+                                <p className="ml-56 text-gray-600 text-sm">San Andreas Maze Bank</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )
+        } else if (this.state.page == "cashin") {
+            return (
+                <div className="flex">
+                    <div className="text-center mr-0 pl-0 mt-64 w-48 text-gray-200 bg-gray-700" style={{marginLeft: "32.5%"}}>
+                        <img className="mx-auto mt-6 rounded-full w-32 h-32 border-2 border-blue-500" src="https://exocentral.de/atm/mazebank.jpg"></img>
+                        <p className="mt-4 text-xl">{this.state.name}</p>
+                        <button className="btn btn-primary mt-8 rounded-sm font-normal" onClick={this.logOut.bind(this)}>Ausloggen</button>
+                    </div>
+                    <div className="container mt-64 max-w-md text-gray-200">
+                        <div className="card">
+                            <ul className="flex border-b-2 border-gray-300">
+                            <li className="flex-1 mr-2">
+                                <a className="text-center block border border-white hover:border-gray-200 text-blue-500 hover:bg-gray-200 py-2 px-4" href="#" data-arg="home" onClick={this.changePage.bind(this)}>Home</a>
+                            </li>
+                            <li className="flex-1 mr-2">
+                                <a className="text-center block border border-white hover:border-gray-200 text-blue-500 hover:bg-gray-200 py-2 px-4" href="#" data-arg="cashout" onClick={this.changePage.bind(this)}>Auszahlen</a>
+                            </li>
+                            <li className="flex-1 mr-2">
+                                <a className="text-center block border border-white py-2 px-4 bg-blue-500 hover:bg-blue-700 text-white" href="#" data-arg="cashin" onClick={this.changePage.bind(this)}>Einzahlen</a>
+                            </li>
+                            <li className="text-center flex-1">
+                                <a className="block py-2 px-4 text-gray-400 cursor-not-allowed" onClick={this.changePage.bind(this)}>Kontoauszug</a>
+                            </li>
+                            </ul>
+                            <div className="card-body max-h-screen bg-gray-200 h-64">
+                                <p className="ml-1 text-gray-600 text-1xl">Bitte geben sie einen Betrag zum Auszahlen an.</p>
+                                <p className="ml-1 mt-2 text-gray-600 text-2xl">Einzahlungsbetrag</p>
+                                <hr></hr>
+                                <div className="flex">
+                                    <input type="edit" placeholder="500" className="edit w-32 ml-1 h-8 mt-2"></input>
+                                    <p className="ml-1 mt-2 text-gray-600 text-xl" onChange={this.cashInEditBox.bind(this)}>$</p>
+                                    <button className="btn btn-primary rounded-sm mt-2 ml-16 h-8 py-0 font-normal">Auszahlen</button>
+                                </div>
+                                <p className="ml-1 mt-4 text-gray-600 text-2xl">Bargeld</p>
+                                <hr></hr>
+                                <p className="ml-1 text-green-600 text-2xl">${this.state.money}</p>
+                                <p className="ml-56 text-gray-600 text-sm">San Andreas Maze Bank</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )    
+        } else { return null }
+    }
+}
+
+export default ATM

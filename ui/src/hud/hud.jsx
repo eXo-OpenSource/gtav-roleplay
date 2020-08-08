@@ -54,9 +54,7 @@ class HUD extends Component {
 					</div>
 				</div>
 			)
-		} else {
-			return null
-		}
+		} else { return null }
 	}
 }
 
