@@ -23,8 +23,6 @@ class ATM extends Component {
             bankmoney = value
         }
 
-        alt.log("yee")
-
         this.forceUpdate()
     }
 
