@@ -275,7 +275,7 @@ namespace server.Commands
 			}
         }
 
-        private static void OutputPosition(IPlayer player, Vector3 pos, Vector3 rot)
+		private static void OutputPosition(IPlayer player, Vector3 pos, Vector3 rot)
         {
             var playerPosString = pos.X + "| " + pos.Y + "| " + pos.Z;
             playerPosString = playerPosString.Replace(",", ".").Replace("|", ",");
@@ -345,6 +345,12 @@ namespace server.Commands
             player.Emit("gotoWayPoint");
             player.SendInformation("Du hat dich an deine Waypoint Position geportet!");
         }
+
+		[Event("Dev:GotoWaypoint")]
+		public static void TeleportToWaypoint(IPlayer client, float x, float y, float z)
+		{
+			client.Position = new Vector3(x, y, z);
+		}
 
         [Command("place")]
         public static void PlaceObject(IPlayer player, Objects obj)

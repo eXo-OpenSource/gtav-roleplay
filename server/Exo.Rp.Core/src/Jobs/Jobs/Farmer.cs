@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AltV.Net.Data;
+using AltV.Net.Enums;
 using models.Enums;
 using models.Jobs;
 using server.Inventory.Items;
@@ -12,11 +13,11 @@ namespace server.Jobs.Jobs
     {
         public const double TreeCooldown = 30; // Seconds
 
-        private readonly Item _apple = Core.GetService<ItemManager>().GetItem(ItemModel.Apfel);
+        private readonly Item apple = Core.GetService<ItemManager>().GetItem(ItemModel.Apfel);
 
         private readonly Position _deliveryMarker = new Position(2315.753f, 5076.539f, 44.3425f);
 
-        private readonly Tree[] _trees =
+        private readonly Tree[] trees =
         {
             new Tree(new Position(2390.723f, 4991.62f, 45.23268f)),
             new Tree(new Position(2389.445f, 5005.084f, 45.74849f)),
@@ -24,7 +25,7 @@ namespace server.Jobs.Jobs
             new Tree(new Position(2377.004f, 5017.008f, 45.50089f))
         };
 
-        private readonly Position[] _wheatFieldCorners =
+        private readonly Position[] wheatFieldCorners =
         {
             new Position(2309.235f, 5087.252f, 46.88379f),
             new Position(2259.764f, 5135.268f, 53.92041f),
@@ -34,10 +35,10 @@ namespace server.Jobs.Jobs
         };
 
 
-        private readonly Position _wheatMarker = new Position(2338.303f, 5095.162f, 46.55493f);
+        private readonly Position wheatMarker = new Position(2338.303f, 5095.162f, 46.55493f);
 
-        private readonly Position _wheatTractorPosition = new Position(2311.975f, 5083.859f, 46.42386f);
-        private readonly float _wheatTractorRotation = 147.6577f;
+        private readonly Position wheatTractorPosition = new Position(2311.975f, 5083.859f, 46.42386f);
+        private readonly float wheatTractorRotation = 147.6577f;
 
         public Farmer(int jobId) : base(jobId)
         {
@@ -80,7 +81,7 @@ namespace server.Jobs.Jobs
 
             if (GetJobUpgradeValue(player, 1) >= 1)
             {
-                //var veh = CreateJobVehicle(player, VehicleModel.Tractor2, wheatTractorPosition, wheatTractorRotation);
+                var veh = CreateJobVehicle(player, VehicleModel.Tractor2, wheatTractorPosition, wheatTractorRotation);
             }
 
             player.SendInformation(Name + "-Job gestartet!");
@@ -98,10 +99,10 @@ namespace server.Jobs.Jobs
         {
             if (player.GetCharacter().IsJobCurrentAndActive<Farmer>()) return;
 
-            if (player.GetCharacter().GetInventory().GetItemCount(_apple) > 0)
+            if (player.GetCharacter().GetInventory().GetItemCount(apple) > 0)
             {
-                player.SendInformation($"Du hast {player.GetCharacter().GetInventory().GetItemCount(_apple)} Äpfel abgegeben.");
-                player.GetCharacter().GetInventory().RemoveItem(_apple);
+                player.SendInformation($"Du hast {player.GetCharacter().GetInventory().GetItemCount(apple)} Äpfel abgegeben.");
+                player.GetCharacter().GetInventory().RemoveItem(apple);
             }
             else
             {
@@ -120,12 +121,12 @@ namespace server.Jobs.Jobs
                 Task.Run(() =>
                 {
                     tree.Use();
-                    /*NAPI.Task.Run(() =>
-                    {
-                        player.StopAnimation();
-                        player.GetCharacter().GetInventory().AddItem(_apple);
-                        player.SendInformation($"Äpfel: {player.GetCharacter().GetInventory().GetItemCount(_apple)}");
-                    }, 2000);*/
+					Task.Delay(2000).ContinueWith(_ =>
+					{
+						player.StopAnimation();
+						player.GetCharacter().GetInventory().AddItem(apple);
+						player.SendInformation($"Äpfel: {player.GetCharacter().GetInventory().GetItemCount(apple)}");
+					});
                 });
             }
             else
