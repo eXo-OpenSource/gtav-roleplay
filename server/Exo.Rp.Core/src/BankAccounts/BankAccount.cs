@@ -1,16 +1,30 @@
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Threading.Tasks;
+using AltV.Net;
+using AltV.Net.Data;
+using AltV.Net.Elements.Entities;
+using AutoMapper.QueryableExtensions.Impl;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using models.Enums;
+using server.Database;
+using server.Extensions;
+using server.Util.Log;
+using IPlayer = server.Players.IPlayer;
+using WorldObject = server.World.WorldObject;
 
 namespace server.BankAccounts
 {
-    [Table("BankAccounts")]
-    public class BankAccount
-    {
-        [Key]
-        public int Id { get; set; }
+	[Table("BankAccounts")]
+	public class BankAccount
+	{
+		[Key]
+		public int Id { get; set; }
 
-        public OwnerType OwnerType { get; set; }
+		public OwnerType OwnerType { get; set; }
         
         /*
         [ForeignKey("CharacterId")]
@@ -25,10 +39,9 @@ namespace server.BankAccounts
 
         public int Money { get; set; }
 
+		#region Functions
 
-        #region Functions
-
-        public int GetMoney() => Money;
+		public int GetMoney() => Money;
 
         public bool GiveMoney(int amount)
         {

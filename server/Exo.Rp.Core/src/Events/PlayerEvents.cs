@@ -92,7 +92,8 @@ namespace server.Events
 		[ClientEvent("BankAccount:RefreshData")]
 		public void RefreshData(IPlayer client)
 		{
-			client.Emit("BankAccount:UpdateData", client.GetCharacter().GetMoney(true), client.GetCharacter().GetMoney(false));
+			client.Emit("BankAccount:UpdateData", client.GetCharacter().GetMoney(true),
+				client.GetCharacter().GetMoney(false), client.GetCharacter().GetNormalizedName());
 		}
 
 		[ClientEvent("BankAccount:CashIn")]
@@ -109,7 +110,6 @@ namespace server.Events
 			client.GetCharacter().GiveMoney(amount, "Maze Bank Einzahlung", true);
 			client.GetCharacter().TakeMoney(amount, "Maze Bank Einzahlung", false);
 			client.SendSuccess($"Du hast ${amount} eingezahlt!");
-			client.SendNotification($"-${amount}");
 		}
 
 		[ClientEvent("BankAccount:CashOut")]
@@ -125,8 +125,7 @@ namespace server.Events
 
 			client.GetCharacter().GiveMoney(amount, "Maze Bank Auszahlung", false);
 			client.GetCharacter().TakeMoney(amount, "Maze Bank Auszahlung", true);
-			client.SendSuccess($"Du hast ${amount} eingezahlt!");
-			client.SendNotification($"-${amount}");
+			client.SendSuccess($"Du hast ${amount} ausgezahlt!");
 		}
 
 		[ClientEvent("FaceFeatures:ApplyData")]

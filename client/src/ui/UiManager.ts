@@ -19,6 +19,7 @@ export class UiManager {
 	private speedo: Speedo;
 	private popup: Popup;
 	private vehicleUI: VehicleUI;
+	private atm: ATM;
 
 	constructor() {
 		this.mainView = new View()
@@ -29,13 +30,13 @@ export class UiManager {
 		this.speedo = new Speedo(this);
 		this.popup = new Popup(this);
 		this.vehicleUI = new VehicleUI(this);
+		this.atm = new ATM(this)
 		this.loadEvents()
 	}
 
     loadEvents() {
         alt.log('Loaded: UI Manager Events');
 
-		alt.on("consoleCommand", (cmd, ...arg) => new ATM(this))
         alt.onServer('Ui:ShowFaceFeatures', () => new FaceFeaturesUi(this));
 
         alt.onServer('Ui:ShowRegisterLogin', () => new RegisterLogin(this));

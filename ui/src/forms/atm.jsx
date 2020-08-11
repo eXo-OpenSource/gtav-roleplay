@@ -1,7 +1,7 @@
 import React, {Component} from "react"
 
 var page = "nav-home"
-var name =  "Kenzo Johnson"
+var name =  "-"
 var money =  0
 var bankmoney = 0
 var cashInAmount = 0
@@ -21,6 +21,8 @@ class ATM extends Component {
             money = value
         } else if (key == "bankmoney") {
             bankmoney = value
+        } else if (key == "name") {
+            name = value
         }
 
         this.forceUpdate()
@@ -48,7 +50,7 @@ class ATM extends Component {
             alt.emit("ATM:Logout")
         }
     }
-
+    
     changeEditBox(e) {
         let _box = e.target.getAttribute("data-arg")
         if ((regexp.test(e.target.value) || e.target.value === '')) {
