@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using server.Jobs.Jobs;
 
 namespace server.Jobs
@@ -14,7 +14,8 @@ namespace server.Jobs
                 {1, new WasteCollector(1)},
                 {2, new LawnCaretaker(2)},
                 {3, new Farmer(3)},
-                {4, new Miner(4)}
+                {4, new Miner(4)},
+				{5, new PizzaDelivery(5)}
             };
         }
 

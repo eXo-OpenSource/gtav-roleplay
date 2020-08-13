@@ -100,7 +100,7 @@ export class Popup extends Component {
 	}
 
 	render() {
-		return !this.state.active ? null : <div className="absolute top-0 right-0 container ml-auto max-w-sm mt-24 mr-4">
+		return !this.state.active ? null : <div className="absolute top-0 right-0 container ml-auto max-w-sm mt-32 mr-4">
 			<div className="card">
 				<div className="card-header py-2">{this.state.title}</div>
 				<div className="card-body py-2 pl-0 pr-0">
