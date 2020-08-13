@@ -97,20 +97,6 @@ namespace server.Jobs.Jobs
 			player.GetCharacter().ShowInteraction("Auftrag starten", "JobPizza:StartMission", interactionData: interactionData);
 		}
 
-		public void StartMission(IPlayer player)
-		{
-			player.SendInformation("Warten auf den Chef...");
-			player.SetSyncedMetaData("JobPizza:TakePizza", true);
-			player.Position = new Position(-1526.244140625f, -911.1417236328125f, 10.169964790344238f);
-
-			Task.Delay(5000).ContinueWith(_ => {
-				player.SendInformation("Neuer Auftrag - fahr zum Kunden!");
-				CreateRandomDelivery(player);
-				player.SetSyncedMetaData("JobPizza:GivePizza", true);
-				Pizza.Pay += Pizza.PayPerPizza;
-			});
-		}
-
 		public void OnDeliveryMarkerHit(Colshape.Colshape col, IEntity entity)
 		{
 			if (!(entity is IPlayer player)) return;
