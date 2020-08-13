@@ -11,6 +11,7 @@ import Speedometer from "./hud/speedometer";
 import Popup from "./hud/popup";
 import Toast from "./hud/toast";
 import Progress from "./hud/progress";
+import CharacterCreatorForm from './forms/character-creator';
 
 const loadableOptions = { };
 const LoadableLoginComponent = loadable(() => import("./forms/login"), loadableOptions);

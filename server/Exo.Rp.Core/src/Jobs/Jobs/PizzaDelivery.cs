@@ -65,11 +65,6 @@ namespace server.Jobs.Jobs
 
 		public void CreateRandomDelivery(IPlayer player)
 		{
-			if (!(Pizza.Capacity == 0)) {
-				player.SendError("Du hast bereits einen Auftrag!");
-				return;
-			}
-
 			Pizza.Capacity++;
 
 			int randomDeliverySpot = randomizeDelivery.Next(0, deliverySpot.Length);

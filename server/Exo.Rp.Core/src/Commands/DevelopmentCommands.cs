@@ -346,7 +346,7 @@ namespace server.Commands
             player.SendInformation("Du hat dich an deine Waypoint Position geportet!");
         }
 
-		[Event("Dev:GotoWaypoint")]
+		[ClientEvent("Dev:GotoWaypoint")]
 		public static void TeleportToWaypoint(IPlayer client, float x, float y, float z)
 		{
 			client.Position = new Vector3(x, y, z);

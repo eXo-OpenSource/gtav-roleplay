@@ -26,7 +26,6 @@ export class Core {
 	private doorManager = new DoorManager();
 
     constructor() {
-
         alt.log('Loaded: client.mjs');
 
         alt.on('consoleCommand', () => {

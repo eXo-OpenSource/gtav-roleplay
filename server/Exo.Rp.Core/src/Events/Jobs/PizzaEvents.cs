@@ -17,10 +17,11 @@ namespace server.Events.Jobs
 			if (job.JobId != (int)JobId.Pizzaboy) return;
 			var pizzaJob = (PizzaDelivery)job;
 
+			player.GetCharacter().HideInteraction();
 			player.SendInformation("Warten auf den Chef...");
 			player.SetSyncedMetaData("JobPizza:TakePizza", true);
 			player.Position = new Position(-1526.244140625f, -911.1417236328125f, 10.169964790344238f);
-
+			player.PlayAnimation("anim@heists@box_carry@", "idle", (int)AnimationFlags.Loop);
 			Task.Delay(5000).ContinueWith(_ => {
 				player.SendInformation("Neuer Auftrag - fahr zum Kunden!");
 				pizzaJob.CreateRandomDelivery(player);

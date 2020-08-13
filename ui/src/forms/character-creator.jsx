@@ -149,7 +149,7 @@ class CharacterCreatorForm extends Component {
                 <div>
                     <div className="container ml-auto mr-4 mt-12 max-w-md text-gray-200">
                         <div className="card">
-                            <div className="card-header italic"><b>Charaktererstellung</b> - Allgemein</div>
+                            <div className="card-header"><b>Charaktererstellung</b> - Allgemein</div>
                             <div className="card-body overflow-y-hidden max-h-screen">
                                 {/* Select gender */}
                                 <p className="text-center font-bold mt-4 mb-3 flex">Mein Geschlecht ist...</p>
@@ -189,7 +189,7 @@ class CharacterCreatorForm extends Component {
                 <div>
                 <div className="container ml-auto mr-4 mt-12 max-w-md text-gray-200">
                     <div className="card">
-                        <div className="card-header italic"><b>Charaktererstellung</b> - Behaarung</div>
+                        <div className="card-header"><b>Charaktererstellung</b> - Behaarung</div>
                         <div className="card-body overflow-y-hidden max-h-screen">
                         <p className="text-sm">In der Charaktererstellung geht es um das natürliche Aussehen.</p>
                         <p className="text-sm mb-4">Make-Up und andere Accessoires sind im Spielverlauf anpassbar.</p>
@@ -239,7 +239,7 @@ class CharacterCreatorForm extends Component {
                 <div>
                 <div className="container ml-auto mr-4 mt-12 max-w-md text-gray-200">
                     <div className="card">
-                        <div className="card-header italic"><b>Charaktererstellung</b> - Über dich</div>
+                        <div className="card-header"><b>Charaktererstellung</b> - Über dich</div>
                         <div className="card-body overflow-y-hidden max-h-screen">
                             <div className="mb-2 rounded bg-red-100 border-l-4 text-red-700 border-red-500 p-2">Bei der Wahl eines Charakternamens ist es ausdrücklich verboten Namen von realen Personen, Schauspielern oder Künstlern zu verwenden. Genauso ist jeder Name verboten, welcher gegen die Verhaltensnormen von eXo Roleplay verstößt! Wir empfehlen genau so nicht den echten Namen zu verwenden.</div>
                             <p className="font-bold mt-4 mb-3 italic">Dein Vorname</p>
