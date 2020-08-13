@@ -12,7 +12,9 @@ namespace server.Jobs.Jobs
 	{
 		public double MaxCapacity { get; set; }
 		public double Capacity { get; set; }
-		public PrivateEntity Blip { get; set; }
-		public Colshape.Colshape Col { get; set; }
+		public PrivateEntity DeliveryBlip { get; set; }
+		public Colshape.Colshape DeliveryCol { get; set; }
+		public PrivateEntity IntakeBlip { get; set; }
+		public Colshape.Colshape IntakeCol { get; set; }
 	}
 }

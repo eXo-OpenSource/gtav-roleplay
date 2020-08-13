@@ -2,6 +2,7 @@ using AltV.Net;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
+using models.Enums;
 using server.Streamer.Entities;
 using server.Streamer.Private;
 using server.Util.Log;
@@ -34,10 +35,7 @@ namespace server.Jobs.Jobs
 
 		private readonly float vehSpawnRot = 250f;
 
-		private readonly Position[] intakeSpot =
-		{
-			new Position(-1527.389f, -910.33844f, 10.155273f)
-		};
+		private readonly Position intakeSpot = new Position(-1526.4132f, -911.0242f, 10.155273f);
 
 		private readonly Position[] deliverySpot =
 		{
@@ -55,36 +53,68 @@ namespace server.Jobs.Jobs
 
 			Pizza = new Pizza
 			{
-				MaxCapacity = 5,
+				MaxCapacity = 1,
 				Capacity = 0,
+				IntakeBlip = new PrivateBlip(intakeSpot, 0, 300) { Sprite = 1, Name = "Chef" },
+				IntakeCol = (Colshape.Colshape)Alt.CreateColShapeSphere(intakeSpot, 1.9f)
 			};
+
+			Core.GetService<PrivateStreamer>().AddEntity(Pizza.IntakeBlip);
+			Pizza.IntakeBlip.AddVisibleEntity(player.Id);
+
+			Pizza.IntakeCol.OnColShapeEnter += OnIntakeMarkerHit;
 
 			CreateRandomDelivery(player);
 		}
 
 		public void CreateRandomDelivery(IPlayer player)
 		{
+			if (!(Pizza.Capacity == 0)) {
+				player.SendError("Du hast bereits einen Auftrag!");
+				return;
+			}
+
 			int randomDeliverySpot = randomizeDelivery.Next(0, deliverySpot.Length);
 
-			Pizza.Col = (Colshape.Colshape) Alt.CreateColShapeSphere((Position) deliverySpot.GetValue(randomDeliverySpot), 1.9f);
-			Pizza.Blip = new PrivateBlip((Position) deliverySpot.GetValue(randomDeliverySpot), 0, 300) { Sprite = 1, Name = "Abgabeort" };
-			Core.GetService<PrivateStreamer>().AddEntity(Pizza.Blip);
-			Pizza.Blip.AddVisibleEntity(player.Id);
+			Pizza.DeliveryBlip = new PrivateBlip((Position)deliverySpot.GetValue(randomDeliverySpot), 0, 300) { Sprite = 1, Name = "Abgabeort" };
+			Pizza.DeliveryCol = (Colshape.Colshape)Alt.CreateColShapeSphere((Position)deliverySpot.GetValue(randomDeliverySpot), 1.9f);
+			Core.GetService<PrivateStreamer>().AddEntity(Pizza.DeliveryBlip);
+			Pizza.DeliveryBlip.AddVisibleEntity(player.Id);
 
-			Pizza.Col.OnColShapeEnter += OnMarkerHit;
+			Pizza.DeliveryCol.OnColShapeEnter += OnDeliveryMarkerHit;
 		}
 
-		public void OnMarkerHit(Colshape.Colshape col, IEntity entity)
+		public void OnIntakeMarkerHit(Colshape.Colshape col, IEntity entity)
+		{
+			if (!(entity is IPlayer player)) return;
+			if (player.GetCharacter() == null || player.GetCharacter().GetJob() != this ||
+				!player.GetCharacter().IsJobActive() || player.IsInVehicle) return;
+			player.SendInformation("Warten auf den Chef...");
+
+			Task.Delay(5000).ContinueWith(_ => {
+				player.SendInformation("Du hast einen neuen Auftrag erhalten!");
+				player.SendInformation("Fahre nun zum nächsten Kunden!");
+				CreateRandomDelivery(player);
+			});
+		}
+
+		public void OnDeliveryMarkerHit(Colshape.Colshape col, IEntity entity)
 		{
 			if (!(entity is IPlayer player)) return;
 			if (player.GetCharacter() == null || player.GetCharacter().GetJob() != this ||
 				!player.GetCharacter().IsJobActive() || player.IsInVehicle) return;
 
-			Task.Delay(300).ContinueWith(_ => {
+			player.SetSyncedMetaData("JobPizza:PlaceObject", true);
+			player.PlayAnimation("amb@medic@standing@kneel@idle_a", "idle_b",
+				(int)AnimationFlags.Loop);
+
+			Task.Delay(2000).ContinueWith(_ => {
+				Pizza.Capacity++;
 				player.SendSuccess("Pizza erfolgreich abgegeben!");
 				player.SendInformation("Fahre nun zurück zur Pizzeria!");
-				Pizza.Blip.RemoveVisibleEntity(player.Id);
-				player.Emit("JobPizza:PlaceObject");
+				Pizza.DeliveryBlip.RemoveVisibleEntity(player.Id);
+				Pizza.DeliveryCol.Remove();
+				player.StopAnimation();
 			});
 		}
 

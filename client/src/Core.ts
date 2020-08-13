@@ -8,6 +8,7 @@ import Interaction from "./systems/Interaction";
 import Streamer from "./systems/Streamer";
 import WasteCollector from "./jobs/WasteCollector";
 import LawnMower from "./jobs/LawnMower";
+import PizzaDelivery from "./jobs/PizzaDelivery";
 import IPLManager from "./world/IPLManager";
 import DoorManager from "./world/Doormanager";
 
@@ -20,6 +21,7 @@ export class Core {
     private streamer = new Streamer();
     private waste = new WasteCollector();
     private lawn = new LawnMower();
+    private pizza = new PizzaDelivery();
 	private iplManager = new IPLManager()
 	private doorManager = new DoorManager();
 
