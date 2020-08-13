@@ -6,6 +6,7 @@ using models.Enums;
 using server.Streamer.Entities;
 using server.Streamer.Private;
 using server.Util.Log;
+using server.Vehicles;
 using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -46,7 +47,7 @@ namespace server.Jobs.Jobs
 		{
 			base.StartJobForPlayer(player);
 			player.SendSuccess($"Arbeit als {Name} gestartet!");
-			player.SendInformation("Steige auf die Faggio auf!");
+			player.SendInformation("Sprich mit dem Chef am Fenster!");
 			player.Emit("JobPizza:StartJob");
 
 			var veh = CreateJobVehicle(player, VehicleModel.Faggio, vehSpawnPoint, vehSpawnRot);
@@ -55,16 +56,10 @@ namespace server.Jobs.Jobs
 			{
 				MaxCapacity = 1,
 				Capacity = 0,
-				IntakeBlip = new PrivateBlip(intakeSpot, 0, 300) { Sprite = 1, Name = "Chef" },
 				IntakeCol = (Colshape.Colshape)Alt.CreateColShapeSphere(intakeSpot, 1.9f)
 			};
 
-			Core.GetService<PrivateStreamer>().AddEntity(Pizza.IntakeBlip);
-			Pizza.IntakeBlip.AddVisibleEntity(player.Id);
-
 			Pizza.IntakeCol.OnColShapeEnter += OnIntakeMarkerHit;
-
-			CreateRandomDelivery(player);
 		}
 
 		public void CreateRandomDelivery(IPlayer player)
@@ -73,6 +68,8 @@ namespace server.Jobs.Jobs
 				player.SendError("Du hast bereits einen Auftrag!");
 				return;
 			}
+
+			Pizza.Capacity++;
 
 			int randomDeliverySpot = randomizeDelivery.Next(0, deliverySpot.Length);
 
@@ -88,13 +85,15 @@ namespace server.Jobs.Jobs
 		{
 			if (!(entity is IPlayer player)) return;
 			if (player.GetCharacter() == null || player.GetCharacter().GetJob() != this ||
-				!player.GetCharacter().IsJobActive() || player.IsInVehicle) return;
+				!player.GetCharacter().IsJobActive() || player.IsInVehicle || !(Pizza.Capacity == 0)) return;
+
 			player.SendInformation("Warten auf den Chef...");
 
 			Task.Delay(5000).ContinueWith(_ => {
-				player.SendInformation("Du hast einen neuen Auftrag erhalten!");
-				player.SendInformation("Fahre nun zum nächsten Kunden!");
+				player.SendInformation("Neuer Auftrag - fahr zum Kunden!");
 				CreateRandomDelivery(player);
+				player.SetSyncedMetaData("JobPizza:GivePizza", true);
+				Pizza.Pay += Pizza.PayPerPizza;
 			});
 		}
 
@@ -104,13 +103,13 @@ namespace server.Jobs.Jobs
 			if (player.GetCharacter() == null || player.GetCharacter().GetJob() != this ||
 				!player.GetCharacter().IsJobActive() || player.IsInVehicle) return;
 
-			player.SetSyncedMetaData("JobPizza:PlaceObject", true);
+			player.SetSyncedMetaData("JobPizza:PlacePizza", true);
 			player.PlayAnimation("amb@medic@standing@kneel@idle_a", "idle_b",
 				(int)AnimationFlags.Loop);
 
 			Task.Delay(2000).ContinueWith(_ => {
-				Pizza.Capacity++;
-				player.SendSuccess("Pizza erfolgreich abgegeben!");
+				Pizza.Capacity--;
+				player.SendSuccess("Pizza abgegeben!");
 				player.SendInformation("Fahre nun zurück zur Pizzeria!");
 				Pizza.DeliveryBlip.RemoveVisibleEntity(player.Id);
 				Pizza.DeliveryCol.Remove();
@@ -124,6 +123,7 @@ namespace server.Jobs.Jobs
 			player.SendInformation($"Arbeit als {Name} beendet!");
 			if (!IsJobLeader(player)) return;
 			DestroyJobVehicle(player);
+			player.GetCharacter().GiveMoney(Pizza.Pay, "This Pizza Lohn");
 		}
 	}
 }
