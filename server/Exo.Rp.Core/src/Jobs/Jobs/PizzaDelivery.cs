@@ -3,6 +3,7 @@ using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
 using models.Enums;
+using server.Players.Characters;
 using server.Streamer.Entities;
 using server.Streamer.Private;
 using server.Util.Log;
@@ -56,7 +57,7 @@ namespace server.Jobs.Jobs
 			{
 				MaxCapacity = 1,
 				Capacity = 0,
-				IntakeCol = (Colshape.Colshape)Alt.CreateColShapeSphere(intakeSpot, 1.9f)
+				IntakeCol = (Colshape.Colshape)Alt.CreateColShapeSphere(intakeSpot, 1f)
 			};
 
 			Pizza.IntakeCol.OnColShapeEnter += OnIntakeMarkerHit;
@@ -87,7 +88,20 @@ namespace server.Jobs.Jobs
 			if (player.GetCharacter() == null || player.GetCharacter().GetJob() != this ||
 				!player.GetCharacter().IsJobActive() || player.IsInVehicle || !(Pizza.Capacity == 0)) return;
 
+			var interactionData = new InteractionData
+			{
+				SourceObject = new PizzaDelivery(JobId),
+				CallBack = null
+			};
+
+			player.GetCharacter().ShowInteraction("Auftrag starten", "JobPizza:StartMission", interactionData: interactionData);
+		}
+
+		public void StartMission(IPlayer player)
+		{
 			player.SendInformation("Warten auf den Chef...");
+			player.SetSyncedMetaData("JobPizza:TakePizza", true);
+			player.Position = new Position(-1526.244140625f, -911.1417236328125f, 10.169964790344238f);
 
 			Task.Delay(5000).ContinueWith(_ => {
 				player.SendInformation("Neuer Auftrag - fahr zum Kunden!");
@@ -109,11 +123,12 @@ namespace server.Jobs.Jobs
 
 			Task.Delay(2000).ContinueWith(_ => {
 				Pizza.Capacity--;
-				player.SendSuccess("Pizza abgegeben!");
+				player.SendSuccess("Pizza ausgeliefert!");
 				player.SendInformation("Fahre nun zurück zur Pizzeria!");
 				Pizza.DeliveryBlip.RemoveVisibleEntity(player.Id);
 				Pizza.DeliveryCol.Remove();
 				player.StopAnimation();
+				Pizza.Pay += Pizza.PayPerPizza;
 			});
 		}
 
@@ -124,6 +139,7 @@ namespace server.Jobs.Jobs
 			if (!IsJobLeader(player)) return;
 			DestroyJobVehicle(player);
 			player.GetCharacter().GiveMoney(Pizza.Pay, "This Pizza Lohn");
+			player.SendSuccess($"Du hast {Pizza.Pay} erhalten!");
 		}
 	}
 }
