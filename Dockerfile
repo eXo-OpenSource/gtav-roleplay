@@ -11,47 +11,13 @@ RUN mkdir -p server
 ADD server/Exo.Rp.Core          server/Exo.Rp.Core
 ADD server/Exo.Rp.Models        server/Exo.Rp.Models
 ADD server/Exo.Rp.Serialization server/Exo.Rp.Serialization
-ADD server/Exo.Rp.Sdk           server/Exo.Rp.Sdk
+ADD server/Exo.Rp.Plugins.Core  server/Exo.Rp.Plugins.Core
 RUN dotnet restore              server/Exo.Rp.Core
 RUN dotnet build                server/Exo.Rp.Core \
     --no-restore \
     --runtime linux-x64 \
     -c Release \
     -o /app/bin
-
-## Builder Client
-FROM node as builder_client
-WORKDIR /app
-
-# Add client files
-RUN mkdir -p client/cef
-ADD client/src          client/src/
-ADD client/*.cfg        client/
-ADD client/*.json       client/
-ADD client/*.mjs        client/
-
-# Install typescript and compile project
-WORKDIR /app/client
-RUN npm install -g typescript
-RUN npm install
-RUN npm run build && \
-    npm run clean
-#    npm audit fix
-
-# Add UI files
-WORKDIR /app
-RUN mkdir -p ui
-ADD ui/src          ui/src/
-ADD ui/*.babelrc    ui/
-ADD ui/*.js         ui/
-ADD ui/*.json       ui/
-ADD ui/*.html       ui/
-
-# Install typescript and compile project
-WORKDIR /app/ui
-RUN npm install
-RUN npm run build
-RUN npm audit fix
 
 
 ## Config Patcher
@@ -80,11 +46,9 @@ RUN echo ${BASE_CONFIG} | \
 FROM runner
 
 # Add binaries
-RUN mkdir -p resources/exov/ && \
-    mkdir -p resources/exov-client/
+RUN mkdir -p resources/exov/
 COPY --from=builder_server  /app/bin                resources/exov/
 COPY --from=configpatcher   /config/config.json     resources/exov/
-COPY --from=builder_client  /app/client             resources/exov-client/
 
 # Cleanup some files
 RUN rm resources/exov/*.runtimeconfig.dev.json
