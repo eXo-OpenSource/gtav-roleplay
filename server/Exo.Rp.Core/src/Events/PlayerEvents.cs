@@ -137,6 +137,13 @@ namespace server.Events
 			client.SendSuccess($"Du hast ${amount} ausgezahlt!");
 		}
 
+		[ClientEvent("Ui:Hide")]
+		public void ShowUi(IPlayer player, bool showChat, bool showHud)
+		{
+			player.Emit("HUD:Hide", showChat);
+			player.Emit("Chat:Hide", showHud);
+		}
+
 		[ClientEvent("FaceFeatures:ApplyData")]
 		public void ApplyFaceFeatures(IPlayer client, string _data)
 		{
@@ -167,7 +174,6 @@ namespace server.Events
 			ff.FacialHair = int.Parse(data[15].ToString());
 			ff.FacialHairColor1 = int.Parse(data[16].ToString());
 
-			client.Emit("HUD:Hide", false);
 			client.GetCharacter().SyncFaceFeatures();
 			Alt.Log($"{client.GetCharacter().FirstName} {client.GetCharacter().LastName} ist erschienen!");
 		}

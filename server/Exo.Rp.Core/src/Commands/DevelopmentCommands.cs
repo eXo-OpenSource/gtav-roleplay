@@ -43,9 +43,10 @@ namespace server.Commands
         {
             player.Emit("Ui:ShowFaceFeatures");
 			player.Emit("HUD:Hide", true);
-        }
+			player.Emit("Chat:Hide", true);
+		}
 
-        [Command("fly", RequiredAdminLevel = AdminLevel.Moderator)]
+		[Command("fly", RequiredAdminLevel = AdminLevel.Moderator)]
         public static void Fly(IPlayer player)
         {
             if (player.Model == (uint) PedModel.Crow)

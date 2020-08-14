@@ -61,6 +61,7 @@ export class Chat {
 
 	hide(state) {
 		this.hidden = state
+		this.uiManager.emit('Chat:Visible', this.hidden)
 	}
 
 	pushMessage(name, text) {
