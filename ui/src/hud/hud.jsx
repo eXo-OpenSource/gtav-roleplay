@@ -23,10 +23,12 @@ class HUD extends Component {
 		}
 
 		setInterval(() => {
-			if (this.state.kevlar == 0 && document.getElementById("kevlarBg")) {
+			if (this.state.kevlar == 0 && document.getElementById("kevlarBg"))
 				document.getElementById("kevlarBg").remove();
-				console.log("heeeeeeeeeeee")
-			}
+			if (this.state.hunger == 0 && document.getElementById("hungerBg"))
+				document.getElementById("hungerBg").remove();
+			if (this.state.health == 0 && document.getElementById("healthBg"))
+				document.getElementById("healthBg").remove();
 		}, 50);
 	}
 
@@ -47,13 +49,13 @@ class HUD extends Component {
 						<img className="absolute mx-auto w-6 h-6 mt-2 shadow-img" src="https://exocentral.de/hud/microphone.png" style={{marginLeft: "0.5rem"}}></img>
 						<ProgressCircle radius={26} stroke={3} progress={0}/>
 					</div>
-					<div id="hunger" className="absolute right-0 top-0 mx-20 my-12 w-10 h-10 mt-20 bg-gray-900 rounded-full opacity-75 shadow-xl">
+					<div id="hungerBg" className="absolute right-0 top-0 mx-20 my-12 w-10 h-10 mt-20 bg-gray-900 rounded-full opacity-75 shadow-xl">
 						<img className="absolute mx-auto w-6 h-6 mt-2 shadow-img" src="https://exocentral.de/hud/hunger.png" style={{marginLeft: "0.5rem"}}></img>
-						<ProgressCircle radius={26} stroke={3} progress={this.state.hunger}/>
+						<ProgressCircle id="hunger" radius={26} stroke={3} progress={this.state.hunger}/>
 					</div>
-					<div id="health" className="absolute right-0 top-0 mx-32 my-12 w-10 h-10 mt-20 bg-gray-900 rounded-full opacity-75 shadow-xl">
+					<div id="healthBg" className="absolute right-0 top-0 mx-32 my-12 w-10 h-10 mt-20 bg-gray-900 rounded-full opacity-75 shadow-xl">
 						<img className="absolute mx-auto w-6 h-6 mt-2 shadow-img" src="https://exocentral.de/hud/health.png" style={{marginLeft: "0.5rem"}}></img>
-						<ProgressCircle radius={26} stroke={3} progress={this.state.health}/>
+						<ProgressCircle id="health" radius={26} stroke={3} progress={this.state.health}/>
 					</div>
 					<div id="kevlarBg" className="absolute right-0 top-0 my-12 w-10 h-10 mt-20 bg-gray-900 rounded-full opacity-75 shadow-xl" style={{marginRight: "11rem"}}>
 						<img className="absolute mx-auto w-6 h-6 mt-2 shadow-img" src="https://exocentral.de/hud/kevlar.png" style={{marginLeft: "0.5rem"}}></img>
