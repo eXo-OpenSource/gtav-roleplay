@@ -17,6 +17,7 @@ using server.Util.Log;
 using IPlayer = server.Players.IPlayer;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
+using AltV.Net.Elements.Entities;
 
 namespace server.Events
 {
@@ -87,6 +88,13 @@ namespace server.Events
 		public void PlayerReady(IPlayer player)
 		{
 			player.Emit("Ui:ShowRegisterLogin");
+		}
+
+		[ClientEvent("Player:SetPosition")]
+		public void SetPosition(IPlayer player, float x, float y, float z)
+		{
+			player.Position = new Position(x, y, z);
+			player.SendSuccess("Willkommen in San Andreas!");
 		}
 
 		[ClientEvent("BankAccount:RefreshData")]

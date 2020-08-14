@@ -92,8 +92,36 @@
 	}
 }
 
+@keyframes fadeInFromTop {
+	0% {
+		opacity: 0;
+		transform: translateY(-200%);
+	}
+	100% {
+		opacity: 1;
+		transform: translateY(0%);
+	}
+}
+
+@keyframes fadeOut {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
 .toast-fade {
 	animation: 1s ease 0s 1 fadeIn;
+}
+
+.logo-fadeIn {
+	animation: 5s ease 0s 1 fadeInFromTop;
+}
+
+.logo-fadeOut {
+	animation: 6s ease 0s 1 fadeOut;
 }
 
 /* purgecss start ignore */

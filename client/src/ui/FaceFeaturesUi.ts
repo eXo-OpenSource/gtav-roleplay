@@ -7,6 +7,7 @@ import { Vector3 } from "natives"
 import { Float } from "../utils/Float"
 import { stringify } from "querystring"
 import {Entity, Player} from 'alt';
+import { spawn } from "child_process"
 
 const url = "http://resource/cef/index.html#/charactercreator"
 
@@ -154,7 +155,6 @@ export class FaceFeaturesUi {
             this.eyebrowID, this.eyebrowColor, this.age, this.beard, this.beardColor
         ]
 
-        alt.log("hi");
         alt.emitServer("FaceFeatures:ApplyData", JSON.stringify(data))
         this.testPed.destroy()
         this.updateHeadOverlay(alt.Player.local.scriptID)
@@ -168,15 +168,18 @@ export class FaceFeaturesUi {
         this.surname = _surname
 
         this.applyData()
-        
+
+        native.requestCutscene("mp_intro_concat", 8)
+        native.startCutscene(0)
+        alt.setTimeout(() => this.uiManager.emit("FaceFeatures:FadeOut"), 5000)
+        alt.setTimeout(() => this.uiManager.reset(), 11000)
+        alt.setTimeout(() => native.doScreenFadeOut(1000), 30000)
         alt.setTimeout(() => {
-            this.uiManager.emit("FaceFeatures:StartScenario")
-            alt.setTimeout(() => {
-                this.uiManager.reset()
-                native.requestCutscene("mp_intro_concat", 8)
-                native.startCutscene(0)        
-            }, 3000)
-        }, 2500)
+            native.stopCutsceneImmediately()
+            native.playSoundFrontend(-1, 'CONTINUE', 'HUD_FRONTEND_DEFAULT_SOUNDSET', true)
+            alt.emitServer("Player:SetPosition", -1038.7649, -2739.2966, 13.828613)
+            native.doScreenFadeIn(1000)
+        }, 33000)
     }
 
     private resetCamera(modelToUse) {
