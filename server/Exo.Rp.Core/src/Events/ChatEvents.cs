@@ -16,7 +16,13 @@ namespace server.Events
     {
         private static readonly Logger<ChatEvents> Logger = new Logger<ChatEvents>();
 
-        [ClientEventAttribute("Chat:Message")]
+		[ClientEvent("Chat:Hide")]
+		public void Hide(IPlayer player, bool state)
+		{
+			player.Emit("Chat:Hide", state);
+		}
+
+        [ClientEvent("Chat:Message")]
         public void ChatMessage(IPlayer player, string msg)
         {
             if (msg?.Length > 0 && msg[0] == '/')

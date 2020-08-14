@@ -94,6 +94,7 @@ namespace server.Events
 		public void SetPosition(IPlayer player, float x, float y, float z)
 		{
 			player.Position = new Position(x, y, z);
+			player.Rotation = new Rotation(0, 0, 45);
 			player.SendSuccess("Willkommen in San Andreas!");
 		}
 

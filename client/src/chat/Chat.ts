@@ -28,6 +28,7 @@ export class Chat {
 		})
 
 		alt.onServer('Chat:Message', this.pushMessage.bind(this));
+		alt.onServer('Chat:Hide', this.hide.bind(this));
 
 		alt.on('keyup', (key) => {
 			if (!this.loaded)
@@ -56,6 +57,10 @@ export class Chat {
 				this.uiManager.emit('Chat:Visible', this.hidden);
 			}
 		});
+	}
+
+	hide(state) {
+		this.hidden = state
 	}
 
 	pushMessage(name, text) {
