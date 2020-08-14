@@ -62,11 +62,11 @@ class Speedometer extends Component {
 					<div className="absolute w-full text-gray-100 text-center text-lg" style={{top: "90px"}}>&nbsp;KM/H</div>
 					<div className="absolute w-full text-gray-100 text-center text-5xl font-bold" style={{top: "35px"}}>{this.state.speed}</div>
 					<div className="absolute text-center font-bold bg-yellow-400 px-2 py-1 shadow-md" style={{left: "175px", top: "90px"}}>{this.state.gear}</div>
-					<img className="absolute w-6 h-6" src={"https://exocentral.de/vehicle/seatbelt" + this.state.seatbelt + ".png"} data-arg="seatbelt" style={{left: "61px", top: "130px"}}></img>
-					<img className="absolute w-6 h-6" src={"https://exocentral.de/vehicle/carlights" + this.state.lights + ".png"} data-arg="lights" style={{left: "91px", top: "130px"}}></img>
-					<img className="absolute w-6 h-6" src={"https://exocentral.de/vehicle/left_arrow" + this.state.indicatorLeft + ".png"} data-arg="indicatorLeft" style={{left: "121px", top: "130px"}}></img>
-					<img className="absolute w-6 h-6" src={"https://exocentral.de/vehicle/right_arrow" + this.state.indicatorRight + ".png"} data-arg="indicatorRight" style={{left: "148px", top: "130px"}}></img>
-					<img className="absolute w-6 h-6" src={"https://exocentral.de/vehicle/fuel" + this.state.fuel + ".png"} data-arg="fuel" style={{left: "172px", top: "130px"}}></img>
+					<img className="absolute w-6 h-6" src={"https://static.exo.cool/exov-static/images/vehicles/speedo/seatbelt" + this.state.seatbelt + ".png"} data-arg="seatbelt" style={{left: "61px", top: "130px"}}></img>
+					<img className="absolute w-6 h-6" src={"https://static.exo.cool/exov-static/images/vehicles/speedo/carlights" + this.state.lights + ".png"} data-arg="lights" style={{left: "91px", top: "130px"}}></img>
+					<img className="absolute w-6 h-6" src={"https://static.exo.cool/exov-static/images/vehicles/speedo/left_arrow" + this.state.indicatorLeft + ".png"} data-arg="indicatorLeft" style={{left: "121px", top: "130px"}}></img>
+					<img className="absolute w-6 h-6" src={"https://static.exo.cool/exov-static/images/vehicles/speedo/right_arrow" + this.state.indicatorRight + ".png"} data-arg="indicatorRight" style={{left: "148px", top: "130px"}}></img>
+					<img className="absolute w-6 h-6" src={"https://static.exo.cool/exov-static/images/vehicles/speedo/fuel" + this.state.fuel + ".png"} data-arg="fuel" style={{left: "172px", top: "130px"}}></img>
 					<div className="absolute bg-gray-700 w-32 bg-grey-light mt-6 shadow" style={{left: "65px", top: "140px", outlineStyle: "solid", outlineWidth: "1px"}}>
 						<div className="bg-yellow-500 text-xs leading-none py-1 h-3 text-center text-gray-100" style={{width: "50px"}}></div>
 					</div>
