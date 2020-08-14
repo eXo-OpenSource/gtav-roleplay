@@ -82,7 +82,6 @@ namespace server.Events.Jobs
                 return;
             }
 
-            Alt.Log("job started");
             Core.GetService<JobManager>().GetJob(jobId).StartJob(player);
             player.Emit("Popup:Close");
         }

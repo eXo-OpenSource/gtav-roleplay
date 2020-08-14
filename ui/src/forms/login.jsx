@@ -33,7 +33,6 @@ class LoginForm extends Component {
     }
 
     onLoginClick() {
-        console.log(this.state.user)
         if ('alt' in window) {
             alt.emit(
                 'login',
