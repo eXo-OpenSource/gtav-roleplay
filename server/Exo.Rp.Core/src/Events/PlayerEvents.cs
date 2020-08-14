@@ -91,10 +91,10 @@ namespace server.Events
 		}
 
 		[ClientEvent("Player:SetPosition")]
-		public void SetPosition(IPlayer player, float x, float y, float z)
+		public void SetPosition(IPlayer player, float x, float y, float z, int rotx = 0, int roty = 0, int rotz = 0)
 		{
 			player.Position = new Position(x, y, z);
-			player.Rotation = new Rotation(0, 0, 45);
+			player.Rotation = new Rotation(x, y, z);
 			player.SendSuccess("Willkommen in San Andreas!");
 		}
 
