@@ -5,11 +5,6 @@ export default class PizzaDelivery {
     private pizza;
 
     constructor() {
-        alt.on("consoleCommand", (cmd: string, arg: string) => {
-            native.requestCutscene("mp_int_mcs_17_a6", 8)
-            native.startCutscene(0)
-        })
-
         alt.on("syncedMetaChange", (entity: Entity, key: string, value: any) => {
             if (key == "JobPizza:GivePizza") {
                 native.requestModel(604847691);

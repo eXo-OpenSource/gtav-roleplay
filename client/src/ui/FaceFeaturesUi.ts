@@ -154,20 +154,28 @@ export class FaceFeaturesUi {
             this.eyebrowID, this.eyebrowColor, this.age, this.beard, this.beardColor
         ]
 
+        alt.log("hi");
         alt.emitServer("FaceFeatures:ApplyData", JSON.stringify(data))
         this.testPed.destroy()
         this.updateHeadOverlay(alt.Player.local.scriptID)
-        this.uiManager.reset()
         this.camera.destroy()
     }
+
 
     // Finished
     private finished(_name, _surname) {
         this.name = _name
         this.surname = _surname
 
+        this.applyData()
+        
         alt.setTimeout(() => {
-            this.applyData()
+            this.uiManager.emit("FaceFeatures:StartScenario")
+            alt.setTimeout(() => {
+                this.uiManager.reset()
+                native.requestCutscene("mp_intro_concat", 8)
+                native.startCutscene(0)        
+            }, 3000)
         }, 2500)
     }
 
