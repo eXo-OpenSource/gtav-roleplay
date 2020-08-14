@@ -138,10 +138,9 @@ namespace server.Events
 		}
 
 		[ClientEvent("Ui:Hide")]
-		public void ShowUi(IPlayer player, bool showChat, bool showHud)
+		public void HideUi(IPlayer player, bool hide = true)
 		{
-			player.Emit("HUD:Hide", showChat);
-			player.Emit("Chat:Hide", showHud);
+			player.HideUi(hide);
 		}
 
 		[ClientEvent("FaceFeatures:ApplyData")]

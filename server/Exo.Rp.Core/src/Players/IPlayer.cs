@@ -33,5 +33,8 @@ namespace server.Players
         void RequestDefaulIpls();
 		void UpdateHud();
 		void ShowRadar(bool state);
+		void HideChat(bool state);
+		void HideHud(bool state);
+		void HideUi(bool state);
     }
 }

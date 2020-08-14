@@ -39,11 +39,10 @@ namespace server.Commands
         }
 
         [Command("ff")]
-        public static void FaceFeaturesGui(IPlayer player)
+        public static void FaceFeaturesGui(Player player)
         {
             player.Emit("Ui:ShowFaceFeatures");
-			player.Emit("HUD:Hide", true);
-			player.Emit("Chat:Hide", true);
+			player.HideUi(true);
 		}
 
 		[Command("fly", RequiredAdminLevel = AdminLevel.Moderator)]

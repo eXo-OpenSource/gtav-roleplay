@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
+using Microsoft.VisualBasic;
 using Sentry.Protocol;
 using server.Database;
 using server.Environment;
@@ -131,6 +132,22 @@ namespace server.Players
 		public void ShowRadar(bool state)
 		{
 			Emit("HUD:ShowRadar", state);
+		}
+
+		public void HideHud(bool state = true)
+		{
+			Emit("HUD:Hide", state);
+		}
+
+		public void HideChat(bool state = true)
+		{
+			Emit("Chat:Hide", state);
+		}
+
+		public void HideUi(bool state = true)
+		{
+			HideHud(state);
+			HideChat(state);
 		}
 
 		public void UpdateHud()

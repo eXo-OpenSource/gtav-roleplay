@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Text.RegularExpressions;
 using AltV.Net;
 using IPlayer = server.Players.IPlayer;
@@ -17,7 +17,7 @@ namespace server.Chat
             }
 
         //[ServerEvent(Event.ChatMessage)]
-            public void OnChatMessage(IPlayer sender, string message)
+		public void OnChatMessage(IPlayer sender, string message)
         {
             message = EscapeMessage(message);
             var senderName = sender.GetCharacter()?.GetNormalizedName();

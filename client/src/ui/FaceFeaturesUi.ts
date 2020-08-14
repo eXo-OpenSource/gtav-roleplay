@@ -178,7 +178,7 @@ export class FaceFeaturesUi {
             native.stopCutsceneImmediately()
             native.playSoundFrontend(-1, 'CONTINUE', 'HUD_FRONTEND_DEFAULT_SOUNDSET', true)
             alt.emitServer("Player:SetPosition", -1038.7649, -2739.2966, 13.828613, 0, 0, 45)
-            alt.emitServer("Ui:Hide", false, false)
+            alt.emitServer("Ui:ShowUi", false)
             native.doScreenFadeIn(1000)
         }, 33000)
     }

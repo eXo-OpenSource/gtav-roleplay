@@ -1,4 +1,4 @@
-﻿using AltV.Net;
+using AltV.Net;
 using server.Players;
 using server.UI;
 
@@ -7,6 +7,12 @@ namespace server.Events
 {
     internal class UiEvents : IScript
     {
+		[ClientEvent("Ui:ShowUi")]
+		public void ShowUi(IPlayer player, bool state = true)
+		{
+			player.HideUi(state);
+		}
+
         [Event("onQuestionDialogueAccept")]
         public void OnDialogueAccept(IPlayer player, int id)
         {

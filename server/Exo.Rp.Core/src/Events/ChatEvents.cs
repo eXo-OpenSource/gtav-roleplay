@@ -17,9 +17,9 @@ namespace server.Events
         private static readonly Logger<ChatEvents> Logger = new Logger<ChatEvents>();
 
 		[ClientEvent("Chat:Hide")]
-		public void Hide(IPlayer player, bool state)
+		public void Hide(IPlayer player, bool state = true)
 		{
-			player.Emit("Chat:Hide", state);
+			player.HideChat(state);
 		}
 
         [ClientEvent("Chat:Message")]
