@@ -1,57 +1,94 @@
 stages:
-    - build
-    - deploy
+  - build
+  - deploy
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
 
 build_job:
-    image: docker:latest
-    stage: build
-    tags:
-        - linux
-        - dind
-    script:
-        - |
-            docker build \
-                --build-arg CI_BUILD_REF_NAME="$CI_BUILD_REF_NAME" \
-                --build-arg BASE_CONFIG="$GAMEMODE_CONFIG" \
-                --build-arg SENTRY_DSN="$SENTRY_DSN" \
-                --build-arg SENTRY_ENVIRONMENT="${CI_COMMIT_BRANCH//\//-}" \
-                --build-arg SENTRY_RELEASE="${CI_COMMIT_SHA}" \
-                -t exo-rp-altv .
-        - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
-        - docker tag exo-rp-altv $CI_REGISTRY_IMAGE:latest-$(echo $CI_BUILD_REF_NAME | tr -d /)
-        - '[ "$CI_BUILD_REF_NAME" == "master" ] && docker tag exo-rp-altv $CI_REGISTRY_IMAGE:latest'
-        - docker push "$CI_REGISTRY_IMAGE"
+  image: docker:latest
+  stage: build
+  tags:
+    - linux
+    - dind
+  script:
+    - |
+        docker build -f Dockerfile \
+          --build-arg CI_BUILD_REF_NAME="$CI_BUILD_REF_NAME" \
+          --build-arg BASE_CONFIG="$GAMEMODE_CONFIG" \
+          --build-arg SENTRY_DSN="$SENTRY_DSN" \
+          --build-arg SENTRY_ENVIRONMENT="${CI_COMMIT_BRANCH//\//-}" \
+          --build-arg SENTRY_RELEASE="${CI_COMMIT_SHA}" \
+          -t exo-rp-altv .
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    - docker tag exo-rp-altv $CI_REGISTRY_IMAGE:latest-$(echo $CI_BUILD_REF_NAME | tr -d /)
+    - '[ "$CI_BUILD_REF_NAME" == "master" ] && docker tag exo-rp-altv $CI_REGISTRY_IMAGE:latest'
+    - docker push "$CI_REGISTRY_IMAGE"
+
+build_cdn_job:
+  image: docker:latest
+  stage: build
+  tags:
+    - linux
+    - dind
+  script:
+    - |
+        docker build -f cdn/Dockerfile \
+          --build-arg CI_BUILD_REF_NAME="$CI_BUILD_REF_NAME" \
+          -t exo-rp-altv-cdn .
+    - docker run --name justpack exo-rp-altv-cdn
+    - docker cp justpack:/opt/altv/cdn_upload/connect.json .
+    - docker cp justpack:/opt/altv/cdn_upload/exov-client.resource .
+    - docker rm justpack
+  artifacts:
+    paths:
+      - connect.json
+      - exov-client.resource
+    expire_in: 1 Week
 
 sentry_job:
-    image: getsentry/sentry-cli
-    stage: deploy
-    tags:
-        - linux
-        - dind
-    script:
-        - sentry-cli releases new --project $SENTRY_PROJECT $CI_COMMIT_SHA
-        - sentry-cli releases set-commits --auto $CI_COMMIT_SHA
-        - sentry-cli releases deploys $CI_COMMIT_SHA new --env ${CI_COMMIT_BRANCH//\//-}
-    only:
-        - master
-        - release/production
+  image: getsentry/sentry-cli
+  stage: deploy
+  tags:
+    - linux
+    - dind
+  script:
+    - sentry-cli releases new --project $SENTRY_PROJECT $CI_COMMIT_SHA
+    - sentry-cli releases set-commits --auto $CI_COMMIT_SHA
+    - sentry-cli releases deploys $CI_COMMIT_SHA new --env ${CI_COMMIT_BRANCH//\//-}
+  only:
+    - master
+    - release/production
 
 deploy_job_develop:
-    image: appropriate/curl
-    tags:
-        - linux
-        - dind
-    stage: deploy
-    script:
-        - curl http://$DEPLOYRON_IP:6000/deploy/altv_develop?APISecret=$DEPLOY_API_SECRET_DEVELOP
-    environment:
-        name: $CI_COMMIT_REF_NAME
-        url: https://join.v.stivik.de/$CI_COMMIT_REF_NAME
-    only:
-      - master
+  image: appropriate/curl
+  tags:
+    - linux
+    - dind
+  stage: deploy
+  script:
+    - curl http://$DEPLOYRON_IP:6000/deploy/altv_develop?APISecret=$DEPLOY_API_SECRET_DEVELOP
+  environment:
+    name: $CI_COMMIT_REF_NAME
+    url: https://join.v.stivik.de/$CI_COMMIT_REF_NAME
+  only:
+    - master
+
+deploy_cdn:
+  image: appropriate/curl # minio/mc -- doesn't work correctly
+  stage: deploy
+  tags:
+    - linux
+    - dind
+  script:
+    - curl https://dl.min.io/client/mc/release/linux-amd64/mc --output mc
+    - chmod +x mc
+    - ./mc alias set exo https://static.exo.cool $MINIO_ACCESS_KEY $MINIO_SECRET_KEY
+    - ./mc cp connect.json          exo/exov-static/resources/pack/
+    - ./mc cp exov-client.resource  exo/exov-static/resources/pack/
+  only:
+    - master
+    - release/production
 
 # deploy_job_production:
 #     image: appropriate/curl
