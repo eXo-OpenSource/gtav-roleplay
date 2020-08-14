@@ -60,7 +60,6 @@ class Chat extends Component {
                 currentMessage: ""
             });
         }
-        console.log(this.state.chatVisible)
     }
 
     setEnabled(state) {

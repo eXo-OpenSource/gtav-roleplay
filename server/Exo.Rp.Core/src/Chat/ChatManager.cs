@@ -14,7 +14,7 @@ namespace server.Chat
         public ChatManager()
         {
 
-            }
+        }
 
         //[ServerEvent(Event.ChatMessage)]
 		public void OnChatMessage(IPlayer sender, string message)
