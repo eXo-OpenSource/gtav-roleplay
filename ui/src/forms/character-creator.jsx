@@ -20,7 +20,7 @@ class CharacterCreatorForm extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            step: "1",
+            step: "4",
             gender: 0,
             fatherName: "Benjamin",
             motherName: "Hannah",
@@ -130,7 +130,7 @@ class CharacterCreatorForm extends Component {
     onChangeSiteClick(e) {
         this.state.step = e.target.getAttribute("step")
         this.forceUpdate()
-        if (this.state.step == 4) {
+        if (this.state.step == 5) {
             if (this.state.name.length >= 3 && this.state.surname.length >= 3) {
                 alt.emit("FaceFeatures:Finished", this.state.name, this.state.surname)
             }
@@ -141,6 +141,17 @@ class CharacterCreatorForm extends Component {
         var currentState = this.state
         currentState[e.target.name] = e.target.value.replace(/[^A-Za-z]/ig, "")
         this.setState({ data: currentState })
+    }
+
+    startScenario(e) {
+        this.state.step = "4"
+        this.forceUpdate()
+
+        let div = document.getElementById("scenario")
+
+        setTimeout(() => {
+            div.style.backgroundColor = 'transparent'
+         }, 1000)
     }
 
     render() {
@@ -255,6 +266,13 @@ class CharacterCreatorForm extends Component {
                     </div>
                 </div>
             </div>
+            )
+        } else if (this.state.step === "4") {
+            return (
+                <div style={{marginTop: "20rem"}}>
+                    <img className="mx-auto" src="https://forum.exo-reallife.de/wsc/images/styleLogo-09a90a2e08be66fccb657b42536567cf7dc373d9.png"></img>
+                    <div class="typewriter shadow-img text-center"><h1>Willkommen in Los Santos</h1></div>
+                </div>
             )
         } else { return null }
     }

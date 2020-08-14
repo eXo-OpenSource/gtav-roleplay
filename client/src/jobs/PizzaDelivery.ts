@@ -5,10 +5,17 @@ export default class PizzaDelivery {
     private pizza;
 
     constructor() {
+        alt.on("consoleCommand", (cmd: string, arg: string) => {
+            native.requestCutscene("mp_int_mcs_17_a6", 8)
+            native.startCutscene(0)
+        })
+
         alt.on("syncedMetaChange", (entity: Entity, key: string, value: any) => {
             if (key == "JobPizza:GivePizza") {
                 native.requestModel(604847691);
                 if (this.pizza) native.deleteObject(this.pizza);
+                native.freezeEntityPosition(entity.scriptID, false);
+                alt.toggleGameControls(true);
                 this.pizza = native.createObject(604847691, entity.pos.x, entity.pos.y, entity.pos.z, true, true, false);
                 native.attachEntityToEntity(this.pizza, entity.scriptID, native.getPedBoneIndex(entity.scriptID, 0xeb95), 
                     0, 0, 0, 0, 0, 0, false, false, true, true, 2, true);

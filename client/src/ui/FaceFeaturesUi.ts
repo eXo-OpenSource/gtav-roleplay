@@ -15,20 +15,15 @@ export class FaceFeaturesUi {
     private testPed: Ped
     private camera: Camera
     private cameraPoint: Vector3 = {
-        x: -140.7032928466797,
-        y: -644.9724975585938,
-        z: 169.413232421875
-    }
-    private teleportPosition: Vector3 = {
-        x: -130.7032928466797,
-        y: -644.9724975585938,
-        z: 169.413232421875
+        x:  392.5164,
+        y: -1002.847,
+        z: -99.2587
     }
 
     private playerPoint: Vector3 = {
-        x: -140.45274353027344,
-        y: -646.4044189453125,
-        z: 168.813232421875
+        x:  402.5164,
+        y: -1002.847,
+        z: -99.2587
     }
     
     private model = "mp_m_freemode_01"
@@ -66,13 +61,12 @@ export class FaceFeaturesUi {
 
         native.requestModel(native.getHashKey("mp_m_freemode_01"))
         native.requestModel(native.getHashKey("mp_f_freemode_01"))
+        native.requestIpl("shr_int")
 
         // Teleport for customization
         if (!this.testPed) {
             this.testPed = new Ped(this.model, this.playerPoint)
         }
-        
-        // alt.emitServer("temporaryTeleport", this.teleportPosition)
         
         this.camera = new Camera(this.cameraPoint, 28)
         this.camera.pointAtBone(this.testPed.scriptID, 31086, 0.05, 0, 0)

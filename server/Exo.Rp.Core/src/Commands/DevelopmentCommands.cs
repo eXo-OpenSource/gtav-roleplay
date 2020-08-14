@@ -4,6 +4,7 @@ using System.Numerics;
 using System.Text;
 using System.Threading;
 using AltV.Net;
+using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
 using models.Enums;
@@ -346,10 +347,10 @@ namespace server.Commands
             player.SendInformation("Du hat dich an deine Waypoint Position geportet!");
         }
 
-		[ClientEvent("Dev:GotoWaypoint")]
+		[Event("Dev:GotoWaypoint")]
 		public static void TeleportToWaypoint(IPlayer client, float x, float y, float z)
 		{
-			client.Position = new Vector3(x, y, z);
+			client.Position = new Position(x, y, z);
 		}
 
         [Command("place")]

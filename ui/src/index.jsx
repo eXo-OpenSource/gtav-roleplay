@@ -39,6 +39,7 @@ class App extends Component {
 				<Chat/>
 				<Toast/>
 				<Popup/>
+				<CharacterCreatorForm/>
 				<HUD/>
 				<Speedometer/>
 				<Progress />
