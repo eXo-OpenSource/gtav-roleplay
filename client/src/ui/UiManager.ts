@@ -1,4 +1,4 @@
-import * as alt from 'alt';
+import * as alt from 'alt-client';
 import { FaceFeaturesUi } from './FaceFeaturesUi';
 import { RegisterLogin } from './RegisterLogin';
 import { View } from "../utils/View";

@@ -1,4 +1,4 @@
-import alt, { Vector3 } from 'alt';
+import alt, { Vector3 } from 'alt-client';
 import * as native from 'natives';
 import { distance } from '../utils/Vector';
 import { getEntityFromRaycast } from '../utils/Raycast';

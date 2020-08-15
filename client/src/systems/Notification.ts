@@ -1,4 +1,4 @@
-import alt from "alt";
+import alt from "alt-client";
 import * as native from 'natives';
 
 alt.log('Loaded: client->utility->ped.mjs');

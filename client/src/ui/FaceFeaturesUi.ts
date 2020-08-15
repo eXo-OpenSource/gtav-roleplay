@@ -1,4 +1,4 @@
-import * as alt from "alt"
+import * as alt from "alt-client"
 import * as native from "natives"
 import { UiManager } from "./UiManager"
 import { Ped } from "../systems/Ped"
@@ -6,7 +6,7 @@ import { Camera } from "../utils/Camera"
 import { Vector3 } from "natives"
 import { Float } from "../utils/Float"
 import { stringify } from "querystring"
-import {Entity, Player} from 'alt';
+import {Entity, Player} from 'alt-client';
 import { spawn } from "child_process"
 
 const url = "http://resource/cef/index.html#/charactercreator"

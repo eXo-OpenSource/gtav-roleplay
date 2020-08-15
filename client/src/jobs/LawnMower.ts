@@ -1,4 +1,4 @@
-import alt, {Entity, Player, Vector3, Vehicle, WorldObject} from 'alt'
+import alt, {Entity, Player, Vector3, Vehicle, WorldObject} from 'alt-client'
 import * as native from 'natives'
 import Marker from "../systems/Marker"
 import {distance} from "../utils/Vector"

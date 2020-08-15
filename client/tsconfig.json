@@ -12,13 +12,14 @@
 		"preserveConstEnums": true,
 		"noImplicitAny": false,
 		"sourceMap": false,
-		"outDir": "build"
+		"outDir": "build",
+		"typeRoots": ["./node_modules/@types", "./node_modules/@altv"],
 	},
 	"exclude": [
 		"node_modules",
 		"cef"
 	], 
 	"include": [
-		"src/**.ts", "src/typings/client.d.ts", "src/typings/natives.d.ts"
+		"src/**.ts"
 	]
 }

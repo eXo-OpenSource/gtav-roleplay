@@ -1,4 +1,4 @@
-import alt, {BaseObject, PointBlip, Vector3} from 'alt';
+import alt, {BaseObject, PointBlip, Vector3} from 'alt-client';
 import Blip from "./Blip";
 import * as natives from "natives";
 

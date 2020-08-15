@@ -1,4 +1,4 @@
-import * as alt from "alt";
+import * as alt from "alt-client";
 import { Singleton } from "./utils/Singleton";
 import { UiManager } from './ui/UiManager';
 // import { log } from "util";

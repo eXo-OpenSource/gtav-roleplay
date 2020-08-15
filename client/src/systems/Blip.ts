@@ -1,4 +1,4 @@
-import alt, {BaseObject, Entity, Player, PointBlip, Vector3, WorldObject} from 'alt';
+import alt, {BaseObject, Entity, Player, PointBlip, Vector3, WorldObject} from 'alt-client';
 import * as native from 'natives';
 import {StreamedEntity} from "./Streamer";
 

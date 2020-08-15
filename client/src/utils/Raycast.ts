@@ -1,4 +1,4 @@
-import * as alt from 'alt';
+import * as alt from 'alt-client';
 import * as native from 'natives';
 
 export function getEntityFromRaycast(flag: number, ignorePlayer: boolean): any {

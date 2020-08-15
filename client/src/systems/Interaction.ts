@@ -1,4 +1,4 @@
-import alt, {Entity, Player} from 'alt';
+import alt, {Entity, Player} from 'alt-client';
 import * as native from 'natives';
 import {distance} from "../utils/Vector";
 import {UiManager} from "../ui/UiManager";

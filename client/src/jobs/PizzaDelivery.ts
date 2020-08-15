@@ -1,4 +1,4 @@
-import alt, {Player, Entity} from 'alt'
+import alt, {Player, Entity} from 'alt-client'
 import * as native from "natives";
 
 export default class PizzaDelivery {
