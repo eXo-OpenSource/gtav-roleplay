@@ -37,10 +37,6 @@ async function loadModel(model) {
 	});
 }
 
-export class Streamer {
-
-}
-
 export interface StreamedEntity {
 	id: number,
 	type: number,

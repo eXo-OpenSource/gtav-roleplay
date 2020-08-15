@@ -64,7 +64,7 @@ export class Chat {
 		this.uiManager.emit('Chat:Visible', !state)
 	}
 
-	pushMessage(name, text) {
+	pushMessage(name, text: string) {
 		if (!this.loaded) {
 			this.buffer.push({ name, text });
 		} else {
@@ -72,7 +72,7 @@ export class Chat {
 		}
 	}
 
-	pushLine(text) {
+	pushLine(text: string) {
 		this.pushMessage(null, text);
 	}
 

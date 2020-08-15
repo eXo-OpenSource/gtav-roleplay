@@ -5,10 +5,6 @@ import Speedo from '../ui/Speedo';
 
 alt.log('Loaded: client->utility->vehicle.mjs');
 
-export class Vehicle {
-
-}
-
 alt.onServer("Vehicle:SetIntoVehicle", (veh, seat) => {
 	let cleared = false;
 	const interval = alt.setInterval(() => {

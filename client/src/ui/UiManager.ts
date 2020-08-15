@@ -73,7 +73,7 @@ export class UiManager {
 		this.mainView.on(name, func);
 	}
 
-	writeChat(text) {
+	writeChat(text: string) {
 		this.chat.pushLine(text);
 	}
 
