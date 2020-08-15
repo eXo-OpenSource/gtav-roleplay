@@ -11,6 +11,7 @@
     "clean": "tsc --build --clean"
   },
   "devDependencies": {
+    "@altv/types": "^1.0.22",
     "@types/node": "^8.0.14",
     "typescript": "^3.9.7"
   }
