@@ -72,10 +72,11 @@ namespace server.Players
             player.GetCharacter().Login(player);
             player.Emit("afterLogin");
 
-            player.SendWarning("Hi");
-        }
+			player.SendWarning("Hi");
+			player.SendWarning("Test");
+		}
 
-        public void PlayerReady(IPlayer player)
+		public void PlayerReady(IPlayer player)
         {
             player.SendInitialSync();
         }
