@@ -21,7 +21,7 @@ export class UiManager {
 	private popup: Popup;
 	private vehicleUI: VehicleUI;
 	private atm: ATM;
-	private carRent = CarRent;
+	private carRent: CarRent;
 
 	constructor() {
 		this.mainView = new View()

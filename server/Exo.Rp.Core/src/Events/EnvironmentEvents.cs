@@ -38,5 +38,16 @@ namespace server.Events
 			player.Emit("CarRent:OpenUI");
 		}
 
+		[Event("CarRent:SpawnVehicle")]
+		public void RentVehicle(IPlayer player, string vehicle)
+		{
+			if (vehicle == "Faggio")
+				Alt.Log("Faggio");
+			else if (vehicle == "Asba")
+				Alt.Log("Asba");
+			else if (vehicle == "BMX")
+				Alt.Log("BMX");
+		}
+
 	}
 }
