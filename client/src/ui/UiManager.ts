@@ -9,6 +9,7 @@ import { VehicleUI } from "./VehicleUI";
 import { ATM } from "./ATM"
 import Speedo from "./Speedo";
 import Popup from "./Popup";
+import { CarRent } from "../environment/CarRent"
 
 const url = 'http://resource/cef/index.html#';
 
@@ -20,6 +21,7 @@ export class UiManager {
 	private popup: Popup;
 	private vehicleUI: VehicleUI;
 	private atm: ATM;
+	private carRent = CarRent;
 
 	constructor() {
 		this.mainView = new View()
@@ -31,6 +33,7 @@ export class UiManager {
 		this.popup = new Popup(this);
 		this.vehicleUI = new VehicleUI(this);
 		this.atm = new ATM(this)
+		this.carRent = new CarRent(this)
 		this.loadEvents()
 	}
 

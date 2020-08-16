@@ -2,8 +2,6 @@ import * as alt from 'alt-client'
 import * as native from 'natives'
 import { UiManager } from './UiManager'
 
-const url = 'http://resource/cef/index.html#/vehicleui'
-
 export class VehicleUI {
     private uiManager: UiManager
 

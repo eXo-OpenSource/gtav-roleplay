@@ -62,9 +62,7 @@ export class FaceFeaturesUi {
 
         native.requestModel(native.getHashKey("mp_m_freemode_01"))
         native.requestModel(native.getHashKey("mp_f_freemode_01"))
-        native.requestIpl("shr_int")
 
-        // Teleport for customization
         if (!this.testPed) {
             this.testPed = new Ped(this.model, this.playerPoint)
         }
@@ -72,7 +70,7 @@ export class FaceFeaturesUi {
         this.camera = new Camera(this.cameraPoint, 28)
         this.camera.pointAtBone(this.testPed.scriptID, 31086, 0.05, 0, 0)
         this.camera.playerControlsEntity(this.testPed.scriptID, true)
-        native.setHdArea(this.playerPoint.x, this.playerPoint.y, this.playerPoint.z, 30);
+        native.setFocusPosAndVel(this.playerPoint.x, this.playerPoint.y, this.playerPoint.z, this.playerPoint.x, this.playerPoint.y, this.playerPoint.z);
     }
 
     // Update sex
@@ -180,6 +178,7 @@ export class FaceFeaturesUi {
             native.playSoundFrontend(-1, 'CONTINUE', 'HUD_FRONTEND_DEFAULT_SOUNDSET', true)
             alt.emitServer("Player:SetPosition", -1038.7649, -2739.2966, 13.828613, 0, 0, 45)
             alt.emitServer("Ui:ShowUi", false)
+            native.clearFocus()
             native.doScreenFadeIn(1000)
         }, 33000)
     }

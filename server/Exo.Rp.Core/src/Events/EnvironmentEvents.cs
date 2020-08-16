@@ -1,4 +1,4 @@
-﻿using AltV.Net;
+using AltV.Net;
 using server.Environment;
 using server.Players;
 
@@ -31,5 +31,12 @@ namespace server.Events
 
             player.GetCharacter().Save();
         }
-    }
+
+		[Event("CarRent:OnPedInteract")]
+		public void OnColshapeHit(IPlayer player)
+		{
+			player.Emit("CarRent:OpenUI");
+		}
+
+	}
 }

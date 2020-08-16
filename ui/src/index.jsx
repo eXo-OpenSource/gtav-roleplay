@@ -12,12 +12,14 @@ import Popup from "./hud/popup";
 import Toast from "./hud/toast";
 import Progress from "./hud/progress";
 import CharacterCreatorForm from './forms/character-creator';
+import CarRent from './forms/car-rent';
 
 const loadableOptions = { };
 const LoadableLoginComponent = loadable(() => import("./forms/login"), loadableOptions);
 const LoadableCharacterCreatorComponent = loadable(() => import("./forms/character-creator"), loadableOptions);
 const LoadableVehicleUIComponent = loadable(() => import("./hud/vehicle-ui"), loadableOptions);
 const LoadableATMComponent = loadable(() => import("./forms/atm"), loadableOptions);
+const LoadableCarRentComponent = loadable(() => import("./forms/car-rent"), loadableOptions);
 
 class App extends Component {
 	constructor(props) {
@@ -34,6 +36,7 @@ class App extends Component {
 						<Route path="/charactercreator" component={LoadableCharacterCreatorComponent} />
 						<Route path="/vehicleui" component={LoadableVehicleUIComponent} />
 						<Route path="/atm" component={LoadableATMComponent} />
+						<Route path="/carrent" component={LoadableCarRentComponent} />
 					</Switch>
 				</Router>
 				<Chat/>

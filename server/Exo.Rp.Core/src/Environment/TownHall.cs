@@ -1,4 +1,4 @@
-﻿using AltV.Net;
+using AltV.Net;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using server.Players.Characters;
@@ -10,7 +10,9 @@ namespace server.Environment
     {
         static TownHall()
         {
-            var pos = new Position(236.3676f, -409.105f, 47.92431f);
+			Alt.Log("test");
+
+			var pos = new Position(236.3676f, -409.105f, 47.92431f);
 
             var blip = Alt.CreateBlip(BlipType.Area, pos);
             var col = Alt.CreateColShapeSphere(pos, 3);
