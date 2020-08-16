@@ -155,5 +155,3 @@ alt.onServer("Animation:Clear", () => {
 alt.onServer("Animation:ForceClear", () => {
 	natives.clearPedTasksImmediately(alt.Player.local.scriptID);
 })
-
-export default Streamer;

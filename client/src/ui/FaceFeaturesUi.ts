@@ -72,6 +72,7 @@ export class FaceFeaturesUi {
         this.camera = new Camera(this.cameraPoint, 28)
         this.camera.pointAtBone(this.testPed.scriptID, 31086, 0.05, 0, 0)
         this.camera.playerControlsEntity(this.testPed.scriptID, true)
+        native.setHdArea(this.playerPoint.x, this.playerPoint.y, this.playerPoint.z, 30);
     }
 
     // Update sex
