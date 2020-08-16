@@ -29,7 +29,6 @@ export class Core {
             alt.log('consoleCommand');
             alt.emitServer("ClientConnectionComplete", "Test")
         })
-
     }
 }
 

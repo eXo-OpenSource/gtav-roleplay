@@ -16,15 +16,15 @@ export class FaceFeaturesUi {
     private testPed: Ped
     private camera: Camera
     private cameraPoint: Vector3 = {
-        x:  392.5164,
-        y: -1002.847,
-        z: -99.2587
+        x: -807.67474,
+        y: 175.17363,
+        z: 76.72888
     }
-
+    
     private playerPoint: Vector3 = {
-        x:  402.5164,
-        y: -1002.847,
-        z: -99.2587
+        x: -811.67474,
+        y: 175.17363,
+        z: 76.72888
     }
     
     private model = "mp_m_freemode_01"
