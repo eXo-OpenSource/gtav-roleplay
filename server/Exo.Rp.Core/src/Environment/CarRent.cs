@@ -4,10 +4,14 @@ using AltV.Net.Elements.Entities;
 using System.Collections.Generic;
 using IPlayer = server.Players.Player;
 using server.Players.Characters;
+using Vehicle = server.Vehicles.Vehicle;
+using AltV.Net.Enums;
+using server.Vehicles.Types;
+using server.Vehicles;
 
 namespace server.Environment
 {
-	internal class CarRent : IScript
+	public class CarRent : IScript
 	{
 		int loadedCarRents = 0;
 

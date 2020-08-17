@@ -1,4 +1,4 @@
-﻿namespace models.Enums
+namespace models.Enums
 {
     public enum OwnerType
     {
@@ -7,6 +7,7 @@
         Team = 1,
         Job = 2,
         Shop = 3,
-        Vehicle = 4
-    }
+        Vehicle = 4,
+		RentedCar = 5
+	}
 }

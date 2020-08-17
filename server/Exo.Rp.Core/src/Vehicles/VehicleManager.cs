@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using AltV.Net;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
@@ -11,6 +12,7 @@ using models.Enums;
 using server.Database;
 using server.Extensions;
 using server.Inventory.Inventories;
+using server.Translation;
 using server.Updateable;
 using server.Util.Log;
 using server.Vehicles.Types;
@@ -27,9 +29,11 @@ namespace server.Vehicles
         private readonly Dictionary<int, PlayerVehicle> _playerVehicles;
         private readonly Dictionary<int, TeamVehicle> _teamVehicles;
         private readonly List<TemporaryVehicle> _temporaryVehicles;
+		private readonly List<RentVehicle> _rentVehicles;
         private readonly List<Vehicle> _vehicles;
         private int _teamporaryVehicleId = 50000;
-        private Rgba _defaultColor = new Rgba(0, 0, 0, 255);
+		private int _rentedVehicleId = 100000;
+        private Rgba _defaultColor = new Rgba(30, 135, 235, 255);
 
         public VehicleManager(DatabaseContext databaseContext, IMapper mapper)
         {
@@ -40,6 +44,7 @@ namespace server.Vehicles
             _playerVehicles = new Dictionary<int, PlayerVehicle>();
             _teamVehicles = new Dictionary<int, TeamVehicle>();
             _temporaryVehicles = new List<TemporaryVehicle>();
+			_rentVehicles = new List<RentVehicle>();
             SpawnVehicles();
         }
 
@@ -55,6 +60,9 @@ namespace server.Vehicles
                     case OwnerType.Team:
                         AddVehicle<TeamVehicle>(vehicle);
                         break;
+					case OwnerType.RentedCar:
+						AddVehicle<RentVehicle>(vehicle);
+						break;
                     default:
                         AddVehicle<Vehicle>(vehicle);
                         break;
@@ -67,9 +75,17 @@ namespace server.Vehicles
         {
 	        if (spawn) vehicle.Spawn();
             _vehicles.Add(_mapper.Map<T>(vehicle));
+	
         }
 
-        public T GetVehicleFromHandle<T>(IVehicle vehicle)
+		private void AddVehicleEx<T>(TemporaryVehicle vehicle, bool spawn = true)
+		where T : TemporaryVehicle
+		{
+			if (spawn) vehicle.Spawn();
+			_vehicles.Add(_mapper.Map<T>(vehicle));
+		}
+
+		public T GetVehicleFromHandle<T>(IVehicle vehicle)
             where T : Vehicle
         {
             return _vehicles.FirstOrDefault(x => x.handle == vehicle) as T;
@@ -156,5 +172,51 @@ namespace server.Vehicles
             _teamporaryVehicleId++;
             return veh;
         }
-    }
+
+		public RentVehicle CreateRentedVehicle(VehicleModel hash, Position position, float heading, int time,
+			Rgba? color1T, Rgba? color2T, string plate = "Rented")
+		{
+			if (color1T == null) color1T = _defaultColor;
+			if (color2T == null) color2T = _defaultColor;
+			var color1 = (Rgba)color1T;
+			var color2 = (Rgba)color2T;
+
+			var veh = new RentVehicle()
+			{
+				Id = _rentedVehicleId,
+				OwnerType = OwnerType.None,
+				OwnerId = -1,
+				Plate = plate,
+				Model = hash,
+				Color1 = color1.ToInt32(),
+				Color2 = color2.ToInt32(),
+				PosX = position.X,
+				PosY = position.Y,
+				PosZ = position.Z,
+				Pos = position,
+				RotZ = heading,
+				Inventory = new VehicleInventory()
+				{
+					OwnerType = OwnerType.Vehicle,
+					Type = InventoryType.Vehicle
+				}
+			};
+
+			Task.Delay(time).ContinueWith(_ =>
+			{
+				Alt.Log("Works");
+				veh.handle.Remove();
+			});
+
+			try {
+				AddVehicle<RentVehicle>(veh, true);
+			}
+			catch(Exception e)
+			{
+				Alt.Log(e.Message);
+			}
+			_rentedVehicleId++;
+			return veh;
+		}
+	}
 }

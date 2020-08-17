@@ -1,6 +1,12 @@
 using AltV.Net;
+using AltV.Net.Data;
+using AltV.Net.Enums;
 using server.Environment;
 using server.Players;
+using server.Vehicles;
+using server.Vehicles.Types;
+using System;
+using System.Runtime.Versioning;
 
 namespace server.Events
 
@@ -39,14 +45,13 @@ namespace server.Events
 		}
 
 		[Event("CarRent:SpawnVehicle")]
-		public void RentVehicle(IPlayer player, string vehicle)
+		public Vehicle RentVehicle(IPlayer player, string _vehicle)
 		{
-			if (vehicle == "Faggio")
-				Alt.Log("Faggio");
-			else if (vehicle == "Asba")
-				Alt.Log("Asba");
-			else if (vehicle == "BMX")
-				Alt.Log("BMX");
+			//VehicleModel vehicle = (VehicleModel)Enum.Parse(typeof(VehicleModel), _vehicle); 
+			//var veh = Core.GetService<VehicleManager>().CreateRentedVehicle(VehicleModel.Adder, new Position(-986.8756713867188f, -2690.510986328125f, 14.04065227508545f), 0, 5000, Rgba.Zero, Rgba.Zero);
+
+			var veh = Core.GetService<VehicleManager>().CreateRentedVehicle(VehicleModel.Adder, new Position(-986.8756713867188f, -2690.510986328125f, 14.04065227508545f), 0, 50000, Rgba.Zero, Rgba.Zero);
+			return veh;
 		}
 
 	}

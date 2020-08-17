@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using AltV.Net;
 using server.Updateable;
 using server.Util.Log;
@@ -6,7 +6,7 @@ using IPlayer = server.Players.IPlayer;
 
 namespace server.Vehicles.Types
 {
-    public class TemporaryVehicle : Vehicle
+    public partial class TemporaryVehicle : Vehicle
     {
         private static readonly Logger<TemporaryVehicle> Logger = new Logger<TemporaryVehicle>();
 

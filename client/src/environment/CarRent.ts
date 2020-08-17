@@ -5,20 +5,29 @@ import { UiManager } from "../ui/UiManager"
 export class CarRent {
     private uiManager: UiManager
     private player = alt.Player.local
+    private visible;
 
     public constructor(uiManager) {
         this.uiManager = uiManager
-        this.uiManager.navigate("/carrent", true)
+        this.visible = false;
+
+        alt.onServer("CarRent:OpenUI", () => {
+            alt.toggleGameControls(false)
+            this.uiManager.navigate("/carrent", true)
+            this.visible = true;
+        })
         
         this.uiManager.on("CarRent:Rent", (vehicle: string) => {
             alt.emitServer("CarRent:SpawnVehicle", vehicle)
-            alt.toggleGameControls(true)
         })
 
         alt.on("keyup", (key: number) => {
             if (key === 32) {
-                this.uiManager.reset()
-                alt.toggleGameControls(false)
+                if (this.visible) {
+                    this.uiManager.reset()
+                    this.visible = false
+                    alt.toggleGameControls(true)
+                }
             }
         })
     }
