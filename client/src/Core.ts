@@ -11,6 +11,7 @@ import LawnMower from "./jobs/LawnMower";
 import PizzaDelivery from "./jobs/PizzaDelivery";
 import IPLManager from "./world/IPLManager";
 import DoorManager from "./world/Doormanager";
+import "./systems/Blip"
 
 @Singleton
 export class Core {
