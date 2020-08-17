@@ -44,7 +44,7 @@ class App extends Component {
         <Popup/>
         <HUD/>
         <Speedometer/>
-        <Progress />
+        <Progress/>
       </div>
     )
   }

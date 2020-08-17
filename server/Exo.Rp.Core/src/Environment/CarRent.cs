@@ -62,7 +62,7 @@ namespace server.Environment
                         new Position(-986.8756713867188f, -2690.510986328125f, 14.04065227508545f), 0, 3600000, Rgba.Zero, Rgba.Zero);
 
                     player.GetCharacter().TakeMoney(price, "Fahrzeugverleih");
-                    player.SendSuccess($"Fahrzeug gemietet! (-${price}");
+                    player.SendSuccess($"Fahrzeug gemietet! (-${price})");
                     player.SetIntoVehicle(veh.handle, -1);
                     vehicles.Add(player.GetId(), veh);
                     player.Emit("CarRent:CloseUI");
