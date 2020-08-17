@@ -1,39 +1,39 @@
-﻿using System;
+using System;
 using Newtonsoft.Json;
 using Sentry;
 using Sentry.Protocol;
 
 namespace server.Util.Settings
 {
-    public class SentrySettings
-    {
-        [JsonProperty("DSN")] 
-        private string _dsnUrl;
+	public class SentrySettings
+	{
+		[JsonProperty("DSN")]
+		private string _dsnUrl;
 
-        [JsonIgnore]
-        public Dsn Dsn
-        {
-            get => new Dsn(_dsnUrl);
-            set => _dsnUrl = value?.ToString();
-        }
-        
-        [JsonProperty("Environment")] 
-        public string Environment;
+		[JsonIgnore]
+		public Dsn Dsn
+		{
+			get => new Dsn(_dsnUrl);
+			set => _dsnUrl = value?.ToString();
+		}
 
-        [JsonProperty("Release")] 
-        public string Release;
+		[JsonProperty("Environment")]
+		public string Environment;
 
-        [JsonProperty("Debug")] 
-        private string _debug;
+		[JsonProperty("Release")]
+		public string Release;
 
-        [JsonIgnore]
-        public bool Debug
-        { 
-            get => bool.Parse(_debug);
-            set => _debug = value.ToString();
-        }
+		[JsonProperty("Debug")]
+		private string _debug;
 
-        [JsonProperty("LoggerLevel")] 
-        public SentryLevel LoggerLevel;
-    }
+		[JsonIgnore]
+		public bool Debug
+		{
+			get => bool.Parse(_debug);
+			set => _debug = value.ToString();
+		}
+
+		[JsonProperty("LoggerLevel")]
+		public SentryLevel LoggerLevel;
+	}
 }

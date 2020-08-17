@@ -1,46 +1,46 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RuntimeIdentifiers>win10-x64;linux-x64</RuntimeIdentifiers>
-    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <GenerateRuntimeConfigurationFiles>false</GenerateRuntimeConfigurationFiles>
-    <Platforms>x64</Platforms>
-    <AssemblyName>Exo.Rp.Models</AssemblyName>
-    <Authors>eXo Roleplay Developers</Authors>
-    <Company>eXo Roleplay</Company>
-    <Product>eXo Roleplay Server</Product>
-    <RootNamespace>models</RootNamespace>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<RuntimeIdentifiers>win10-x64;linux-x64</RuntimeIdentifiers>
+		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+		<GenerateRuntimeConfigurationFiles>false</GenerateRuntimeConfigurationFiles>
+		<Platforms>x64</Platforms>
+		<AssemblyName>Exo.Rp.Models</AssemblyName>
+		<Authors>eXo Roleplay Developers</Authors>
+		<Company>eXo Roleplay</Company>
+		<Product>eXo Roleplay Server</Product>
+		<RootNamespace>models</RootNamespace>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
-    <OutputPath>..\bin\server\</OutputPath>
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
-    <PlatformTarget>x64</PlatformTarget>
-    <Optimize>false</Optimize>
-    <DebugType>full</DebugType>
-    <DebugSymbols>true</DebugSymbols>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)'=='Debug'">
+		<OutputPath>..\bin\server\</OutputPath>
+		<DefineConstants>TRACE;DEBUG</DefineConstants>
+		<PlatformTarget>x64</PlatformTarget>
+		<Optimize>false</Optimize>
+		<DebugType>full</DebugType>
+		<DebugSymbols>true</DebugSymbols>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)'=='Release'">
-    <OutputPath>..\bin\server\</OutputPath>
-    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-    <PlatformTarget>x64</PlatformTarget>
-    <DefineConstants></DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>full</DebugType>
-    <DebugSymbols>true</DebugSymbols>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)'=='Release'">
+		<OutputPath>..\bin\server\</OutputPath>
+		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+		<PlatformTarget>x64</PlatformTarget>
+		<DefineConstants></DefineConstants>
+		<Optimize>true</Optimize>
+		<DebugType>full</DebugType>
+		<DebugSymbols>true</DebugSymbols>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="AltV.Net" Version="1.16.5" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="AltV.Net" Version="1.16.5" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Exo.Rp.Serialization\Exo.Rp.Serialization.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Exo.Rp.Serialization\Exo.Rp.Serialization.csproj" />
+	</ItemGroup>
 
 </Project>

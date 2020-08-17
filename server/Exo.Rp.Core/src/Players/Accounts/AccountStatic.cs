@@ -10,10 +10,10 @@ using server.Players.Characters;
 
 namespace server.Players.Accounts
 {
-    internal static class AccountStatic
-    {
-        public static bool CreateAccount(this IPlayer player, string username, string mail, AdminLevel adminLvl)
-        {
+	internal static class AccountStatic
+	{
+		public static bool CreateAccount(this IPlayer player, string username, string mail, AdminLevel adminLvl)
+		{
 			var accountData = new Account
 			{
 				Username = username,
@@ -47,24 +47,24 @@ namespace server.Players.Accounts
 					FaceFeatures = new FaceFeatures()
 					{
 
-                    }
-                    
-                }
-            };
+					}
 
-            //var characterData = ;
+				}
+			};
 
-            Core.GetService<DatabaseContext>().AccountModel.Local.Add(accountData);
-            Core.GetService<DatabaseContext>().CharacterModel.Local.Add(accountData.Character);
-            Core.GetService<DatabaseContext>().BankAccountModel.Local.Add(accountData.Character.BankAccount);
-            Core.GetService<DatabaseContext>().InventoryModel.Local.Add(accountData.Character.InventoryModel);
-            Core.GetService<DatabaseContext>().FaceFeaturesModel.Local.Add(accountData.Character.FaceFeatures);
+			//var characterData = ;
 
-            DatabaseCore.SaveChangeToDatabase();
+			Core.GetService<DatabaseContext>().AccountModel.Local.Add(accountData);
+			Core.GetService<DatabaseContext>().CharacterModel.Local.Add(accountData.Character);
+			Core.GetService<DatabaseContext>().BankAccountModel.Local.Add(accountData.Character.BankAccount);
+			Core.GetService<DatabaseContext>().InventoryModel.Local.Add(accountData.Character.InventoryModel);
+			Core.GetService<DatabaseContext>().FaceFeaturesModel.Local.Add(accountData.Character.FaceFeatures);
 
-            //player.SetData("account.id", accountData.Id);
-            return true;
+			DatabaseCore.SaveChangeToDatabase();
 
-        }
-    }
+			//player.SetData("account.id", accountData.Id);
+			return true;
+
+		}
+	}
 }

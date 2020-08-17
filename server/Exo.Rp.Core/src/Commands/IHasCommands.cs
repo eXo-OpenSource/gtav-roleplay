@@ -1,4 +1,4 @@
-﻿namespace server.Commands
+namespace server.Commands
 {
-    public interface IHasCommands { }
+	public interface IHasCommands { }
 }

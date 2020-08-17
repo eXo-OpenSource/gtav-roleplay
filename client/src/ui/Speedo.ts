@@ -29,7 +29,7 @@ export class Speedo {
 				this.uiManager.emit("Speedo:SetData", "gear", veh.gear);
 			}
 		})
-		
+
 		alt.on("Speedo:EmitData", (key, value) => {
 			this.uiManager.emit("Speedo:SetData", key, value)
 		})

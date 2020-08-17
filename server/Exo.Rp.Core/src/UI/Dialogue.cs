@@ -1,6 +1,6 @@
-﻿namespace server.UI
+namespace server.UI
 {
-    internal class Dialogue
-    {
-    }
+	internal class Dialogue
+	{
+	}
 }

@@ -44,4 +44,3 @@ namespace server.Vehicles.Types
 		}
 	}
 }
-

@@ -1,4 +1,4 @@
-﻿namespace server
+namespace server
 {
-    public interface IService { }
+	public interface IService { }
 }

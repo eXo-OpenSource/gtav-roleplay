@@ -1,6 +1,6 @@
-﻿namespace server.Inventory
+namespace server.Inventory
 {
-    internal class TemporaryInventory : Inventory
-    {
-    }
+	internal class TemporaryInventory : Inventory
+	{
+	}
 }

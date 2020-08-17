@@ -26,7 +26,7 @@ namespace server.Jobs.Jobs
 			Init();
 		}
 
-		private static readonly Logger<PizzaDelivery> Logger = new Logger<PizzaDelivery>(); 
+		private static readonly Logger<PizzaDelivery> Logger = new Logger<PizzaDelivery>();
 
 		private Pizza Pizza;
 

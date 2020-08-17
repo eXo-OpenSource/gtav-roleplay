@@ -11,7 +11,7 @@ const path = require("path");
 module.exports = merge.smart(common, {
 	mode: "production",
 	output: {
-        path: path.resolve(__dirname, "../client/cef/"),
+		path: path.resolve(__dirname, "../client/cef/"),
 	},
 	plugins: [
 		new DuplicatePackageCheckerPlugin(),
@@ -22,9 +22,9 @@ module.exports = merge.smart(common, {
 	module: {
 		rules: [
 			{
-                test: /\.(css)$/,
-                use: [
-                    {
+				test: /\.(css)$/,
+				use: [
+					{
 						loader: 'postcss-loader',
 						options: {
 							ident: 'postcss',
@@ -47,8 +47,8 @@ module.exports = merge.smart(common, {
 							],
 						}
 					}
-                ]
-            }
+				]
+			}
 		]
 	}
 });

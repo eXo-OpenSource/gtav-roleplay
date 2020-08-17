@@ -1,64 +1,64 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace models.Enums
 {
-    [Flags]
-    public enum TeamPermissions : ulong
-    {
-        None = 0,
+	[Flags]
+	public enum TeamPermissions : ulong
+	{
+		None = 0,
 
-        // Rank
-        HirePlayer = 1 << 0,
-        PromotePlayer = HirePlayer << 1,
-        DemotePlayer = PromotePlayer << 1,
-        DismissPlayer = DemotePlayer << 1,
+		// Rank
+		HirePlayer = 1 << 0,
+		PromotePlayer = HirePlayer << 1,
+		DemotePlayer = PromotePlayer << 1,
+		DismissPlayer = DemotePlayer << 1,
 
-        //vehicle
-        EnterVehicle = DismissPlayer << 1,
-        DriveVehicle = EnterVehicle << 1,
+		//vehicle
+		EnterVehicle = DismissPlayer << 1,
+		DriveVehicle = EnterVehicle << 1,
 
-        //Money
-        GiveMoney = DriveVehicle << 1,
-        TakeMoney = GiveMoney << 1,
+		//Money
+		GiveMoney = DriveVehicle << 1,
+		TakeMoney = GiveMoney << 1,
 
-        // Departments
-        PromoteDepartment = TakeMoney << 1,
-        DemoteDepartment = PromoteDepartment << 1,
-        CreateDepartment = DemoteDepartment << 1,
-        DeleteDepartment = CreateDepartment << 1,
-
-        
+		// Departments
+		PromoteDepartment = TakeMoney << 1,
+		DemoteDepartment = PromoteDepartment << 1,
+		CreateDepartment = DemoteDepartment << 1,
+		DeleteDepartment = CreateDepartment << 1,
 
 
-        All = HirePlayer | PromotePlayer | DemotePlayer | 
-                    DismissPlayer | EnterVehicle | DriveVehicle | 
-                    GiveMoney | TakeMoney | PromoteDepartment | 
-                    DemoteDepartment | CreateDepartment | DeleteDepartment,
-    }
 
-    public static class TeamPermissionsExtensions
-    {
-        public static TeamPermissions Set(this TeamPermissions states, TeamPermissions state)
-        {
-            return states | state;
-        }
 
-        public static TeamPermissions UnSet(this TeamPermissions states, TeamPermissions state)
-        {
-            if ((int)states == 0)
-                return states;
+		All = HirePlayer | PromotePlayer | DemotePlayer |
+					DismissPlayer | EnterVehicle | DriveVehicle |
+					GiveMoney | TakeMoney | PromoteDepartment |
+					DemoteDepartment | CreateDepartment | DeleteDepartment,
+	}
 
-            if (states == state)
-                return TeamPermissions.None;
+	public static class TeamPermissionsExtensions
+	{
+		public static TeamPermissions Set(this TeamPermissions states, TeamPermissions state)
+		{
+			return states | state;
+		}
 
-            return states & ~state;
-        }
+		public static TeamPermissions UnSet(this TeamPermissions states, TeamPermissions state)
+		{
+			if ((int)states == 0)
+				return states;
 
-        public static IEnumerable<TeamPermissions> GetFlags(this TeamPermissions input)
-        {
-            return Enum.GetValues(typeof(TeamPermissions)).Cast<TeamPermissions>().Where(value => input.HasFlag(value));
-        }
-    }
+			if (states == state)
+				return TeamPermissions.None;
+
+			return states & ~state;
+		}
+
+		public static IEnumerable<TeamPermissions> GetFlags(this TeamPermissions input)
+		{
+			return Enum.GetValues(typeof(TeamPermissions)).Cast<TeamPermissions>().Where(value => input.HasFlag(value));
+		}
+	}
 }

@@ -14,21 +14,20 @@ import DoorManager from "./world/Doormanager";
 
 @Singleton
 export class Core {
-    private uiManager = new UiManager();
-    private interaction = new Interaction(this.uiManager);
-    private waste = new WasteCollector();
-    private lawn = new LawnMower();
-    private pizza = new PizzaDelivery();
+	private uiManager = new UiManager();
+	private interaction = new Interaction(this.uiManager);
+	private waste = new WasteCollector();
+	private lawn = new LawnMower();
+	private pizza = new PizzaDelivery();
 	private iplManager = new IPLManager()
 	private doorManager = new DoorManager();
 
-    constructor() {
-        alt.log('Loaded: client.mjs');
+	constructor() {
+		alt.log('Loaded: client.mjs');
 
-        alt.on('consoleCommand', () => {
-            alt.log('consoleCommand');
-            alt.emitServer("ClientConnectionComplete", "Test")
-        })
-    }
+		alt.on('consoleCommand', () => {
+			alt.log('consoleCommand');
+			alt.emitServer("ClientConnectionComplete", "Test")
+		})
+	}
 }
-

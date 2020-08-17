@@ -47,7 +47,7 @@ export class HUD {
 		})
 
 		alt.onServer("HUD:Hide", (isHidden) => {
-            this.uiManager.emit("HUD:SetData", "hidden", isHidden)
+	this.uiManager.emit("HUD:SetData", "hidden", isHidden)
 		})
 
 		alt.onServer("HUD:UpdateMoney", (amount) => {

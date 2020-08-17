@@ -1,9 +1,9 @@
-﻿namespace server.Peds
+namespace server.Peds
 {
-    public partial class Ped
-    {
-        public Ped()
-        {
-        }
-    }
+	public partial class Ped
+	{
+		public Ped()
+		{
+		}
+	}
 }

@@ -1,9 +1,9 @@
-﻿namespace server.Inventory.Items
+namespace server.Inventory.Items
 {
-    public partial class Item
-    {
-        public Item()
-        {
-        }
-    }
+	public partial class Item
+	{
+		public Item()
+		{
+		}
+	}
 }

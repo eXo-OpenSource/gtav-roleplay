@@ -8,13 +8,13 @@ const path = require("path");
 module.exports = merge.smart(common, {
 	mode: "development",
 	output: {
-        path: path.resolve(__dirname, "dist"),
-    },
+		path: path.resolve(__dirname, "dist"),
+	},
 	devServer: {
-        contentBase: path.join(__dirname, "dist"),
-        compress: true,
-        port: 8090,
-        historyApiFallback: true
+		contentBase: path.join(__dirname, "dist"),
+		compress: true,
+		port: 8090,
+		historyApiFallback: true
 	},
 	plugins: [
 		new HtmlWebpackPlugin({ title: "eXo UI" }),

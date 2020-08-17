@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using serialization;
@@ -6,50 +6,50 @@ using serialization.Extensions;
 
 namespace models.Teams
 {
-    public class TeamDto : Serializable<TeamDto>
-    {
-        public List<DepartmentDto> Departments;
-        public string Description;
-        public int Id;
-        public string Name;
-        
-        public override string SerializeObject()
-        {
-            using (var memoryStream = new MemoryStream())
-            {
-                using (var writer = new BinaryWriter(memoryStream))
-                {
-                    writer.Write(GetClassName());
+	public class TeamDto : Serializable<TeamDto>
+	{
+		public List<DepartmentDto> Departments;
+		public string Description;
+		public int Id;
+		public string Name;
 
-                    writer.Write(Departments);
-                    writer.Write(Description);
-                    writer.Write(Id);
-                    writer.Write(Name);
+		public override string SerializeObject()
+		{
+			using (var memoryStream = new MemoryStream())
+			{
+				using (var writer = new BinaryWriter(memoryStream))
+				{
+					writer.Write(GetClassName());
 
-                    return Convert.ToBase64String(memoryStream.ToArray());
-                }
-            }
-        }
+					writer.Write(Departments);
+					writer.Write(Description);
+					writer.Write(Id);
+					writer.Write(Name);
 
-        public override TeamDto DeserializeObject(string value)
-        {
-            using (var memoryStream = new MemoryStream(Convert.FromBase64String(value)))
-            {
-                using (var reader = new BinaryReader(memoryStream))
-                {
-                    var type = reader.ReadString();
+					return Convert.ToBase64String(memoryStream.ToArray());
+				}
+			}
+		}
 
-                    if (type != GetClassName())
-                        throw new ArgumentException($"Expected data from type {GetClassName()} got {type}.");
+		public override TeamDto DeserializeObject(string value)
+		{
+			using (var memoryStream = new MemoryStream(Convert.FromBase64String(value)))
+			{
+				using (var reader = new BinaryReader(memoryStream))
+				{
+					var type = reader.ReadString();
 
-                    Departments = reader.ReadListSerializable<DepartmentDto>();
-                    Description = reader.ReadString();
-                    Id = reader.ReadInt32();
-                    Name = reader.ReadString();
+					if (type != GetClassName())
+						throw new ArgumentException($"Expected data from type {GetClassName()} got {type}.");
 
-                    return this;
-                }
-            }
-        }
-    }
+					Departments = reader.ReadListSerializable<DepartmentDto>();
+					Description = reader.ReadString();
+					Id = reader.ReadInt32();
+					Name = reader.ReadString();
+
+					return this;
+				}
+			}
+		}
+	}
 }

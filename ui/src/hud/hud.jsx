@@ -33,10 +33,10 @@ class HUD extends Component {
 	}
 
 	setData(key, value) {
-        this.setState({ [key]: value})
-    }
-	
-	render() {		
+		this.setState({ [key]: value})
+	}
+
+	render() {
 		if (!this.state.hidden) {
 			return (
 				<div className="select-none">

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using serialization;
@@ -6,48 +6,48 @@ using serialization.Extensions;
 
 namespace models.Shops.Vehicles
 {
-    [Serializable]
-    public class BuyMenuDto : Serializable<BuyMenuDto>
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public Dictionary<int, VehicleDataDto> Vehicles { get; set; }
-        
-        public override string SerializeObject()
-        {
-            using (var memoryStream = new MemoryStream())
-            {
-                using (var writer = new BinaryWriter(memoryStream))
-                {
-                    writer.Write(GetClassName());
+	[Serializable]
+	public class BuyMenuDto : Serializable<BuyMenuDto>
+	{
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public Dictionary<int, VehicleDataDto> Vehicles { get; set; }
 
-                    writer.Write(Id);
-                    writer.Write(Name);
-                    writer.Write(Vehicles);
+		public override string SerializeObject()
+		{
+			using (var memoryStream = new MemoryStream())
+			{
+				using (var writer = new BinaryWriter(memoryStream))
+				{
+					writer.Write(GetClassName());
 
-                    return Convert.ToBase64String(memoryStream.ToArray());
-                }
-            }
-        }
+					writer.Write(Id);
+					writer.Write(Name);
+					writer.Write(Vehicles);
 
-        public override BuyMenuDto DeserializeObject(string value)
-        {
-            using (var memoryStream = new MemoryStream(Convert.FromBase64String(value)))
-            {
-                using (var reader = new BinaryReader(memoryStream))
-                {
-                    var type = reader.ReadString();
+					return Convert.ToBase64String(memoryStream.ToArray());
+				}
+			}
+		}
 
-                    if (type != GetClassName())
-                        throw new ArgumentException($"Expected data from type {GetClassName()} got {type}.");
+		public override BuyMenuDto DeserializeObject(string value)
+		{
+			using (var memoryStream = new MemoryStream(Convert.FromBase64String(value)))
+			{
+				using (var reader = new BinaryReader(memoryStream))
+				{
+					var type = reader.ReadString();
 
-                    Id = reader.ReadInt32();
-                    Name = reader.ReadString();
-                    Vehicles = reader.ReadDictionarySerializable<int, VehicleDataDto>();
+					if (type != GetClassName())
+						throw new ArgumentException($"Expected data from type {GetClassName()} got {type}.");
 
-                    return this;
-                }
-            }
-        }
-    }
+					Id = reader.ReadInt32();
+					Name = reader.ReadString();
+					Vehicles = reader.ReadDictionarySerializable<int, VehicleDataDto>();
+
+					return this;
+				}
+			}
+		}
+	}
 }

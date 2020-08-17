@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,53 +12,53 @@ using Directory = System.IO.Directory;
 
 namespace server.PluginManager
 {
-    public class PluginManager : IManager, IUpdateable, IDisposable
-    {
-        private static readonly string PluginsPath = Path.Combine(Directory.GetCurrentDirectory(), "resources", Alt.Server.Resource.Name,
-            "plugins");
+	public class PluginManager : IManager, IUpdateable, IDisposable
+	{
+		private static readonly string PluginsPath = Path.Combine(Directory.GetCurrentDirectory(), "resources", Alt.Server.Resource.Name,
+			"plugins");
 
-        private readonly RuntimeIndexer _indexer;
-        private readonly List<IPlugin> _plugins;
+		private readonly RuntimeIndexer _indexer;
+		private readonly List<IPlugin> _plugins;
 
-        public PluginManager(IServiceProvider serviceProvider, RuntimeIndexer indexer)
-        {
-            _indexer = indexer;
-            _plugins = new List<IPlugin>();
-            IndexPlugins();
-            LoadPlugins(serviceProvider);
-        }
+		public PluginManager(IServiceProvider serviceProvider, RuntimeIndexer indexer)
+		{
+			_indexer = indexer;
+			_plugins = new List<IPlugin>();
+			IndexPlugins();
+			LoadPlugins(serviceProvider);
+		}
 
-        public void Dispose()
-        {
-            _plugins.ForEach(plugin => plugin.Dispose());
-        }
+		public void Dispose()
+		{
+			_plugins.ForEach(plugin => plugin.Dispose());
+		}
 
-        private void IndexPlugins()
-        {
-            if (!Directory.Exists(PluginsPath))
-                return;
+		private void IndexPlugins()
+		{
+			if (!Directory.Exists(PluginsPath))
+				return;
 
-            var plugins = Directory
-                .GetFiles(PluginsPath, "*.plugin.dll", SearchOption.TopDirectoryOnly)
-                .ToList().Select(Alt.LoadAssemblyFromPath);
+			var plugins = Directory
+				.GetFiles(PluginsPath, "*.plugin.dll", SearchOption.TopDirectoryOnly)
+				.ToList().Select(Alt.LoadAssemblyFromPath);
 
-            foreach (var plugin in plugins)
-            {
-                _indexer.IndexImplementsInterface<IPlugin>(plugin, type =>
-                {
-                    _plugins.Add(Activator.CreateInstance(type) as IPlugin);
-                });
-            }
-        }
+			foreach (var plugin in plugins)
+			{
+				_indexer.IndexImplementsInterface<IPlugin>(plugin, type =>
+				{
+					_plugins.Add(Activator.CreateInstance(type) as IPlugin);
+				});
+			}
+		}
 
-        private void LoadPlugins(IServiceProvider serviceProvider)
-        {
-            _plugins.ForEach(plugin => plugin.Load(serviceProvider));
-        }
+		private void LoadPlugins(IServiceProvider serviceProvider)
+		{
+			_plugins.ForEach(plugin => plugin.Load(serviceProvider));
+		}
 
-        public void Tick()
-        {
-            _plugins.ForEach(plugin => plugin.Tick());
-        }
-    }
+		public void Tick()
+		{
+			_plugins.ForEach(plugin => plugin.Tick());
+		}
+	}
 }

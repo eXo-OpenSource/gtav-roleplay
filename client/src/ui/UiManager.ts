@@ -37,14 +37,14 @@ export class UiManager {
 		this.loadEvents()
 	}
 
-    loadEvents() {
-        alt.log('Loaded: UI Manager Events');
+	loadEvents() {
+		alt.log('Loaded: UI Manager Events');
 
-        alt.onServer('Ui:ShowFaceFeatures', () => new FaceFeaturesUi(this));
+		alt.onServer('Ui:ShowFaceFeatures', () => new FaceFeaturesUi(this));
 
-        alt.onServer('Ui:ShowRegisterLogin', () => new RegisterLogin(this));
+		alt.onServer('Ui:ShowRegisterLogin', () => new RegisterLogin(this));
 
-        this.mainView.on("ready", () => alt.emitServer("ready"))
+		this.mainView.on("ready", () => alt.emitServer("ready"))
 
 		alt.onServer("Toast:AddTimed", (name, text, time) => {
 			this.insertTimedToast(name, text, time)
@@ -61,9 +61,9 @@ export class UiManager {
 		alt.onServer("Progress:Active", (toggle) => {
 			this.emit("Progress:Active", toggle)
 		})
-    }
+	}
 
-    reset() {
+	reset() {
 		this.navigate("/", false)
 		Cursor.show(false)
 	}

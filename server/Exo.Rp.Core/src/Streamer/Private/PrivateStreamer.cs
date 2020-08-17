@@ -76,144 +76,144 @@ namespace server.Streamer.Private
 			this.idProvider = idProvider;
 		}
 
-		 private void OnEntityCreate(IClient client, IEntity entity, LinkedList<string> changedKeys)
-        {
-            Dictionary<string, object> data;
-            if (changedKeys != null) {
-                data = new Dictionary<string, object>();
-                var changedKey = changedKeys.First;
-                while (changedKey != null)
-                {
-                    var key = changedKey.Value;
-                    if (entity.TryGetThreadLocalData(key, out var value))
-                    {
-                        data[key] = value;
-                    }
-                    else
-                    {
-                        data[key] = null;
-                    }
-                    changedKey = changedKey.Next;
-                }
-            }
-            else
-            {
-                data = null;
-            }
-            networkLayer.SendEvent(client, new EntityCreateEvent(entity, data));
+		private void OnEntityCreate(IClient client, IEntity entity, LinkedList<string> changedKeys)
+		{
+			Dictionary<string, object> data;
+			if (changedKeys != null) {
+				data = new Dictionary<string, object>();
+				var changedKey = changedKeys.First;
+				while (changedKey != null)
+				{
+					var key = changedKey.Value;
+					if (entity.TryGetThreadLocalData(key, out var value))
+					{
+						data[key] = value;
+					}
+					else
+					{
+						data[key] = null;
+					}
+					changedKey = changedKey.Next;
+				}
+			}
+			else
+			{
+				data = null;
+			}
+			networkLayer.SendEvent(client, new EntityCreateEvent(entity, data));
 
-            var callback = EntityCreateCallbacks.First;
-            while (callback != null)
-            {
-                callback.Value(client, entity);
-                callback = callback.Next;
-            }
-        }
+			var callback = EntityCreateCallbacks.First;
+			while (callback != null)
+			{
+				callback.Value(client, entity);
+				callback = callback.Next;
+			}
+		}
 
-        private void OnEntityRemove(IClient client, IEntity entity)
-        {
-            networkLayer.SendEvent(client, new EntityRemoveEvent(entity));
-            var callback = EntityRemoveCallbacks.First;
-            while (callback != null)
-            {
-                callback.Value(client, entity);
-                callback = callback.Next;
-            }
-        }
+		private void OnEntityRemove(IClient client, IEntity entity)
+		{
+			networkLayer.SendEvent(client, new EntityRemoveEvent(entity));
+			var callback = EntityRemoveCallbacks.First;
+			while (callback != null)
+			{
+				callback.Value(client, entity);
+				callback = callback.Next;
+			}
+		}
 
-        private void OnEntityDataChange(IClient client, IEntity entity, LinkedList<string> changedKeys)
-        {
-            Dictionary<string, object> data;
-            if (changedKeys != null) {
-                data = new Dictionary<string, object>();
-                var changedKey = changedKeys.First;
-                while (changedKey != null)
-                {
-                    var key = changedKey.Value;
-                    if (entity.TryGetThreadLocalData(key, out var value))
-                    {
-                        data[key] = value;
-                    }
-                    else
-                    {
-                        data[key] = null;
-                    }
-                    changedKey = changedKey.Next;
-                }
-            }
-            else
-            {
-                data = null;
-            }
-            networkLayer.SendEvent(client, new EntityDataChangeEvent(entity, data));
-        }
+		private void OnEntityDataChange(IClient client, IEntity entity, LinkedList<string> changedKeys)
+		{
+			Dictionary<string, object> data;
+			if (changedKeys != null) {
+				data = new Dictionary<string, object>();
+				var changedKey = changedKeys.First;
+				while (changedKey != null)
+				{
+					var key = changedKey.Value;
+					if (entity.TryGetThreadLocalData(key, out var value))
+					{
+						data[key] = value;
+					}
+					else
+					{
+						data[key] = null;
+					}
+					changedKey = changedKey.Next;
+				}
+			}
+			else
+			{
+				data = null;
+			}
+			networkLayer.SendEvent(client, new EntityDataChangeEvent(entity, data));
+		}
 
-        private void OnEntityPositionChange(IClient client, IEntity entity, Vector3 newPosition)
-        {
-            networkLayer.SendEvent(client, new EntityPositionUpdateEvent(entity, newPosition));
-        }
+		private void OnEntityPositionChange(IClient client, IEntity entity, Vector3 newPosition)
+		{
+			networkLayer.SendEvent(client, new EntityPositionUpdateEvent(entity, newPosition));
+		}
 
-        private void OnEntityClearCache(IClient client, IEntity entity)
-        {
-            networkLayer.SendEvent(client, new EntityClearCacheEvent(entity));
-        }
+		private void OnEntityClearCache(IClient client, IEntity entity)
+		{
+			networkLayer.SendEvent(client, new EntityClearCacheEvent(entity));
+		}
 
-        public void AddEntity(PrivateEntity entity)
-        {
-            entityRepository.Add(entity);
-        }
+		public void AddEntity(PrivateEntity entity)
+		{
+			entityRepository.Add(entity);
+		}
 
-        public void RemoveEntity(PrivateEntity entity)
-        {
-            entityRepository.Remove(entity);
-            idProvider?.Free(entity.Id);
-        }
+		public void RemoveEntity(PrivateEntity entity)
+		{
+			entityRepository.Remove(entity);
+			idProvider?.Free(entity.Id);
+		}
 
-        public void UpdateEntity(PrivateEntity entity)
-        {
-            entityRepository.Update(entity);
-        }
+		public void UpdateEntity(PrivateEntity entity)
+		{
+			entityRepository.Update(entity);
+		}
 
-        public void UpdateEntityData(PrivateEntity entity, string key, object value)
-        {
-            entityRepository.UpdateData(entity, key, value);
-        }
+		public void UpdateEntityData(PrivateEntity entity, string key, object value)
+		{
+			entityRepository.UpdateData(entity, key, value);
+		}
 
-        public void ResetEntityData(PrivateEntity entity, string key)
-        {
-            entityRepository.ResetData(entity, key);
-        }
+		public void ResetEntityData(PrivateEntity entity, string key)
+		{
+			entityRepository.ResetData(entity, key);
+		}
 
-        public bool TryGetEntity(ulong id, ulong type, out IEntity entity)
-        {
-            return entityRepository.TryGet(id, type, out entity);
-        }
+		public bool TryGetEntity(ulong id, ulong type, out IEntity entity)
+		{
+			return entityRepository.TryGet(id, type, out entity);
+		}
 
-        public IEnumerable<IEntity> GetAllEntities()
-        {
-            return entityRepository.GetAll();
-        }
+		public IEnumerable<IEntity> GetAllEntities()
+		{
+			return entityRepository.GetAll();
+		}
 
-        public List<IEntity> FindEntities(Vector3 position, int dimension)
-        {
-            var foundEntities = new List<IEntity>();
-            for (int i = 0, length = entityThreads.Length; i < length; i++)
-            {
-                lock (clientThreadRepositories[i].Mutex)
-                {
-                    foundEntities.AddRange(spatialPartitions[i].Find(position, dimension));
-                }
-            }
+		public List<IEntity> FindEntities(Vector3 position, int dimension)
+		{
+			var foundEntities = new List<IEntity>();
+			for (int i = 0, length = entityThreads.Length; i < length; i++)
+			{
+				lock (clientThreadRepositories[i].Mutex)
+				{
+					foundEntities.AddRange(spatialPartitions[i].Find(position, dimension));
+				}
+			}
 
-            return foundEntities;
-        }
+			return foundEntities;
+		}
 
-        public void Stop()
-        {
-            foreach (var entityThread in entityThreads)
-            {
-                entityThread.Stop();
-            }
-        }
+		public void Stop()
+		{
+			foreach (var entityThread in entityThreads)
+			{
+				entityThread.Stop();
+			}
+		}
 	}
 }

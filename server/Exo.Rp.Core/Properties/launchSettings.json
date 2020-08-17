@@ -1,10 +1,10 @@
 {
-  "profiles": {
-    "Exo.Rp.Core": {
-      "commandName": "Executable",
-      "executablePath": ".\\altv-server.exe",
-      "workingDirectory": "..\\..\\bin\\altv",
-      "sqlDebugging": true
-    }
-  }
+	"profiles": {
+		"Exo.Rp.Core": {
+			"commandName": "Executable",
+			"executablePath": ".\\altv-server.exe",
+			"workingDirectory": "..\\..\\bin\\altv",
+			"sqlDebugging": true
+		}
+	}
 }

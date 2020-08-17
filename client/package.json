@@ -1,19 +1,19 @@
 {
-  "name": "exo.rp.core",
-  "version": "0.0.0",
-  "description": "Exo.Rp.Core",
-  "main": "app.js",
-  "author": {
-    "name": ""
-  },
-  "scripts": {
-    "build": "tsc --build",
-    "clean": "tsc --build --clean"
-  },
-  "devDependencies": {
-    "@altv/types-client": "^1.1.0",
-    "@altv/types-natives": "^1.1.0",
-    "@types/node": "^8.0.14",
-    "typescript": "^3.9.7"
-  }
+	"name": "exo.rp.core",
+	"version": "0.0.0",
+	"description": "Exo.Rp.Core",
+	"main": "app.js",
+	"author": {
+		"name": ""
+	},
+	"scripts": {
+		"build": "tsc --build",
+		"clean": "tsc --build --clean"
+	},
+	"devDependencies": {
+		"@altv/types-client": "^1.1.0",
+		"@altv/types-natives": "^1.1.0",
+		"@types/node": "^8.0.14",
+		"typescript": "^3.9.7"
+	}
 }

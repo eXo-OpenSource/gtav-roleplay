@@ -4,31 +4,31 @@
 /* purgecss end ignore */
 
 .btn {
-    @apply font-bold py-2 px-4 rounded-sm;
+	@apply font-bold py-2 px-4 rounded-sm;
 }
 
 .btn-primary {
-    @apply bg-blue-500 text-white;
+	@apply bg-blue-500 text-white;
 }
 
 .btn-primary:hover {
-    @apply bg-blue-700;
+	@apply bg-blue-700;
 }
 
 .card {
-    @apply rounded-lg shadow-lg;
+	@apply rounded-lg shadow-lg;
 }
 
 .card-header {
-    @apply py-4 text-xl rounded-t-lg text-white text-center bg-blue-400;
+	@apply py-4 text-xl rounded-t-lg text-white text-center bg-blue-400;
 }
 
 .card-body {
-    @apply py-6 px-6 bg-gray-800 opacity-75;
+	@apply py-6 px-6 bg-gray-800 opacity-75;
 }
 
 .card-footer {
-    @apply px-6 py-4 card-footer bg-gray-900 rounded-b-lg;
+	@apply px-6 py-4 card-footer bg-gray-900 rounded-b-lg;
 }
 
 .edit {
@@ -152,17 +152,17 @@
 	white-space: nowrap;
 	margin: 0 auto;
 	letter-spacing: .15em;
-	animation: 
-	  typing 30s steps(115, end),
-	  blink-caret .5s step-end infinite;
+	animation:
+	typing 30s steps(115, end),
+	blink-caret .5s step-end infinite;
   }
-  
+
   /* The typing effect */
 @keyframes typing {
 	from { width: 0 }
 	to { width: 100% }
 }
-  
+
   /* The typewriter cursor effect */
 @keyframes blink-caret {
 	from, to { border-color: transparent }

@@ -1,4 +1,4 @@
-﻿namespace server
+namespace server
 {
-    public interface IManager : IService { }
+	public interface IManager : IService { }
 }

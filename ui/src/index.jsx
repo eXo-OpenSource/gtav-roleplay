@@ -27,8 +27,8 @@ class App extends Component {
 		this.routerRef = React.createRef()
 	}
 
-    render() {
-        return (
+	render() {
+		return (
 			<div>
 				<Router ref={this.routerRef}>
 					<Switch>
@@ -47,9 +47,9 @@ class App extends Component {
 				<Progress />
 			</div>
 		)
-    }
+	}
 
-    componentDidMount() {
+	componentDidMount() {
 		if ("alt" in window) {
 			alt.on("locationChange", this.changeLocation.bind(this));
 			alt.emit("ready");
