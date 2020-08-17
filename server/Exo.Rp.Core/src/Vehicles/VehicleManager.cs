@@ -10,6 +10,7 @@ using AltV.Net.Enums;
 using AutoMapper;
 using models.Enums;
 using server.Database;
+using server.Environment;
 using server.Extensions;
 using server.Inventory.Inventories;
 using server.Translation;
@@ -173,7 +174,7 @@ namespace server.Vehicles
             return veh;
         }
 
-        public RentVehicle CreateRentedVehicle(VehicleModel hash, Position position, float heading, int time,
+        public RentVehicle CreateRentedVehicle(IPlayer tempOwner, VehicleModel hash, Position position, float heading, int time,
             Rgba? color1T, Rgba? color2T, string plate = "Rented")
         {
             if (color1T == null) color1T = _defaultColor;
@@ -184,7 +185,7 @@ namespace server.Vehicles
             var veh = new RentVehicle()
             {
                 Id = _rentedVehicleId,
-                OwnerType = OwnerType.None,
+                OwnerType = OwnerType.RentedCar,
                 OwnerId = -1,
                 Plate = plate,
                 Model = hash,
@@ -204,17 +205,11 @@ namespace server.Vehicles
 
             Task.Delay(time).ContinueWith(_ =>
             {
-                Alt.Log("Works");
+                CarRent.RemoveVeh(tempOwner);
                 veh.handle.Remove();
             });
-
-            try {
-                AddVehicle<RentVehicle>(veh, true);
-            }
-            catch(Exception e)
-            {
-                Alt.Log(e.Message);
-            }
+            
+            AddVehicle<RentVehicle>(veh, true);
             _rentedVehicleId++;
             return veh;
         }

@@ -2,7 +2,7 @@ using AltV.Net;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using System.Collections.Generic;
-using IPlayer = server.Players.Player;
+using IPlayer = server.Players.IPlayer;
 using server.Players.Characters;
 using Vehicle = server.Vehicles.Vehicle;
 using AltV.Net.Enums;
@@ -10,6 +10,7 @@ using server.Streamer;
 using server.Streamer.Entities;
 using server.Vehicles.Types;
 using server.Vehicles;
+using System;
 
 namespace server.Environment
 {
@@ -18,6 +19,7 @@ namespace server.Environment
         int loadedCarRents = 0;
 
         private Dictionary<int, Colshape.Colshape> colshapes;
+        private static Dictionary<int, Vehicle> vehicles;
 
         private readonly Position[] rentSpots =
         {
@@ -27,15 +29,14 @@ namespace server.Environment
         public CarRent()
         {
             colshapes = new Dictionary<int, Colshape.Colshape>();
+            vehicles = new Dictionary<int, Vehicle>();
             LoadCarRents();
         }
 
         public void LoadCarRents()
         {
-            Alt.Log("init car rent");
             foreach (Position _carRent in rentSpots)
             {
-                Alt.Log(_carRent.ToString());
                 Core.GetService<PublicStreamer>().AddGlobalBlip(new StaticBlip
                 {
                     Color = 5,
@@ -43,13 +44,46 @@ namespace server.Environment
                     X = _carRent.X,
                     Y = _carRent.Y,
                     Z = _carRent.Z,
-                    SpriteId = 198
+                    SpriteId = 198,
                 });
                 colshapes.Add(loadedCarRents, (Colshape.Colshape)Alt.CreateColShapeSphere(_carRent, 1.9f));
                 colshapes[loadedCarRents].OnColShapeEnter += OnColshapeEnter;
                 loadedCarRents++;
             }
-            Alt.Log($"Loaded {loadedCarRents} carRents");
+        }
+
+        public static Vehicle SpawnVehicle(IPlayer player, string vehicle, int price)
+        {
+            if (!vehicles.ContainsKey(player.GetId()))
+            {
+                if (price <= player.GetCharacter().GetMoney()) {
+                    var veh = Core.GetService<VehicleManager>().CreateRentedVehicle(player, (VehicleModel)Enum.Parse(typeof(VehicleModel), vehicle),
+                        new Position(-986.8756713867188f, -2690.510986328125f, 14.04065227508545f), 0, 3600000, Rgba.Zero, Rgba.Zero);
+
+                    player.GetCharacter().TakeMoney(price, "Fahrzeugverleih");
+                    player.SendSuccess($"Fahrzeug gemietet! (-${price}");
+                    player.SetIntoVehicle(veh.handle, -1);
+                    vehicles.Add(player.GetId(), veh);
+                    player.Emit("CarRent:CloseUI");
+                    return veh;
+                } else
+                {
+                    player.SendError("Du hast nicht genug Geld!");
+                    return null;
+                }
+            }
+            player.SendError("Du hast bereits ein Leihfahrzeug!");
+            return null;
+        }
+
+        public static void RemoveVeh(IPlayer player)
+        {
+            if (vehicles.ContainsKey(player.GetId()))
+            {
+                vehicles.Remove(player.GetId());
+                player.Emit("CarRent:CloseUI");
+                player.SendError("Dein Leihfahrzeug ist abgelaufen!");
+            }
         }
 
         public void OnColshapeEnter(Colshape.Colshape col, IEntity entity)

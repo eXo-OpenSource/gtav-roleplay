@@ -9,7 +9,8 @@ class CarRent extends Component {
 
   rentCar(e) {
     let vehType = e.target.getAttribute("type")
-    alt.emit("CarRent:Rent", vehType)
+    let price = e.target.getAttribute("price")
+    alt.emit("CarRent:Rent", vehType, Number(price))
   }
 
   render() {
@@ -28,7 +29,7 @@ class CarRent extends Component {
               </div>
               <div class="flex flex-col items-center justify-center w-full h-full py-6 rounded-b-lg bg-blue-500">
               <p class="text-xl text-white">1 Stunde</p>
-              <button type="Faggio" class="w-5/6 py-2 mt-2 font-semibold text-center uppercase bg-white border border-transparent rounded text-blue-500" onClick={this.rentCar}>Mieten</button>
+              <button price="75" type="Faggio" class="w-5/6 py-2 mt-2 font-semibold text-center uppercase bg-white border border-transparent rounded text-blue-500" onClick={this.rentCar}>Mieten</button>
               </div>
             </label>
             </div>
@@ -44,7 +45,7 @@ class CarRent extends Component {
                 </div>
                 <div class="flex flex-col items-center justify-center w-full h-full py-12 rounded-b-lg bg-blue-700">
                 <p class="text-xl text-white">1 Stunde</p>
-                <button type="Bmx" class="w-5/6 py-2 mt-2 font-semibold text-center uppercase bg-white border border-transparent rounded text-blue-500" onClick={this.rentCar}>Jetzt mieten</button>
+                <button price="25" type="Bmx" class="w-5/6 py-2 mt-2 font-semibold text-center uppercase bg-white border border-transparent rounded text-blue-500" onClick={this.rentCar}>Jetzt mieten</button>
               </div>
             </label>
             </div>
@@ -58,7 +59,7 @@ class CarRent extends Component {
               </div>
               <div class="flex flex-col items-center justify-center w-full h-full py-6 rounded-b-lg bg-blue-500">
               <p class="text-xl text-white">1 Stunde</p>
-              <button type="Asbo" class="w-5/6 py-2 mt-2 font-semibold text-center uppercase bg-white border border-transparent rounded text-blue-500" onClick={this.rentCar}>Mieten</button>
+              <button price="125" type="Asbo" class="w-5/6 py-2 mt-2 font-semibold text-center uppercase bg-white border border-transparent rounded text-blue-500" onClick={this.rentCar}>Mieten</button>
               </div>
             </label>
             </div>

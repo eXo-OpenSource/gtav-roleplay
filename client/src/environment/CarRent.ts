@@ -9,26 +9,31 @@ export class CarRent {
 
   public constructor(uiManager) {
     this.uiManager = uiManager
-    this.visible = false;
+    this.visible = false
 
     alt.onServer("CarRent:OpenUI", () => {
-      alt.toggleGameControls(false)
-      this.uiManager.navigate("/carrent", true)
-      this.visible = true;
+      if (!this.visible) {
+        alt.toggleGameControls(false)
+        this.uiManager.navigate("/carrent", true)
+        this.visible = true
+      }
     })
 
-    this.uiManager.on("CarRent:Rent", (vehicle: string) => {
-      alt.emitServer("CarRent:SpawnVehicle", vehicle)
+    alt.onServer("CarRent:CloseUI", () => this.resetUI())
+
+    this.uiManager.on("CarRent:Rent", (vehicle: string, price: number) => {
+      alt.emitServer("CarRent:SpawnVehicle", vehicle, price)
     })
 
     alt.on("keyup", (key: number) => {
-      if (key === 32) {
-        if (this.visible) {
-          this.uiManager.reset()
-          this.visible = false
-          alt.toggleGameControls(true)
-        }
-      }
+      if (key === 32 && this.visible)
+        this.resetUI()
     })
+  }
+
+  resetUI() {
+    alt.toggleGameControls(true)
+    this.uiManager.reset()
+    this.visible = false
   }
 }
