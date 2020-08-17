@@ -109,7 +109,7 @@ manual_fix_ident:
     - linux
     - dind
   before_script:
-    - git remote set-url origin https://deploybot:${CI_PUSH_TOKEN}@git.exo.cool:gtav/altv/altv-gamemode.git
+    - git remote set-url origin https://deploybot:${CI_PUSH_TOKEN}@git.exo.cool/gtav/altv/altv-gamemode.git
     - git config --global user.email 'gitlab@exo-reallife.de'
     - git config --global user.name 'deploybot'
   script:
