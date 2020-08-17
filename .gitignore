@@ -46,3 +46,7 @@ client/build/
 *.bundle.js.map.gz
 index.html
 index.html.gz
+
+# CI
+exov-client.resource
+connect.json
