@@ -45,7 +45,7 @@ namespace server.Jobs.Jobs
             Name = "Farmer";
             Description = "Bepflanze, Ernte und Verkaufe als Farmer!";
             PedPosition = new Position(2320.17f, 5078.815f, 45.82973f);
-
+            SpriteId = 496;
             JobUpgrades.Add(new JobUpgradeCategoryDto
             {
                 Id = 1,

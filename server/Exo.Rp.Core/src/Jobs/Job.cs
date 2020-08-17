@@ -9,6 +9,8 @@ using models.Popup;
 using Newtonsoft.Json;
 using server.Players;
 using server.Players.Characters;
+using server.Streamer;
+using server.Streamer.Entities;
 using server.Util.Log;
 using server.Vehicles;
 using server.Vehicles.Types;
@@ -27,6 +29,7 @@ namespace server.Jobs
         public List<JobUpgradeCategoryDto> JobUpgrades;
         public Dictionary<IPlayer, TemporaryVehicle> JobVehicles;
         public int MaxPlayers = 1;
+        public int SpriteId;
         public string Name;
         public Position PedPosition;
 
@@ -40,7 +43,15 @@ namespace server.Jobs
 
         public void Init()
         {
-            Alt.CreateBlip(BlipType.Cont, PedPosition);
+            Core.GetService<PublicStreamer>().AddGlobalBlip(new StaticBlip
+            {
+                Color = 4,
+                Name = Name,
+                X = PedPosition.X,
+                Y = PedPosition.Y,
+                Z = PedPosition.Z,
+                SpriteId = SpriteId,
+            });
 
             var col = (Colshape.Colshape) Alt.CreateColShapeSphere(PedPosition, 3);
             col.OnColShapeEnter += OnColEnter;

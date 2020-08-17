@@ -18,8 +18,9 @@ namespace server.Jobs.Jobs
 
         public Miner(int jobId) : base(jobId)
         {
-            Name = "Bergbau-Arbeiter";
+            Name = "Bergbau";
             Description = "Gewinne wertvolle Erze als Bergbau-Arbeiter!";
+            SpriteId = 557;
             PedPosition = new Position(2947.522f, 2743.842f, 43.35672f);
 
             Init();

@@ -64,6 +64,7 @@ namespace server.Jobs.Jobs
         public LawnCaretaker(int jobId) : base(jobId)
         {
             Name = "Rasenpfleger";
+            SpriteId = 237;
             Description = "Mähe den Rasen!";
             PedPosition = new Position(-1352.778f, 125.5773f, 56.23866f);
             Init();

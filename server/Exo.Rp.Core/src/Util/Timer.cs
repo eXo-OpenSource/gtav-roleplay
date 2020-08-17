@@ -7,9 +7,7 @@ namespace server.Util
 {
     public class TimerHandler
     {
-
         // Use for example like: this.timer = new Util.TimerHandler(() =>{this.giveGo();}, 222);
-
         private Timer timer { get; set; }
         private Action callback { get; set; }
 
@@ -17,7 +15,7 @@ namespace server.Util
         {
             this.callback = callback;
 
-            this.timer = new Timer(
+            timer = new Timer(
                 new TimerCallback(TimerCallback),
                 null,
                 milliseconds,
@@ -27,12 +25,11 @@ namespace server.Util
         public void StopTimeout()
         {
             timer.Change(Timeout.Infinite, Timeout.Infinite);
-
         }
 
         private void TimerCallback(object state)
         {
-            this.callback();
+            callback();
             timer.Change(
                 Timeout.Infinite,
                 Timeout.Infinite);

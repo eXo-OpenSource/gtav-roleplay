@@ -31,6 +31,7 @@ namespace server.Jobs.Jobs
         public WasteCollector(int jobId) : base(jobId)
         {
             Name = "Müllabfuhr";
+            SpriteId = 318;
             Description = "Fahre mit dem Müllwagen durch Los Santos und sammle Mülltonnen!";
             PedPosition = new Position(-570.5051f, 310.7722f, 84.57085f);
             MaxPlayers = 4;

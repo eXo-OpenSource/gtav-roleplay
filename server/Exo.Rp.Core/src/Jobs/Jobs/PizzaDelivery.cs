@@ -23,6 +23,7 @@ namespace server.Jobs.Jobs
             Name = "Pizzalieferant";
             Description = "Teile Pizza in der Stadt aus!";
             PedPosition = new Position(-1529.1692f, -908.7824f, 10.155273f);
+            SpriteId = 267;
             Init();
         }
 
