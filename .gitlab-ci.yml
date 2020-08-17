@@ -64,7 +64,7 @@ sentry_job:
 deploy_job_develop:
   image: appropriate/curl
   stage: deploy
-  needs: build_job
+  needs: ["build_job"]
   tags:
     - linux
     - dind
@@ -79,7 +79,7 @@ deploy_job_develop:
 deploy_cdn:
   image: appropriate/curl # minio/mc -- doesn't work correctly
   stage: deploy
-  needs: build_cdn_job
+  needs: ["build_cdn_job"]
   tags:
     - linux
     - dind
