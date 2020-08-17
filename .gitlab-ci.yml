@@ -75,15 +75,17 @@ deploy_job_develop:
     - master
 
 deploy_cdn:
-  image: minio/mc
+  image: appropriate/curl # minio/mc -- doesn't work correctly
   stage: deploy
   tags:
     - linux
     - dind
   script:
-    - alias set exo https://static.exo.cool $MINIO_ACCESS_KEY $MINIO_SECRET_KEY
-    - cp connect.json          exo/exov-static/resources/pack/
-    - cp exov-client.resource  exo/exov-static/resources/pack/
+    - curl https://dl.min.io/client/mc/release/linux-amd64/mc --output mc
+    - chmod +x mc
+    - ./mc alias set exo https://static.exo.cool $MINIO_ACCESS_KEY $MINIO_SECRET_KEY
+    - ./mc cp connect.json          exo/exov-static/resources/pack/
+    - ./mc cp exov-client.resource  exo/exov-static/resources/pack/
   only:
     - master
     - release/production
