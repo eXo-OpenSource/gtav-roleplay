@@ -1,10 +1,10 @@
 namespace models.Enums
 {
-	public enum TeamType
-	{
-		State,
-		Public,
-		Private,
-		Gang
-	}
+    public enum TeamType
+    {
+        State,
+        Public,
+        Private,
+        Gang
+    }
 }

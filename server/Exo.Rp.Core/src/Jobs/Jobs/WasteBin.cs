@@ -7,19 +7,19 @@ using Object = AltV.Net.Elements.Entities.IWorldObject;
 
 namespace server.Jobs.Jobs
 {
-	public class WasteBin
-	{
-		public StreamObject BinObject { get; set; }
-		public Colshape.Colshape Col { get; set; }
-		public bool Full { get; set; }
+    public class WasteBin
+    {
+        public StreamObject BinObject { get; set; }
+        public Colshape.Colshape Col { get; set; }
+        public bool Full { get; set; }
 
-		public PrivateEntity Blip { get; set; }
+        public PrivateEntity Blip { get; set; }
 
-		public void Destroy()
-		{
-			if (Col.Exists) Col.Remove();
-			Core.GetService<PublicStreamer>().RemoveObject(BinObject);
-			Full = false;
-		}
-	}
+        public void Destroy()
+        {
+            if (Col.Exists) Col.Remove();
+            Core.GetService<PublicStreamer>().RemoveObject(BinObject);
+            Full = false;
+        }
+    }
 }

@@ -1,7 +1,7 @@
 namespace models.Enums
 {
-	public enum ItemModel
-	{
-		Smartphone, Apfel
-	}
+    public enum ItemModel
+    {
+        Smartphone, Apfel
+    }
 }

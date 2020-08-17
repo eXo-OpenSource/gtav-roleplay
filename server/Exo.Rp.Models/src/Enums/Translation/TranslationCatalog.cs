@@ -1,7 +1,7 @@
 namespace models.Enums.Translation
 {
-	public enum TranslationCatalog
-	{
-		General = 0
-	}
+    public enum TranslationCatalog
+    {
+        General = 0
+    }
 }

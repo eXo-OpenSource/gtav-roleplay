@@ -2,15 +2,15 @@ using System.Collections.Generic;
 
 namespace server.Jobs
 {
-	public class CharacterJobData
-	{
-		public Dictionary<int, Dictionary<int, int>> Upgrades { get; set; } // JobId | CategoryId | UpgradeId
-		public Dictionary<int, int> Points { get; set; } // JobId | Points
+    public class CharacterJobData
+    {
+        public Dictionary<int, Dictionary<int, int>> Upgrades { get; set; } // JobId | CategoryId | UpgradeId
+        public Dictionary<int, int> Points { get; set; } // JobId | Points
 
-		public CharacterJobData()
-		{
-			Upgrades = new Dictionary<int, Dictionary<int, int>>();
-			Points = new Dictionary<int, int>();
-		}
-	}
+        public CharacterJobData()
+        {
+            Upgrades = new Dictionary<int, Dictionary<int, int>>();
+            Points = new Dictionary<int, int>();
+        }
+    }
 }

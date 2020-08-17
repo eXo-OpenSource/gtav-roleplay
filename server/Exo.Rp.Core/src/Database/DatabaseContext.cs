@@ -22,45 +22,45 @@ using AccountModel = server.Players.Accounts.Account;
 
 namespace server.Database
 {
-	public class DatabaseContext : DbContext, IService
-	{
-		// If a new entity is added it need to be load "DatabaseCore.OnResourceStartHandler()"
-		public DbSet<AccountModel> AccountModel { get; set; }
-		public DbSet<CharacterModel> CharacterModel { get; set; }
+    public class DatabaseContext : DbContext, IService
+    {
+        // If a new entity is added it need to be load "DatabaseCore.OnResourceStartHandler()"
+        public DbSet<AccountModel> AccountModel { get; set; }
+        public DbSet<CharacterModel> CharacterModel { get; set; }
 
-		public DbSet<VehicleModel> VehicleModel { get; set; }
-		public DbSet<TeamModel> TeamModel { get; set; }
-		public DbSet<DepartmentModel> TeamDepartmentModel { get; set; }
-		public DbSet<TeamMemberModel> TeamMemberModel { get; set; }
-		public DbSet<TeamMemberPermissionModel> TeamMemberPermissionModel { get; set; }
-		public DbSet<BankAccountModel> BankAccountModel { get; set; }
-		public DbSet<ShopModel> ShopModel { get; set; }
-		public DbSet<VehicleShopVehicleModel> VehicleShopVehicleModel { get; set; }
-		public DbSet<PedModel> PedModel { get; set; }
-		public DbSet<InventoryModel> InventoryModel { get; set; }
-		public DbSet<ItemModel> ItemModel { get; set; }
-		public DbSet<InventoryItemsModel> InventoryItemsModel { get; set; }
-		public DbSet<WorldObjectsModel> WorldObjectsModels { get; set; }
+        public DbSet<VehicleModel> VehicleModel { get; set; }
+        public DbSet<TeamModel> TeamModel { get; set; }
+        public DbSet<DepartmentModel> TeamDepartmentModel { get; set; }
+        public DbSet<TeamMemberModel> TeamMemberModel { get; set; }
+        public DbSet<TeamMemberPermissionModel> TeamMemberPermissionModel { get; set; }
+        public DbSet<BankAccountModel> BankAccountModel { get; set; }
+        public DbSet<ShopModel> ShopModel { get; set; }
+        public DbSet<VehicleShopVehicleModel> VehicleShopVehicleModel { get; set; }
+        public DbSet<PedModel> PedModel { get; set; }
+        public DbSet<InventoryModel> InventoryModel { get; set; }
+        public DbSet<ItemModel> ItemModel { get; set; }
+        public DbSet<InventoryItemsModel> InventoryItemsModel { get; set; }
+        public DbSet<WorldObjectsModel> WorldObjectsModels { get; set; }
 
-		public DbSet<FaceFeaturesModel> FaceFeaturesModel { get; set; }
+        public DbSet<FaceFeaturesModel> FaceFeaturesModel { get; set; }
 
-		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-		{
-			if (ContextFactory.ConnectionString == null)
-			{
-				DatabaseCore.SetDatabaseConnection(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "config.json"), Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "logs"));
-			}
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (ContextFactory.ConnectionString == null)
+            {
+                DatabaseCore.SetDatabaseConnection(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "config.json"), Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "logs"));
+            }
 
-			Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
-			if (SettingsManager.ServerSettings.Database.QueryLog)
-			{
-				optionsBuilder.UseLoggerFactory(DatabaseCore.GetLoggerFactory(LogLevel.Information)).UseMySql(ContextFactory.ConnectionString);
-			}
-			else
-			{
-				optionsBuilder.UseLoggerFactory(DatabaseCore.GetLoggerFactory(LogLevel.Error)).UseMySql(ContextFactory.ConnectionString);
-			}
-		}
-	}
+            if (SettingsManager.ServerSettings.Database.QueryLog)
+            {
+                optionsBuilder.UseLoggerFactory(DatabaseCore.GetLoggerFactory(LogLevel.Information)).UseMySql(ContextFactory.ConnectionString);
+            }
+            else
+            {
+                optionsBuilder.UseLoggerFactory(DatabaseCore.GetLoggerFactory(LogLevel.Error)).UseMySql(ContextFactory.ConnectionString);
+            }
+        }
+    }
 }
