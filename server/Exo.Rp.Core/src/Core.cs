@@ -19,6 +19,7 @@ using server.Factories.Entities;
 using server.Inventory;
 using server.Inventory.Items;
 using server.Jobs;
+using server.Peds;
 using server.Players;
 using server.Shops;
 using server.Streamer;
@@ -71,7 +72,8 @@ namespace server
                 .AddSingleton<PrivateStreamer>()
                 .AddSingleton<PublicStreamer>()
                 .AddSingleton<DoorManager>()
-                .AddSingleton<EnvironmentManager>();
+                .AddSingleton<EnvironmentManager>()
+                .AddSingleton<PedManager>();
 
             // Start loading database mode/ls
             _databaseCore.OnResourceStartHandler(
@@ -124,10 +126,10 @@ namespace server
                     {
                         return new LimitedGrid3(50_000, 50_000, 125, 10_000, 10_000, 1000);
                     }
-                    /*//THREAD PED
-                    else if (threadId == 3){
+                    //THREAD PED
+                    else if (threadId == 2){
                         return new LimitedGrid3(50_000, 50_000, 175, 10_000, 10_000, 64);
-                    }*/
+                    }
                     else
                     {
                         return new LimitedGrid3(50_000, 50_000, 175, 10_000, 10_000, 300);
@@ -164,6 +166,8 @@ namespace server
             _serviceProvider.GetService<DoorManager>();
             Logger.Info("Services | Loading Environment manager...");
             _serviceProvider.GetService<EnvironmentManager>();
+            Logger.Info("Services | Loading Ped manager...");
+            _serviceProvider.GetService<PedManager>();
             Logger.Info("Services | Loading Plugin manager...");
             _serviceProvider.GetService<PluginManager.PluginManager>();
 

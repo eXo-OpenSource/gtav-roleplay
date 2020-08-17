@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using AltV.Net;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
@@ -8,10 +9,12 @@ using models.Peds;
 using Newtonsoft.Json;
 using server.Database;
 using server.Extensions;
+using server.Streamer;
+using server.Streamer.Entities;
 
 namespace server.Peds
 {
-    internal class PedManager
+    internal class PedManager : IManager
     {
         public static readonly Dictionary<int, Ped> Peds;
 
@@ -20,26 +23,13 @@ namespace server.Peds
             Peds = new Dictionary<int, Ped>();
 
             if (!Core.GetService<DatabaseContext>().PedModel.Local.Any()) return;
-            foreach (var pedM in Core.GetService<DatabaseContext>().PedModel.Local) Peds.Add(pedM.Id, pedM);
-        }
-
-        public static List<PedDto> GetPedsForIPlayer()
-        {
-            var pedList = new List<PedDto>();
-            foreach (var pedObject in Peds.Values)
-            {
-                var nPed = new PedDto()
+            foreach (var pedM in Core.GetService<DatabaseContext>().PedModel.Local) Core.GetService<PublicStreamer>()
+                .AddPed(new StreamPed(pedM.Pos, 0)
                 {
-                    //Id = pedObject.Id,
-                    Skin = (uint) pedObject.Skin,
-                    Name = pedObject.Name,
-                    Pos = new Position(pedObject.PosX, pedObject.PosY, pedObject.PosZ).Serialize(),
-                    Rot = pedObject.Rot,
-                    Type = (int) pedObject.Type
-                };
-                pedList.Add(nPed);
-            }
-            return pedList;
+                    Heading = pedM.Rot,
+                    Model = (uint)pedM.Skin,
+                    Static = true
+                });
         }
 
         public static Ped GetFromType(PedType type, int objectId)
@@ -61,11 +51,6 @@ namespace server.Peds
             };
             Core.GetService<DatabaseContext>().PedModel.Local.Add(ped);
             return ped;
-        }
-
-        public static void SendToIPlayer(IPlayer player)
-        {
-            player.Emit("Peds:Init", JsonConvert.SerializeObject(GetPedsForIPlayer()));
         }
     }
 }

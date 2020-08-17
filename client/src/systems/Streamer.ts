@@ -1,6 +1,7 @@
 import alt, {BaseObject, PointBlip, Vector3} from 'alt-client';
 import Blip from "./Blip";
 import * as natives from "natives";
+import native from "natives";
 
 let entities: StreamedEntity[] = [];
 
@@ -76,6 +77,23 @@ alt.onServer("entitySync:create", (entityId, entityType, position, currEntityDat
         natives.setObjectTextureVariation(handle, 0)
         natives.setEntityCollision(handle, false, true);
       });
+    } else if(entityType === 2) {
+      loadModel(currEntityData.model).then(() => {
+        let handle = natives.createPed(1, currEntityData.model, position.x, position.y, position.z,
+          currEntityData.heading, false, false)
+        entities.push({
+          id: entityId,
+          type: entityType,
+          position: position,
+          data: currEntityData,
+          handle: handle
+        })
+        if(currEntityData.static) {
+          native.taskSetBlockingOfNonTemporaryEvents(handle, true);
+          native.setBlockingOfNonTemporaryEvents(handle, true);
+          native.setPedFleeAttributes(handle, 0, false);
+        }
+      })
     }
   } else {
     const thisEntity = entities.find(value => value.id === entityId && value.type == entityType);
@@ -105,6 +123,8 @@ alt.onServer("entitySync:remove", (entityId, entityType) => {
   } else if(entityType === 1) {
     // alt.log(JSON.stringify(entity))
     natives.deleteObject(<number>entity.handle)
+  } else if(entityType === 2) {
+    natives.deleteEntity(<number>entity.handle)
   }
   entity.handle = null;
 })

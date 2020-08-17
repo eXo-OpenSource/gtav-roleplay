@@ -41,5 +41,10 @@ namespace server.Streamer
         {
             _globalBlips.Add(blip);
         }
+
+        public void AddPed(StreamPed ped)
+        {
+            AltEntitySync.AddEntity(ped);
+        }
     }
 }
