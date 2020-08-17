@@ -48,6 +48,7 @@ namespace server.Environment
                 });
                 colshapes.Add(loadedCarRents, (Colshape.Colshape)Alt.CreateColShapeSphere(_carRent, 1.9f));
                 colshapes[loadedCarRents].OnColShapeEnter += OnColshapeEnter;
+                colshapes[loadedCarRents].OnColShapeExit += OnColshapeLeave;
                 loadedCarRents++;
             }
         }
@@ -96,6 +97,13 @@ namespace server.Environment
             };
 
             player.GetCharacter().ShowInteraction("Rent A Car", "CarRent:OnPedInteract", "Drücke E um zu interagieren", interactionData: interactionData);
+        }
+
+        public void OnColshapeLeave(Colshape.Colshape col, IEntity entity)
+        {
+            if(!(entity is IPlayer player)) return;
+            if (player.GetCharacter() == null) return;
+            player.GetCharacter().HideInteraction();
         }
     }
 }
