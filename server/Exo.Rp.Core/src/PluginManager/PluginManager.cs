@@ -42,12 +42,14 @@ namespace server.PluginManager
                 .GetFiles(PluginsPath, "*.plugin.dll", SearchOption.TopDirectoryOnly)
                 .ToList().Select(Alt.LoadAssemblyFromPath);
 
-            foreach (var plugin in plugins)
+            foreach (var assembly in plugins)
             {
-                _indexer.IndexImplementsInterface<IPlugin>(plugin, type =>
+                var result = _indexer.IndexImplementsInterface<IPlugin>(assembly)
+                    .Select(t => Activator.CreateInstance(t) as IPlugin);
+                foreach (var plugin in result)
                 {
-                    _plugins.Add(Activator.CreateInstance(type) as IPlugin);
-                });
+                    _plugins.Add(plugin);
+                }
             }
         }
 

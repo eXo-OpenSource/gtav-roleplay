@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Sentry;
@@ -24,20 +25,14 @@ namespace server.Updateable
         private const string UpdateMethodName = "Tick";
         private const double Throttle = 0.1 * 1000; // 100ms
 
-        private readonly List<Type> _updateables = new List<Type>();
+        private readonly List<Type> _updateables;
         private DateTime _lastTick = DateTime.UtcNow;
 
         public UpdateableManager(RuntimeIndexer indexer)
         {
-            indexer.IndexImplementsInterface<IUpdateable>(Assembly.GetExecutingAssembly(), type =>
-            {
-                if (type.GetInterface(typeof(IManager).Name, true) == default)
-                {
-                    throw new NotSupportedException("The IUpdateable interface may only be implemented on IManager classes.");
-                }
-
-                _updateables.Add(type);
-            });
+            _updateables = indexer.IndexImplementsInterface<IUpdateable>(Assembly.GetExecutingAssembly())
+                .Where(t => t.GetInterface(typeof(IManager).Name) != default)
+                .ToList();
         }
 
         public void Tick()

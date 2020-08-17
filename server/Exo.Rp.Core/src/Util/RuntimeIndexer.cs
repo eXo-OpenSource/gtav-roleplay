@@ -2,15 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using server.Util.Log;
 
 namespace server.Util
 {
     public class RuntimeIndexer : IService
     {
-        private static readonly Logger<RuntimeIndexer> Logger = new Logger<RuntimeIndexer>();
-
-        public void IndexWithAttribute<TAttribute, TMemberInfo>(Assembly target, Predicate<TMemberInfo> filter, Action<(TAttribute attribute, TMemberInfo memberInfo)> onFound)
+        public IEnumerable<(TAttribute attribute, TMemberInfo memberInfo)> IndexWithAttribute<TAttribute, TMemberInfo>(Assembly target, Predicate<TMemberInfo> filter)
             where TAttribute : Attribute
             where TMemberInfo : MemberInfo
         {
@@ -37,21 +36,17 @@ namespace server.Util
                 {
                     foreach (var attribute in memberInfo.GetCustomAttributes<TAttribute>())
                     {
-                        onFound((attribute, memberInfo));
+                        yield return (attribute, memberInfo);
                     }
                 }
             }
         }
-
-        public void IndexImplementsInterface<TInterface>(Assembly target, Action<Type> onFound)
+        
+        public IEnumerable<Type> IndexImplementsInterface<TInterface>(Assembly target)
         {
-            foreach (var type in target.GetTypes())
-            {
-                if (type.GetInterface(typeof(TInterface).Name, true) != default)
-                {
-                    onFound(type);
-                }
-            }
+            return target
+                .GetTypes()
+                .Where(type => type.GetInterface(typeof(TInterface).Name, true) != default);
         }
     }
 }

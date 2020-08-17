@@ -11,17 +11,12 @@ namespace server.Commands
 {
     public class CommandHandler : IManager
     {
-        private static readonly Logger<CommandHandler> Logger = new Logger<CommandHandler>();
-
-        private readonly List<(CommandAttribute command, MethodInfo method)> _commands;
+        private readonly IEnumerable<(CommandAttribute command, MethodInfo method)> _commands;
 
         public CommandHandler(RuntimeIndexer indexer)
         {
-            _commands = new List<(CommandAttribute, MethodInfo)>();
-            indexer.IndexWithAttribute<CommandAttribute, MethodInfo>(Assembly.GetExecutingAssembly(),
-                method => method.IsStatic && method.IsPublic,
-                pair => _commands.Add((pair.attribute, pair.memberInfo)));
-            Logger.Debug($"Found {_commands.Count} command(s).");
+            _commands = indexer.IndexWithAttribute<CommandAttribute, MethodInfo>(Assembly.GetExecutingAssembly(),
+                method => method.IsStatic && method.IsPublic);
         }
 
         public CommandInvokeResult Invoke(string commandIdentifier, IPlayer player, object[] commandArguments)
