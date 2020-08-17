@@ -22,43 +22,43 @@ const LoadableATMComponent = loadable(() => import("./forms/atm"), loadableOptio
 const LoadableCarRentComponent = loadable(() => import("./forms/car-rent"), loadableOptions);
 
 class App extends Component {
-	constructor(props) {
-		super(props)
-		this.routerRef = React.createRef()
-	}
+  constructor(props) {
+    super(props)
+    this.routerRef = React.createRef()
+  }
 
-	render() {
-		return (
-			<div>
-				<Router ref={this.routerRef}>
-					<Switch>
-						<Route path="/login" component={LoadableLoginComponent} />
-						<Route path="/charactercreator" component={LoadableCharacterCreatorComponent} />
-						<Route path="/vehicleui" component={LoadableVehicleUIComponent} />
-						<Route path="/atm" component={LoadableATMComponent} />
-						<Route path="/carrent" component={LoadableCarRentComponent} />
-					</Switch>
-				</Router>
-				<Chat/>
-				<Toast/>
-				<Popup/>
-				<HUD/>
-				<Speedometer/>
-				<Progress />
-			</div>
-		)
-	}
+  render() {
+    return (
+      <div>
+        <Router ref={this.routerRef}>
+          <Switch>
+            <Route path="/login" component={LoadableLoginComponent} />
+            <Route path="/charactercreator" component={LoadableCharacterCreatorComponent} />
+            <Route path="/vehicleui" component={LoadableVehicleUIComponent} />
+            <Route path="/atm" component={LoadableATMComponent} />
+            <Route path="/carrent" component={LoadableCarRentComponent} />
+          </Switch>
+        </Router>
+        <Chat/>
+        <Toast/>
+        <Popup/>
+        <HUD/>
+        <Speedometer/>
+        <Progress />
+      </div>
+    )
+  }
 
-	componentDidMount() {
-		if ("alt" in window) {
-			alt.on("locationChange", this.changeLocation.bind(this));
-			alt.emit("ready");
-		}
-	}
+  componentDidMount() {
+    if ("alt" in window) {
+      alt.on("locationChange", this.changeLocation.bind(this));
+      alt.emit("ready");
+    }
+  }
 
-	changeLocation(url) {
-		this.routerRef.current.history.push(url)
-	}
+  changeLocation(url) {
+    this.routerRef.current.history.push(url)
+  }
 }
 
 ReactDOM.render(<App />, document.getElementById('root'));

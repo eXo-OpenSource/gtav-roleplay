@@ -4,169 +4,169 @@
 /* purgecss end ignore */
 
 .btn {
-	@apply font-bold py-2 px-4 rounded-sm;
+  @apply font-bold py-2 px-4 rounded-sm;
 }
 
 .btn-primary {
-	@apply bg-blue-500 text-white;
+  @apply bg-blue-500 text-white;
 }
 
 .btn-primary:hover {
-	@apply bg-blue-700;
+  @apply bg-blue-700;
 }
 
 .card {
-	@apply rounded-lg shadow-lg;
+  @apply rounded-lg shadow-lg;
 }
 
 .card-header {
-	@apply py-4 text-xl rounded-t-lg text-white text-center bg-blue-400;
+  @apply py-4 text-xl rounded-t-lg text-white text-center bg-blue-400;
 }
 
 .card-body {
-	@apply py-6 px-6 bg-gray-800 opacity-75;
+  @apply py-6 px-6 bg-gray-800 opacity-75;
 }
 
 .card-footer {
-	@apply px-6 py-4 card-footer bg-gray-900 rounded-b-lg;
+  @apply px-6 py-4 card-footer bg-gray-900 rounded-b-lg;
 }
 
 .edit {
-	@apply bg-gray-400 rounded w-full appearance-none py-2 px-3;
+  @apply bg-gray-400 rounded w-full appearance-none py-2 px-3;
 }
 
 .edit:hover {
-	@apply bg-gray-300;
+  @apply bg-gray-300;
 }
 
 .popup-item {
-	@apply h-10 px-2 text-white leading-10 bg-gray-900;
-	cursor: default;
+  @apply h-10 px-2 text-white leading-10 bg-gray-900;
+  cursor: default;
 }
 
 .blue {
-	background: rgba(64, 143, 247, 0.4);
+  background: rgba(64, 143, 247, 0.4);
 }
 
 .blue:hover, .blue.selected
 {
-	color: #fff;
-	background: rgba(64, 143, 247, 1);
-	background: linear-gradient(to right, rgba(64, 143, 247,1) 0%, rgba(64, 143, 247,0.8) 100%);
+  color: #fff;
+  background: rgba(64, 143, 247, 1);
+  background: linear-gradient(to right, rgba(64, 143, 247,1) 0%, rgba(64, 143, 247,0.8) 100%);
 }
 
 .green
 {
-	background: rgba(195, 227, 143, 0.4);
+  background: rgba(195, 227, 143, 0.4);
 }
 
 .green:hover, .green.selected
 {
-	color: #fff;
-	background: rgba(115,166,40,1);
-	background: linear-gradient(to right, rgba(115,166,40,1) 0%, rgba(115,166,40,0.8) 100%);
+  color: #fff;
+  background: rgba(115,166,40,1);
+  background: linear-gradient(to right, rgba(115,166,40,1) 0%, rgba(115,166,40,0.8) 100%);
 }
 
 
 .red
 {
-	background: rgba(247, 64, 77, 0.4);
+  background: rgba(247, 64, 77, 0.4);
 }
 
 .red:hover, .red.selected
 {
-	color: #fff;
-	background: rgba(242,67,67,1);
-	background: linear-gradient(to right, rgba(242,67,67,1) 0%, rgba(242,67,67,0.8) 100%);
+  color: #fff;
+  background: rgba(242,67,67,1);
+  background: linear-gradient(to right, rgba(242,67,67,1) 0%, rgba(242,67,67,0.8) 100%);
 }
 
 
 @keyframes fadeIn {
-	0% {
-		opacity: 0;
-		transform: translateX(50%);
-	}
-	100% {
-		opacity: 0.75;
-		transform: translateX(0);
-	}
+  0% {
+    opacity: 0;
+    transform: translateX(50%);
+  }
+  100% {
+    opacity: 0.75;
+    transform: translateX(0);
+  }
 }
 
 @keyframes fadeInFromTop {
-	0% {
-		opacity: 0;
-		transform: translateY(-200%);
-	}
-	100% {
-		opacity: 1;
-		transform: translateY(0%);
-	}
+  0% {
+    opacity: 0;
+    transform: translateY(-200%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0%);
+  }
 }
 
 @keyframes fadeOut {
-	0% {
-		opacity: 1;
-	}
-	100% {
-		opacity: 0;
-	}
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 .toast-fade {
-	animation: 1s ease 0s 1 fadeIn;
+  animation: 1s ease 0s 1 fadeIn;
 }
 
 .logo-fadeIn {
-	animation: 5s ease 0s 1 fadeInFromTop;
+  animation: 5s ease 0s 1 fadeInFromTop;
 }
 
 .logo-fadeOut {
-	animation: 6s ease 0s 1 fadeOut;
+  animation: 6s ease 0s 1 fadeOut;
 }
 
 /* purgecss start ignore */
 .gauge > .dial {
-	stroke: #334455;
-	stroke-width: 6;
-	stroke-dasharray: 18 1;
-	fill: rgba(0,0,0,0);
+  stroke: #334455;
+  stroke-width: 6;
+  stroke-dasharray: 18 1;
+  fill: rgba(0,0,0,0);
 
 }
 
 .gauge > .value {
-	stroke: #334455;
-	stroke-width: 6;
-	stroke-dasharray: 18 1;
-	fill: rgba(0,0,0,0);
+  stroke: #334455;
+  stroke-width: 6;
+  stroke-dasharray: 18 1;
+  fill: rgba(0,0,0,0);
 
 }
 
 .shadow-img {
-	filter: drop-shadow(0px 3px 10px rgba(0, 0, 0, 0.3));
+  filter: drop-shadow(0px 3px 10px rgba(0, 0, 0, 0.3));
 }
 
 .typewriter h1 {
-	color: #fff;
-	font-family: monospace;
-	overflow: hidden;
-	white-space: nowrap;
-	margin: 0 auto;
-	letter-spacing: .15em;
-	animation:
-	typing 30s steps(115, end),
-	blink-caret .5s step-end infinite;
+  color: #fff;
+  font-family: monospace;
+  overflow: hidden;
+  white-space: nowrap;
+  margin: 0 auto;
+  letter-spacing: .15em;
+  animation:
+  typing 30s steps(115, end),
+  blink-caret .5s step-end infinite;
   }
 
   /* The typing effect */
 @keyframes typing {
-	from { width: 0 }
-	to { width: 100% }
+  from { width: 0 }
+  to { width: 100% }
 }
 
   /* The typewriter cursor effect */
 @keyframes blink-caret {
-	from, to { border-color: transparent }
-	50% { border-color: rgba(64, 143, 247, 1) }
+  from, to { border-color: transparent }
+  50% { border-color: rgba(64, 143, 247, 1) }
 }
 
 /* purgecss end ignore */
