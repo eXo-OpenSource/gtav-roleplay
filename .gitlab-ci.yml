@@ -63,10 +63,11 @@ sentry_job:
 
 deploy_job_develop:
   image: appropriate/curl
+  stage: deploy
+  needs: build_job
   tags:
     - linux
     - dind
-  stage: deploy
   script:
     - curl http://$DEPLOYRON_IP:6000/deploy/altv_develop?APISecret=$DEPLOY_API_SECRET_DEVELOP
   environment:
@@ -78,6 +79,7 @@ deploy_job_develop:
 deploy_cdn:
   image: appropriate/curl # minio/mc -- doesn't work correctly
   stage: deploy
+  needs: build_cdn_job
   tags:
     - linux
     - dind
