@@ -170,25 +170,25 @@ export class FaceFeaturesUi {
     this.applyData()
 
     native.prefetchSrl("GTAO_INTRO_MALE")
-		loadCutscene("mp_intro_concat", 8).then(() => {
-			native.registerEntityForCutscene(Player.local.scriptID, this.gender == 1 ? "MP_Female_Character" : "MP_Male_Character", 0, 0, 0)
-			native.registerEntityForCutscene(0, this.gender == 0 ? "MP_Female_Character" : "MP_Male_Character", 3, native.getHashKey(this.gender == 1 ? "mp_f_freemode_01" : "mp_m_freemode_01"), 0)
-			native.beginSrl()
-			native.startCutscene(4)
-			alt.setTimeout(() => this.uiManager.emit("FaceFeatures:FadeOut"), 5000)
-			alt.setTimeout(() => this.uiManager.reset(), 11000)
-			alt.setTimeout(() => native.doScreenFadeOut(1000), 30000)
-			alt.setTimeout(() => {
-				native.stopCutsceneImmediately()
-				native.playSoundFrontend(-1, 'CONTINUE', 'HUD_FRONTEND_DEFAULT_SOUNDSET', true)
-				alt.emitServer("Player:SetPosition", -1038.7649, -2739.2966, 13.828613, 0, 0, 45)
-				alt.emitServer("Ui:ShowUi", false)
-				native.endSrl()
-				native.clearFocus()
-				native.doScreenFadeIn(1000)
-			}, 33000)
-		})
-	}
+    loadCutscene("mp_intro_concat", 8).then(() => {
+      native.registerEntityForCutscene(Player.local.scriptID, this.gender == 1 ? "MP_Female_Character" : "MP_Male_Character", 0, 0, 0)
+      native.registerEntityForCutscene(0, this.gender == 0 ? "MP_Female_Character" : "MP_Male_Character", 3, native.getHashKey(this.gender == 1 ? "mp_f_freemode_01" : "mp_m_freemode_01"), 0)
+      native.beginSrl()
+      native.startCutscene(4)
+      alt.setTimeout(() => this.uiManager.emit("FaceFeatures:FadeOut"), 5000)
+      alt.setTimeout(() => this.uiManager.reset(), 11000)
+      alt.setTimeout(() => native.doScreenFadeOut(1000), 30000)
+      alt.setTimeout(() => {
+        native.stopCutsceneImmediately()
+        native.playSoundFrontend(-1, 'CONTINUE', 'HUD_FRONTEND_DEFAULT_SOUNDSET', true)
+        alt.emitServer("Player:SetPosition", -1038.7649, -2739.2966, 13.828613, 0, 0, 45)
+        alt.emitServer("Ui:ShowUi", false)
+        native.endSrl()
+        native.clearFocus()
+        native.doScreenFadeIn(1000)
+      }, 33000)
+    })
+  }
 
   private resetCamera(modelToUse) {
     this.testPed.destroy()

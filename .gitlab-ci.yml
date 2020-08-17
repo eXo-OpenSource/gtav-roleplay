@@ -101,25 +101,3 @@ deploy_cdn:
 #         - curl http://$DEPLOYRON_IP:6000/deploy/altv_production?APISecret=$DEPLOY_API_SECRET_PRODUCTION
 #     only:
 #     - release/production
-
-manual_apply_editorconfig:
-  image: node:latest
-  stage: eclint
-  tags:
-    - linux
-    - dind
-  allow_failure: true
-  before_script:
-    - git remote set-url origin https://deploybot:${CI_PUSH_TOKEN}@git.exo.cool/gtav/altv/altv-gamemode.git
-    - git config --global user.email 'gitlab@exo-reallife.de'
-    - git config --global user.name 'deploybot'
-  script:
-    - git checkout $CI_BUILD_REF_NAME
-    - npm install -g eclint
-    - eclint fix 'server/**/*'
-    - eclint fix 'client/**/*' 
-    - eclint fix 'ui/**/*'
-    - git add .
-    - git commit -m "Applied editorconfig to all files"
-    - git push origin $CI_BUILD_REF_NAME
-  when: manual
