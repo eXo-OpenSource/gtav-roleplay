@@ -20,7 +20,7 @@ using IPlayer = server.Players.IPlayer;
 
 namespace server.Vehicles
 {
-    internal class VehicleManager : IManager, IUpdateable
+    internal class VehicleManager : IManager
     {
         private static readonly Logger<VehicleManager> Logger = new Logger<VehicleManager>();
 
@@ -217,11 +217,6 @@ namespace server.Vehicles
             }
             _rentedVehicleId++;
             return veh;
-        }
-
-        public void Tick()
-        {
-            throw new NotImplementedException();
         }
     }
 }
