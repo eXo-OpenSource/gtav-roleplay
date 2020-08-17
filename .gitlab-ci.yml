@@ -102,18 +102,19 @@ deploy_cdn:
 #     only:
 #     - release/production
 
-manual_fix_ident:
+manual_apply_editorconfig:
   image: node:latest
   stage: eclint
   tags:
     - linux
     - dind
+  allow_failure: true
   before_script:
     - git remote set-url origin https://deploybot:${CI_PUSH_TOKEN}@git.exo.cool/gtav/altv/altv-gamemode.git
     - git config --global user.email 'gitlab@exo-reallife.de'
     - git config --global user.name 'deploybot'
   script:
-    - git checkout -b $CI_BUILD_REF_NAME
+    - git checkout $CI_BUILD_REF_NAME
     - npm install -g eclint
     - eclint fix 'server/**/*'
     - eclint fix 'client/**/*' 
