@@ -193,7 +193,7 @@ namespace server.Jobs.Jobs
                 Blip = new PrivateBlip( pos, 0, 300){Sprite = 364, Name = "Mülltonne"}
             };
 	        Core.GetService<PrivateStreamer>().AddEntity(nBin.Blip);
-	        Core.GetService<ObjectStreamer>().Add(nBin.BinObject);
+	        Core.GetService<PublicStreamer>().AddObject(nBin.BinObject);
 
             nBin.Col.SetData("WasteBin", nBin);
             nBin.Col.OnColShapeEnter += OnBinColEnter;

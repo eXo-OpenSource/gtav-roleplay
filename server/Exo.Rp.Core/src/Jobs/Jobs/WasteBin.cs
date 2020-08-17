@@ -18,7 +18,7 @@ namespace server.Jobs.Jobs
         public void Destroy()
         {
 	        if (Col.Exists) Col.Remove();
-	        Core.GetService<ObjectStreamer>().Remove(BinObject);
+	        Core.GetService<PublicStreamer>().RemoveObject(BinObject);
 	        Full = false;
         }
     }

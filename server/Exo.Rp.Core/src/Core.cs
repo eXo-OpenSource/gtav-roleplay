@@ -13,6 +13,7 @@ using server.AutoMapper;
 using server.BankAccounts;
 using server.Commands;
 using server.Database;
+using server.Environment;
 using server.Factories.BaseObjects;
 using server.Factories.Entities;
 using server.Inventory;
@@ -68,8 +69,9 @@ namespace server
 	            .AddSingleton<UpdateableManager>()
 	            .AddSingleton<PluginManager.PluginManager>()
 	            .AddSingleton<PrivateStreamer>()
-	            .AddSingleton<ObjectStreamer>()
-	            .AddSingleton<DoorManager>();
+	            .AddSingleton<PublicStreamer>()
+	            .AddSingleton<DoorManager>()
+	            .AddSingleton<EnvironmentManager>();
 
             // Start loading database mode/ls
             _databaseCore.OnResourceStartHandler(
@@ -111,7 +113,7 @@ namespace server
 	            (entityId, entityType, threadCount) => entityType,
 	            (threadid) => new LimitedPrivateGrid3(50_000, 50_000, 75, 10_000, 10_000,  500)
 	            , new IdProvider());
-            _serviceProvider.GetService<ObjectStreamer>();
+            _serviceProvider.GetService<PublicStreamer>();
             AltEntitySync.Init(3, 250,
 	            (threadCount, repository) => new ServerEventNetworkLayer(threadCount, repository),
 	            (entity, threadCount) => entity.Type,
@@ -160,6 +162,8 @@ namespace server
             _updateableManager = _serviceProvider.GetService<UpdateableManager>();
             Logger.Info("Services | Loading Door manager...");
 	        _serviceProvider.GetService<DoorManager>();
+	        Logger.Info("Services | Loading Environment manager...");
+	        _serviceProvider.GetService<EnvironmentManager>();
 			Logger.Info("Services | Loading Plugin manager...");
             _serviceProvider.GetService<PluginManager.PluginManager>();
 

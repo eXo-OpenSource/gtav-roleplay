@@ -6,12 +6,14 @@ using IPlayer = server.Players.Player;
 using server.Players.Characters;
 using Vehicle = server.Vehicles.Vehicle;
 using AltV.Net.Enums;
+using server.Streamer;
+using server.Streamer.Entities;
 using server.Vehicles.Types;
 using server.Vehicles;
 
 namespace server.Environment
 {
-	public class CarRent : IScript
+	public class CarRent
 	{
 		int loadedCarRents = 0;
 
@@ -30,10 +32,19 @@ namespace server.Environment
 
 		public void LoadCarRents()
 		{
+			Alt.Log("init car rent");
 			foreach (Position _carRent in rentSpots)
 			{
 				Alt.Log(_carRent.ToString());
-				Alt.CreateBlip(BlipType.Cont, _carRent);
+				Core.GetService<PublicStreamer>().AddGlobalBlip(new StaticBlip
+				{
+					Color = 5,
+					Name = "Autovermietung",
+					X = _carRent.X,
+					Y = _carRent.Y,
+					Z = _carRent.Z,
+					SpriteId = 198
+				});
 				colshapes.Add(loadedCarRents, (Colshape.Colshape)Alt.CreateColShapeSphere(_carRent, 1.9f));
 				colshapes[loadedCarRents].OnColShapeEnter += OnColshapeEnter;
 				loadedCarRents++;
