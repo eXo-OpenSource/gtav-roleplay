@@ -12,6 +12,8 @@ const maxEyeColor = 12
 const maxAgeing = 14
 const maxEyebrows = 33
 const maxBeards = 28
+const maxMaleHairs = 37
+const maxFemaleHairs = 38
 const maxMoles = 16
 const eyeColors = ["Grün", "Emerald", "Hellblau", "Ozeanblau", "Hellbraun", "Dunkelbraun", "Haselnuss", "Dunkelgrau", "Hellgrau", "Pink", "Gelb", "Lila", "Blackout", "Shades of Gray", "Tequila Sunrise", "Atomar", "Warp", "ECola", "Space Ranger", "Ying Yang", "Bullseye", "Echse", "Drache", "Ausserirdisch", "Ziege", "Smiley", "Besessen", "Dämon", "Infiziert", "Alien", "Untot", "Zombie"];
 
@@ -31,7 +33,7 @@ class CharacterCreatorForm extends Component {
       hairID: 0,
       hairColor: 0,
       hairHighlights: 0,
-      eyebrowID: 18,
+      eyebrowID: 0,
       eyebrowColor: 0,
       eyebrowHighlight: 0,
       eyeColor: 0,
@@ -52,12 +54,12 @@ class CharacterCreatorForm extends Component {
   }
 
   updateAgeing(e) {
-    this.setState({ ageing: e.target.value - 1})
+    this.setState({ ageing: e.target.value })
     alt.emit("FaceFeatures:UpdateAgeing", this.state.ageing)
   }
 
   updateMoles(e) {
-    this.setState({ moles: e.target.value - 1})
+    this.setState({ moles: e.target.value })
     alt.emit("FaceFeatures:UpdateMoles", this.state.moles)
   }
 
@@ -68,50 +70,55 @@ class CharacterCreatorForm extends Component {
   }
 
   updateEyeColor(e) {
-    this.setState({ eyeColor: e.target.value - 1})
+    this.setState({ eyeColor: e.target.value })
     alt.emit("FaceFeatures:UpdateEyes", this.state.eyeColor)
   }
 
   updateBeard(e) {
     let slider = e.target.getAttribute("data-arg")
     if (slider == "beards") {
-      this.setState({ beardID: e.target.value - 1 })
+      this.setState({ beardID: e.target.value })
     } else {
-      this.setState({ beardColor: e.target.value - 1 })
+      this.setState({ beardColor: e.target.value })
     }
     alt.emit("FaceFeatures:UpdateBeard", this.state.beardID, this.state.beardColor)
   }
 
   updateHairs(e) {
-    let slider = e.target.getAttribute("data-arg")
-    if (slider == "hairs") {
-      this.setState({ hairID: e.target.value - 1 })
-    } else if (slider == "hairColor") {
-      this.setState({ hairColor: e.target.value - 1 })
-    } else if (slider == "hairHighlights") {
-      this.setState({ hairHighlights: e.target.value - 1 })
-    } else if (slider == "eyebrows") {
-      this.setState({ eyebrowID: e.target.value - 1 })
-    } else if (slider == "eyebrowColor") {
-      this.setState({ eyebrowColor: e.target.value - 1 })
-    }
+    this.setState({ hairID: e.target.value })
+    alt.emit("FaceFeatures:UpdateHairs", this.state.hairID)
+  }
 
-    alt.emit("FaceFeatures:UpdateHairs", this.state.hairID,
-      this.state.hairColor, this.state.hairHighlights, this.state.eyebrowID,
-      this.state.eyebrowColor, this.state.eyebrowHighlight
-    )
+  updateHairColor(e) {
+    this.setState({ hairColor: e.target.value })
+    alt.emit("FaceFeatures:UpdateHairColor", this.state.hairColor, this.state.hairHighlights)
+  }
+
+  updateHairHighlights(e) {
+    this.setState({ hairHighlights: e.target.value })
+    alt.emit("FaceFeatures:UpdateHairHighlights", this.state.hairColor, this.state.hairHighlights)
+  }
+
+  updateEyebrows(e) {
+    this.setState({ eyebrowID: e.target.value })
+    alt.emit("FaceFeatures:UpdateEyebrows", this.state.eyebrowID)
+  }
+
+  updateEyebrowColor(e) {
+    this.setState({ eyebrowColor: e.target.value })
+    alt.emit("FaceFeatures:UpdateEyebrowColor", this.state.eyebrowColor, this.state.eyebrowColor)
   }
 
   updateParent(e) {
     let parentType = e.target.getAttribute("data-arg")
     if (parentType == "father") {
-      let father = fatherNames[e.target.value - 1]
+      let father = fatherNames[e.target.value]
       this.setState({ fatherName: father })
-      this.setState({ fatherID: e.target.value - 1 })
+      this.setState({ fatherID: e.target.value })
     } else {
-      let mother = motherNames[e.target.value - 1]
+      let mother = motherNames[e.target.value]
       this.setState({ motherName: mother })
-      this.setState({ motherID: e.target.value - 1 })
+      this.setState({ motherID: e.target.value })
     }
     alt.emit("FaceFeatures:UpdateParent", this.state.fatherID,
       this.state.motherID, this.state.skinInheritance,
@@ -175,22 +182,22 @@ class CharacterCreatorForm extends Component {
                   <button className="w-2/4 bg-gray-700 py-5 rounded rounded-l-none text-white text-center" data-arg="0" onClick={this.updateSex.bind(this)}>Weiblich</button>
                 </div>
                 <p className="font-bold mt-4 mb-3">Wie alt willst du im Gesicht aussehen?</p>
-                <input type="range" min="1" max={maxAgeing} class="slider" className="w-full rounded-lg bg-blue-700" data-arg="ageing" onChange={this.updateAgeing.bind(this)}></input>
+                <input type="range" min="1" max={maxAgeing - 1} value={this.state.ageing} class="slider" className="w-full rounded-lg bg-blue-700" data-arg="ageing" onChange={this.updateAgeing.bind(this)}></input>
                 <p className="font-bold mt-4 mb-3">Dein Vater ist {this.state.fatherName}</p>
-                <input type="range" min="1" max={fathers.length} class="slider" className="w-full rounded-lg bg-blue-700" data-arg="father" onChange={this.updateParent.bind(this)}></input>
+                <input type="range" min="1" max={fathers.length - 1} value={this.state.fatherID} class="slider" className="w-full rounded-lg bg-blue-700" data-arg="father" onChange={this.updateParent.bind(this)}></input>
                 <p className="font-bold mt-4 mb-3">Deine Mutter ist {this.state.motherName}</p>
-                <input type="range" min="1" max={mothers.length} class="slider" className="w-full rounded-lg bg-blue-700" data-arg="mother" onChange={this.updateParent.bind(this)}></input>
+                <input type="range" min="1" max={mothers.length - 1} value={this.state.motherID} class="slider" className="w-full rounded-lg bg-blue-700" data-arg="mother" onChange={this.updateParent.bind(this)}></input>
                 <p className="font-bold mt-4">Passe dein Aussehen an</p>
                 <p className="text-sm mb-4">Das Aussehen regelst Du indem du zum Elternteil ziehst. </p>
                 <div className="flex">
                   <p className="font-bold mt-4 mb-3 flex px-6">← Mutter </p>
-                  <input type="range" min="1" max="100" class="slider" className="rounded-lg bg-blue-700 content-center mx-5" data-arg="skinInheritance" onChange={this.updateInheritance.bind(this)}></input>
+                  <input type="range" min="1" max="100" value={this.state.skinInheritance} class="slider" className="rounded-lg bg-blue-700 content-center mx-5" data-arg="skinInheritance" onChange={this.updateInheritance.bind(this)}></input>
                   <p className="font-bold mt-4 mb-3 flex px-6">Vater →</p>
                 </div>
                 <p className="font-bold mt-4 mb-3">Passe deine Hautfarbe an</p>
                 <div className="flex">
                   <p className="font-bold mt-4 mb-3 flex px-6">← Mutter</p>
-                  <input type="range" min="1" max="100" class="slider" className="rounded-lg bg-blue-700 content-center mx-5" data-arg="lookInheritance" onChange={this.updateInheritance.bind(this)}></input>
+                  <input type="range" min="1" value={this.state.lookInheritance} max="100" class="slider" className="rounded-lg bg-blue-700 content-center mx-5" data-arg="lookInheritance" onChange={this.updateInheritance.bind(this)}></input>
                   <p className="font-bold mt-4 mb-3 flex px-6">Vater →</p>
                 </div>
               </div>
@@ -211,36 +218,36 @@ class CharacterCreatorForm extends Component {
             <p className="text-sm">In der Charaktererstellung geht es um das natürliche Aussehen.</p>
             <p className="text-sm mb-4">Make-Up und andere Accessoires sind im Spielverlauf anpassbar.</p>
               <p className="font-bold mt-4 mb-3">Haare: {hairList[this.state.gender][this.state.hairID].Name}</p>
-              <input type="range" min="1" max={hairList[this.state.gender].length - 1} class="slider" className="w-full rounded-lg bg-blue-700" data-arg="hairs" onChange={this.updateHairs.bind(this)}></input>
+              <input type="range" min="0" max={hairList[this.state.gender].length} class="slider" className="w-full rounded-lg bg-blue-700" data-arg="hairs" onChange={this.updateHairs.bind(this)}></input>
               <div className="flex">
                 <p className="mt-4 mb-3 font-bold w-1/2 rounded-lg content-center mr-8">Haarfarbe</p>
                 <p className="mt-4 mb-3 font-bold w-1/2 rounded-lg content-center">Highlights</p>
               </div>
               <div className="flex">
-                <input type="range" min="1" max={maxHairColor} class="slider" className="w-1/2 rounded-lg bg-blue-700 content-center mr-8" data-arg="hairColor" onChange={this.updateHairs.bind(this)}></input>
-                <input type="range" min="1" max={maxHairColor} class="slider" className="w-1/2 rounded-lg bg-blue-700 content-center" data-arg="hairHighlights" onChange={this.updateHairs.bind(this)}></input>
+                <input type="range" min="0" max={maxHairColor} value={this.state.hairColor} class="slider" className="w-1/2 rounded-lg bg-blue-700 content-center mr-8" data-arg="hairColor" onChange={this.updateHairColor.bind(this)}></input>
+                <input type="range" min="0" max={maxHairColor} value={this.state.hairHighlights} class="slider" className="w-1/2 rounded-lg bg-blue-700 content-center" data-arg="hairHighlights" onChange={this.updateHairHighlights.bind(this)}></input>
               </div>
               <div className="flex">
                 <p className="mt-4 mb-3 font-bold w-1/2 rounded-lg content-center mr-8">Augenbrauen</p>
                 <p className="mt-4 mb-3 font-bold w-1/2 rounded-lg content-center">Farbe</p>
               </div>
               <div className="flex">
-                <input type="range" min="1" max={maxEyebrows} class="slider" className="w-1/2 rounded-lg bg-blue-700 content-center mr-8" data-arg="eyebrows" onChange={this.updateHairs.bind(this)}></input>
-                <input type="range" min="1" max={maxHairColor} class="slider" className="w-1/2 rounded-lg bg-blue-700 content-center" data-arg="eyebrowColor" onChange={this.updateHairs.bind(this)}></input>
+                <input type="range" min="0" max={maxEyebrows} value={this.state.eyebrowID} class="slider" className="w-1/2 rounded-lg bg-blue-700 content-center mr-8" data-arg="eyebrows" onChange={this.updateEyebrows.bind(this)}></input>
+                <input type="range" min="0" max={maxHairColor} value={this.state.eyebrowColor} class="slider" className="w-1/2 rounded-lg bg-blue-700 content-center" data-arg="eyebrowColor" onChange={this.updateEyebrowColor.bind(this)}></input>
               </div>
               <p className="font-bold mt-4 mb-3">Suche eine Augenfarbe aus</p>
-              <input type="range" min="1" max={maxEyeColor} class="slider" className="w-full rounded-lg bg-blue-700" data-arg="eyes" onChange={this.updateEyeColor.bind(this)}></input>
+              <input type="range" min="0" max={maxEyeColor} value={this.state.eyeColor} class="slider" className="w-full rounded-lg bg-blue-700" data-arg="eyes" onChange={this.updateEyeColor.bind(this)}></input>
               <div className="flex">
                 <p className="mt-4 mb-3 font-bold w-1/2 rounded-lg content-center mr-8">Bart</p>
                 <p className="mt-4 mb-3 font-bold w-1/2 rounded-lg content-center">Farbe</p>
               </div>
               <div className="flex">
-                <input type="range" min="1" max={maxBeards} class="slider" className="w-1/2 rounded-lg bg-blue-700 content-center mr-8" data-arg="beards" onChange={this.updateBeard.bind(this)}></input>
-                <input type="range" min="1" max={maxHairColor} class="slider" className="w-1/2 rounded-lg bg-blue-700 content-center" data-arg="beardColor" onChange={this.updateBeard.bind(this)}></input>
+                <input type="range" min="0" max={maxBeards} value={this.state.beardID} class="slider" className="w-1/2 rounded-lg bg-blue-700 content-center mr-8" data-arg="beards" onChange={this.updateBeard.bind(this)}></input>
+                <input type="range" min="0" max={maxHairColor} value={this.state.beardColor} class="slider" className="w-1/2 rounded-lg bg-blue-700 content-center" data-arg="beardColor" onChange={this.updateBeard.bind(this)}></input>
               </div>
               <p className="font-bold mt-4 mb-3">Gesichtsmerkmale</p>
               <div className="flex">
-                <input type="range" min="1" max={maxMoles} class="slider" className="w-full rounded-lg bg-blue-700 content-center" data-arg="moles" onChange={this.updateMoles.bind(this)}></input>
+                <input type="range" min="0" max={maxMoles} value={this.state.moles} class="slider" className="w-full rounded-lg bg-blue-700 content-center" data-arg="moles" onChange={this.updateMoles.bind(this)}></input>
               </div>
             </div>
             <div className="card-footer">

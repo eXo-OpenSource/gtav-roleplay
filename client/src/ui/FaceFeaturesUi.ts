@@ -4,20 +4,15 @@ import { UiManager } from "./UiManager"
 import { Ped } from "../systems/Ped"
 import { Camera } from "../utils/Camera"
 import { Vector3 } from "natives"
-import { Float } from "../utils/Float"
-import { stringify } from "querystring"
-import {Entity, Player} from 'alt-client';
-import { spawn } from "child_process"
+import {Player} from 'alt-client';
 import {loadCutscene} from "../systems/Cutscene";
-
-const url = "http://resource/cef/index.html#/charactercreator"
 
 export class FaceFeaturesUi {
   private uiManager: UiManager
   private testPed: Ped
   private camera: Camera
   private cameraPoint: Vector3 = {
-    x: -807.67474,
+    x: -813.67474,
     y: 175.17363,
     z: 76.72888
   }
@@ -55,6 +50,10 @@ export class FaceFeaturesUi {
     this.uiManager.on("FaceFeatures:UpdateSex", this.updateSex.bind(this))
     this.uiManager.on("FaceFeatures:UpdateParent", this.updateParent.bind(this))
     this.uiManager.on("FaceFeatures:UpdateHairs", this.updateHairs.bind(this))
+    this.uiManager.on("FaceFeatures:UpdateHairColor", this.updateHairColor.bind(this))
+    this.uiManager.on("FaceFeatures:UpdateHairHighlights", this.updateHairColor.bind(this))
+    this.uiManager.on("FaceFeatures:UpdateEyebrows", this.updateEyebrows.bind(this))
+    this.uiManager.on("FaceFeatures:UpdateEyebrowColor", this.updateEyebrowColor.bind(this))
     this.uiManager.on("FaceFeatures:UpdateEyes", this.updateEyeColor.bind(this))
     this.uiManager.on("FaceFeatures:UpdateBeard", this.updateBeard.bind(this))
     this.uiManager.on("FaceFeatures:UpdateAgeing", this.updateAgeing.bind(this))
@@ -68,31 +67,20 @@ export class FaceFeaturesUi {
       this.testPed = new Ped(this.model, this.playerPoint)
     }
 
-    this.camera = new Camera(this.cameraPoint, 28)
+    native.setFocusPosAndVel(this.playerPoint.x, this.playerPoint.y,
+      this.playerPoint.z, this.playerPoint.x, this.playerPoint.y, this.playerPoint.z)
+
+    this.camera = new Camera(this.cameraPoint, 38)
     this.camera.pointAtBone(this.testPed.scriptID, 31086, 0.05, 0, 0)
     this.camera.playerControlsEntity(this.testPed.scriptID, true)
-    native.setFocusPosAndVel(this.playerPoint.x, this.playerPoint.y, this.playerPoint.z, this.playerPoint.x, this.playerPoint.y, this.playerPoint.z);
+    this.freezePed()
   }
 
-  // Update sex
-  private updateSex(value) {
-    this.model = value == 0 ? "mp_f_freemode_01" : "mp_m_freemode_01"
-    this.gender = value
-    this.resetCamera(this.model)
-    this.updateHeadOverlay(this.testPed.scriptID)
+  private freezePed() {
+    alt.setTimeout(() => native.freezeEntityPosition(this.testPed.scriptID, true), 2500)
   }
 
-  // Update parent
-  private updateParent(_fatherID, _motherID, _skin, _look) {
-    this.fatherID = _fatherID
-    this.motherID = _motherID
-    this.skin = _skin
-    this.look = _look
-    this.resetCamera(this.model)
-    this.updateHeadOverlay(this.testPed.scriptID)
-  }
-
-  private updateHeadOverlay(ped) {
+  private applyFaceFeatures(ped) {
     native.setPedHeadBlendData(ped,
       this.fatherID, this.motherID, 0,
       this.fatherID, this.motherID, 0, this.look,
@@ -111,42 +99,75 @@ export class FaceFeaturesUi {
     }
   }
 
-  // Update moles & freckles
-  private updateMoles(_moleID) {
-    this.moleID = _moleID
-    this.updateHeadOverlay(this.testPed.scriptID)
+  // Update sex
+  private updateSex(gender) {
+    this.model = gender == 0 ? "mp_f_freemode_01" : "mp_m_freemode_01"
+    this.gender = gender
+    this.resetCamera(this.model)
+    native.setPedHeadBlendData(this.testPed.scriptID,
+      this.fatherID, this.motherID, 0,
+      this.fatherID, this.motherID, 0, this.look,
+      this.skin, 0, false
+    )
   }
 
-  // Update eye color
-  private updateEyeColor(_eyeColor) {
-    this.eyeColor = _eyeColor
-    this.updateHeadOverlay(this.testPed.scriptID)
+  // Update parent
+  private updateParent(fatherID = this.fatherID, motherID = this.motherID, skin = this.skin, look = this.look) {
+    this.fatherID = fatherID
+    this.motherID = motherID
+    this.skin = skin
+    this.look = look
+    this.preventFaceBugs()
+    native.setPedHeadBlendData(this.testPed.scriptID, this.fatherID, this.motherID, 0,
+      this.fatherID, this.motherID, 0, this.look, this.skin, 0, false
+    )
   }
 
-  // Update hairs
-  private updateHairs(_hairID, _hairColor, _hairHighlight, _eyebrowID, _eyebrowColor, _eyebrowHighlight) {
-    this.hairID = _hairID
-    this.hairColor = _hairColor
-    this.hairHighlight = _hairHighlight
-    this.eyebrowID = _eyebrowID
-    this.eyebrowColor = _eyebrowColor
-    this.updateHeadOverlay(this.testPed.scriptID)
+  private updateEyebrows(eyebrows = this.eyebrowID) {
+    this.eyebrowID = eyebrows
+    native.setPedHeadOverlay(this.testPed.scriptID, 2, this.eyebrowID, 255)
   }
 
-  // Update ageing
-  private updateAgeing(_age) {
-    this.age = _age
-    this.updateHeadOverlay(this.testPed.scriptID)
+  private updateEyebrowColor(color = this.eyebrowColor) {
+    this.eyebrowColor = color
+    native.setPedHeadOverlayColor(this.testPed.scriptID, 2, 1, this.eyebrowColor, this.eyebrowColor)
   }
 
-  // Update beard
-  private updateBeard(_beard, _beardColor) {
-    this.beard = _beard
-    this.beardColor = _beardColor
-    this.updateHeadOverlay(this.testPed.scriptID)
+  private updateHairColor(hairColor = this.hairColor, hairHighlight = this.hairHighlight) {
+    this.hairColor = hairColor
+    this.hairHighlight = hairHighlight
+    native.setPedHairColor(this.testPed.scriptID, this.hairColor, this.hairHighlight)
   }
 
-  // Apply data in charcreator
+  private updateMoles(moleID = this.moleID) {
+    this.moleID = moleID
+    native.setPedHeadOverlay(this.testPed.scriptID, 9, this.moleID, 255)
+  }
+
+  private updateEyeColor(eyeColor = this.eyeColor) {
+    this.eyeColor = eyeColor
+    native.setPedEyeColor(this.testPed.scriptID, this.eyeColor)
+  }
+
+  private updateHairs(hairs = this.hairID) {
+    this.hairID = hairs
+    native.setPedComponentVariation(this.testPed.scriptID, 2, this.hairID, 0, 0)
+  }
+
+  private updateAgeing(age = this.age) {
+    this.age = age
+    native.setPedHeadOverlay(this.testPed.scriptID, 3, this.age, 255)
+  }
+
+  private updateBeard(beard = this.beard, beardColor = this.beardColor) {
+    this.beard = beard
+    this.beardColor = beardColor
+    if (this.gender == 1) {
+      native.setPedHeadOverlay(this.testPed.scriptID, 1, this.beard, 255)
+      native.setPedHeadOverlayColor(this.testPed.scriptID, 1, 1, this.beardColor, this.beardColor)
+    }
+  }
+
   private applyData() {
     const data = [
       this.name, this.surname,
@@ -154,10 +175,9 @@ export class FaceFeaturesUi {
       this.moleID, this.eyeColor, this.hairID, this.hairColor, this.hairHighlight,
       this.eyebrowID, this.eyebrowColor, this.age, this.beard, this.beardColor
     ]
-
+    this.applyFaceFeatures(alt.Player.local.scriptID)
     alt.emitServer("FaceFeatures:ApplyData", JSON.stringify(data))
     this.testPed.destroy()
-    this.updateHeadOverlay(alt.Player.local.scriptID)
     this.camera.destroy()
   }
 
@@ -190,30 +210,17 @@ export class FaceFeaturesUi {
     })
   }
 
+  private preventFaceBugs() {
+    native.addPedDecorationFromHashes(this.testPed.scriptID, native.getHashKey("mpbeach_overlays"), native.getHashKey("fm_hair_fuzz"))
+    native.setPedHeadBlendData(this.testPed.scriptID, 0, 0, 0, 0, 0, 0, 0, 0, 0, false);
+  }
+
   private resetCamera(modelToUse) {
     this.testPed.destroy()
 
     this.testPed = new Ped(modelToUse, this.playerPoint)
 
-    native.setPedComponentVariation(this.testPed.scriptID, 6, 1, 0, 0)
-    native.setPedComponentVariation(this.testPed.scriptID, 6, 1, 0, 0)
-
-    native.addPedDecorationFromHashes(
-      this.testPed.scriptID,
-      native.getHashKey("mpbeach_overlays"),
-      native.getHashKey("fm_hair_fuzz")
-    )
-
-    native.setPedHeadBlendData(this.testPed.scriptID,
-      0, 21, 0, 0, 21,
-      0, 0, 0, 0, false
-    )
-
-    native.setPedHeadOverlay(this.testPed.scriptID, 2, 0, 255)
-    native.setPedHeadOverlayColor(this.testPed.scriptID, 2, 1, 1, 1)
-
-    this.camera.pointAtBone(this.testPed.scriptID, 31086, 0.05, 0, 0)
-    this.camera.playerControlsEntity(this.testPed.scriptID, true)
+    this.preventFaceBugs()
   }
 }
 
