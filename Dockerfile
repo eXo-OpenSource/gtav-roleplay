@@ -4,7 +4,7 @@ FROM eisengrind/altv-server:1286-js-dotnet as runner
 
 ## Builder Server
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 as builder_server
-WORKDIR /app
+WORKDIR /
 
 # Restore nuget packages and build binaries
 RUN mkdir -p server

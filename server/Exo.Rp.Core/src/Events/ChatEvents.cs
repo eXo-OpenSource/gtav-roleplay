@@ -66,7 +66,7 @@ namespace server.Events
                         Logger.Error(
                             $"A runtime exception occured during the execution of command: [{player.ToString()}: {msg}]");
 
-                        player.SendError(T._("Correlation Id: {0}", player, correlationId));
+                        player.SendCorrelationId(correlationId);
                     });
                 }
             }

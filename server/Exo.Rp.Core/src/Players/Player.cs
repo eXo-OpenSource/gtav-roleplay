@@ -78,6 +78,11 @@ namespace server.Players
             SendNotification("~r~Fehler~w~: " + text);
         }
 
+        public void SendCorrelationId(SentryId id)
+        {
+            SendNotification("~r~Correlation Id~w~: " + id);
+        }
+
         public void SendSuccess(string text)
         {
             SendNotification("~g~Erfolgreich~w~: " + text);

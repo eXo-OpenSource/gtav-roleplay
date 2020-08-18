@@ -22,6 +22,7 @@ namespace server.Players
         void SendInformation(string text);
         void SendWarning(string text);
         void SendError(string text);
+        void SendCorrelationId(SentryId id);
         void SendSuccess(string text);
         void StopAnimation(bool force = false);
         void PlayAnimation(string animation, string v, int flag);
