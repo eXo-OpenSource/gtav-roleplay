@@ -12,6 +12,8 @@ using Exo.Rp.Core.Peds;
 using Exo.Rp.Core.Players;
 using Exo.Rp.Core.Plugins;
 using Exo.Rp.Core.Shops;
+using Exo.Rp.Core.Streamer;
+using Exo.Rp.Core.Streamer.Private;
 using Exo.Rp.Core.Teams;
 using Exo.Rp.Core.Translation;
 using Exo.Rp.Core.Updateable;
@@ -36,6 +38,11 @@ namespace Exo.Rp.Core.StartupTasks.Tasks
         public Task ExecuteAsync(CancellationToken cancellationToken = default)
         {
             _logger.Info("Loading services...");
+
+            _logger.Info("Services | Loading Streaming handler...");
+            _serviceProvider.GetService<PublicStreamer>();
+            _serviceProvider.GetService<PrivateStreamer>();
+
             _logger.Info("Services | Loading Command handler...");
             _serviceProvider.GetService<CommandHandler>();
 

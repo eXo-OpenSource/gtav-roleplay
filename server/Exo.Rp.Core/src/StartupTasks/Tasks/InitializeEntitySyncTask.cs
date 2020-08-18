@@ -13,7 +13,7 @@ namespace Exo.Rp.Core.StartupTasks.Tasks
     {
         private readonly PrivateStreamer _privateStreamer;
 
-        public InitializeEntitySyncTask(PrivateStreamer privateStreamer, PublicStreamer publicStreamer /* Force instantiation of publicStreamer */)
+        public InitializeEntitySyncTask(PrivateStreamer privateStreamer)
         {
             _privateStreamer = privateStreamer;
         }
