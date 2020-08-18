@@ -6,6 +6,7 @@ using Exo.Rp.Core.Players.Characters;
 using Exo.Rp.Core.Util.Log;
 using Exo.Rp.Models.Popup;
 using Exo.Rp.Sdk;
+using Exo.Rp.Sdk.Logger;
 
 namespace Exo.Rp.Core.Events.Jobs
 {

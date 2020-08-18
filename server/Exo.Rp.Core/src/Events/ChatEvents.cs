@@ -8,6 +8,7 @@ using Exo.Rp.Core.Translation;
 using Exo.Rp.Core.Util;
 using Exo.Rp.Core.Util.Log;
 using Exo.Rp.Sdk;
+using Exo.Rp.Sdk.Logger;
 using Sentry;
 
 namespace Exo.Rp.Core.Events

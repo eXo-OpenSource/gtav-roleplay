@@ -4,6 +4,7 @@ using Exo.Rp.Core.Util.Log;
 using Exo.Rp.Models.Enums;
 using Exo.Rp.Models.Inventory;
 using Exo.Rp.Sdk;
+using Exo.Rp.Sdk.Logger;
 
 //using shared.Inventory;
 

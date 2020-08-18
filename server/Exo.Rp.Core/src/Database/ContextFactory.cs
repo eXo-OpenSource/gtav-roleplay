@@ -2,6 +2,7 @@ using System;
 using Exo.Rp.Core.Util;
 using Exo.Rp.Core.Util.Log;
 using Exo.Rp.Sdk;
+using Exo.Rp.Sdk.Logger;
 using MySql.Data.MySqlClient;
 
 namespace Exo.Rp.Core.Database

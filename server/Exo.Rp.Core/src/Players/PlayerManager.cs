@@ -6,6 +6,7 @@ using Exo.Rp.Core.Extensions;
 using Exo.Rp.Core.Translation;
 using Exo.Rp.Core.Util.Log;
 using Exo.Rp.Sdk;
+using Exo.Rp.Sdk.Logger;
 
 namespace Exo.Rp.Core.Players
 {

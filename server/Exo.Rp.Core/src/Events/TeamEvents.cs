@@ -3,6 +3,7 @@ using Exo.Rp.Core.Players;
 using Exo.Rp.Core.Teams;
 using Exo.Rp.Core.Util.Log;
 using Exo.Rp.Sdk;
+using Exo.Rp.Sdk.Logger;
 
 namespace Exo.Rp.Core.Events
 {

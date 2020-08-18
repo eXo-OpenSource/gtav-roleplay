@@ -14,6 +14,7 @@ using Exo.Rp.Core.Vehicles.Types;
 using Exo.Rp.Models.Jobs;
 using Exo.Rp.Models.Popup;
 using Exo.Rp.Sdk;
+using Exo.Rp.Sdk.Logger;
 using Newtonsoft.Json;
 using IPlayer = Exo.Rp.Core.Players.IPlayer;
 using Vehicle = Exo.Rp.Core.Vehicles.Vehicle;

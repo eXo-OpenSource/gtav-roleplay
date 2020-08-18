@@ -7,6 +7,7 @@ using AltV.Net;
 using Exo.Rp.Core.Util;
 using Exo.Rp.Models.Enums.Translation;
 using Exo.Rp.Sdk;
+using Exo.Rp.Sdk.Logger;
 using NGettext;
 using Sentry;
 

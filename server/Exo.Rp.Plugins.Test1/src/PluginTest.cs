@@ -1,4 +1,5 @@
 using Exo.Rp.Sdk;
+using Exo.Rp.Sdk.Logger;
 
 namespace plugins.Test1
 {

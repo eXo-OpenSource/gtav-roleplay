@@ -6,6 +6,7 @@ using Exo.Rp.Core.Database;
 using Exo.Rp.Core.Teams.State;
 using Exo.Rp.Models.Teams;
 using Exo.Rp.Sdk;
+using Exo.Rp.Sdk.Logger;
 using Newtonsoft.Json;
 using Character = Exo.Rp.Core.Players.Characters.Character;
 

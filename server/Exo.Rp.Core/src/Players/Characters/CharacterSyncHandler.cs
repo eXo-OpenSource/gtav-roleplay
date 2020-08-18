@@ -5,6 +5,7 @@ using AltV.Net;
 using Exo.Rp.Core.Util.Log;
 using Exo.Rp.Core.Util.Settings;
 using Exo.Rp.Sdk;
+using Exo.Rp.Sdk.Logger;
 
 //using shared.Serialization;
 

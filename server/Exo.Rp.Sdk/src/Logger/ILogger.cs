@@ -1,7 +1,4 @@
-﻿using Exo.Rp.Models.Enums;
-using Exo.Rp.Sdk.Logger;
-
-namespace Exo.Rp.Sdk
+﻿namespace Exo.Rp.Sdk.Logger
 {
     public interface ILogger
     {

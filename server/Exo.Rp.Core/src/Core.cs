@@ -29,7 +29,7 @@ using Exo.Rp.Core.Util;
 using Exo.Rp.Core.Util.Log;
 using Exo.Rp.Core.Vehicles;
 using Exo.Rp.Core.World;
-using Exo.Rp.Sdk;
+using Exo.Rp.Sdk.Logger;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Sentry.Protocol;

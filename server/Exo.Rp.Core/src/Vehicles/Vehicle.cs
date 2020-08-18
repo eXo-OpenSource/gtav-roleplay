@@ -4,6 +4,7 @@ using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
 using Exo.Rp.Core.Util.Log;
 using Exo.Rp.Sdk;
+using Exo.Rp.Sdk.Logger;
 using IPlayer = Exo.Rp.Core.Players.IPlayer;
 
 namespace Exo.Rp.Core.Vehicles

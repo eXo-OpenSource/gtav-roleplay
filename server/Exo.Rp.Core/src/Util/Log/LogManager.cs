@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Exo.Rp.Core.Util.Settings;
 using Exo.Rp.Models.Enums;
 using Exo.Rp.Sdk;
+using Exo.Rp.Sdk.Logger;
 
 namespace Exo.Rp.Core.Util.Log
 {

@@ -7,6 +7,7 @@ using Exo.Rp.Core.Players.Characters;
 using Exo.Rp.Core.Util.Log;
 using Exo.Rp.Models.Enums;
 using Exo.Rp.Sdk;
+using Exo.Rp.Sdk.Logger;
 using Newtonsoft.Json;
 using IPlayer = Exo.Rp.Core.Players.IPlayer;
 

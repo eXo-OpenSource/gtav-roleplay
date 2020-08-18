@@ -9,6 +9,7 @@ using Exo.Rp.Core.Players.Characters;
 using Exo.Rp.Core.Util.Log;
 using Exo.Rp.Core.World;
 using Exo.Rp.Sdk;
+using Exo.Rp.Sdk.Logger;
 using Sentry.Protocol;
 
 namespace Exo.Rp.Core.Players

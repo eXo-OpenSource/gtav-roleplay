@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Exo.Rp.Core.Util.Log;
 using Exo.Rp.Core.Util.Settings;
 using Exo.Rp.Sdk;
+using Exo.Rp.Sdk.Logger;
 using Newtonsoft.Json;
 
 namespace Exo.Rp.Core.Util

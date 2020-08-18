@@ -5,6 +5,7 @@ using Exo.Rp.Core.Database;
 using Exo.Rp.Core.Util.Log;
 using Exo.Rp.Models.Enums;
 using Exo.Rp.Sdk;
+using Exo.Rp.Sdk.Logger;
 
 namespace Exo.Rp.Core.Inventory.Items
 {
