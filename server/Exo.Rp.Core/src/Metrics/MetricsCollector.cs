@@ -9,7 +9,7 @@ using Timer = System.Timers.Timer;
 
 namespace Exo.Rp.Core.Metrics
 {
-    public class MetricsCollector : IDisposable
+    public class MetricsCollector : IService, IDisposable
     {
         private readonly ILogger<MetricsCollector> _logger;
         private readonly InfluxDB.Collector.MetricsCollector _collector;

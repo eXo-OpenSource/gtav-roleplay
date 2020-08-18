@@ -1,5 +1,7 @@
 using System;
 using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
 using AltV.Net;
 using AltV.Net.Elements.Entities;
 using AltV.Net.EntitySync;
@@ -18,7 +20,10 @@ using Exo.Rp.Core.Inventory.Items;
 using Exo.Rp.Core.Jobs;
 using Exo.Rp.Core.Peds;
 using Exo.Rp.Core.Players;
+using Exo.Rp.Core.Plugins;
 using Exo.Rp.Core.Shops;
+using Exo.Rp.Core.StartupTasks;
+using Exo.Rp.Core.StartupTasks.Tasks;
 using Exo.Rp.Core.Streamer;
 using Exo.Rp.Core.Streamer.Grid;
 using Exo.Rp.Core.Streamer.Private;
@@ -40,8 +45,7 @@ namespace Exo.Rp.Core
 {
     public class Core : Resource
     {
-        private static readonly ILogger<Core> Logger = new Logger<Core>();
-        
+        private static readonly Logger<Core> Logger = new Logger<Core>();
         private DatabaseCore _databaseCore;
         private static IServiceProvider _serviceProvider;
 
@@ -71,14 +75,20 @@ namespace Exo.Rp.Core
                 .AddSingleton<IplManager>()
                 .AddSingleton<JobManager>()
                 .AddSingleton<UpdateableManager>()
-                .AddSingleton<PluginManager.PluginManager>()
+                .AddSingleton<PluginManager>()
                 .AddSingleton<PrivateStreamer>()
                 .AddSingleton<PublicStreamer>()
                 .AddSingleton<DoorManager>()
                 .AddSingleton<EnvironmentManager>()
                 .AddSingleton<PedManager>();
 
-            // Start loading database mode/ls
+            // Add startup tasks
+            serviceCollection
+                .AddStartupTask<InitializeEntitySyncTask>()
+                .AddStartupTask<LoadManagerTask>();
+
+
+            // Start loading database models
             _databaseCore.OnResourceStartHandler(
                 configureSentry: (settings, options) =>
                 {
@@ -101,102 +111,30 @@ namespace Exo.Rp.Core
                     _serviceProvider = serviceCollection
                         .AddSingleton(ContextFactory.Instance)
                         .BuildServiceProvider();
-                    LoadServices();
+                    RunTasks().Wait();
                 }
             );
         }
 
-        private void LoadServices()
+        private async Task RunTasks()
         {
-            Logger.Info("Loading services...");
+            Logger.Info("Startup Tasks | Executing Tasks...");
             var stopWatch = Stopwatch.StartNew();
 
-            Logger.Info("Services | Loading Streamer managers...");
-            _serviceProvider.GetService<PrivateStreamer>().Init(1, 500,
-                (threadCount, repo) => new BetterServerEventNetworkLayer(threadCount, repo),
-                (entity, threadCount) => entity.Type,
-                (entityId, entityType, threadCount) => entityType,
-                (threadid) => new LimitedPrivateGrid3(50_000, 50_000, 75, 10_000, 10_000,  500)
-                , new IdProvider());
-            _serviceProvider.GetService<PublicStreamer>();
-            AltEntitySync.Init(3, 250,
-                (threadCount, repository) => new ServerEventNetworkLayer(threadCount, repository),
-                (entity, threadCount) => entity.Type,
-                (entityId, entityType, threadCount) => entityType,
-                (threadId) =>
-                {
-                    if (threadId == 1)
-                    {
-                        return new LimitedGrid3(50_000, 50_000, 125, 10_000, 10_000, 1000);
-                    }
-                    //THREAD PED
-                    else if (threadId == 2){
-                        return new LimitedGrid3(50_000, 50_000, 175, 10_000, 10_000, 64);
-                    }
-                    else
-                    {
-                        return new LimitedGrid3(50_000, 50_000, 175, 10_000, 10_000, 300);
-                    }
-                },
-                Core.GetService<PrivateStreamer>().idProvider);
-            Logger.Info("Services | Loading Command handler...");
-            _serviceProvider.GetService<CommandHandler>();
-            Logger.Info("Services | Loading Metrics collector...");
-            _serviceProvider.GetService<MetricsCollector>().Start();
-            Logger.Info("Services | Loading Translation manager...");
-            _serviceProvider.GetService<TranslationManager>();
-            Logger.Info("Services | Loading Player manager...");
-            _serviceProvider.GetService<PlayerManager>();
-            Logger.Info("Services | Loading Team manager...");
-            _serviceProvider.GetService<TeamManager>();
-            Logger.Info("Services | Loading Vehicle manager...");
-            _serviceProvider.GetService<VehicleManager>();
-            Logger.Info("Services | Loading Bank Account manager...");
-            _serviceProvider.GetService<BankAccountManager>();
-            Logger.Info("Services | Loading Shop manager...");
-            _serviceProvider.GetService<ShopManager>();
-            Logger.Info("Services | Loading Item manager...");
-            _serviceProvider.GetService<ItemManager>();
-            Logger.Info("Services | Loading Inventory manager...");
-            _serviceProvider.GetService<InventoryManager>();
-            Logger.Info("Services | Loading Ipl manager...");
-            _serviceProvider.GetService<IplManager>();
-            Logger.Info("Services | Loading Job manager...");
-            _serviceProvider.GetService<JobManager>();
-            Logger.Info("Services | Loading Updateable manager...");
-            _updateableManager = _serviceProvider.GetService<UpdateableManager>();
-            Logger.Info("Services | Loading Door manager...");
-            _serviceProvider.GetService<DoorManager>();
-            Logger.Info("Services | Loading Environment manager...");
-            _serviceProvider.GetService<EnvironmentManager>();
-            Logger.Info("Services | Loading Ped manager...");
-            _serviceProvider.GetService<PedManager>();
-            Logger.Info("Services | Loading Plugin manager...");
-            _serviceProvider.GetService<PluginManager.PluginManager>();
+            var startupTasks = _serviceProvider.GetServices<IStartupTask>();
+            foreach (var task in startupTasks)
+            {
+                Logger.Info($"Startup Tasks | Executing {task.GetType().Name}...");
+                var _stopWatch = Stopwatch.StartNew();
+
+                await task.ExecuteAsync();
+
+                _stopWatch.Stop();
+                Logger.Info($"Startup Tasks | Executed {task.GetType().Name} in {_stopWatch.ElapsedMilliseconds}ms.");
+            }
 
             stopWatch.Stop();
-            Logger.Debug($"Loaded services in {stopWatch.ElapsedMilliseconds} ms.");
-
-            /*var binsPath = Path.Combine("resources", Alt.Server.Resource.Name, "worldBinsDumpsters.json");
-            var bins = JsonConvert.DeserializeObject<List<Bin>>(File.ReadAllText(binsPath));
-
-            foreach (var bin in bins)
-            {
-                if(!bin.Name.Contains("dumpster")) continue;
-                var pos = new Position(bin.Position.X, bin.Position.Y, bin.Position.Z);
-                var rot = new Position(bin.Rotation.X, bin.Rotation.Y, bin.Rotation.Z);
-                var nModel = new WorldObjects.WorldObject()
-                {
-                    Position = pos.Serialize(),
-                    Rotation = rot.Serialize(),
-                    Type = models.Enums.WorldObjects.WasteBin,
-                    PlacedBy = 1,
-                    Date = DateTime.Now
-                };
-                var factory = GetService<DatabaseContext>().WorldObjectsModels.Local;
-                factory.Add(nModel);
-                Logger.Debug($"{bin.Name}");
-            }*/
+            Logger.Debug($"Startup Tasks | Excuted Taks in {stopWatch.ElapsedMilliseconds} ms.");
         }
 
         public override void OnStop()
@@ -204,7 +142,7 @@ namespace Exo.Rp.Core
             Logger.Info("Disposing Metrics collector...");
             _serviceProvider.GetService<MetricsCollector>().Dispose();
             Logger.Info("Disposing Plugin manager...");
-            _serviceProvider.GetService<PluginManager.PluginManager>().Dispose();
+            _serviceProvider.GetService<PluginManager>().Dispose();
 
             Logger.Info("Committing changes to database...");
             DatabaseCore.SaveChangeToDatabase();
@@ -242,7 +180,7 @@ namespace Exo.Rp.Core
         {
             return new ColShapeBaseObjectFactory();
         }
-
+        
         public static T GetService<T>()
             where T : IService
         {

@@ -2,9 +2,11 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using Exo.Rp.Core.Inventory;
+using Exo.Rp.Core.Streamer.Entities;
 using Exo.Rp.Core.Teams;
 using Exo.Rp.Core.Util.Settings;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using TeamModel = Exo.Rp.Core.Teams.Team;
 using ShopModel = Exo.Rp.Core.Shops.Shop;
@@ -53,13 +55,18 @@ namespace Exo.Rp.Core.Database
 
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
+
             if (SettingsManager.ServerSettings.Database.QueryLog)
             {
-                optionsBuilder.UseLoggerFactory(DatabaseCore.GetLoggerFactory(LogLevel.Information)).UseMySql(ContextFactory.ConnectionString);
+                optionsBuilder
+                    .UseLoggerFactory(DatabaseCore.GetLoggerFactory(LogLevel.Information))
+                    .UseMySql(ContextFactory.ConnectionString);
             }
             else
             {
-                optionsBuilder.UseLoggerFactory(DatabaseCore.GetLoggerFactory(LogLevel.Error)).UseMySql(ContextFactory.ConnectionString);
+                optionsBuilder
+                    .UseLoggerFactory(DatabaseCore.GetLoggerFactory(LogLevel.Error))
+                    .UseMySql(ContextFactory.ConnectionString);
             }
         }
     }
