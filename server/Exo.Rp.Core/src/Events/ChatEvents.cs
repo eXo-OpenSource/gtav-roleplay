@@ -53,11 +53,12 @@ namespace server.Events
                 }
                 catch (Exception e)
                 {
-                    SentrySdk.WithScope(s =>
+                    player.SendError(T._("Befehl konnte nicht ausgeführt werden.", player));
+                    e.WithScopeOrThrow(s =>
                     {
                         s.User = player.SentryContext;
 
-                        SentrySdk.AddBreadcrumb(null, "Command", null, new Dictionary<string, string> { { "command", command }, { "args", string.Join(',', args) } });
+                        SentrySdk.AddBreadcrumb(null, "Command", null, new Dictionary<string, string> { { "command", command }, { "args", string.Join(' ', args) } });
                         var correlationId = (e.InnerException ?? e).TrackOrThrow();
 
                         var rootException = e.InnerException ?? e;
@@ -65,7 +66,7 @@ namespace server.Events
                         Logger.Error(
                             $"A runtime exception occured during the execution of command: [{player.ToString()}: {msg}]");
 
-                        player.SendError(T._("Befehl konnte nicht ausgeführt werden. Correlation Id: {0}", player, correlationId));
+                        player.SendError(T._("Correlation Id: {0}", player, correlationId));
                     });
                 }
             }

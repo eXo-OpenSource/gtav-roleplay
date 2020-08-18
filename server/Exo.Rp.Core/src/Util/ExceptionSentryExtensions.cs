@@ -18,12 +18,12 @@ namespace server.Util
 
         public static void WithScopeOrThrow(this Exception exception, Action<Scope> scopeAction)
         {
-            if (SentrySdk.IsEnabled)
+            if (!SentrySdk.IsEnabled)
             {
-                SentrySdk.WithScope(scopeAction);
+                throw exception;
             }
 
-            throw exception;
+            SentrySdk.WithScope(scopeAction);
         }
     }
 }
