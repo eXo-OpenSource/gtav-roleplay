@@ -13,6 +13,7 @@ using Exo.Rp.Core.Vehicles;
 using Exo.Rp.Core.Vehicles.Types;
 using Exo.Rp.Models.Jobs;
 using Exo.Rp.Models.Popup;
+using Exo.Rp.Sdk;
 using Newtonsoft.Json;
 using IPlayer = Exo.Rp.Core.Players.IPlayer;
 using Vehicle = Exo.Rp.Core.Vehicles.Vehicle;
@@ -21,7 +22,7 @@ namespace Exo.Rp.Core.Jobs
 {
     public class Job
     {
-        private static readonly Logger<Job> Logger = new Logger<Job>();
+        private static readonly ILogger<Job> Logger = new Logger<Job>();
 
         public string Description;
         public int JobId;

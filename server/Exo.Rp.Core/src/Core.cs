@@ -40,7 +40,7 @@ namespace Exo.Rp.Core
 {
     public class Core : Resource
     {
-        private static readonly Logger<Core> Logger = new Logger<Core>();
+        private static readonly ILogger<Core> Logger = new Logger<Core>();
         
         private DatabaseCore _databaseCore;
         private static IServiceProvider _serviceProvider;

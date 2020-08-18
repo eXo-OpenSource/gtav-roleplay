@@ -7,13 +7,14 @@ using Exo.Rp.Core.Players;
 using Exo.Rp.Core.Translation;
 using Exo.Rp.Core.Util;
 using Exo.Rp.Core.Util.Log;
+using Exo.Rp.Sdk;
 using Sentry;
 
 namespace Exo.Rp.Core.Events
 {
     class ChatEvents : IScript
     {
-        private static readonly Logger<ChatEvents> Logger = new Logger<ChatEvents>();
+        private static readonly ILogger<ChatEvents> Logger = new Logger<ChatEvents>();
 
         [ClientEvent("Chat:Hide")]
         public void Hide(IPlayer player, bool state = true)

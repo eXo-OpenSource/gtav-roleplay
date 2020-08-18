@@ -8,6 +8,7 @@ using Exo.Rp.Core.Players.Accounts;
 using Exo.Rp.Core.Util;
 using Exo.Rp.Core.Util.Log;
 using Exo.Rp.Models.Enums;
+using Exo.Rp.Sdk;
 using Newtonsoft.Json;
 using IPlayer = Exo.Rp.Core.Players.IPlayer;
 
@@ -15,7 +16,7 @@ namespace Exo.Rp.Core.Events
 {
     class PlayerEvents : IScript
     {
-        private static readonly Logger<PlayerEvents> Logger = new Logger<PlayerEvents>();
+        private static readonly ILogger<PlayerEvents> Logger = new Logger<PlayerEvents>();
 
         [ClientEvent("RegisterLogin:Login")]
         public void Login(IPlayer player, string username, string password)

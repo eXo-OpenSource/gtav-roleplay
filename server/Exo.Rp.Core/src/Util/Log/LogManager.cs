@@ -4,13 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Exo.Rp.Core.Util.Settings;
 using Exo.Rp.Models.Enums;
+using Exo.Rp.Sdk;
 
 namespace Exo.Rp.Core.Util.Log
 {
     // ReSharper disable once ClassNeverInstantiated.Global
     public static class LogManager
     {
-        private static readonly Logger Logger = new Logger(typeof(LogManager));
+        private static readonly ILogger Logger = new Logger(typeof(LogManager));
 
         public static ConsoleColor LogCatToColor(LogCat category)
         {

@@ -2,10 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using AltV.Net;
 using Exo.Rp.Core.Updateable;
 using Exo.Rp.Core.Util;
 using Exo.Rp.Sdk;
+using Microsoft.Extensions.DependencyInjection;
 using Directory = System.IO.Directory;
 
 namespace Exo.Rp.Core.PluginManager
@@ -44,7 +46,7 @@ namespace Exo.Rp.Core.PluginManager
                 .Select(Alt.LoadAssemblyFromPath);
 
             var result = _indexer.IndexImplementsInterface<IPlugin>(plugins)
-                .Select(type => Activator.CreateInstance(type, _serviceProvider) as IPlugin);
+                .Select(type => ActivatorUtilities.CreateInstance(_serviceProvider, type) as IPlugin);
             foreach (var plugin in result)
             {
                 _plugins.Add(plugin);

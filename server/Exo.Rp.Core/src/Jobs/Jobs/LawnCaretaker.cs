@@ -2,13 +2,14 @@ using System;
 using AltV.Net.Data;
 using Exo.Rp.Core.Util.Log;
 using Exo.Rp.Models.Enums;
+using Exo.Rp.Sdk;
 using IPlayer = Exo.Rp.Core.Players.IPlayer;
 
 namespace Exo.Rp.Core.Jobs.Jobs
 {
     internal class LawnCaretaker : Job
     {
-        private static readonly Logger<LawnCaretaker> Logger = new Logger<LawnCaretaker>();
+        private static readonly ILogger<LawnCaretaker> Logger = new Logger<LawnCaretaker>();
 
         private readonly Position[] emptyPoints =
         {

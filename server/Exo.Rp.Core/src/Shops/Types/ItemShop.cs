@@ -6,6 +6,7 @@ using Exo.Rp.Core.Inventory.Items;
 using Exo.Rp.Core.Players.Characters;
 using Exo.Rp.Core.Util.Log;
 using Exo.Rp.Models.Enums;
+using Exo.Rp.Sdk;
 using Newtonsoft.Json;
 using IPlayer = Exo.Rp.Core.Players.IPlayer;
 
@@ -14,7 +15,7 @@ namespace Exo.Rp.Core.Shops.Types
     internal class ItemShop : Shop
     {
         [NotMapped]
-        private static readonly Logger<ItemShop> Logger = new Logger<ItemShop>();
+        private static readonly ILogger<ItemShop> Logger = new Logger<ItemShop>();
         [NotMapped]
         private Dictionary<int, ShopItemData> _itemData;
         [NotMapped]

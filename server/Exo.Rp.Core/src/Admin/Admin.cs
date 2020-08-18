@@ -3,13 +3,14 @@ using System.Linq;
 using AltV.Net;
 using Exo.Rp.Core.Util.Log;
 using Exo.Rp.Models.Enums;
+using Exo.Rp.Sdk;
 using IPlayer = Exo.Rp.Core.Players.IPlayer;
 
 namespace Exo.Rp.Core.Admin
 {
     internal class Admin : IScript
     {
-        private static readonly Logger<Admin> Logger = new Logger<Admin>();
+        private static readonly ILogger<Admin> Logger = new Logger<Admin>();
 
         private Dictionary<IPlayer, AdminLevel> _admins;
 

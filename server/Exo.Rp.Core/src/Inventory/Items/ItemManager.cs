@@ -4,12 +4,13 @@ using System.Linq;
 using Exo.Rp.Core.Database;
 using Exo.Rp.Core.Util.Log;
 using Exo.Rp.Models.Enums;
+using Exo.Rp.Sdk;
 
 namespace Exo.Rp.Core.Inventory.Items
 {
     internal class ItemManager : IManager
     {
-        private static readonly Logger<ItemManager> Logger = new Logger<ItemManager>();
+        private static readonly ILogger<ItemManager> Logger = new Logger<ItemManager>();
 
         private readonly DatabaseContext _databaseContext;
         private readonly Dictionary<int, Item> _items;

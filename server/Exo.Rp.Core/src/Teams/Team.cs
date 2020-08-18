@@ -2,13 +2,14 @@ using System.Collections.Generic;
 using Exo.Rp.Core.Database;
 using Exo.Rp.Core.Util.Log;
 using Exo.Rp.Models.Teams;
+using Exo.Rp.Sdk;
 using IPlayer = Exo.Rp.Core.Players.IPlayer;
 
 namespace Exo.Rp.Core.Teams
 {
     public partial class Team
     {
-        private static readonly Logger<Team> Logger = new Logger<Team>();
+        private static readonly ILogger<Team> Logger = new Logger<Team>();
 
         public void AddPlayer(IPlayer player, int departmentId, int rank)
         {

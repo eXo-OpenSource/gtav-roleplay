@@ -3,13 +3,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 using AltV.Net.Enums;
 using Exo.Rp.Core.Util.Log;
 using Exo.Rp.Models.Enums;
+using Exo.Rp.Sdk;
 
 namespace Exo.Rp.Core.Players.Characters
 {
     public partial class Character
     {
         [NotMapped]
-        private static readonly Logger<Character> Logger = new Logger<Character>();
+        private static readonly ILogger<Character> Logger = new Logger<Character>();
 
         //Logged in:
         [NotMapped]

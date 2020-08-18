@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using Exo.Rp.Core.Util.Log;
 using Exo.Rp.Models.Enums;
+using Exo.Rp.Sdk;
 using Exo.Rp.Sdk.Logger;
 using Newtonsoft.Json;
 using Sentry.Protocol;
@@ -10,7 +11,7 @@ namespace Exo.Rp.Core.Util.Settings
 {
     public static class SettingsManager
     {
-        private static readonly Logger Logger = new Logger(typeof(SettingsManager));
+        private static readonly ILogger Logger = new Logger(typeof(SettingsManager));
 
         public static readonly List<LogMessage> LogOutput = new List<LogMessage>();
 

@@ -1,7 +1,4 @@
-using System;
-using System.Reflection.Metadata;
 using Exo.Rp.Sdk;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace plugins.Test1
 {
@@ -9,9 +6,9 @@ namespace plugins.Test1
     {
         private readonly ILogger<PluginTest> _logger;
 
-        public PluginTest(IServiceProvider serviceProvider)
+        public PluginTest(ILogger<PluginTest> logger)
         {
-            _logger = serviceProvider.GetService<ILogger<PluginTest>>();
+            _logger = logger;
         }
 
         public void Load()

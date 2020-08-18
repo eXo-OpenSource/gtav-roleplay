@@ -5,12 +5,13 @@ using Exo.Rp.Core.Database;
 using Exo.Rp.Core.Extensions;
 using Exo.Rp.Core.Translation;
 using Exo.Rp.Core.Util.Log;
+using Exo.Rp.Sdk;
 
 namespace Exo.Rp.Core.Players
 {
     internal class PlayerManager : IManager
     {
-        private static readonly Logger<PlayerManager> Logger = new Logger<PlayerManager>();
+        private static readonly ILogger<PlayerManager> Logger = new Logger<PlayerManager>();
 
         private readonly DatabaseContext _databaseContext;
         private readonly Dictionary<int, IPlayer> _players;

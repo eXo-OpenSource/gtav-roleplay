@@ -1,13 +1,14 @@
 using System;
 using Exo.Rp.Core.Util;
 using Exo.Rp.Core.Util.Log;
+using Exo.Rp.Sdk;
 using MySql.Data.MySqlClient;
 
 namespace Exo.Rp.Core.Database
 {
     public static class ContextFactory
     {
-        private static readonly Logger Logger = new Logger(typeof(ContextFactory));
+        private static readonly ILogger Logger = new Logger(typeof(ContextFactory));
 
         private static DatabaseContext _instance;
         private static bool _checkedConnection;

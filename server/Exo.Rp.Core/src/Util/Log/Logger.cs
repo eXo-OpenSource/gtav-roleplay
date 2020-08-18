@@ -92,12 +92,12 @@ namespace Exo.Rp.Core.Util.Log
             Log(LogCat.Fatal, message, args);
         }
 
-        public void ServerOutput(string message, params object[] args)
+        private void ServerOutput(string message, params object[] args)
         {
             Log(LogCat.AltV, message, args);
         }
 
-        public LogMessage GetPrefix(LogCat category, string message, params object[] args)
+        private LogMessage GetPrefix(LogCat category, string message, params object[] args)
         {
             var date = DateTime.Now;
 
@@ -136,7 +136,7 @@ namespace Exo.Rp.Core.Util.Log
             SettingsManager.LogOutput.Add(logMsg);
         }
 
-        public void LogToLogOutput(LogMessage logMessage)
+        private void LogToLogOutput(LogMessage logMessage)
         {
             SettingsManager.LogOutput.Add(logMessage);
         }

@@ -1,4 +1,6 @@
 using System;
+using AltV.Net;
+using AltV.Net.ColoredConsole;
 using Exo.Rp.Models.Enums;
 
 namespace Exo.Rp.Sdk.Logger

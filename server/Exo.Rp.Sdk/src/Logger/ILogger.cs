@@ -10,9 +10,6 @@ namespace Exo.Rp.Sdk
         public void Warn(string message, params object[] args);
         public void Error(string message, params object[] args);
         public void Fatal(string message, params object[] args);
-        public void ServerOutput(string message, params object[] args);
-        public LogMessage GetPrefix(LogCat category, string message, params object[] args);
-        public void LogToLogOutput(LogMessage logMessage);
     }
 
     public interface ILogger<T> : ILogger {}

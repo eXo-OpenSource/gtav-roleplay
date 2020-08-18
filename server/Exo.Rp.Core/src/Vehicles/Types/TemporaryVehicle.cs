@@ -1,13 +1,14 @@
 using System;
 using AltV.Net;
 using Exo.Rp.Core.Util.Log;
+using Exo.Rp.Sdk;
 using IPlayer = Exo.Rp.Core.Players.IPlayer;
 
 namespace Exo.Rp.Core.Vehicles.Types
 {
     public partial class TemporaryVehicle : Vehicle
     {
-        private static readonly Logger<TemporaryVehicle> Logger = new Logger<TemporaryVehicle>();
+        private static readonly ILogger<TemporaryVehicle> Logger = new Logger<TemporaryVehicle>();
 
         public DateTime LastUsed = DateTime.UtcNow;
 
