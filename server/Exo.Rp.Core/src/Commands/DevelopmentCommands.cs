@@ -81,7 +81,9 @@ namespace server.Commands
         {
             if (Enum.IsDefined(typeof(VehicleModel), modelString))
             {
-                var veh = Core.GetService<VehicleManager>().CreateTemporaryVehicle(Enum.Parse<VehicleModel>(modelString), player.Position, player.Rotation.Roll, null, null, "Admin");
+                var random = new Random();
+                var color = new Rgba(Convert.ToByte(random.Next(255)), Convert.ToByte(random.Next(255)), Convert.ToByte(random.Next(255)), Convert.ToByte(random.Next(255)));
+                var veh = Core.GetService<VehicleManager>().CreateTemporaryVehicle(Enum.Parse<VehicleModel>(modelString), player.Position, player.Rotation.Roll, color, color, "Admin");
 
                 Alt.Log("Fahrzeug gespawnt: " + veh.Model.ToString() + "!");
                 player.SetIntoVehicle(veh.handle, -1);

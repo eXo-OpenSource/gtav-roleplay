@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>netcoreapp3.1</TargetFramework>
@@ -15,7 +15,7 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)'=='Debug'">
-		<OutputPath>..\bin\server\</OutputPath>
+		<OutputPath>..\bin\plugins</OutputPath>
 		<DefineConstants>TRACE;DEBUG</DefineConstants>
 		<PlatformTarget>x64</PlatformTarget>
 		<Optimize>false</Optimize>
@@ -44,7 +44,7 @@
 	</ItemGroup>
 
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-		<Exec Command="copy /b/v/y &quot;$(OutDir)/*&quot;  &quot;$(OutDir)/../../server/netcoreapp3.1/plugins/&quot;" />
+	  <Exec Command="if not exist $(OutDir)\..\..\server\netcoreapp3.1\plugins\* mkdir $(OutDir)\..\..\server\netcoreapp3.1\plugins&#xD;&#xA;copy /b /v /y $(OutDir)\*  $(OutDir)\..\..\server\netcoreapp3.1\plugins\*" />
 	</Target>
 
 </Project>

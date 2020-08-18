@@ -54,14 +54,6 @@ namespace server.Util.Log
         }
     }
 
-    public class Logger<TClass> : Logger
-    {
-
-        public Logger()
-            : base(typeof(TClass))
-        { }
-    }
-
     public class Logger
     {
         private readonly string _parent;
@@ -146,5 +138,13 @@ namespace server.Util.Log
         {
             SettingsManager.LogOutput.Add(logMessage);
         }
+    }
+
+    public class Logger<TClass> : Logger
+    {
+
+        public Logger()
+            : base(typeof(TClass))
+        { }
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using AltV.Net;
 using Exo.Rp.Sdk;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,13 +20,15 @@ namespace server.PluginManager
 
         private readonly RuntimeIndexer _indexer;
         private readonly List<IPlugin> _plugins;
+        private readonly IServiceProvider _serviceProvider;
 
         public PluginManager(IServiceProvider serviceProvider, RuntimeIndexer indexer)
         {
+            _serviceProvider = serviceProvider;
             _indexer = indexer;
             _plugins = new List<IPlugin>();
             IndexPlugins();
-            LoadPlugins(serviceProvider);
+            LoadPlugins();
         }
 
         public void Dispose()
@@ -40,22 +43,20 @@ namespace server.PluginManager
 
             var plugins = Directory
                 .GetFiles(PluginsPath, "*.plugin.dll", SearchOption.TopDirectoryOnly)
-                .ToList().Select(Alt.LoadAssemblyFromPath);
+                .ToList()
+                .Select(Alt.LoadAssemblyFromPath);
 
-            foreach (var assembly in plugins)
+            var result = _indexer.IndexImplementsInterface<IPlugin>(plugins)
+                .Select(type => Activator.CreateInstance(type, _serviceProvider) as IPlugin);
+            foreach (var plugin in result)
             {
-                var result = _indexer.IndexImplementsInterface<IPlugin>(assembly)
-                    .Select(t => Activator.CreateInstance(t) as IPlugin);
-                foreach (var plugin in result)
-                {
-                    _plugins.Add(plugin);
-                }
+                _plugins.Add(plugin);
             }
         }
 
-        private void LoadPlugins(IServiceProvider serviceProvider)
+        private void LoadPlugins()
         {
-            _plugins.ForEach(plugin => plugin.Load(serviceProvider));
+            _plugins.ForEach(plugin => plugin.Load());
         }
 
         public void Tick()

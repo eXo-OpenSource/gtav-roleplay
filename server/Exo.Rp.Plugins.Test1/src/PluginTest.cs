@@ -1,23 +1,32 @@
 using System;
+using System.Reflection.Metadata;
 using Exo.Rp.Sdk;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace plugins.Test1
 {
     public class PluginTest : IPlugin
     {
-        public void Load(IServiceProvider serviceProvider)
+        private readonly IServiceProvider serviceProvider;
+
+        public PluginTest(IServiceProvider serviceProvider)
         {
-            throw new NotImplementedException();
+            this.serviceProvider = serviceProvider;
+        }
+
+        public void Load()
+        {
+            
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+
         }
 
         public void Tick()
         {
-            throw new NotImplementedException();
+
         }
     }
 }

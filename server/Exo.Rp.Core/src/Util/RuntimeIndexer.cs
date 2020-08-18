@@ -48,5 +48,12 @@ namespace server.Util
                 .GetTypes()
                 .Where(type => type.GetInterface(typeof(TInterface).Name, true) != default);
         }
+
+        public IEnumerable<Type> IndexImplementsInterface<TInterface>(IEnumerable<Assembly> assemblies)
+        {
+            return assemblies
+                .SelectMany(assembly => assembly.GetTypes())
+                .Where(type => type.GetInterface(typeof(TInterface).Name, true) != default);
+        }
     }
 }

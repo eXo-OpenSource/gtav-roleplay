@@ -4,7 +4,7 @@ namespace Exo.Rp.Sdk
 {
     public interface IPlugin : IDisposable
     {
-        public void Load(IServiceProvider serviceProvider);
+        public void Load();
         public void Tick();
     }
 }
