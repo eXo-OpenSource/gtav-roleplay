@@ -1,9 +1,9 @@
 using AltV.Net;
-using server.Players;
-using server.Shops;
-using server.Shops.Types;
+using Exo.Rp.Core.Players;
+using Exo.Rp.Core.Shops;
+using Exo.Rp.Core.Shops.Types;
 
-namespace server.Events
+namespace Exo.Rp.Core.Events
 
 {
     internal class ShopEvents : IScript

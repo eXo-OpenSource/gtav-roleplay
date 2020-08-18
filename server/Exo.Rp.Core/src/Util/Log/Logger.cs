@@ -1,13 +1,13 @@
 using System;
 using System.Reflection;
+using Exo.Rp.Core.Util.Settings;
+using Exo.Rp.Models.Enums;
 using Exo.Rp.Sdk;
 using Exo.Rp.Sdk.Logger;
-using models.Enums;
 using Sentry;
 using Sentry.Protocol;
-using server.Util.Settings;
 
-namespace server.Util.Log
+namespace Exo.Rp.Core.Util.Log
 {
     public class SentryLogger : Logger, Sentry.Extensibility.IDiagnosticLogger
     {

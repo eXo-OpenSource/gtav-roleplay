@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using server.Jobs.Jobs;
+using Exo.Rp.Core.Jobs.Jobs;
 
-namespace server.Jobs
+namespace Exo.Rp.Core.Jobs
 {
     internal class JobManager : IManager
     {

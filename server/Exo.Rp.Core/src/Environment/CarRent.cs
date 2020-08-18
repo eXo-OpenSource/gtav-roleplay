@@ -1,18 +1,17 @@
+using System;
+using System.Collections.Generic;
 using AltV.Net;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
-using System.Collections.Generic;
-using IPlayer = server.Players.IPlayer;
-using server.Players.Characters;
-using Vehicle = server.Vehicles.Vehicle;
 using AltV.Net.Enums;
-using server.Streamer;
-using server.Streamer.Entities;
-using server.Vehicles.Types;
-using server.Vehicles;
-using System;
+using Exo.Rp.Core.Players.Characters;
+using Exo.Rp.Core.Streamer;
+using Exo.Rp.Core.Streamer.Entities;
+using Exo.Rp.Core.Vehicles;
+using IPlayer = Exo.Rp.Core.Players.IPlayer;
+using Vehicle = Exo.Rp.Core.Vehicles.Vehicle;
 
-namespace server.Environment
+namespace Exo.Rp.Core.Environment
 {
     public class CarRent
     {

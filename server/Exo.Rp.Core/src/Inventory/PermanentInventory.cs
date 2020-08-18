@@ -1,10 +1,10 @@
 using System.Linq;
+using Exo.Rp.Core.Database;
+using Exo.Rp.Core.Inventory.Items;
+using Exo.Rp.Models.Enums;
 using Microsoft.EntityFrameworkCore;
-using models.Enums;
-using server.Database;
-using server.Inventory.Items;
 
-namespace server.Inventory
+namespace Exo.Rp.Core.Inventory
 {
     public partial class PermanentInventory : Inventory
     {

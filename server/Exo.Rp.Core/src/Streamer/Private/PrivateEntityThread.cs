@@ -4,9 +4,9 @@ using System.Numerics;
 using System.Threading;
 using AltV.Net.EntitySync;
 using AltV.Net.EntitySync.ServerEvent;
-using server.Streamer.Grid;
+using Exo.Rp.Core.Streamer.Grid;
 
-namespace server.Streamer.Private
+namespace Exo.Rp.Core.Streamer.Private
 {
     public class PrivateEntityThread
     {

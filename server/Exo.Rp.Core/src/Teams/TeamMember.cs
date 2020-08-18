@@ -1,8 +1,8 @@
-using Character = server.Players.Characters.Character;
-using IPlayer = server.Players.IPlayer;
-using TeamPermissions = models.Enums.TeamPermissions;
+using Character = Exo.Rp.Core.Players.Characters.Character;
+using IPlayer = Exo.Rp.Core.Players.IPlayer;
+using TeamPermissions = Exo.Rp.Models.Enums.TeamPermissions;
 
-namespace server.Teams
+namespace Exo.Rp.Core.Teams
 {
     public partial class TeamMember
     {

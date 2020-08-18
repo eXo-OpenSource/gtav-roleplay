@@ -1,8 +1,8 @@
 using AltV.Net;
-using server.Jobs.Jobs;
-using IPlayer = server.Players.IPlayer;
+using Exo.Rp.Core.Jobs.Jobs;
+using IPlayer = Exo.Rp.Core.Players.IPlayer;
 
-namespace server.Events.Jobs
+namespace Exo.Rp.Core.Events.Jobs
 {
     internal class LawnMowerEvents : IScript
     {

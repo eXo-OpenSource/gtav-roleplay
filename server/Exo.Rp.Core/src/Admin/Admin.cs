@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using AltV.Net;
-using models.Enums;
-using server.Util.Log;
-using IPlayer = server.Players.IPlayer;
+using Exo.Rp.Core.Util.Log;
+using Exo.Rp.Models.Enums;
+using IPlayer = Exo.Rp.Core.Players.IPlayer;
 
-namespace server.Admin
+namespace Exo.Rp.Core.Admin
 {
     internal class Admin : IScript
     {

@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace server.Util
+namespace Exo.Rp.Core.Util
 {
     internal static class StringHelper
     {

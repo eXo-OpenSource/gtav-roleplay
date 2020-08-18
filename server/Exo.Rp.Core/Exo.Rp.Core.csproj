@@ -10,7 +10,7 @@
 		<Authors>eXo Roleplay Developers</Authors>
 		<Company>eXo Roleplay</Company>
 		<Product>eXo Roleplay Server</Product>
-		<RootNamespace>server</RootNamespace>
+		<RootNamespace>Exo.Rp.Core</RootNamespace>
 		<LangVersion>8</LangVersion>
 	</PropertyGroup>
 

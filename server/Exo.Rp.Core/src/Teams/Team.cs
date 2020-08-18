@@ -1,10 +1,10 @@
 using System.Collections.Generic;
-using models.Teams;
-using server.Database;
-using server.Util.Log;
-using IPlayer = server.Players.IPlayer;
+using Exo.Rp.Core.Database;
+using Exo.Rp.Core.Util.Log;
+using Exo.Rp.Models.Teams;
+using IPlayer = Exo.Rp.Core.Players.IPlayer;
 
-namespace server.Teams
+namespace Exo.Rp.Core.Teams
 {
     public partial class Team
     {

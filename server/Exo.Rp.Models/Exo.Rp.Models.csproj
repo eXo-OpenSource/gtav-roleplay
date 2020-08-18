@@ -11,7 +11,7 @@
 		<Authors>eXo Roleplay Developers</Authors>
 		<Company>eXo Roleplay</Company>
 		<Product>eXo Roleplay Server</Product>
-		<RootNamespace>models</RootNamespace>
+		<RootNamespace>Exo.Rp.Models</RootNamespace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)'=='Debug'">

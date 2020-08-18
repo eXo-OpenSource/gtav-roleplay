@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Numerics;
 using AltV.Net.EntitySync;
 using AltV.Net.EntitySync.Events;
-using server.Streamer.Entities;
-using server.Streamer.Grid;
+using Exo.Rp.Core.Streamer.Entities;
+using Exo.Rp.Core.Streamer.Grid;
 
-namespace server.Streamer.Private
+namespace Exo.Rp.Core.Streamer.Private
 {
     public class PrivateStreamer : IManager
     {

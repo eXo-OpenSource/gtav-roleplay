@@ -1,6 +1,6 @@
-using models.Enums;
+using Exo.Rp.Models.Enums;
 
-namespace server.Inventory.Inventories
+namespace Exo.Rp.Core.Inventory.Inventories
 {
     public sealed class VehicleInventory : PermanentInventory
     {

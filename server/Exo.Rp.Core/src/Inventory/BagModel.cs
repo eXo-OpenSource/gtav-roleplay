@@ -1,6 +1,6 @@
-using models.Enums;
+using Exo.Rp.Models.Enums;
 
-namespace server.Inventory
+namespace Exo.Rp.Core.Inventory
 {
     public class BagModel
     {

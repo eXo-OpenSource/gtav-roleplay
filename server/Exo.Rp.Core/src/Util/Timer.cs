@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 
-namespace server.Util
+namespace Exo.Rp.Core.Util
 {
     public class TimerHandler
     {

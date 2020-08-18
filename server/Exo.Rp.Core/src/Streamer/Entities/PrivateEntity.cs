@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Numerics;
 using AltV.Net.EntitySync;
-using server.Streamer.Private;
+using Exo.Rp.Core.Streamer.Private;
 
-namespace server.Streamer.Entities
+namespace Exo.Rp.Core.Streamer.Entities
 {
     public class PrivateEntity : IEntity
     {

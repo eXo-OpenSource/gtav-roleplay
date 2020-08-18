@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace server.Teams
+namespace Exo.Rp.Core.Teams
 {
     [Table("Departments")]
     public class DepartmentModel

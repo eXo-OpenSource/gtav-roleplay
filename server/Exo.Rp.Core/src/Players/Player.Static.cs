@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using AltV.Net;
 
-namespace server.Players
+namespace Exo.Rp.Core.Players
 {
     public partial class Player
     {

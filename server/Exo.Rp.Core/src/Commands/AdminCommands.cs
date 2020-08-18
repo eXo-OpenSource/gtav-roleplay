@@ -4,17 +4,17 @@ using System.Text;
 using AltV.Net;
 using AltV.Net.Data;
 using AltV.Net.Enums;
-using models.Enums;
-using server.Admin;
-using server.BankAccounts;
-using server.Database;
-using server.Inventory.Inventories;
-using IPlayer = server.Players.IPlayer;
-using Player = server.Players.Player;
-using Team = server.Teams.Team;
-using Vehicle = server.Vehicles.Vehicle;
+using Exo.Rp.Core.Admin;
+using Exo.Rp.Core.BankAccounts;
+using Exo.Rp.Core.Database;
+using Exo.Rp.Core.Inventory.Inventories;
+using Exo.Rp.Models.Enums;
+using IPlayer = Exo.Rp.Core.Players.IPlayer;
+using Player = Exo.Rp.Core.Players.Player;
+using Team = Exo.Rp.Core.Teams.Team;
+using Vehicle = Exo.Rp.Core.Vehicles.Vehicle;
 
-namespace server.Commands
+namespace Exo.Rp.Core.Commands
 {
     public class AdminCommands : IScript
     {

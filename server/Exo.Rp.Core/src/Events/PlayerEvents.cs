@@ -1,25 +1,17 @@
 using System;
-using System.Globalization;
 using System.Collections.Generic;
-using System.Linq;
+using System.Globalization;
 using AltV.Net;
 using AltV.Net.Data;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using models.Enums;
-using MySql.Data.MySqlClient;
+using Exo.Rp.Core.Players;
+using Exo.Rp.Core.Players.Accounts;
+using Exo.Rp.Core.Util;
+using Exo.Rp.Core.Util.Log;
+using Exo.Rp.Models.Enums;
 using Newtonsoft.Json;
-using Sentry;
-using server.Database;
-using server.Players;
-using server.Players.Accounts;
-using server.Util;
-using server.Util.Log;
-using IPlayer = server.Players.IPlayer;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
-using AltV.Net.Elements.Entities;
+using IPlayer = Exo.Rp.Core.Players.IPlayer;
 
-namespace server.Events
+namespace Exo.Rp.Core.Events
 {
     class PlayerEvents : IScript
     {

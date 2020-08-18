@@ -1,6 +1,6 @@
 using AltV.Net;
 
-namespace models.Popup
+namespace Exo.Rp.Models.Popup
 {
     public class PopupLabelDto : PopupItemDto
     {

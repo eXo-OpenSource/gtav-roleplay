@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using AltV.Net;
+using Exo.Rp.Core.Jobs;
+using Exo.Rp.Core.Players;
+using Exo.Rp.Core.Players.Characters;
+using Exo.Rp.Core.Util.Log;
+using Exo.Rp.Models.Popup;
 using Exo.Rp.Sdk;
-using models.Popup;
-using server.Jobs;
-using server.Players;
-using server.Players.Characters;
-using server.Util.Log;
 
-namespace server.Events.Jobs
+namespace Exo.Rp.Core.Events.Jobs
 {
     internal class JobEvents : IScript
     {

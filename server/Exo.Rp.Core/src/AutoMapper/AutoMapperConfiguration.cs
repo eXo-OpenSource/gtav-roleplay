@@ -1,14 +1,14 @@
 using AutoMapper;
-using server.Inventory;
-using server.Inventory.Inventories;
-using server.Shops;
-using server.Shops.Types;
-using server.Teams;
-using server.Teams.State;
-using server.Vehicles;
-using server.Vehicles.Types;
+using Exo.Rp.Core.Inventory;
+using Exo.Rp.Core.Inventory.Inventories;
+using Exo.Rp.Core.Shops;
+using Exo.Rp.Core.Shops.Types;
+using Exo.Rp.Core.Teams;
+using Exo.Rp.Core.Teams.State;
+using Exo.Rp.Core.Vehicles;
+using Exo.Rp.Core.Vehicles.Types;
 
-namespace server.AutoMapper
+namespace Exo.Rp.Core.AutoMapper
 {
     public static class AutoMapperConfiguration
     {

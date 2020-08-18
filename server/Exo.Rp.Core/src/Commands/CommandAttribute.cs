@@ -1,7 +1,7 @@
 using System;
-using models.Enums;
+using Exo.Rp.Models.Enums;
 
-namespace server.Commands
+namespace Exo.Rp.Core.Commands
 {
     [AttributeUsage(AttributeTargets.Method, Inherited = false)]
     public class CommandAttribute : Attribute

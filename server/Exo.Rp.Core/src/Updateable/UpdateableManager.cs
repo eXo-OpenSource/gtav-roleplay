@@ -3,12 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using Sentry;
-using server.Commands;
-using server.Util;
-using server.Vehicles;
+using Exo.Rp.Core.Util;
 
-namespace server.Updateable
+namespace Exo.Rp.Core.Updateable
 {
     public class InvalidIUpdateableTargetException : Exception
     {

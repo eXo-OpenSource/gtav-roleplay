@@ -1,8 +1,8 @@
 using System;
 using System.IO;
-using serialization;
+using Exo.Rp.Serialization;
 
-namespace models.Peds
+namespace Exo.Rp.Models.Peds
 {
     [Serializable]
     public class PedDto : Serializable<PedDto>

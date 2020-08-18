@@ -3,17 +3,17 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using AltV.Net;
+using Exo.Rp.Core.Util.Log;
+using Exo.Rp.Core.Util.Settings;
+using Exo.Rp.Models.Enums;
 using Exo.Rp.Sdk.Logger;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using models.Enums;
 using MySql.Data.MySqlClient;
 using Sentry;
-using server.Util.Log;
-using server.Util.Settings;
 
-namespace server.Database
+namespace Exo.Rp.Core.Database
 {
     public class DatabaseCore
     {

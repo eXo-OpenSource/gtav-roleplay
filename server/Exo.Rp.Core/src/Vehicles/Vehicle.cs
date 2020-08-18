@@ -2,12 +2,11 @@ using AltV.Net;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
+using Exo.Rp.Core.Util.Log;
 using Exo.Rp.Sdk;
-using server.Util;
-using server.Util.Log;
-using IPlayer = server.Players.IPlayer;
+using IPlayer = Exo.Rp.Core.Players.IPlayer;
 
-namespace server.Vehicles
+namespace Exo.Rp.Core.Vehicles
 {
     public partial class Vehicle
     {

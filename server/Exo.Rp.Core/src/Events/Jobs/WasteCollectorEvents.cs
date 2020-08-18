@@ -1,12 +1,12 @@
 using AltV.Net;
 using AltV.Net.Elements.Entities;
-using models.Enums;
-using server.Extensions;
-using server.Jobs;
-using server.Jobs.Jobs;
-using IPlayer = server.Players.IPlayer;
+using Exo.Rp.Core.Extensions;
+using Exo.Rp.Core.Jobs;
+using Exo.Rp.Core.Jobs.Jobs;
+using Exo.Rp.Models.Enums;
+using IPlayer = Exo.Rp.Core.Players.IPlayer;
 
-namespace server.Events.Jobs
+namespace Exo.Rp.Core.Events.Jobs
 {
     internal class WasteCollectorEvents : IScript
     {

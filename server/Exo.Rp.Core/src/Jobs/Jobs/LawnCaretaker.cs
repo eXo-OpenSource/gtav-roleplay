@@ -1,13 +1,10 @@
-using AltV.Net;
-using AltV.Net.Data;
-using AltV.Net.Elements.Entities;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using models.Enums;
-using server.Util.Log;
 using System;
-using IPlayer = server.Players.IPlayer;
+using AltV.Net.Data;
+using Exo.Rp.Core.Util.Log;
+using Exo.Rp.Models.Enums;
+using IPlayer = Exo.Rp.Core.Players.IPlayer;
 
-namespace server.Jobs.Jobs
+namespace Exo.Rp.Core.Jobs.Jobs
 {
     internal class LawnCaretaker : Job
     {

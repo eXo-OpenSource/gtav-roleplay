@@ -1,13 +1,12 @@
 using System;
 using System.Collections.Generic;
 using AltV.Net;
+using Exo.Rp.Core.Util.Settings;
 using Exo.Rp.Sdk;
 using InfluxDB.Collector;
-using server.Util.Log;
-using server.Util.Settings;
 using Timer = System.Timers.Timer;
 
-namespace server.Metrics
+namespace Exo.Rp.Core.Metrics
 {
     public class MetricsCollector : IDisposable
     {

@@ -1,4 +1,4 @@
-namespace server.Peds
+namespace Exo.Rp.Core.Peds
 {
     public partial class Ped
     {

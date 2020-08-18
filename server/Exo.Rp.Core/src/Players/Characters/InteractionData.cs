@@ -1,4 +1,4 @@
-namespace server.Players.Characters
+namespace Exo.Rp.Core.Players.Characters
 {
     public class InteractionData
     {

@@ -1,7 +1,7 @@
 using System.Numerics;
 using AltV.Net.EntitySync;
 
-namespace server.Streamer.Entities
+namespace Exo.Rp.Core.Streamer.Entities
 {
     public class StreamBlip : Entity, IEntity
     {

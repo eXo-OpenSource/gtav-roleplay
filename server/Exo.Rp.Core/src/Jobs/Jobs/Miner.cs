@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using AltV.Net.Data;
-using IPlayer = server.Players.IPlayer;
+using IPlayer = Exo.Rp.Core.Players.IPlayer;
 using Object = AltV.Net.Elements.Entities.IWorldObject;
 
-namespace server.Jobs.Jobs
+namespace Exo.Rp.Core.Jobs.Jobs
 {
     internal class Miner : Job
     {

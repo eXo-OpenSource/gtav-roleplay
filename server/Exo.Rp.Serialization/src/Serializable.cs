@@ -1,4 +1,4 @@
-namespace serialization
+namespace Exo.Rp.Serialization
 {
     public abstract class Serializable<T> where T : Serializable<T>, new()
     {

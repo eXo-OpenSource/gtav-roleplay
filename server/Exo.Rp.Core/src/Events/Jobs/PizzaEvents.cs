@@ -1,13 +1,11 @@
-using System.Diagnostics.Tracing;
-using AltV.Net;
-using AltV.Net.Elements.Entities;
-using AltV.Net.Data;
-using models.Enums;
-using server.Jobs.Jobs;
 using System.Threading.Tasks;
-using IPlayer = server.Players.IPlayer;
+using AltV.Net;
+using AltV.Net.Data;
+using Exo.Rp.Core.Jobs.Jobs;
+using Exo.Rp.Models.Enums;
+using IPlayer = Exo.Rp.Core.Players.IPlayer;
 
-namespace server.Events.Jobs
+namespace Exo.Rp.Core.Events.Jobs
 {
     internal class PizzaEvents : IScript
     {

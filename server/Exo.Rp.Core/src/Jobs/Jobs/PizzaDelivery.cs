@@ -1,21 +1,19 @@
+using System;
+using System.Threading.Tasks;
 using AltV.Net;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
-using models.Enums;
-using server.Players.Characters;
-using server.Streamer.Entities;
-using server.Streamer.Private;
-using server.Util.Log;
-using server.Vehicles;
-using System;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
+using Exo.Rp.Core.Players.Characters;
+using Exo.Rp.Core.Streamer.Entities;
+using Exo.Rp.Core.Streamer.Private;
+using Exo.Rp.Core.Util.Log;
+using Exo.Rp.Models.Enums;
 using Exo.Rp.Sdk;
-using IPlayer = server.Players.IPlayer;
+using IPlayer = Exo.Rp.Core.Players.IPlayer;
 
 
-namespace server.Jobs.Jobs
+namespace Exo.Rp.Core.Jobs.Jobs
 {
     internal class PizzaDelivery : Job
     {

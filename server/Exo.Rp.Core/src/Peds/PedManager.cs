@@ -1,18 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
-using AltV.Net;
 using AltV.Net.Data;
-using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
-using models.Enums;
-using models.Peds;
-using Newtonsoft.Json;
-using server.Database;
-using server.Extensions;
-using server.Streamer;
-using server.Streamer.Entities;
+using Exo.Rp.Core.Database;
+using Exo.Rp.Core.Streamer;
+using Exo.Rp.Core.Streamer.Entities;
+using Exo.Rp.Models.Enums;
 
-namespace server.Peds
+namespace Exo.Rp.Core.Peds
 {
     internal class PedManager : IManager
     {

@@ -1,13 +1,14 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using Exo.Rp.Models.Enums;
 
-namespace server.World
+namespace Exo.Rp.Core.World
 {
     [Table("WorldObjects")]
     public class WorldObject
     {
         public int Id { get; set; }
-        public models.Enums.WorldObjects Type { get; set; }
+        public WorldObjects Type { get; set; }
         public string Position { get; set; }
         public string Rotation { get; set; }
         public int PlacedBy { get; set; }

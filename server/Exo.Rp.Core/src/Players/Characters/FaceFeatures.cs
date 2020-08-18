@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace server.Players.Characters
+namespace Exo.Rp.Core.Players.Characters
 {
     [Table("FaceFeatures")]
     public class FaceFeatures

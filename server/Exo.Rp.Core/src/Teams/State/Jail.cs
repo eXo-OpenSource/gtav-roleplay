@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using AltV.Net.Data;
 using AltV.Net.Enums;
-using IPlayer = server.Players.IPlayer;
+using IPlayer = Exo.Rp.Core.Players.IPlayer;
 
-namespace server.Teams.State
+namespace Exo.Rp.Core.Teams.State
 {
     public class Jail
     {

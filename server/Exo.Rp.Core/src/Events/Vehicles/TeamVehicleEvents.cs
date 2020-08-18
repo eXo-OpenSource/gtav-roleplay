@@ -1,10 +1,10 @@
 using AltV.Net;
 using AltV.Net.Elements.Entities;
-using server.Vehicles;
-using server.Vehicles.Types;
-using IPlayer = server.Players.IPlayer;
+using Exo.Rp.Core.Vehicles;
+using Exo.Rp.Core.Vehicles.Types;
+using IPlayer = Exo.Rp.Core.Players.IPlayer;
 
-namespace server.Events.Vehicles
+namespace Exo.Rp.Core.Events.Vehicles
 {
     internal class TeamVehicleEvents : IScript
     {

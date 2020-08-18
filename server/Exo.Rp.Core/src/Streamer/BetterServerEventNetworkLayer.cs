@@ -8,7 +8,7 @@ using AltV.Net.EntitySync;
 using AltV.Net.EntitySync.Events;
 using AltV.Net.EntitySync.ServerEvent;
 
-namespace server.Streamer
+namespace Exo.Rp.Core.Streamer
 {
     public class BetterServerEventNetworkLayer : NetworkLayer
     {

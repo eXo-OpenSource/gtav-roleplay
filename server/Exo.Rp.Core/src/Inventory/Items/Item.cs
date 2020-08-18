@@ -1,4 +1,4 @@
-namespace server.Inventory.Items
+namespace Exo.Rp.Core.Inventory.Items
 {
     public partial class Item
     {

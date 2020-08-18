@@ -1,4 +1,4 @@
-namespace server
+namespace Exo.Rp.Core
 {
     public interface IManager : IService { }
 }

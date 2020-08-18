@@ -2,10 +2,10 @@ using System;
 using AltV.Net;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
-using server.Players.Characters;
-using IPlayer = server.Players.IPlayer;
+using Exo.Rp.Core.Players.Characters;
+using IPlayer = Exo.Rp.Core.Players.IPlayer;
 
-namespace server.Jobs.Jobs
+namespace Exo.Rp.Core.Jobs.Jobs
 {
     internal class Tree
     {

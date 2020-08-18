@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using models.Enums;
+using Exo.Rp.Models.Enums;
 
-namespace server.Teams
+namespace Exo.Rp.Core.Teams
 {
     [Table("TeamMemberPermissions")]
     public class TeamMemberPermissionModel

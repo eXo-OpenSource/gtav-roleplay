@@ -1,7 +1,7 @@
 using AltV.Net;
 using AltV.Net.Elements.Entities;
 
-namespace server.Commands
+namespace Exo.Rp.Core.Commands
 {
     internal class ClientCommands : IScript
     {

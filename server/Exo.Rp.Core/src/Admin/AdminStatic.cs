@@ -1,8 +1,8 @@
-using models.Enums;
-using server.Translation;
-using IPlayer = server.Players.IPlayer;
+using Exo.Rp.Core.Translation;
+using Exo.Rp.Models.Enums;
+using IPlayer = Exo.Rp.Core.Players.IPlayer;
 
-namespace server.Admin
+namespace Exo.Rp.Core.Admin
 {
     public static class AdminStatic
     {

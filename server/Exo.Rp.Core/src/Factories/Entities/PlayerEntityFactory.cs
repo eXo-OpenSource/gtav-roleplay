@@ -1,9 +1,9 @@
 using System;
 using AltV.Net;
-using server.Players;
+using Exo.Rp.Core.Players;
 using IPlayer = AltV.Net.Elements.Entities.IPlayer;
 
-namespace server.Factories.Entities
+namespace Exo.Rp.Core.Factories.Entities
 {
     public class PlayerEntityFactory : IEntityFactory<IPlayer>
     {

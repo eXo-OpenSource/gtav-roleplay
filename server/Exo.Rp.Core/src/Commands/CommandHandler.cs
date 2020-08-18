@@ -2,13 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Exo.Rp.Sdk;
-using server.Admin;
-using server.Players;
-using server.Util;
-using server.Util.Log;
+using Exo.Rp.Core.Admin;
+using Exo.Rp.Core.Players;
+using Exo.Rp.Core.Util;
 
-namespace server.Commands
+namespace Exo.Rp.Core.Commands
 {
     public class CommandHandler : IManager
     {

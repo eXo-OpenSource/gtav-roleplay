@@ -1,9 +1,8 @@
-using System;
 using Newtonsoft.Json;
 using Sentry;
 using Sentry.Protocol;
 
-namespace server.Util.Settings
+namespace Exo.Rp.Core.Util.Settings
 {
     public class SentrySettings
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Channels;
 using AltV.Net.EntitySync;
 
-namespace server.Streamer.Private
+namespace Exo.Rp.Core.Streamer.Private
 {
     public class PrivateEntityThreadRepository : IEntityThreadRepository
     {

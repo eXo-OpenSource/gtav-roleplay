@@ -2,15 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using AltV.Net;
+using Exo.Rp.Core.Commands;
+using Exo.Rp.Core.Players;
+using Exo.Rp.Core.Translation;
+using Exo.Rp.Core.Util;
+using Exo.Rp.Core.Util.Log;
 using Sentry;
-using Sentry.Protocol;
-using server.Commands;
-using server.Players;
-using server.Translation;
-using server.Util;
-using server.Util.Log;
 
-namespace server.Events
+namespace Exo.Rp.Core.Events
 {
     class ChatEvents : IScript
     {

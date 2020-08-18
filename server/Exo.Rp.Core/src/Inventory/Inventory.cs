@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using AltV.Net.Elements.Entities;
-using models.Enums;
-using models.Inventory;
+using Exo.Rp.Core.Inventory.Items;
+using Exo.Rp.Models.Enums;
+using Exo.Rp.Models.Inventory;
 using Newtonsoft.Json;
-using server.Inventory.Items;
 
-namespace server.Inventory
+namespace Exo.Rp.Core.Inventory
 {
     public partial class Inventory
     {

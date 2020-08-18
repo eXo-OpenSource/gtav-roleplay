@@ -1,14 +1,13 @@
 using System.Collections.Generic;
-using System.Globalization;
 using AltV.Net.Enums;
-using models.Enums;
-using server.BankAccounts;
-using server.Database;
-using server.Inventory;
-using server.Inventory.Inventories;
-using server.Players.Characters;
+using Exo.Rp.Core.BankAccounts;
+using Exo.Rp.Core.Database;
+using Exo.Rp.Core.Inventory;
+using Exo.Rp.Core.Inventory.Inventories;
+using Exo.Rp.Core.Players.Characters;
+using Exo.Rp.Models.Enums;
 
-namespace server.Players.Accounts
+namespace Exo.Rp.Core.Players.Accounts
 {
     internal static class AccountStatic
     {

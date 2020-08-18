@@ -1,20 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Security.Cryptography.X509Certificates;
-using AltV.Net;
 using AltV.Net.Data;
 using AltV.Net.Enums;
-using models.Enums;
+using Exo.Rp.Core.Extensions;
+using Exo.Rp.Core.Inventory.Inventories;
+using Exo.Rp.Core.Jobs;
+using Exo.Rp.Core.Shops;
+using Exo.Rp.Core.Teams;
+using Exo.Rp.Models.Enums;
 using Newtonsoft.Json;
-using server.Extensions;
-using server.Inventory.Inventories;
-using server.Jobs;
-using server.Shops;
-using server.Teams;
-using Team = server.Teams.Team;
+using Team = Exo.Rp.Core.Teams.Team;
 
-namespace server.Players.Characters
+namespace Exo.Rp.Core.Players.Characters
 {
     public partial class Character
     {

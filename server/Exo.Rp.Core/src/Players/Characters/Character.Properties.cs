@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using AltV.Net.Enums;
-using models.Enums;
-using server.Util.Log;
+using Exo.Rp.Core.Util.Log;
+using Exo.Rp.Models.Enums;
 
-namespace server.Players.Characters
+namespace Exo.Rp.Core.Players.Characters
 {
     public partial class Character
     {

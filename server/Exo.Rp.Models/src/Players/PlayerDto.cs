@@ -1,10 +1,10 @@
 using System;
 using System.IO;
-using models.Enums;
-using serialization;
-using Gender = models.Enums.Gender;
+using Exo.Rp.Models.Enums;
+using Exo.Rp.Serialization;
+using Gender = Exo.Rp.Models.Enums.Gender;
 
-namespace models.Players
+namespace Exo.Rp.Models.Players
 {
     [Serializable]
     public class PlayerDto : Serializable<PlayerDto>

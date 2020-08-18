@@ -1,9 +1,9 @@
 using System;
 using System.IO;
-using serialization;
-using serialization.Extensions;
+using Exo.Rp.Serialization;
+using Exo.Rp.Serialization.Extensions;
 
-namespace models.Characters
+namespace Exo.Rp.Models.Characters
 {
     [Serializable]
     public class FaceFeaturesDto : Serializable<FaceFeaturesDto>

@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using server.Players.Characters;
+using Exo.Rp.Core.Players.Characters;
 
-namespace server.Teams
+namespace Exo.Rp.Core.Teams
 {
     [Table("TeamMembers")]
     public partial class TeamMember

@@ -1,9 +1,9 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using models.Enums;
+using Exo.Rp.Models.Enums;
 
-namespace server.Inventory.Items
+namespace Exo.Rp.Core.Inventory.Items
 {
     [Table("Items")]
     public partial class Item

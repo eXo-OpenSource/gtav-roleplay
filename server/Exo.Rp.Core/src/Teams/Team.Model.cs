@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using models.Enums;
-using server.BankAccounts;
-using server.Inventory.Inventories;
+using Exo.Rp.Core.BankAccounts;
+using Exo.Rp.Core.Inventory.Inventories;
+using Exo.Rp.Models.Enums;
 
-namespace server.Teams
+namespace Exo.Rp.Core.Teams
 {
     [Table("Teams")]
     public partial class Team {

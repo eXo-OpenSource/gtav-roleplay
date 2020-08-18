@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace server.Util.Settings
+namespace Exo.Rp.Core.Util.Settings
 {
     public class DataSyncSettings
     {

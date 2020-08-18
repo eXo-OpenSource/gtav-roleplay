@@ -1,12 +1,9 @@
 using System;
-using Microsoft.Extensions.Logging;
-
+using Exo.Rp.Core.Util;
+using Exo.Rp.Core.Util.Log;
 using MySql.Data.MySqlClient;
-using Sentry;
-using server.Util;
-using server.Util.Log;
 
-namespace server.Database
+namespace Exo.Rp.Core.Database
 {
     public static class ContextFactory
     {

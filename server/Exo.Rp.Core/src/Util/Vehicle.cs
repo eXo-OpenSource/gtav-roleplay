@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using AltV.Net.Elements.Entities;
 using Newtonsoft.Json;
 
-namespace server.Util
+namespace Exo.Rp.Core.Util
 {
     public static class Vehicle
     {

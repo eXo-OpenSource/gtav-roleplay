@@ -1,22 +1,8 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
-using AltV.Net;
-using AltV.Net.Data;
-using AltV.Net.Elements.Entities;
-using AutoMapper.QueryableExtensions.Impl;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using models.Enums;
-using server.Database;
-using server.Extensions;
-using server.Util.Log;
-using IPlayer = server.Players.IPlayer;
-using WorldObject = server.World.WorldObject;
+using Exo.Rp.Models.Enums;
 
-namespace server.BankAccounts
+namespace Exo.Rp.Core.BankAccounts
 {
     [Table("BankAccounts")]
     public class BankAccount

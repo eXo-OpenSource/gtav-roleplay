@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using AltV.Net.EntitySync;
 
-namespace server.Streamer.Private
+namespace Exo.Rp.Core.Streamer.Private
 {
     public class PrivateClientRepository : IClientRepository
     {

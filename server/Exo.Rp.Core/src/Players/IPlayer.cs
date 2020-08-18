@@ -1,12 +1,11 @@
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
+using Exo.Rp.Core.Players.Accounts;
+using Exo.Rp.Core.Players.Characters;
 using Sentry.Protocol;
-using server.Players.Accounts;
-using server.Players.Characters;
 
-namespace server.Players
+namespace Exo.Rp.Core.Players
 {
     public interface IPlayer : AltV.Net.Elements.Entities.IPlayer
     {

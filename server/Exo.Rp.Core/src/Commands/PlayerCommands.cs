@@ -1,9 +1,9 @@
 using System;
 using AltV.Net;
-using models.Enums;
-using IPlayer = server.Players.IPlayer;
+using Exo.Rp.Models.Enums;
+using IPlayer = Exo.Rp.Core.Players.IPlayer;
 
-namespace server.Commands
+namespace Exo.Rp.Core.Commands
 {
     public class PlayerCommands : IScript
     {

@@ -2,7 +2,7 @@
 
 using AltV.Net.Data;
 
-namespace server.Commands
+namespace Exo.Rp.Core.Commands
 {
     internal class TpPoint
     {

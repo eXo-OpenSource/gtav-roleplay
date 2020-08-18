@@ -2,9 +2,9 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using AltV.Net.Data;
 using AltV.Net.Enums;
-using models.Enums;
+using Exo.Rp.Models.Enums;
 
-namespace server.Peds
+namespace Exo.Rp.Core.Peds
 {
     [Table("Peds")]
     public partial class Ped

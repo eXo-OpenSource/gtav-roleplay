@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace models.Elements
+namespace Exo.Rp.Models.Elements
 {
 
     // Serverside : server.SharedUtil.Vector3DtoHelper in server/src/SharedUtil

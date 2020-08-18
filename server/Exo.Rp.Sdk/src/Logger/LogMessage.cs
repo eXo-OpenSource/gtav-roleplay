@@ -1,5 +1,5 @@
 using System;
-using models.Enums;
+using Exo.Rp.Models.Enums;
 
 namespace Exo.Rp.Sdk.Logger
 {

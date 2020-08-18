@@ -1,7 +1,7 @@
-using models.Enums;
-using server.Inventory.Items;
+using Exo.Rp.Core.Inventory.Items;
+using Exo.Rp.Models.Enums;
 
-namespace server.Inventory.Inventories
+namespace Exo.Rp.Core.Inventory.Inventories
 {
     public sealed class TeamInventory : PermanentInventory
     {

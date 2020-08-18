@@ -1,8 +1,8 @@
 using System;
 using System.IO;
-using serialization;
+using Exo.Rp.Serialization;
 
-namespace models.Teams
+namespace Exo.Rp.Models.Teams
 {
     public class TeamMemberDto : Serializable<TeamMemberDto>
     {

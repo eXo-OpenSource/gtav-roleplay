@@ -4,20 +4,20 @@ using AltV.Net;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
-using models.Jobs;
-using models.Popup;
+using Exo.Rp.Core.Players;
+using Exo.Rp.Core.Players.Characters;
+using Exo.Rp.Core.Streamer;
+using Exo.Rp.Core.Streamer.Entities;
+using Exo.Rp.Core.Util.Log;
+using Exo.Rp.Core.Vehicles;
+using Exo.Rp.Core.Vehicles.Types;
+using Exo.Rp.Models.Jobs;
+using Exo.Rp.Models.Popup;
 using Newtonsoft.Json;
-using server.Players;
-using server.Players.Characters;
-using server.Streamer;
-using server.Streamer.Entities;
-using server.Util.Log;
-using server.Vehicles;
-using server.Vehicles.Types;
-using IPlayer = server.Players.IPlayer;
-using Vehicle = server.Vehicles.Vehicle;
+using IPlayer = Exo.Rp.Core.Players.IPlayer;
+using Vehicle = Exo.Rp.Core.Vehicles.Vehicle;
 
-namespace server.Jobs
+namespace Exo.Rp.Core.Jobs
 {
     public class Job
     {

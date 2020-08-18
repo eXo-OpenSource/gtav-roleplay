@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
-using server.Util.Log;
+using Exo.Rp.Core.Util.Log;
 
-namespace server.Inventory
+namespace Exo.Rp.Core.Inventory
 {
     public partial class PermanentInventory : Inventory
     {

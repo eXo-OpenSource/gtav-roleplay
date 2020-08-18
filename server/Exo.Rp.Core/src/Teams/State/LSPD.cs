@@ -2,9 +2,9 @@ using AltV.Net;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
-using server.Peds;
+using Exo.Rp.Core.Peds;
 
-namespace server.Teams.State
+namespace Exo.Rp.Core.Teams.State
 {
     internal class Lspd : Team
     {

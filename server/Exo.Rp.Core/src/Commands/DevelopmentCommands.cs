@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Numerics;
 using System.Text;
 using System.Threading;
@@ -7,26 +6,21 @@ using AltV.Net;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
-using models.Enums;
-using Newtonsoft.Json;
-using server.Admin;
-using server.Database;
-using server.Extensions;
-using server.Jobs;
-using server.Players;
-using server.Shops;
-using server.Shops.Types;
-using server.Teams.State;
-using server.Translation;
-using server.Util;
-using server.Util.Log;
-using server.Vehicles;
-using server.World;
+using Exo.Rp.Core.Database;
+using Exo.Rp.Core.Extensions;
+using Exo.Rp.Core.Jobs;
+using Exo.Rp.Core.Shops;
+using Exo.Rp.Core.Shops.Types;
+using Exo.Rp.Core.Teams.State;
+using Exo.Rp.Core.Translation;
+using Exo.Rp.Core.Vehicles;
+using Exo.Rp.Core.World;
+using Exo.Rp.Models.Enums;
 using static System.Int32;
-using IPlayer = server.Players.IPlayer;
-using Player = server.Players.Player;
+using IPlayer = Exo.Rp.Core.Players.IPlayer;
+using Player = Exo.Rp.Core.Players.Player;
 
-namespace server.Commands
+namespace Exo.Rp.Core.Commands
 {
     internal class DevelopmentCommands : IScript
     {

@@ -2,16 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using AltV.Net;
+using Exo.Rp.Core.Updateable;
+using Exo.Rp.Core.Util;
 using Exo.Rp.Sdk;
-using Microsoft.Extensions.DependencyInjection;
-using server.Players;
-using server.Updateable;
-using server.Util;
 using Directory = System.IO.Directory;
 
-namespace server.PluginManager
+namespace Exo.Rp.Core.PluginManager
 {
     public class PluginManager : IManager, IUpdateable, IDisposable
     {

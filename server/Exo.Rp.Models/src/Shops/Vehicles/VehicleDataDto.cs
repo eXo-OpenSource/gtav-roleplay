@@ -1,9 +1,9 @@
 using System;
 using System.IO;
 using AltV.Net.Elements.Entities;
-using serialization;
+using Exo.Rp.Serialization;
 
-namespace models.Shops.Vehicles
+namespace Exo.Rp.Models.Shops.Vehicles
 {
     [Serializable]
     public class VehicleDataDto : Serializable<VehicleDataDto>

@@ -1,7 +1,7 @@
 using System;
-using server.Players;
+using Exo.Rp.Core.Players;
 
-namespace server.UI
+namespace Exo.Rp.Core.UI
 {
     internal class QuestionDialogue : Dialogue
     {

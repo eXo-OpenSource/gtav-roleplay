@@ -1,7 +1,7 @@
 using System;
 using AltV.Net.Elements.Entities;
 
-namespace server.Jobs.Jobs
+namespace Exo.Rp.Core.Jobs.Jobs
 {
     public class LawnMower
     {

@@ -1,13 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using AltV.Net;
-using AltV.Net.Enums;
-using server.Database;
-using server.Extensions;
-using server.Translation;
-using server.Util.Log;
+using Exo.Rp.Core.Database;
+using Exo.Rp.Core.Extensions;
+using Exo.Rp.Core.Translation;
+using Exo.Rp.Core.Util.Log;
 
-namespace server.Players
+namespace Exo.Rp.Core.Players
 {
     internal class PlayerManager : IManager
     {

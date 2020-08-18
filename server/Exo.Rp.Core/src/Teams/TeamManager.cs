@@ -2,15 +2,14 @@ using System.Collections.Generic;
 using System.Linq;
 using AltV.Net.Elements.Entities;
 using AutoMapper;
+using Exo.Rp.Core.Database;
+using Exo.Rp.Core.Teams.State;
+using Exo.Rp.Models.Teams;
 using Exo.Rp.Sdk;
-using models.Teams;
 using Newtonsoft.Json;
-using server.Database;
-using server.Teams.State;
-using server.Util.Log;
-using Character = server.Players.Characters.Character;
+using Character = Exo.Rp.Core.Players.Characters.Character;
 
-namespace server.Teams
+namespace Exo.Rp.Core.Teams
 {
     internal class TeamManager : IManager
     {
@@ -62,14 +61,14 @@ namespace server.Teams
                 TeamMemberPermissions.AddRange(_databaseContext.TeamMemberPermissionModel.Local);
         }
 
-        private void AddTeam<T>(global::server.Teams.Team team)
-            where T: global::server.Teams.Team
+        private void AddTeam<T>(global::Exo.Rp.Core.Teams.Team team)
+            where T: global::Exo.Rp.Core.Teams.Team
         {
             Teams.Add(_mapper.Map<T>(team));
         }
 
         public T GetTeam<T>(int teamId)
-            where T: global::server.Teams.Team
+            where T: global::Exo.Rp.Core.Teams.Team
         {
             return Teams.Find(x => x.Id == teamId) as T;
         }
@@ -84,11 +83,11 @@ namespace server.Teams
             return TeamMembers.Find(x => x.Id == memberId);
         }
 
-        public List<global::server.Teams.Team> GetTeamsForPlayer(Character player)
+        public List<global::Exo.Rp.Core.Teams.Team> GetTeamsForPlayer(Character player)
         {
-            var teams = new List<global::server.Teams.Team>();
+            var teams = new List<global::Exo.Rp.Core.Teams.Team>();
 
-            foreach (var teamMember in GetTeamMembersForPlayer(player)) teams.Add(GetTeam<global::server.Teams.Team>(teamMember.Id));
+            foreach (var teamMember in GetTeamMembersForPlayer(player)) teams.Add(GetTeam<global::Exo.Rp.Core.Teams.Team>(teamMember.Id));
 
             return teams;
         }

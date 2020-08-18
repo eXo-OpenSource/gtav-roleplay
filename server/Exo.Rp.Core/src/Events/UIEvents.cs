@@ -1,8 +1,8 @@
 using AltV.Net;
-using server.Players;
-using server.UI;
+using Exo.Rp.Core.Players;
+using Exo.Rp.Core.UI;
 
-namespace server.Events
+namespace Exo.Rp.Core.Events
 
 {
     internal class UiEvents : IScript

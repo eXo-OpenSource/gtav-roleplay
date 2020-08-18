@@ -1,8 +1,8 @@
 using AltV.Net;
-using server.Teams;
-using IPlayer = server.Players.IPlayer;
+using Exo.Rp.Core.Teams;
+using IPlayer = Exo.Rp.Core.Players.IPlayer;
 
-namespace server.Vehicles.Types
+namespace Exo.Rp.Core.Vehicles.Types
 {
     internal class TeamVehicle : Vehicle
     {

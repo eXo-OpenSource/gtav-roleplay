@@ -1,11 +1,10 @@
-using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using AltV.Net.Data;
 using AltV.Net.Enums;
-using models.Enums;
-using server.Inventory.Inventories;
+using Exo.Rp.Core.Inventory.Inventories;
+using Exo.Rp.Models.Enums;
 
-namespace server.Vehicles
+namespace Exo.Rp.Core.Vehicles
 {
     [Table("Vehicles")]
     public partial class Vehicle

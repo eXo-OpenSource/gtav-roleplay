@@ -2,7 +2,7 @@ using System;
 using Sentry;
 using Sentry.Protocol;
 
-namespace server.Util
+namespace Exo.Rp.Core.Util
 {
     public static class ExceptionSentryExtensions
     {

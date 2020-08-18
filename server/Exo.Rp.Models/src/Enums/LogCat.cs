@@ -1,6 +1,6 @@
 using System;
 
-namespace models.Enums
+namespace Exo.Rp.Models.Enums
 {
     [Flags]
     public enum LogCat

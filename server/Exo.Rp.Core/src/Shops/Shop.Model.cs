@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using models.Enums;
+using Exo.Rp.Core.BankAccounts;
+using Exo.Rp.Models.Enums;
 using Newtonsoft.Json;
-using server.BankAccounts;
-using Ped = server.Peds.Ped;
+using Ped = Exo.Rp.Core.Peds.Ped;
 
-namespace server.Shops
+namespace Exo.Rp.Core.Shops
 {
     [Table("Shops")]
     public partial class Shop

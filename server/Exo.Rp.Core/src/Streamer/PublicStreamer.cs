@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using AltV.Net;
 using AltV.Net.EntitySync;
-using server.Streamer.Entities;
+using Exo.Rp.Core.Streamer.Entities;
 
-namespace server.Streamer
+namespace Exo.Rp.Core.Streamer
 {
     public class PublicStreamer : IManager
     {

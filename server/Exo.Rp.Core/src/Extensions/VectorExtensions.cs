@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using AltV.Net.Data;
 using Newtonsoft.Json;
 
-namespace server.Extensions
+namespace Exo.Rp.Core.Extensions
 {
     internal static class VectorExtensions
     {

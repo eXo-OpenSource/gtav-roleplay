@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Numerics;
 using AltV.Net.EntitySync;
 using AltV.Net.EntitySync.SpatialPartitions;
-using server.Streamer.Entities;
+using Exo.Rp.Core.Streamer.Entities;
 
-namespace server.Streamer.Grid
+namespace Exo.Rp.Core.Streamer.Grid
 {
     public class LimitedPrivateGrid3 : Grid3
     {

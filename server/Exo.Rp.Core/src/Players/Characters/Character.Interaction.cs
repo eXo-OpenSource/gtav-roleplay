@@ -2,7 +2,7 @@ using System;
 
 //using shared.Interactions;
 
-namespace server.Players.Characters
+namespace Exo.Rp.Core.Players.Characters
 {
     public partial class Character
     {

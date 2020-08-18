@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using serialization;
-using serialization.Extensions;
+using Exo.Rp.Serialization;
+using Exo.Rp.Serialization.Extensions;
 
-namespace models.Shops.Vehicles
+namespace Exo.Rp.Models.Shops.Vehicles
 {
     [Serializable]
     public class BuyMenuDto : Serializable<BuyMenuDto>

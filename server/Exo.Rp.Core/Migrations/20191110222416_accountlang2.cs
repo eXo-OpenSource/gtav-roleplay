@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace server.Migrations
+namespace Exo.Rp.Core.Migrations
 {
     public partial class accountlang2 : Migration
     {

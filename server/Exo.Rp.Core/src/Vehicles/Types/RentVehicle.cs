@@ -1,10 +1,7 @@
-using System;
 using AltV.Net;
-using server.Updateable;
-using server.Util.Log;
-using IPlayer = server.Players.IPlayer;
+using IPlayer = Exo.Rp.Core.Players.IPlayer;
 
-namespace server.Vehicles.Types
+namespace Exo.Rp.Core.Vehicles.Types
 {
     public class RentVehicle : Vehicle
     {

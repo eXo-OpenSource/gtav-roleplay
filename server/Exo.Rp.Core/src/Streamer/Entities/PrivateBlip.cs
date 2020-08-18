@@ -1,6 +1,6 @@
 using System.Numerics;
 
-namespace server.Streamer.Entities
+namespace Exo.Rp.Core.Streamer.Entities
 {
     public class PrivateBlip : PrivateEntity
     {

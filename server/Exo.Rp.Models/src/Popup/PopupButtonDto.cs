@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using AltV.Net;
 
-namespace models.Popup
+namespace Exo.Rp.Models.Popup
 {
     public class PopupButtonDto : PopupItemDto
     {

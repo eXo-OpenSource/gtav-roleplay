@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using models.Enums;
+using Exo.Rp.Models.Enums;
 using Newtonsoft.Json;
 
-namespace server.Inventory
+namespace Exo.Rp.Core.Inventory
 {
     [Table("Inventories")]
     public partial class Inventory

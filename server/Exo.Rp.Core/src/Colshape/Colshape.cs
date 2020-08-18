@@ -1,7 +1,7 @@
 using System;
 using AltV.Net.Elements.Entities;
 
-namespace server.Colshape
+namespace Exo.Rp.Core.Colshape
 {
     public class Colshape : AltV.Net.Elements.Entities.ColShape
     {

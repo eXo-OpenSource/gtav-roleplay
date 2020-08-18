@@ -2,12 +2,12 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AltV.Net.Data;
 using AltV.Net.Enums;
-using models.Enums;
-using models.Jobs;
-using server.Inventory.Items;
-using IPlayer = server.Players.IPlayer;
+using Exo.Rp.Core.Inventory.Items;
+using Exo.Rp.Models.Enums;
+using Exo.Rp.Models.Jobs;
+using IPlayer = Exo.Rp.Core.Players.IPlayer;
 
-namespace server.Jobs.Jobs
+namespace Exo.Rp.Core.Jobs.Jobs
 {
     internal class Farmer : Job
     {

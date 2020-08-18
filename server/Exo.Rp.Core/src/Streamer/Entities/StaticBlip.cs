@@ -1,6 +1,6 @@
 using AltV.Net;
 
-namespace server.Streamer.Entities
+namespace Exo.Rp.Core.Streamer.Entities
 {
     public class StaticBlip : IWritable
     {

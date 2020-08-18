@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
-using models.Enums;
-using server.Database;
-using server.Shops.Types;
+using Exo.Rp.Core.Database;
+using Exo.Rp.Core.Shops.Types;
+using Exo.Rp.Models.Enums;
 
-namespace server.Shops
+namespace Exo.Rp.Core.Shops
 {
     internal class ShopManager : IManager
     {

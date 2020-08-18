@@ -2,7 +2,7 @@ using System;
 using AltV.Net;
 using AltV.Net.Elements.Entities;
 
-namespace server.Factories.Entities
+namespace Exo.Rp.Core.Factories.Entities
 {
     public class VehicleEntityFactory : IEntityFactory<IVehicle>
     {

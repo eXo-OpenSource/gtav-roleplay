@@ -1,9 +1,9 @@
 using AltV.Net;
-using models.Enums;
-using server.Players;
-using IPlayer = server.Players.IPlayer;
+using Exo.Rp.Core.Players;
+using Exo.Rp.Models.Enums;
+using IPlayer = Exo.Rp.Core.Players.IPlayer;
 
-namespace server.Vehicles.Types
+namespace Exo.Rp.Core.Vehicles.Types
 {
     public class PlayerVehicle : Vehicle
     {

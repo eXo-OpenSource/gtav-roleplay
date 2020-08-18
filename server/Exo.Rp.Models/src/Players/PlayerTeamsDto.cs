@@ -1,8 +1,8 @@
 using System;
 using System.IO;
-using serialization;
+using Exo.Rp.Serialization;
 
-namespace models.Players
+namespace Exo.Rp.Models.Players
 {
     [Serializable]
     public class PlayerTeamsDto : Serializable<PlayerTeamsDto>

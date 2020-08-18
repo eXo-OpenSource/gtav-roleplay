@@ -1,4 +1,4 @@
-namespace server.UI
+namespace Exo.Rp.Core.UI
 {
     internal class Dialogue
     {

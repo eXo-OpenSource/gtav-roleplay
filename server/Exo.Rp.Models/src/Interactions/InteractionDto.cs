@@ -1,8 +1,8 @@
 using System;
 using System.IO;
-using serialization;
+using Exo.Rp.Serialization;
 
-namespace models.Interactions
+namespace Exo.Rp.Models.Interactions
 {
     [Serializable]
     public class InteractionDto : Serializable<InteractionDto>

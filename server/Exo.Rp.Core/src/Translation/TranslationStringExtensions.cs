@@ -1,9 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using models.Enums.Translation;
-using server.Players;
+using Exo.Rp.Core.Players;
+using Exo.Rp.Models.Enums.Translation;
 
-namespace server.Translation
+namespace Exo.Rp.Core.Translation
 {
     public static class T
     {

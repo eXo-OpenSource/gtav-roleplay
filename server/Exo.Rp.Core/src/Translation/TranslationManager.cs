@@ -4,14 +4,13 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using AltV.Net;
+using Exo.Rp.Core.Util;
+using Exo.Rp.Models.Enums.Translation;
 using Exo.Rp.Sdk;
-using models.Enums.Translation;
 using NGettext;
 using Sentry;
-using server.Util;
-using server.Util.Log;
 
-namespace server.Translation
+namespace Exo.Rp.Core.Translation
 {
     public class TranslationManager : IManager
     {

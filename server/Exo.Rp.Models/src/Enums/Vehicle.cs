@@ -1,4 +1,4 @@
-namespace models.Enums
+namespace Exo.Rp.Models.Enums
 {
     public enum VehicleDoors
     {

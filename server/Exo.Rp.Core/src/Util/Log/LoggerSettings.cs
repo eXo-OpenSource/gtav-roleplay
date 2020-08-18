@@ -1,8 +1,7 @@
-using Exo.Rp.Sdk.Logger;
-using models.Enums;
+using Exo.Rp.Models.Enums;
 using Newtonsoft.Json;
 
-namespace server.Util.Log
+namespace Exo.Rp.Core.Util.Log
 {
     public class LoggerSettings
     {

@@ -6,19 +6,18 @@ using AltV.Net;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
-using models.Enums;
-using models.Jobs;
-using Newtonsoft.Json;
-using server.Database;
-using server.Extensions;
-using server.Players;
-using server.Streamer;
-using server.Streamer.Entities;
-using server.Streamer.Private;
-using IPlayer = server.Players.IPlayer;
-using WorldObject = server.World.WorldObject;
+using Exo.Rp.Core.Database;
+using Exo.Rp.Core.Extensions;
+using Exo.Rp.Core.Players;
+using Exo.Rp.Core.Streamer;
+using Exo.Rp.Core.Streamer.Entities;
+using Exo.Rp.Core.Streamer.Private;
+using Exo.Rp.Models.Enums;
+using Exo.Rp.Models.Jobs;
+using IPlayer = Exo.Rp.Core.Players.IPlayer;
+using WorldObject = Exo.Rp.Core.World.WorldObject;
 
-namespace server.Jobs.Jobs
+namespace Exo.Rp.Core.Jobs.Jobs
 {
     internal class WasteCollector : Job
     {
@@ -166,7 +165,7 @@ namespace server.Jobs.Jobs
             {
                 Position = pos.Serialize(),
                 Rotation = rot.Serialize(),
-                Type = models.Enums.WorldObjects.WasteBin,
+                Type = WorldObjects.WasteBin,
                 PlacedBy = player.GetId(),
                 Date = DateTime.Now
             };

@@ -2,14 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using AltV.Net.Elements.Entities;
-using models.Enums;
+using Exo.Rp.Core.Inventory.Items;
+using Exo.Rp.Core.Players.Characters;
+using Exo.Rp.Core.Util.Log;
+using Exo.Rp.Models.Enums;
 using Newtonsoft.Json;
-using server.Inventory.Items;
-using server.Players.Characters;
-using server.Util.Log;
-using IPlayer = server.Players.IPlayer;
+using IPlayer = Exo.Rp.Core.Players.IPlayer;
 
-namespace server.Shops.Types
+namespace Exo.Rp.Core.Shops.Types
 {
     internal class ItemShop : Shop
     {

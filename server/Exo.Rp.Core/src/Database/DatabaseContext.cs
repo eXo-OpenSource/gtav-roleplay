@@ -1,26 +1,26 @@
 using System.IO;
 using System.Reflection;
 using System.Text;
+using Exo.Rp.Core.Inventory;
+using Exo.Rp.Core.Teams;
+using Exo.Rp.Core.Util.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using server.Inventory;
-using server.Teams;
-using server.Util.Settings;
-using TeamModel = server.Teams.Team;
-using ShopModel = server.Shops.Shop;
-using BankAccountModel = server.BankAccounts.BankAccount;
-using PedModel = server.Peds.Ped;
-using WorldObjectsModel = server.World.WorldObject;
-using VehicleShopVehicleModel = server.Vehicles.VehicleShopVehicle;
-using VehicleModel = server.Vehicles.Vehicle;
-using ItemModel = server.Inventory.Items.Item;
-using InventoryModel = server.Inventory.Inventory;
-using TeamMemberModel = server.Teams.TeamMember;
-using FaceFeaturesModel = server.Players.Characters.FaceFeatures;
-using CharacterModel = server.Players.Characters.Character;
-using AccountModel = server.Players.Accounts.Account;
+using TeamModel = Exo.Rp.Core.Teams.Team;
+using ShopModel = Exo.Rp.Core.Shops.Shop;
+using BankAccountModel = Exo.Rp.Core.BankAccounts.BankAccount;
+using PedModel = Exo.Rp.Core.Peds.Ped;
+using WorldObjectsModel = Exo.Rp.Core.World.WorldObject;
+using VehicleShopVehicleModel = Exo.Rp.Core.Vehicles.VehicleShopVehicle;
+using VehicleModel = Exo.Rp.Core.Vehicles.Vehicle;
+using ItemModel = Exo.Rp.Core.Inventory.Items.Item;
+using InventoryModel = Exo.Rp.Core.Inventory.Inventory;
+using TeamMemberModel = Exo.Rp.Core.Teams.TeamMember;
+using FaceFeaturesModel = Exo.Rp.Core.Players.Characters.FaceFeatures;
+using CharacterModel = Exo.Rp.Core.Players.Characters.Character;
+using AccountModel = Exo.Rp.Core.Players.Accounts.Account;
 
-namespace server.Database
+namespace Exo.Rp.Core.Database
 {
     public class DatabaseContext : DbContext, IService
     {

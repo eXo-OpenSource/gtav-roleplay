@@ -1,8 +1,7 @@
 using System;
-using Exo.Rp.Sdk.Logger;
-using models.Enums;
+using Exo.Rp.Models.Enums;
 
-namespace server.Util.Log
+namespace Exo.Rp.Core.Util.Log
 {
     public class LogTest
     {

@@ -1,6 +1,6 @@
 using System;
 
-namespace server.Extensions
+namespace Exo.Rp.Core.Extensions
 {
     public static class ActionExtensions
     {

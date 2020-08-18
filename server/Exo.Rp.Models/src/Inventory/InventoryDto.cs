@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using serialization;
-using serialization.Extensions;
+using Exo.Rp.Serialization;
+using Exo.Rp.Serialization.Extensions;
 
-namespace models.Inventory
+namespace Exo.Rp.Models.Inventory
 {
     [Serializable]
     public class InventoryDto : Serializable<InventoryDto>

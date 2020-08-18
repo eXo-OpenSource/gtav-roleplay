@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using Exo.Rp.Core.Util.Log;
+using Exo.Rp.Models.Enums;
+using Exo.Rp.Models.Inventory;
 using Exo.Rp.Sdk;
-using models.Enums;
-using models.Inventory;
-using server.Util.Log;
 
 //using shared.Inventory;
 
-namespace server.Inventory
+namespace Exo.Rp.Core.Inventory
 {
     public partial class Inventory
     {

@@ -1,8 +1,8 @@
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
-using IPlayer = server.Players.IPlayer;
+using IPlayer = Exo.Rp.Core.Players.IPlayer;
 
-namespace server.Shops.Types
+namespace Exo.Rp.Core.Shops.Types
 {
     internal class TuningShop : Shop
     {

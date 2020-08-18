@@ -5,16 +5,16 @@ using System.Linq;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
-using models.Enums;
-using models.Shops.Vehicles;
+using Exo.Rp.Core.Database;
+using Exo.Rp.Core.Players.Characters;
+using Exo.Rp.Core.Vehicles;
+using Exo.Rp.Core.Vehicles.Types;
+using Exo.Rp.Models.Enums;
+using Exo.Rp.Models.Shops.Vehicles;
 using Newtonsoft.Json;
-using server.Database;
-using server.Players.Characters;
-using server.Vehicles;
-using server.Vehicles.Types;
-using IPlayer = server.Players.IPlayer;
+using IPlayer = Exo.Rp.Core.Players.IPlayer;
 
-namespace server.Shops.Types
+namespace Exo.Rp.Core.Shops.Types
 {
     internal class VehicleShop : Shop
     {

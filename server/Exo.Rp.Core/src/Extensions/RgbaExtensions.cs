@@ -1,6 +1,6 @@
 using AltV.Net.Data;
 
-namespace server.Extensions
+namespace Exo.Rp.Core.Extensions
 {
     internal static class RgbaExtensions
     {

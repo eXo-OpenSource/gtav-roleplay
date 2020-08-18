@@ -6,37 +6,37 @@ using AltV.Net.EntitySync;
 using AltV.Net.EntitySync.ServerEvent;
 using AltV.Net.EntitySync.SpatialPartitions;
 using AutoMapper;
+using Exo.Rp.Core.AutoMapper;
+using Exo.Rp.Core.BankAccounts;
+using Exo.Rp.Core.Commands;
+using Exo.Rp.Core.Database;
+using Exo.Rp.Core.Environment;
+using Exo.Rp.Core.Factories.BaseObjects;
+using Exo.Rp.Core.Factories.Entities;
+using Exo.Rp.Core.Inventory;
+using Exo.Rp.Core.Inventory.Items;
+using Exo.Rp.Core.Jobs;
+using Exo.Rp.Core.Peds;
+using Exo.Rp.Core.Players;
+using Exo.Rp.Core.Shops;
+using Exo.Rp.Core.Streamer;
+using Exo.Rp.Core.Streamer.Grid;
+using Exo.Rp.Core.Streamer.Private;
+using Exo.Rp.Core.Teams;
+using Exo.Rp.Core.Translation;
+using Exo.Rp.Core.Updateable;
+using Exo.Rp.Core.Util;
+using Exo.Rp.Core.Util.Log;
+using Exo.Rp.Core.Vehicles;
+using Exo.Rp.Core.World;
 using Exo.Rp.Sdk;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Sentry.Protocol;
-using server.AutoMapper;
-using server.BankAccounts;
-using server.Commands;
-using server.Database;
-using server.Environment;
-using server.Factories.BaseObjects;
-using server.Factories.Entities;
-using server.Inventory;
-using server.Inventory.Items;
-using server.Jobs;
-using server.Peds;
-using server.Players;
-using server.Shops;
-using server.Streamer;
-using server.Streamer.Grid;
-using server.Streamer.Private;
-using server.Teams;
-using server.Translation;
-using server.Updateable;
-using server.Util;
-using server.Util.Log;
-using server.Vehicles;
-using server.World;
-using MetricsCollector = server.Metrics.MetricsCollector;
+using MetricsCollector = Exo.Rp.Core.Metrics.MetricsCollector;
 using IPlayer = AltV.Net.Elements.Entities.IPlayer;
 
-namespace server
+namespace Exo.Rp.Core
 {
     public class Core : Resource
     {

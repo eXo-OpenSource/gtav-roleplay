@@ -1,20 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
+using Exo.Rp.Core.Database;
+using Exo.Rp.Core.Players.Accounts;
+using Exo.Rp.Core.Players.Characters;
+using Exo.Rp.Core.Util.Log;
+using Exo.Rp.Core.World;
 using Exo.Rp.Sdk;
-using Microsoft.VisualBasic;
 using Sentry.Protocol;
-using server.Database;
-using server.Environment;
-using server.Players.Accounts;
-using server.Players.Characters;
-using server.Util.Log;
-using server.World;
 
-namespace server.Players
+namespace Exo.Rp.Core.Players
 {
     public partial class Player : AltV.Net.Elements.Entities.Player, IPlayer
     {

@@ -1,9 +1,9 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 using AltV.Net;
-using IPlayer = server.Players.IPlayer;
+using IPlayer = Exo.Rp.Core.Players.IPlayer;
 
-namespace server.Chat
+namespace Exo.Rp.Core.Chat
 {
     internal class ChatManager : IScript
     {

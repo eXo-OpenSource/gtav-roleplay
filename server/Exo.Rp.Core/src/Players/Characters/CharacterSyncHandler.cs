@@ -2,13 +2,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Timers;
 using AltV.Net;
+using Exo.Rp.Core.Util.Log;
+using Exo.Rp.Core.Util.Settings;
 using Exo.Rp.Sdk;
-using server.Util.Log;
-using server.Util.Settings;
 
 //using shared.Serialization;
 
-namespace server.Players.Characters
+namespace Exo.Rp.Core.Players.Characters
 {
     using ParameterMapping = Dictionary<string, object>;
     using ParameterUpdatedMapping = Dictionary<string, bool>;

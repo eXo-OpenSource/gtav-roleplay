@@ -1,4 +1,4 @@
-namespace models.Enums
+namespace Exo.Rp.Models.Enums
 {
     // TODO: Need to be moved out of enums namespace
     public class TransferMoneyOptions

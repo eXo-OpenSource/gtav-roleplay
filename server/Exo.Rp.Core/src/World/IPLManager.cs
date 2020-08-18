@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using server.Players;
-using IPlayer = server.Players.IPlayer;
+using Exo.Rp.Core.Players;
+using IPlayer = Exo.Rp.Core.Players.IPlayer;
 
-namespace server.World
+namespace Exo.Rp.Core.World
 {
     internal class IplManager : IManager
     {

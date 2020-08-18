@@ -1,11 +1,10 @@
 using System.Collections.Generic;
 using AltV.Net;
 using AltV.Net.Data;
-using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using Newtonsoft.Json;
 
-namespace server.Extensions
+namespace Exo.Rp.Core.Extensions
 {
     internal static class EntityExtensions
     {

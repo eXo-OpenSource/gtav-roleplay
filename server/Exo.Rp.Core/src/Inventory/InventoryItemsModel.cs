@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
-using server.Inventory.Items;
+using Exo.Rp.Core.Inventory.Items;
 
-namespace server.Inventory
+namespace Exo.Rp.Core.Inventory
 {
     [Table("InventoryItems")]
     public class InventoryItemsModel

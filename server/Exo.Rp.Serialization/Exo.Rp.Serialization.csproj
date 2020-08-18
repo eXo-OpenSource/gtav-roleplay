@@ -11,7 +11,7 @@
 		<Authors>eXo Roleplay Developers</Authors>
 		<Company>eXo Roleplay</Company>
 		<Product>eXo Roleplay Server</Product>
-		<RootNamespace>serialization</RootNamespace>
+		<RootNamespace>Exo.Rp.Serialization</RootNamespace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)'=='Debug'">

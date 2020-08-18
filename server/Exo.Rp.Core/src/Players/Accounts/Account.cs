@@ -1,9 +1,9 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
-using models.Enums;
-using Character = server.Players.Characters.Character;
+using Exo.Rp.Models.Enums;
+using Character = Exo.Rp.Core.Players.Characters.Character;
 
-namespace server.Players.Accounts
+namespace Exo.Rp.Core.Players.Accounts
 {
     [Table("Accounts")]
     public partial class Account

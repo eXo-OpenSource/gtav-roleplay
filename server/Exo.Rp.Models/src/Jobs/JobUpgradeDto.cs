@@ -1,8 +1,8 @@
 using System;
 using System.IO;
-using serialization;
+using Exo.Rp.Serialization;
 
-namespace models.Jobs
+namespace Exo.Rp.Models.Jobs
 {
     public class JobUpgradeDto : Serializable<JobUpgradeDto>
     {

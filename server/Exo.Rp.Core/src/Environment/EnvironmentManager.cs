@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace server.Environment
+namespace Exo.Rp.Core.Environment
 {
     public class EnvironmentManager : IManager
     {

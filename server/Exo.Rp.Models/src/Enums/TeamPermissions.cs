@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace models.Enums
+namespace Exo.Rp.Models.Enums
 {
     [Flags]
     public enum TeamPermissions : ulong

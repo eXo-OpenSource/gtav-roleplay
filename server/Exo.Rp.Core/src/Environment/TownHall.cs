@@ -1,10 +1,10 @@
 using AltV.Net;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
-using server.Players.Characters;
-using IPlayer = server.Players.IPlayer;
+using Exo.Rp.Core.Players.Characters;
+using IPlayer = Exo.Rp.Core.Players.IPlayer;
 
-namespace server.Environment
+namespace Exo.Rp.Core.Environment
 {
     internal class TownHall
     {

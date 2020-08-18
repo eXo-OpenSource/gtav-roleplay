@@ -1,5 +1,5 @@
-﻿using Exo.Rp.Sdk.Logger;
-using models.Enums;
+﻿using Exo.Rp.Models.Enums;
+using Exo.Rp.Sdk.Logger;
 
 namespace Exo.Rp.Sdk
 {

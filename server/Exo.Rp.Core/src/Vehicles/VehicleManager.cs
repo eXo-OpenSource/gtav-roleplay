@@ -1,26 +1,21 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
-using AltV.Net;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
 using AutoMapper;
+using Exo.Rp.Core.Database;
+using Exo.Rp.Core.Environment;
+using Exo.Rp.Core.Extensions;
+using Exo.Rp.Core.Inventory.Inventories;
+using Exo.Rp.Core.Vehicles.Types;
+using Exo.Rp.Models.Enums;
 using Exo.Rp.Sdk;
-using models.Enums;
-using server.Database;
-using server.Environment;
-using server.Extensions;
-using server.Inventory.Inventories;
-using server.Translation;
-using server.Updateable;
-using server.Util.Log;
-using server.Vehicles.Types;
-using IPlayer = server.Players.IPlayer;
+using IPlayer = Exo.Rp.Core.Players.IPlayer;
 
-namespace server.Vehicles
+namespace Exo.Rp.Core.Vehicles
 {
     internal class VehicleManager : IManager
     {

@@ -2,9 +2,9 @@ using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using AltV.Net.Data;
 using AltV.Net.Enums;
-using server.Shops;
+using Exo.Rp.Core.Shops;
 
-namespace server.Vehicles
+namespace Exo.Rp.Core.Vehicles
 {
     [Table("ShopVehicles")]
     public class VehicleShopVehicle

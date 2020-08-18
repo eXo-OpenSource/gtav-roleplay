@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace server.Jobs
+namespace Exo.Rp.Core.Jobs
 {
     public class CharacterJobData
     {

@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using models.Enums;
-using server.Database;
-using server.Util.Log;
+using Exo.Rp.Core.Database;
+using Exo.Rp.Core.Util.Log;
+using Exo.Rp.Models.Enums;
 
-namespace server.Inventory.Items
+namespace Exo.Rp.Core.Inventory.Items
 {
     internal class ItemManager : IManager
     {

@@ -1,7 +1,7 @@
-using server.Players.Characters;
-using IPlayer = server.Players.IPlayer;
+using Exo.Rp.Core.Players.Characters;
+using IPlayer = Exo.Rp.Core.Players.IPlayer;
 
-namespace server.Extensions
+namespace Exo.Rp.Core.Extensions
 {
     internal static class CharacterSyncHandlerIPlayerExtension
     {

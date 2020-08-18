@@ -1,15 +1,12 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
+using Exo.Rp.Core.Util.Log;
+using Exo.Rp.Models.Enums;
 using Exo.Rp.Sdk.Logger;
-using Microsoft.VisualBasic.CompilerServices;
-using models.Enums;
 using Newtonsoft.Json;
-using Sentry;
 using Sentry.Protocol;
-using server.Util.Log;
 
-namespace server.Util.Settings
+namespace Exo.Rp.Core.Util.Settings
 {
     public static class SettingsManager
     {

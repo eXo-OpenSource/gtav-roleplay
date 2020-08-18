@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace models.Enums
+namespace Exo.Rp.Models.Enums
 {
     // TODO: Need to be moved out of enums namespace
     [Serializable]

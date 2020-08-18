@@ -2,7 +2,7 @@ using System;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace server.Migrations
+namespace Exo.Rp.Core.Migrations
 {
     public partial class initial : Migration
     {

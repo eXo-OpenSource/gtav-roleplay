@@ -2,11 +2,10 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Exo.Rp.Sdk.Logger;
-using models.Enums;
-using server.Util.Settings;
+using Exo.Rp.Core.Util.Settings;
+using Exo.Rp.Models.Enums;
 
-namespace server.Util.Log
+namespace Exo.Rp.Core.Util.Log
 {
     // ReSharper disable once ClassNeverInstantiated.Global
     public static class LogManager

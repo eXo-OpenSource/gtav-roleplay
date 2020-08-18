@@ -1,4 +1,4 @@
-namespace server.Commands
+namespace Exo.Rp.Core.Commands
 {
     public interface IHasCommands { }
 }

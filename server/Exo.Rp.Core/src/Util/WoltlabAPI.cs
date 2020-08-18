@@ -1,13 +1,12 @@
-using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Exo.Rp.Core.Util.Log;
+using Exo.Rp.Core.Util.Settings;
 using Exo.Rp.Sdk;
 using Newtonsoft.Json;
-using server.Util.Log;
-using server.Util.Settings;
 
-namespace server.Util
+namespace Exo.Rp.Core.Util
 {
     public class WoltlabApi
     {

@@ -1,9 +1,9 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using AltV.Net;
 using AltV.Net.Elements.Entities;
-using IPlayer = server.Players.IPlayer;
+using IPlayer = Exo.Rp.Core.Players.IPlayer;
 
-namespace server.Shops
+namespace Exo.Rp.Core.Shops
 {
     public partial class Shop
     {

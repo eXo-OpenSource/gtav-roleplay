@@ -1,15 +1,12 @@
-using System;
 using AltV.Net;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
-using server.Players;
-using server.Util;
-using server.Vehicles;
-using server.Players.Characters;
-using IPlayer = server.Players.IPlayer;
-using Vehicle = server.Vehicles.Vehicle;
+using Exo.Rp.Core.Util;
+using Exo.Rp.Core.Vehicles;
+using IPlayer = Exo.Rp.Core.Players.IPlayer;
+using Vehicle = Exo.Rp.Core.Vehicles.Vehicle;
 
-namespace server.Events.Vehicles
+namespace Exo.Rp.Core.Events.Vehicles
 {
     internal class VehicleEvents : IScript
     {

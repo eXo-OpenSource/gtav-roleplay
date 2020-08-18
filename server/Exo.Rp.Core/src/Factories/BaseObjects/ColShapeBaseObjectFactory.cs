@@ -2,7 +2,7 @@ using System;
 using AltV.Net;
 using AltV.Net.Elements.Entities;
 
-namespace server.Factories.BaseObjects
+namespace Exo.Rp.Core.Factories.BaseObjects
 {
     public class ColShapeBaseObjectFactory : IBaseObjectFactory<IColShape>
     {

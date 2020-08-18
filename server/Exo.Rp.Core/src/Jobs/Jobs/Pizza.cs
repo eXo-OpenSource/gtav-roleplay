@@ -1,13 +1,6 @@
-using AltV.Net.Data;
-using AltV.Net.Elements.Entities;
-using server.Streamer;
-using server.Vehicles;
-using server.Streamer.Entities;
-using server.Streamer.Private;
-using Object = AltV.Net.Elements.Entities.IWorldObject;
-using System;
+using Exo.Rp.Core.Streamer.Entities;
 
-namespace server.Jobs.Jobs
+namespace Exo.Rp.Core.Jobs.Jobs
 {
     public class Pizza
     {

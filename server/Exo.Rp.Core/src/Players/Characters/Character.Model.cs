@@ -2,13 +2,13 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using AltV.Net.Data;
 using AltV.Net.Enums;
-using models.Enums;
+using Exo.Rp.Core.BankAccounts;
+using Exo.Rp.Core.Inventory.Inventories;
+using Exo.Rp.Core.Jobs;
+using Exo.Rp.Models.Enums;
 using Newtonsoft.Json;
-using server.BankAccounts;
-using server.Inventory.Inventories;
-using server.Jobs;
 
-namespace server.Players.Characters
+namespace Exo.Rp.Core.Players.Characters
 {
     [Table("Characters")]
     public partial class Character

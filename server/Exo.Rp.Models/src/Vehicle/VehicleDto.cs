@@ -1,9 +1,9 @@
 using System;
 using System.IO;
-using models.Enums;
-using serialization;
+using Exo.Rp.Models.Enums;
+using Exo.Rp.Serialization;
 
-namespace models.Vehicle
+namespace Exo.Rp.Models.Vehicle
 {
     [Serializable]
     public class VehicleDto : Serializable<VehicleDto>

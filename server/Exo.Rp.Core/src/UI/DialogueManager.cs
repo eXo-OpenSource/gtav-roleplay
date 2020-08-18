@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using AltV.Net;
-using server.Players;
+using Exo.Rp.Core.Players;
 
-namespace server.UI
+namespace Exo.Rp.Core.UI
 {
     internal class DialogueManager : IScript
     {

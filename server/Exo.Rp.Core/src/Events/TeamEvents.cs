@@ -1,10 +1,10 @@
 using AltV.Net;
+using Exo.Rp.Core.Players;
+using Exo.Rp.Core.Teams;
+using Exo.Rp.Core.Util.Log;
 using Exo.Rp.Sdk;
-using server.Players;
-using server.Teams;
-using server.Util.Log;
 
-namespace server.Events
+namespace Exo.Rp.Core.Events
 {
     internal class TeamEvents : IScript
     {

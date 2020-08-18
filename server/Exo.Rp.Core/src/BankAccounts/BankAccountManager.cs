@@ -1,14 +1,14 @@
 using System.Collections.Generic;
 using System.Linq;
-using AltV.Net.Data;
 using AltV.Net;
-using server.Database;
-using IPlayer = server.Players.IPlayer;
+using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
-using models.Enums;
-using server.Extensions;
+using Exo.Rp.Core.Database;
+using Exo.Rp.Core.Extensions;
+using Exo.Rp.Models.Enums;
+using IPlayer = Exo.Rp.Core.Players.IPlayer;
 
-namespace server.BankAccounts
+namespace Exo.Rp.Core.BankAccounts
 {
     internal class BankAccountManager : IManager
     {

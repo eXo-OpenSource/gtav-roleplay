@@ -1,7 +1,7 @@
 using AltV.Net;
 using AltV.Net.Elements.Entities;
 
-namespace server.Events
+namespace Exo.Rp.Core.Events
 {
     class ColShapeEvents : IScript
     {

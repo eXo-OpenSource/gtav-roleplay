@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 using System.Text;
 using AltV.Net.Data;
 
-namespace server.Util
+namespace Exo.Rp.Core.Util
 {
     internal static class General
     {

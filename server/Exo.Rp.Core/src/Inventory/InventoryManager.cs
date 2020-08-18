@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using server.AutoMapper;
+using Exo.Rp.Core.AutoMapper;
 
-namespace server.Inventory
+namespace Exo.Rp.Core.Inventory
 {
     internal class InventoryManager : IManager
     {
