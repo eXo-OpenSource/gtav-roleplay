@@ -13,12 +13,11 @@ ADD server/Exo.Rp.Models        server/Exo.Rp.Models
 ADD server/Exo.Rp.Serialization server/Exo.Rp.Serialization
 ADD server/Exo.Rp.Sdk           server/Exo.Rp.Sdk
 RUN dotnet restore              server/Exo.Rp.Core
-RUN dotnet build                server/Exo.Rp.Core \
+RUN dotnet publish              server/Exo.Rp.Core \
     --no-restore \
     --runtime linux-x64 \
     -c Release \
     -o /app/bin
-
 
 ## Builder Client
 FROM node as builder_client
@@ -86,9 +85,6 @@ RUN mkdir -p resources/exov/
 COPY --from=builder_server  /app/bin                resources/exov/
 COPY --from=configpatcher   /config/config.json     resources/exov/
 COPY --from=builder_client  /app/client             resources/exov-client/
-
-# Cleanup some files
-RUN rm resources/exov/*.runtimeconfig.dev.json
 
 # Add server config
 ADD build/server.cfg server.cfg
