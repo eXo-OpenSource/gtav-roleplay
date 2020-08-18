@@ -1,3 +1,4 @@
+using System.Diagnostics.Tracing;
 using AltV.Net;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Data;
@@ -10,7 +11,7 @@ namespace server.Events.Jobs
 {
     internal class PizzaEvents : IScript
     {
-        [Event("JobPizza:StartMission")]
+        [ClientEvent("JobPizza:StartMission")]
         public void StartMission(IPlayer player)
         {
             var job = player.GetCharacter().GetJob();

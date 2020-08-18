@@ -10,7 +10,7 @@ namespace server.Events.Jobs
 {
     internal class WasteCollectorEvents : IScript
     {
-        [Event("JobTrash:onVehicleMarkerHit")]
+        [ClientEvent("JobTrash:onVehicleMarkerHit")]
         public void OnVehicleMarkerHit(IPlayer player, IVehicle vehicle)
         {
             var job = player.GetCharacter().GetJob();
@@ -19,7 +19,7 @@ namespace server.Events.Jobs
             wasteJob.OnVehicleMarkerHit(player, vehicle);
         }
 
-        [Event("JobTrash:OnWasteBinPlaced")]
+        [ClientEvent("JobTrash:OnWasteBinPlaced")]
         public void OnWasteBinPlaced(IPlayer player, string pos, string rot)
         {
             var job = (WasteCollector) Core.GetService<JobManager>().GetJob(1);

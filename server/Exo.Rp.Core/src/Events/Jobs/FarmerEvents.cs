@@ -8,7 +8,7 @@ namespace server.Events.Jobs
 {
     internal class FarmerEvents : IScript
     {
-        [Event("JobFarmer:onTreeInteract")]
+        [ClientEvent("JobFarmer:onTreeInteract")]
         public void OnTreeInteract(IPlayer player)
         {
             var tree = (Tree) player.GetCharacter().GetInteractionData().SourceObject;
@@ -18,7 +18,7 @@ namespace server.Events.Jobs
             farmerJob.OnTreeInteract(player, tree);
         }
 
-        [Event("JobFarmer:onEnterDeliveryMarker")]
+        [ClientEvent("JobFarmer:onEnterDeliveryMarker")]
         public void OnEnterDeliveryMarker(IPlayer player, ColShape shape)
         {
             var job = player.GetCharacter().GetJob();

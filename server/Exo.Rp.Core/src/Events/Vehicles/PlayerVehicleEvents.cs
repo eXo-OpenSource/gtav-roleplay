@@ -11,7 +11,7 @@ namespace server.Events.Vehicles
 {
     internal class PlayerVehicleEvents : IScript
     {
-        [Event("vehicle:GetPlayerVehicles")]
+        [ClientEvent("vehicle:GetPlayerVehicles")]
         public void GetPlayerVehicles(IPlayer client)
         {
             var vehicles = new List<VehicleDto>();

@@ -53,7 +53,7 @@ namespace server.Events.Vehicles
             vehicle?.OnStartExit(client);
         }
 
-        [Event("Vehicle:ToggleEngine")]
+        [ClientEvent("Vehicle:ToggleEngine")]
         public void OnVehicleEngineSwitchBind(IPlayer client)
         {
             var vehicle = Core.GetService<VehicleManager>().GetVehicleFromHandle<Vehicle>(client.Vehicle);
@@ -69,7 +69,7 @@ namespace server.Events.Vehicles
             }
         }
 
-        [Event("Vehicle:ToggleLight")]
+        [ClientEvent("Vehicle:ToggleLight")]
         public void OnVehicleLightSwitch(IPlayer client)
         {
             var vehicle = Core.GetService<VehicleManager>().GetVehicleFromHandle<Vehicle>(client.Vehicle);
@@ -81,7 +81,7 @@ namespace server.Events.Vehicles
             }
         }
 
-        [Event("Vehicle:ToggleLock")]
+        [ClientEvent("Vehicle:ToggleLock")]
         public void OnVehicleLockSwitch(IPlayer client, IVehicle networkVehicle)
         {
             var vehicle = Core.GetService<VehicleManager>().GetVehicleFromHandle<Vehicle>(networkVehicle);
@@ -98,7 +98,7 @@ namespace server.Events.Vehicles
             }
         }
 
-        [Event("Vehicle:ToggleDoor")]
+        [ClientEvent("Vehicle:ToggleDoor")]
         public void ToggleVehicleDoor(IPlayer client, IVehicle networkVehicle, int door, bool open)
         {
             var vehicle = Core.GetService<VehicleManager>().GetVehicleFromHandle<Vehicle>(networkVehicle);
@@ -112,7 +112,7 @@ namespace server.Events.Vehicles
             }
         }
 
-        [Event("vehicle:OpenVehicleMenu")]
+        [ClientEvent("vehicle:OpenVehicleMenu")]
         public void OpenVehicleMenu(IPlayer client, IVehicle veh)
         {
             if (veh != null)
@@ -126,7 +126,7 @@ namespace server.Events.Vehicles
             }
         }
 
-        [Event("Vehicle:GetInfo")]
+        [ClientEvent("Vehicle:GetInfo")]
         public void GetVehicleInfos(IPlayer client, IVehicle networkVehicle)
         {
             var vehicle = Core.GetService<VehicleManager>().GetVehicleFromHandle<Vehicle>(networkVehicle);

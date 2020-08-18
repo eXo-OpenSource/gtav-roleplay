@@ -1,12 +1,9 @@
 using System.Collections.Generic;
-using System.Diagnostics.Tracing;
 using AltV.Net;
-using models.Enums;
 using models.Popup;
 using server.Jobs;
 using server.Players;
 using server.Players.Characters;
-using server.UI;
 using server.Util.Log;
 
 namespace server.Events.Jobs
@@ -15,7 +12,7 @@ namespace server.Events.Jobs
     {
         private static readonly Logger<JobEvents> Logger = new Logger<JobEvents>();
 
-        [AltV.Net.Event("onJobPedInteraction")]
+        [ClientEvent("onJobPedInteraction")]
         public void OnJobPedInteraction(IPlayer player)
         {
             if (player.GetCharacter().GetInteractionData() == null) return;
@@ -24,7 +21,7 @@ namespace server.Events.Jobs
             job.ShowJobMenu(player);
         }
 
-        [AltV.Net.Event("Job:AcceptJob")]
+        [ClientEvent("Job:AcceptJob")]
         public void AcceptJob(IPlayer player, int jobId)
         {
             if (player.GetCharacter().GetJob() != null)
@@ -41,7 +38,7 @@ namespace server.Events.Jobs
             job.ShowJobMenu(player);
         }
 
-        [AltV.Net.Event("Job:DeclineJob")]
+        [ClientEvent("Job:DeclineJob")]
         public void DeclineJob(IPlayer player, int jobId)
         {
             if (player.GetCharacter().GetJob() == null)
@@ -59,7 +56,7 @@ namespace server.Events.Jobs
             job.ShowJobMenu(player);
         }
 
-        [AltV.Net.Event("Job:StartJobSingle")]
+        [ClientEvent("Job:StartJobSingle")]
         public void StartJob(IPlayer player, int jobId)
         {
             if (player.GetCharacter().GetJob() == null)
@@ -73,7 +70,7 @@ namespace server.Events.Jobs
             player.Emit("Popup:Close");
         }
 
-        [AltV.Net.Event("Job:StartJobMultiplayer")]
+        [ClientEvent("Job:StartJobMultiplayer")]
         public void StartJobMultiplayer(IPlayer player, int jobId)
         {
             if (player.GetCharacter().GetJob() == null)
@@ -86,7 +83,7 @@ namespace server.Events.Jobs
             player.Emit("Popup:Close");
         }
 
-        [AltV.Net.Event("Job:StopJob")]
+        [ClientEvent("Job:StopJob")]
         public void StopJob(IPlayer player, int jobId)
         {
             if (player.GetCharacter().GetJob() == null)
@@ -99,7 +96,7 @@ namespace server.Events.Jobs
             player.Emit("Popup:Close");
         }
 
-        [AltV.Net.Event("Job:AcceptCoop")]
+        [ClientEvent("Job:AcceptCoop")]
         public void AcceptCook(IPlayer player)
         {
             if (player.GetCharacter().GetInteractionData() == null) return;
@@ -111,7 +108,7 @@ namespace server.Events.Jobs
             leader.Emit("Popup:Close");
             OpenCoopMenu(leader, job.JobId);
         }
-        [AltV.Net.Event("Job:AskCoop")]
+        [ClientEvent("Job:AskCoop")]
         public void AskCoop(IPlayer leader, int jobId, int playerId)
         {
             if (leader.GetCharacter().GetJob() == null)
@@ -150,7 +147,7 @@ namespace server.Events.Jobs
                 leader.SendError("Spieler nicht gefunden!");
         }
 
-        [AltV.Net.Event("Job:OpenCoop")]
+        [ClientEvent("Job:OpenCoop")]
         public void OpenCoopMenu(IPlayer player, int jobId)
         {
             var job = Core.GetService<JobManager>().GetJob(jobId);
@@ -212,7 +209,7 @@ namespace server.Events.Jobs
             player.Emit("Popup:Show", data);
         }
 
-        [AltV.Net.Event("Job:BuyUpgrade")]
+        [ClientEvent("Job:BuyUpgrade")]
         public void BuyUpgrade(IPlayer player, int jobId, int categoryId, int upgradeId)
         {
             if (player.GetCharacter().GetJob() == null) return;

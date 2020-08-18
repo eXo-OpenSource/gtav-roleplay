@@ -187,7 +187,7 @@ namespace server.Database
             return ContextFactory.Instance != null;
         }
 
-        [Event("Update")]
+        [ClientEvent("Update")]
         public async Task OnUpdateHandler()
         {
             if (ContextFactory.Instance == null)

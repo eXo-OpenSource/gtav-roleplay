@@ -13,13 +13,13 @@ namespace server.Events
             player.HideUi(state);
         }
 
-        [Event("onQuestionDialogueAccept")]
+        [ClientEvent("onQuestionDialogueAccept")]
         public void OnDialogueAccept(IPlayer player, int id)
         {
             DialogueManager.Instance.OnDialogueAccept(player, id);
         }
 
-        [Event("onQuestionDialogueDecline")]
+        [ClientEvent("onQuestionDialogueDecline")]
         public void OnDialogueDecline(IPlayer player, int id)
         {
             DialogueManager.Instance.OnDialogueDecline(player, id);

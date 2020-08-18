@@ -9,14 +9,14 @@ namespace server.Events
 {
     internal class EnvironmentEvents : IScript
     {
-        [Event("onTownHallInteraction")]
+        [ClientEvent("onTownHallInteraction")]
         public void OnVehicleShopInteraction(IPlayer player)
         {
             var townHall = (TownHall) player.GetCharacter().GetInteractionData().SourceObject;
             TownHall.OnInteract(player);
         }
 
-        [Event("setCharacterName")]
+        [ClientEvent("setCharacterName")]
         public void OnVehicleShopInteraction(IPlayer player, string type, string name)
         {
             switch (type)
@@ -34,13 +34,13 @@ namespace server.Events
             player.GetCharacter().Save();
         }
 
-        [Event("CarRent:OnPedInteract")]
+        [ClientEvent("CarRent:OnPedInteract")]
         public void OnColshapeHit(IPlayer player)
         {
             player.Emit("CarRent:OpenUI");
         }
 
-        [Event("CarRent:SpawnVehicle")]
+        [ClientEvent("CarRent:SpawnVehicle")]
         public void RentVehicle(IPlayer player, string vehicle, int price)
         {
             CarRent.SpawnVehicle(player, vehicle, price);

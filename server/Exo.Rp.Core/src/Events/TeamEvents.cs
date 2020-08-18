@@ -15,7 +15,7 @@ namespace server.Events
 
         }
 
-        [Event("Team:toggleDuty")]
+        [ClientEvent("Team:toggleDuty")]
         public void ToggleDuty(IPlayer player, params object[] arguments)
         {
             var faction = player.GetCharacter().GetTeams();
@@ -29,7 +29,7 @@ namespace server.Events
             }
         }
 
-        [Event("Team:kickMember")]
+        [ClientEvent("Team:kickMember")]
         public void KickMember(IPlayer player, params object[] arguments)
         {
             if (arguments.Length < 2)
@@ -53,7 +53,7 @@ namespace server.Events
             }
         }
 
-        [Event("Team:requestTeamMembers")]
+        [ClientEvent("Team:requestTeamMembers")]
         public void RequestTeamMembers(IPlayer player, int teamId)
         {
             //TODO FIX

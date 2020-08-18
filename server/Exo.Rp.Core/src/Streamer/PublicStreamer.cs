@@ -12,7 +12,7 @@ namespace server.Streamer
 
         public PublicStreamer()
         {
-            Alt.OnClient("ready", (player, args) =>
+            Alt.OnClient<int>("ready", (player, _) =>
             {
                 player.Emit("globalBlips:init", _globalBlips);
             });

@@ -347,7 +347,7 @@ namespace server.Commands
             player.SendInformation("Du hat dich an deine Waypoint Position geportet!");
         }
 
-        [Event("Dev:GotoWaypoint")]
+        [ClientEvent("Dev:GotoWaypoint")]
         public static void TeleportToWaypoint(IPlayer client, float x, float y, float z)
         {
             client.Position = new Position(x, y, z);
@@ -444,7 +444,7 @@ namespace server.Commands
             Core.GetService<DoorManager>().SetDoorState(hash, state);
         }
 
-        [Event("Debug:onObjectPlaced")]
+        [ClientEvent("Debug:onObjectPlaced")]
         public static void OnObjectPlaced(IPlayer player, string pos, string rot, int number)
         {
             player.SendChatMessage("#b#Object-Position:");

@@ -52,7 +52,8 @@ namespace server.Streamer
         public BetterServerEventNetworkLayer(ulong threadCount, IClientRepository clientRepository) : base(threadCount,
             clientRepository)
         {
-            Alt.OnClient("ready", (player, args) =>
+            // Todo: Correct?
+            Alt.OnClient<int>("ready", (player, _) =>
             {
                 var playerClient = new PlayerClient(threadCount, player.Id.ToString(), player);
                 player.SetData("entitySync:client", playerClient);

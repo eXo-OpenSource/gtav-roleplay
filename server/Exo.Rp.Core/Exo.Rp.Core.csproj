@@ -35,7 +35,7 @@
 		<OutputPath>..\bin\server\</OutputPath>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="AltV.Net" Version="1.31.1" />
+		<PackageReference Include="AltV.Net" Version="1.38.4" />
 		<PackageReference Include="AltV.Net.EntitySync" Version="1.6.2-dev-preview" />
 		<PackageReference Include="AltV.Net.EntitySync.ServerEvent" Version="1.3.0-dev-preview" />
 		<PackageReference Include="AutoMapper" Version="9.0.0" />

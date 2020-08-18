@@ -28,7 +28,7 @@ namespace server.Admin
             return admins;
         }
 
-        [Event("onIPlayerConsoleText")]
+        [ClientEvent("onIPlayerConsoleText")]
         public void OnIPlayerConsoleText(IPlayer player, params object[] arguments)
         {
             Logger.Debug("Console Output from {0}: {1}", player.Name, arguments[0]);
