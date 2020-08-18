@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Exo.Rp.Sdk;
 using Newtonsoft.Json;
 using server.Util.Log;
 using server.Util.Settings;
@@ -10,7 +11,7 @@ namespace server.Util
 {
     public class WoltlabApi
     {
-        private static readonly Logger<WoltlabApi> Logger = new Logger<WoltlabApi>();
+        private static readonly ILogger<WoltlabApi> Logger = new Logger<WoltlabApi>();
 
         public enum LoginStatus
         {

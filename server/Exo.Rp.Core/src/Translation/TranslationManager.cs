@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using AltV.Net;
+using Exo.Rp.Sdk;
 using models.Enums.Translation;
 using NGettext;
 using Sentry;
@@ -14,14 +15,15 @@ namespace server.Translation
 {
     public class TranslationManager : IManager
     {
-        private static readonly Logger<TranslationManager> Logger = new Logger<TranslationManager>();
+        private readonly ILogger<TranslationManager> _logger;
 
         private readonly string _localDir = Path.Combine("resources", Alt.Server.Resource.Name, "translations");
         private readonly IReadOnlyList<CultureInfo> _languages = new List<CultureInfo>( new[] { new CultureInfo("en-US") } );
         private readonly IReadOnlyDictionary<CultureInfo, IReadOnlyDictionary<TranslationCatalog, Catalog>> _catalogs;
 
-        public TranslationManager()
+        public TranslationManager(ILogger<TranslationManager> logger)
         {
+            _logger = logger;
             _catalogs =
                 _languages.ToDictionary<CultureInfo, CultureInfo, IReadOnlyDictionary<TranslationCatalog, Catalog>>(
                     lang => lang,
@@ -50,7 +52,7 @@ namespace server.Translation
                 SentrySdk.AddBreadcrumb(null, "Translation", null, new Dictionary<string, string> { { "message", formatString }, { "language", lang.DisplayName }, { "catalog", translationCatalog.ToString() }, });
                 e.TrackOrThrow();
 
-                Logger.Warn($"Translation of message '{formatString}' for '{lang}/{translationCatalog}' failed.");
+                _logger.Warn($"Translation of message '{formatString}' for '{lang}/{translationCatalog}' failed.");
                 return formatString;
             }
         }

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AltV.Net.Elements.Entities;
 using AutoMapper;
+using Exo.Rp.Sdk;
 using models.Teams;
 using Newtonsoft.Json;
 using server.Database;
@@ -13,7 +14,7 @@ namespace server.Teams
 {
     internal class TeamManager : IManager
     {
-        private static readonly Logger<TeamManager> Logger = new Logger<TeamManager>();
+        private readonly ILogger<TeamManager> _logger;
 
         private readonly DatabaseContext _databaseContext;
         private readonly IMapper _mapper;
@@ -26,10 +27,11 @@ namespace server.Teams
         //public Dictionary<int, List<TeamMemberModel>> TeamMembers;
 
 
-        public TeamManager(DatabaseContext databaseContext, IMapper mapper)
+        public TeamManager(DatabaseContext databaseContext, IMapper mapper, ILogger<TeamManager> logger)
         {
             _databaseContext = databaseContext;
             _mapper = mapper;
+            _logger = logger;
 
             Teams = new List<Team>();
             TeamDepartments = new List<DepartmentModel>();
@@ -44,7 +46,7 @@ namespace server.Teams
             if (!_databaseContext.TeamModel.Local.Any()) return;
             foreach (var team in _databaseContext.TeamModel.Local.ToList())
             {
-                //Logger.Debug($"Loaded Team \"{team.Name}\"");
+                _logger.Debug($"Loaded Team \"{team.Name}\"");
                 switch (team.Id)
                 {
                     case 1:

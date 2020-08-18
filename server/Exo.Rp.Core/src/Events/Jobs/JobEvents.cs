@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using AltV.Net;
+using Exo.Rp.Sdk;
 using models.Popup;
 using server.Jobs;
 using server.Players;
@@ -10,7 +11,7 @@ namespace server.Events.Jobs
 {
     internal class JobEvents : IScript
     {
-        private static readonly Logger<JobEvents> Logger = new Logger<JobEvents>();
+        private static readonly ILogger<JobEvents> Logger = new Logger<JobEvents>();
 
         [ClientEvent("onJobPedInteraction")]
         public void OnJobPedInteraction(IPlayer player)

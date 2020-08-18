@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>netcoreapp3.1</TargetFramework>
@@ -52,7 +52,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Exo.Rp.Models\Exo.Rp.Models.csproj" />
 		<ProjectReference Include="..\Exo.Rp.Sdk\Exo.Rp.Sdk.csproj" />
 	</ItemGroup>
 

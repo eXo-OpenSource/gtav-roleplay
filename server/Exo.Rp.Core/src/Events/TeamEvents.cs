@@ -1,4 +1,5 @@
 using AltV.Net;
+using Exo.Rp.Sdk;
 using server.Players;
 using server.Teams;
 using server.Util.Log;
@@ -7,7 +8,7 @@ namespace server.Events
 {
     internal class TeamEvents : IScript
     {
-        private static readonly Logger<TeamEvents> Logger = new Logger<TeamEvents>();
+        private static readonly ILogger<TeamEvents> Logger = new Logger<TeamEvents>();
 
         //[ServerEvent(Event.ResourceStart)]
         public void Load()

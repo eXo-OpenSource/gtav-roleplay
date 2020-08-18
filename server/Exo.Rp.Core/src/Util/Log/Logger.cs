@@ -1,5 +1,7 @@
 using System;
 using System.Reflection;
+using Exo.Rp.Sdk;
+using Exo.Rp.Sdk.Logger;
 using models.Enums;
 using Sentry;
 using Sentry.Protocol;
@@ -54,7 +56,7 @@ namespace server.Util.Log
         }
     }
 
-    public class Logger
+    public class Logger : ILogger
     {
         private readonly string _parent;
 
@@ -140,7 +142,7 @@ namespace server.Util.Log
         }
     }
 
-    public class Logger<TClass> : Logger
+    public class Logger<TClass> : Logger, ILogger<TClass>
     {
 
         public Logger()

@@ -11,6 +11,7 @@ using server.Vehicles;
 using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Exo.Rp.Sdk;
 using IPlayer = server.Players.IPlayer;
 
 
@@ -27,7 +28,7 @@ namespace server.Jobs.Jobs
             Init();
         }
 
-        private static readonly Logger<PizzaDelivery> Logger = new Logger<PizzaDelivery>();
+        private static readonly ILogger<PizzaDelivery> Logger = new Logger<PizzaDelivery>();
 
         private Pizza Pizza;
 

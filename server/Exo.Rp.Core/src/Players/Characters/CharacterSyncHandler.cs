@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Timers;
 using AltV.Net;
+using Exo.Rp.Sdk;
 using server.Util.Log;
 using server.Util.Settings;
 
@@ -14,7 +15,7 @@ namespace server.Players.Characters
 
     public class CharacterSyncHandler
     {
-        private static readonly Logger<CharacterSyncHandler> Logger = new Logger<CharacterSyncHandler>();
+        private static readonly ILogger<CharacterSyncHandler> Logger = new Logger<CharacterSyncHandler>();
 
         private static readonly Dictionary<IPlayer, ParameterMapping> PublicSync = new Dictionary<IPlayer, ParameterMapping>();
         private static readonly Dictionary<IPlayer, ParameterUpdatedMapping> PublicSyncUpdate = new Dictionary<IPlayer, ParameterUpdatedMapping>();

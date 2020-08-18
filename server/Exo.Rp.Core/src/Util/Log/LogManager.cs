@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Exo.Rp.Sdk.Logger;
 using models.Enums;
 using server.Util.Settings;
 

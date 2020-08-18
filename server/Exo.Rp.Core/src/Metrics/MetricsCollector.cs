@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using AltV.Net;
+using Exo.Rp.Sdk;
 using InfluxDB.Collector;
 using server.Util.Log;
 using server.Util.Settings;
@@ -10,13 +11,13 @@ namespace server.Metrics
 {
     public class MetricsCollector : IDisposable
     {
-        private static readonly Logger<MetricsCollector> Logger = new Logger<MetricsCollector>();
-
+        private readonly ILogger<MetricsCollector> _logger;
         private readonly InfluxDB.Collector.MetricsCollector _collector;
         private readonly Timer _timer = new Timer();
 
-        public MetricsCollector()
+        public MetricsCollector(ILogger<MetricsCollector> logger)
         {
+            _logger = logger;
             var settings = SettingsManager.ServerSettings.MetricsCollector;
             _collector = new CollectorConfiguration()
                 .Batch.AtInterval(TimeSpan.FromSeconds(2))
@@ -34,11 +35,12 @@ namespace server.Metrics
         public void Dispose()
         {
             _timer.Enabled = false;
+            _collector.Dispose();
         }
 
         private void Collect()
         {
-            Logger.Info("Writing metrics to InfluxDB...");
+            _logger.Info("Writing metrics to InfluxDB...");
             _collector.Write("player_count",
                 new Dictionary<string, object>
                 {

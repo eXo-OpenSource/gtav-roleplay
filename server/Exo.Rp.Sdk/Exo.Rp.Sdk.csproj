@@ -39,4 +39,8 @@
 		<PackageReference Include="AltV.Net" Version="1.27.3" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\Exo.Rp.Models\Exo.Rp.Models.csproj" />
+	</ItemGroup>
+
 </Project>

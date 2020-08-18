@@ -8,6 +8,7 @@ using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
 using AutoMapper;
+using Exo.Rp.Sdk;
 using models.Enums;
 using server.Database;
 using server.Environment;
@@ -23,7 +24,7 @@ namespace server.Vehicles
 {
     internal class VehicleManager : IManager
     {
-        private static readonly Logger<VehicleManager> Logger = new Logger<VehicleManager>();
+        private readonly ILogger<VehicleManager> _logger;
 
         private readonly DatabaseContext _databaseContext;
         private readonly IMapper _mapper;
@@ -36,10 +37,11 @@ namespace server.Vehicles
         private int _rentedVehicleId = 100000;
         private Rgba _defaultColor = new Rgba(30, 135, 235, 255);
 
-        public VehicleManager(DatabaseContext databaseContext, IMapper mapper)
+        public VehicleManager(DatabaseContext databaseContext, IMapper mapper, ILogger<VehicleManager> logger)
         {
             _databaseContext = databaseContext;
             _mapper = mapper;
+            _logger = logger;
 
             _vehicles = new List<Vehicle>();
             _playerVehicles = new Dictionary<int, PlayerVehicle>();

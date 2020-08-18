@@ -2,6 +2,7 @@ using AltV.Net;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
+using Exo.Rp.Sdk;
 using server.Util;
 using server.Util.Log;
 using IPlayer = server.Players.IPlayer;
@@ -10,7 +11,7 @@ namespace server.Vehicles
 {
     public partial class Vehicle
     {
-        private static readonly Logger<Vehicle> Logger = new Logger<Vehicle>();
+        private static readonly ILogger<Vehicle> Logger = new Logger<Vehicle>();
 
         public IVehicle handle;
         private bool _lightStatus;

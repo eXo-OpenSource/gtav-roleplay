@@ -6,6 +6,7 @@ using AltV.Net.EntitySync;
 using AltV.Net.EntitySync.ServerEvent;
 using AltV.Net.EntitySync.SpatialPartitions;
 using AutoMapper;
+using Exo.Rp.Sdk;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Sentry.Protocol;
@@ -40,7 +41,7 @@ namespace server
     public class Core : Resource
     {
         private static readonly Logger<Core> Logger = new Logger<Core>();
-
+        
         private DatabaseCore _databaseCore;
         private static IServiceProvider _serviceProvider;
 
@@ -54,6 +55,8 @@ namespace server
             // Prepare service provider
             var serviceCollection = new ServiceCollection()
                 .AddSingleton<IMapper>(AutoMapperConfiguration.GetMapper())
+                .AddSingleton(typeof(ILogger), typeof(Logger))
+                .AddSingleton(typeof(ILogger<>), typeof(Logger<>))
                 .AddSingleton<RuntimeIndexer>()
                 .AddSingleton<CommandHandler>()
                 .AddSingleton<MetricsCollector>()

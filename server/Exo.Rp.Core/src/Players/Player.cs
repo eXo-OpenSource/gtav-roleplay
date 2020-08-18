@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
+using Exo.Rp.Sdk;
 using Microsoft.VisualBasic;
 using Sentry.Protocol;
 using server.Database;
@@ -17,7 +18,7 @@ namespace server.Players
 {
     public partial class Player : AltV.Net.Elements.Entities.Player, IPlayer
     {
-        private static readonly Logger<Player> Logger = new Logger<Player>();
+        private static readonly ILogger<Player> Logger = new Logger<Player>();
 
         private Account _account;
         private Account Account => _account ??= Core.GetService<DatabaseContext>().AccountModel.Local.FirstOrDefault(x => x.SocialClubId == SocialClubId);

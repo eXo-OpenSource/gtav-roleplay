@@ -1,4 +1,5 @@
 using System;
+using Exo.Rp.Sdk.Logger;
 using models.Enums;
 
 namespace server.Util.Log

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using Exo.Rp.Sdk;
 using models.Enums;
 using models.Inventory;
 using server.Util.Log;
@@ -11,7 +12,7 @@ namespace server.Inventory
     public partial class Inventory
     {
         [NotMapped]
-        private static readonly Logger<Inventory> Logger = new Logger<Inventory>();
+        private static readonly ILogger<Inventory> Logger = new Logger<Inventory>();
         [NotMapped]
         private const int Size = 3;
         [NotMapped]
