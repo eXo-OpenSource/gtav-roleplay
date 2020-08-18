@@ -132,6 +132,7 @@ namespace Exo.Rp.Core.Jobs.Jobs
             };
 
             Pizza.IntakeCol.OnColShapeEnter += OnIntakeMarkerHit;
+            Pizza.IntakeCol.OnColShapeExit += OnIntakeMarkerLeave;
         }
 
         public void CreateRandomDelivery(IPlayer player)
@@ -146,6 +147,7 @@ namespace Exo.Rp.Core.Jobs.Jobs
             Pizza.DeliveryBlip.AddVisibleEntity(player.Id);
 
             Pizza.DeliveryCol.OnColShapeEnter += OnDeliveryMarkerHit;
+            Pizza.DeliveryCol.OnColShapeExit += OnDeliveryMarkerLeave;
         }
 
         public void OnIntakeMarkerHit(Colshape.Colshape col, IEntity entity)
@@ -161,6 +163,12 @@ namespace Exo.Rp.Core.Jobs.Jobs
             };
 
             player.GetCharacter().ShowInteraction("Auftrag starten", "JobPizza:StartMission", interactionData: interactionData);
+        }
+        public void OnIntakeMarkerLeave(Colshape.Colshape col, IEntity entity)
+        {
+            if (!(entity is IPlayer player)) return;
+            if (player.GetCharacter() == null) return;
+            player.GetCharacter().HideInteraction();
         }
 
         public void OnDeliveryMarkerHit(Colshape.Colshape col, IEntity entity)
@@ -182,6 +190,12 @@ namespace Exo.Rp.Core.Jobs.Jobs
                 player.StopAnimation();
                 Pizza.Pay += Pizza.PayPerPizza;
             });
+        }
+        public void OnDeliveryMarkerLeave(Colshape.Colshape col, IEntity entity)
+        {
+            if (!(entity is IPlayer player)) return;
+            if (player.GetCharacter() == null) return;
+            player.GetCharacter().HideInteraction();
         }
 
         public override void StopJob(IPlayer player)

@@ -75,12 +75,12 @@ class CharacterCreatorForm extends Component {
   }
 
   updateBeard(e) {
-    let slider = e.target.getAttribute("data-arg")
-    if (slider == "beards") {
-      this.setState({ beardID: e.target.value })
-    } else {
-      this.setState({ beardColor: e.target.value })
-    }
+    this.setState({ beardID: e.target.value })
+    alt.emit("FaceFeatures:UpdateBeard", this.state.beardID, this.state.beardColor)
+  }
+
+  updateBeardColor(e) {
+    this.setState({ beardColor: e.target.value })
     alt.emit("FaceFeatures:UpdateBeard", this.state.beardID, this.state.beardColor)
   }
 
@@ -243,7 +243,7 @@ class CharacterCreatorForm extends Component {
               </div>
               <div className="flex">
                 <input type="range" min="0" max={maxBeards} value={this.state.beardID} class="slider" className="w-1/2 rounded-lg bg-blue-700 content-center mr-8" data-arg="beards" onChange={this.updateBeard.bind(this)}></input>
-                <input type="range" min="0" max={maxHairColor} value={this.state.beardColor} class="slider" className="w-1/2 rounded-lg bg-blue-700 content-center" data-arg="beardColor" onChange={this.updateBeard.bind(this)}></input>
+                <input type="range" min="0" max={maxHairColor} value={this.state.beardColor} class="slider" className="w-1/2 rounded-lg bg-blue-700 content-center" data-arg="beardColor" onChange={this.updateBeardColor.bind(this)}></input>
               </div>
               <p className="font-bold mt-4 mb-3">Gesichtsmerkmale</p>
               <div className="flex">
