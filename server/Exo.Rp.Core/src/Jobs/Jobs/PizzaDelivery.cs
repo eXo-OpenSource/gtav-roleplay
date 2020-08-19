@@ -31,6 +31,8 @@ namespace Exo.Rp.Core.Jobs.Jobs
 
         private Pizza Pizza;
 
+        private string InteractionId;
+
 
         private Random randomizeDelivery = new Random();
 
@@ -163,13 +165,13 @@ namespace Exo.Rp.Core.Jobs.Jobs
                 CallBack = null
             };
 
-            player.GetCharacter().ShowInteraction("Auftrag starten", "JobPizza:StartMission", interactionData: interactionData);
+            InteractionId = player.GetCharacter().ShowInteraction("Auftrag starten", "JobPizza:StartMission", interactionData: interactionData);
         }
         public void OnIntakeMarkerLeave(Colshape.Colshape col, IEntity entity)
         {
             if (!(entity is IPlayer player)) return;
             if (player.GetCharacter() == null) return;
-            player.GetCharacter().HideInteraction();
+            player.GetCharacter().HideInteraction(InteractionId);
         }
 
         public void OnDeliveryMarkerHit(Colshape.Colshape col, IEntity entity)
