@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import {HashRouter as Router, Route, Switch, Link, withRouter} from "react-router-dom";
 import Chat from "./hud/chat";
 import HUD from "./hud/hud";
-import ATM from "./forms/atm"
 import loadable, { Options as LoadableOptions } from "@loadable/component";
 
 import './root.css';
@@ -11,13 +10,11 @@ import Speedometer from "./hud/speedometer";
 import Popup from "./hud/popup";
 import Toast from "./hud/toast";
 import Progress from "./hud/progress";
-import CharacterCreatorForm from './forms/character-creator';
-import CarRent from './forms/car-rent';
+import Interaction from "./hud/interaction";
 
 const loadableOptions = { };
 const LoadableLoginComponent = loadable(() => import("./forms/login"), loadableOptions);
 const LoadableCharacterCreatorComponent = loadable(() => import("./forms/character-creator"), loadableOptions);
-const LoadableVehicleUIComponent = loadable(() => import("./hud/vehicle-ui"), loadableOptions);
 const LoadableATMComponent = loadable(() => import("./forms/atm"), loadableOptions);
 const LoadableCarRentComponent = loadable(() => import("./forms/car-rent"), loadableOptions);
 
@@ -34,7 +31,6 @@ class App extends Component {
           <Switch>
             <Route path="/login" component={LoadableLoginComponent} />
             <Route path="/charactercreator" component={LoadableCharacterCreatorComponent} />
-            <Route path="/vehicleui" component={LoadableVehicleUIComponent} />
             <Route path="/atm" component={LoadableATMComponent} />
             <Route path="/carrent" component={LoadableCarRentComponent} />
           </Switch>
@@ -44,6 +40,7 @@ class App extends Component {
         <Popup/>
         <HUD/>
         <Speedometer/>
+        <Interaction />
         <Progress/>
       </div>
     )
