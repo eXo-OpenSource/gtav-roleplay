@@ -52,8 +52,7 @@ namespace Exo.Rp.Core.Streamer
         public BetterServerEventNetworkLayer(ulong threadCount, IClientRepository clientRepository) : base(threadCount,
             clientRepository)
         {
-            // Todo: Correct?
-            Alt.OnClient<int>("ready", (player, _) =>
+            Alt.OnClient("ready", (player) =>
             {
                 var playerClient = new PlayerClient(threadCount, player.Id.ToString(), player);
                 player.SetData("entitySync:client", playerClient);
