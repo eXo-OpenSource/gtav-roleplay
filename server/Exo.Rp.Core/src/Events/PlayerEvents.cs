@@ -39,9 +39,8 @@ namespace Exo.Rp.Core.Events
                             if (player.GetAccount() == default)
                                 {
                                     Logger.Debug($"Creating new account for {player.Name}");
-                                    var userdata = WoltlabApi.GetUserData(username).Result;
-                                    AccountStatic.CreateAccount(player, username, userdata.email,
-                                        AdminLevel.Entwickler);
+                                    //var userdata = WoltlabApi.GetUserData(username).Result;
+                                    AccountStatic.CreateAccount(player, username, "null", AdminLevel.Entwickler);
                                 }
 
                                 Core.GetService<PlayerManager>().DoLogin(player);
