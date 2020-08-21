@@ -11,6 +11,7 @@ using Exo.Rp.Models.Enums;
 using Exo.Rp.Sdk;
 using Exo.Rp.Sdk.Logger;
 using Newtonsoft.Json;
+using Sentry;
 using IPlayer = Exo.Rp.Core.Players.IPlayer;
 
 namespace Exo.Rp.Core.Events
@@ -66,14 +67,14 @@ namespace Exo.Rp.Core.Events
             }
             catch (Exception e)
             {
-                /* e.WithScopeOrThrow(s =>
+                e.WithScopeOrThrow(s =>
                 {
                     s.User = player.SentryContext;
                     var correlationId = SentrySdk.CaptureException(e);
 
                     Console.WriteLine(e.Message);
                     player.Emit("registerLogin:Error", "Unbekannter Fehler! Correlation Id: {0}", correlationId);
-                }); */
+                });
             }
         }
 
