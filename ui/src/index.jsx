@@ -11,12 +11,12 @@ import Speedometer from "./hud/speedometer";
 import Popup from "./hud/popup";
 import Toast from "./hud/toast";
 import Progress from "./hud/progress";
-import CharacterCreatorForm from './forms/character-creator';
+import CharacterCreatorForm from './forms/charcreator/charcreator';
 import CarRent from './forms/car-rent';
 
 const loadableOptions = { };
 const LoadableLoginComponent = loadable(() => import("./forms/login"), loadableOptions);
-const LoadableCharacterCreatorComponent = loadable(() => import("./forms/character-creator"), loadableOptions);
+const LoadableCharacterCreatorComponent = loadable(() => import("./forms/charcreator/charcreator"), loadableOptions);
 const LoadableVehicleUIComponent = loadable(() => import("./hud/vehicle-ui"), loadableOptions);
 const LoadableATMComponent = loadable(() => import("./forms/atm"), loadableOptions);
 const LoadableCarRentComponent = loadable(() => import("./forms/car-rent"), loadableOptions);
@@ -41,6 +41,7 @@ class App extends Component {
         </Router>
         <Chat/>
         <Toast/>
+        <CharacterCreatorForm/>
         <Popup/>
         <HUD/>
         <Speedometer/>

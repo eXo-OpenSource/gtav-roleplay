@@ -4,15 +4,23 @@
 /* purgecss end ignore */
 
 .btn {
-  @apply font-bold py-2 px-4 rounded-sm;
+  @apply font-bold py-2 px-4 rounded-sm text-shadow-md;
 }
 
 .btn-primary {
-  @apply bg-blue-500 text-white;
+  @apply bg-blue-600 text-white;
+}
+
+.btn-secondary {
+  @apply bg-gray-800 text-white;
 }
 
 .btn-primary:hover {
   @apply bg-blue-700;
+}
+
+.btn-secondary:hover {
+  @apply bg-gray-900;
 }
 
 .card {
@@ -20,7 +28,7 @@
 }
 
 .card-header {
-  @apply py-4 text-xl rounded-t-lg text-white text-center bg-blue-400;
+  @apply py-4 text-xl rounded-t-lg text-white text-center bg-blue-600 text-shadow-md;
 }
 
 .card-body {
@@ -80,6 +88,27 @@
   background: linear-gradient(to right, rgba(242,67,67,1) 0%, rgba(242,67,67,0.8) 100%);
 }
 
+.inner-box-shadow {
+  -webkit-box-shadow: inset 1px 0px 14px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: inset 1px 0px 14px 0px rgba(0,0,0,0.75);
+  box-shadow: inset 1px 0px 14px 0px rgba(0,0,0,0.75);
+}
+
+.text-shadow {
+  text-shadow: 0 2px 4px rgba(0,0,0,0.10);
+}
+
+.text-shadow-md {
+  text-shadow: 0 4px 8px rgba(0,0,0,0.12), 0 2px 4px rgba(0,0,0,0.08);
+}
+
+.text-shadow-lg {
+  text-shadow: 0 15px 30px rgba(0,0,0,0.11), 0 5px 15px rgba(0,0,0,0.08);
+}
+
+.text-shadow-none {
+  text-shadow: none;
+}
 
 @keyframes fadeIn {
   0% {

@@ -27,8 +27,8 @@ export class FaceFeaturesUi {
   private gender = 1
   private fatherID = 0
   private motherID = 21
-  private skin = 0.5
-  private look = 0.5
+  private skin = 50
+  private look = 50
   private moleID = 0
   private eyeColor = 0
   private hairID = 0
@@ -70,14 +70,12 @@ export class FaceFeaturesUi {
     native.setFocusPosAndVel(this.playerPoint.x, this.playerPoint.y,
       this.playerPoint.z, this.playerPoint.x, this.playerPoint.y, this.playerPoint.z)
 
-    this.camera = new Camera(this.cameraPoint, 38)
-    this.camera.pointAtBone(this.testPed.scriptID, 31086, 0.05, 0, 0)
-    this.camera.playerControlsEntity(this.testPed.scriptID, true)
+    this.resetCamera(this.model)
     this.freezePed()
   }
 
   private freezePed() {
-    alt.setTimeout(() => native.freezeEntityPosition(this.testPed.scriptID, true), 2500)
+    //alt.setTimeout(() => native.freezeEntityPosition(this.testPed.scriptID, true), 2500)
   }
 
   private applyFaceFeatures(ped) {
@@ -124,44 +122,44 @@ export class FaceFeaturesUi {
   }
 
   private updateEyebrows(eyebrows = this.eyebrowID) {
-    this.eyebrowID = eyebrows
+    this.eyebrowID = eyebrows - 1
     native.setPedHeadOverlay(this.testPed.scriptID, 2, this.eyebrowID, 255)
   }
 
   private updateEyebrowColor(color = this.eyebrowColor) {
-    this.eyebrowColor = color
+    this.eyebrowColor = color - 1
     native.setPedHeadOverlayColor(this.testPed.scriptID, 2, 1, this.eyebrowColor, this.eyebrowColor)
   }
 
   private updateHairColor(hairColor = this.hairColor, hairHighlight = this.hairHighlight) {
-    this.hairColor = hairColor
-    this.hairHighlight = hairHighlight
+    this.hairColor = hairColor - 1
+    this.hairHighlight = hairHighlight - 1
     native.setPedHairColor(this.testPed.scriptID, this.hairColor, this.hairHighlight)
   }
 
   private updateMoles(moleID = this.moleID) {
-    this.moleID = moleID
+    this.moleID = moleID - 1
     native.setPedHeadOverlay(this.testPed.scriptID, 9, this.moleID, 255)
   }
 
   private updateEyeColor(eyeColor = this.eyeColor) {
-    this.eyeColor = eyeColor
+    this.eyeColor = eyeColor - 1
     native.setPedEyeColor(this.testPed.scriptID, this.eyeColor)
   }
 
   private updateHairs(hairs = this.hairID) {
-    this.hairID = hairs
+    this.hairID = hairs - 1
     native.setPedComponentVariation(this.testPed.scriptID, 2, this.hairID, 0, 0)
   }
 
   private updateAgeing(age = this.age) {
-    this.age = age
+    this.age = age - 1
     native.setPedHeadOverlay(this.testPed.scriptID, 3, this.age, 255)
   }
 
   private updateBeard(beard = this.beard, beardColor = this.beardColor) {
-    this.beard = beard
-    this.beardColor = beardColor
+    this.beard = beard - 1
+    this.beardColor = beardColor - 1
     if (this.gender == 1) {
       native.setPedHeadOverlay(this.testPed.scriptID, 1, this.beard, 255)
       native.setPedHeadOverlayColor(this.testPed.scriptID, 1, 1, this.beardColor, this.beardColor)
@@ -211,7 +209,6 @@ export class FaceFeaturesUi {
   }
 
   private preventFaceBugs() {
-    native.addPedDecorationFromHashes(this.testPed.scriptID, native.getHashKey("mpbeach_overlays"), native.getHashKey("fm_hair_fuzz"))
     native.setPedHeadBlendData(this.testPed.scriptID, 0, 0, 0, 0, 0, 0, 0, 0, 0, false);
   }
 
@@ -219,6 +216,10 @@ export class FaceFeaturesUi {
     this.testPed.destroy()
 
     this.testPed = new Ped(modelToUse, this.playerPoint)
+
+    this.camera = new Camera(this.cameraPoint, 38)
+    this.camera.pointAtBone(this.testPed.scriptID, 31086, 0.05, 0, 0)
+    this.camera.playerControlsEntity(this.testPed.scriptID, true)
 
     this.preventFaceBugs()
   }
