@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Exo.Rp.Core.Database;
 using Exo.Rp.Core.Metrics;
 using Exo.Rp.Core.Plugins;
 using Exo.Rp.Sdk.Logger;
@@ -26,7 +27,10 @@ namespace Exo.Rp.Core.Tasks.Shutdown.Tasks
             
             _logger.Info("Services | Disposing Plugin manager...");
             _serviceProvider.GetService<PluginManager>().Dispose();
-            
+
+            _logger.Info("Services | Disposing Database Core...");
+            DatabaseCore.SaveChangeToDatabase();
+
             return Task.CompletedTask;
         }
     }

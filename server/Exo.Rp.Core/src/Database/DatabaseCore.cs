@@ -19,7 +19,6 @@ namespace Exo.Rp.Core.Database
     {
         private static readonly Util.Log.Logger<DatabaseCore> Logger = new Util.Log.Logger<DatabaseCore>();
 
-        private IDisposable _sentry;
         private Stopwatch _lastUpdate;
 
         public Task OnResourceStartHandler()
@@ -106,12 +105,6 @@ namespace Exo.Rp.Core.Database
             return Task.CompletedTask;
         }
 
-        public void OnResourceStopHandler()
-        {
-            if (SettingsManager.ServerSettings.Sentry.Release.Length > 0)
-                _sentry.Dispose();
-        }
-        
         public void CreateDatabaseConnection()
         {
             var connectionStringBuilder = new MySqlConnectionStringBuilder
