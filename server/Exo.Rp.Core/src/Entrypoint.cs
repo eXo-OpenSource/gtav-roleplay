@@ -49,7 +49,7 @@ namespace Exo.Rp.Core
 
         public async override void OnStart()
         {
-            _host = Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder()
+            _host = Host.CreateDefaultBuilder()
                 .ConfigureServices(ConfigureServices)
                 .Build();
 
