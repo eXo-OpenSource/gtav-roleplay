@@ -22,7 +22,7 @@ namespace Exo.Rp.Core.Database
         private IDisposable _sentry;
         private Stopwatch _lastUpdate;
 
-        public void OnResourceStartHandler(Action<SentrySettings, SentryOptions>? configureSentry, Action? onDatabaseInitialized)
+        public Task OnResourceStartHandler()
         {
             SettingsManager.LogOutput.Add(new LogMessage
             {
@@ -44,50 +44,9 @@ namespace Exo.Rp.Core.Database
                 Category = LogCat.None,
                 Messages = new[] { "=================================================" }
             });
-
-            /*
-            var cls = new SerializationTest("1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890");
-
-            var timer = Stopwatch.StartNew();
-            var str = cls.Serialize();
-            timer.Stop();
-
-            var timer2 = Stopwatch.StartNew();
-            var str2 = JsonConvert.SerializeObject(cls);
-            timer2.Stop();
-
-            Console.WriteLine($"Serialization byte array: {timer.ElapsedTicks} Ticks | json: {timer2.ElapsedTicks} Ticks");
-            Console.WriteLine($"byte array length: {str.Length} | json: {str2.Length}");
-
-            timer.Restart();
-            var bcls = SerializationTest.Deserialize(str);
-            timer.Stop();
-
-            timer2.Restart();
-            var jcls = JsonConvert.DeserializeObject<SerializationTest>(str2);
-            timer2.Stop();
-
-            Console.WriteLine($"Deserialization time byte array: {timer.ElapsedTicks} Ticks | json: {timer2.ElapsedTicks} Ticks");
-            Console.WriteLine($"Org  data number: {cls.number} msg right: {cls.message == cls.message}");
-            Console.WriteLine($"Byte data number: {bcls.number} msg right: {bcls.message == cls.message}");
-            Console.WriteLine($"Json data number: {jcls.number} msg right: {jcls.message == cls.message}");
-            */
-
+            
             Logger.Info("====== Server started ======");
-
-            var settingsPath = Path.Combine("resources", Alt.Server.Resource.Name, "config.json");
-            var logsPath = Path.Combine("resources", Alt.Server.Resource.Name, "logs");
-
-            if (!SetDatabaseConnection(settingsPath, logsPath))
-                return;
-
-            // Initialize sentry
-            if (SettingsManager.ServerSettings.Sentry.Release.Length > 0)
-                _sentry = SentrySdk.Init(sentryOptions => configureSentry(SettingsManager.ServerSettings.Sentry, sentryOptions));
-
-            if (!CreateDatabaseConnection())
-                return;
-
+            
             Logger.Info($"Database connection to server: {SettingsManager.ServerSettings.Database.Server}");
 
             var stopWatch = Stopwatch.StartNew();
@@ -144,7 +103,7 @@ namespace Exo.Rp.Core.Database
             Logger.Debug($"Loaded database in {stopWatch.ElapsedMilliseconds} ms.");
 
             _lastUpdate = Stopwatch.StartNew();
-            onDatabaseInitialized?.Invoke();
+            return Task.CompletedTask;
         }
 
         public void OnResourceStopHandler()
@@ -152,25 +111,8 @@ namespace Exo.Rp.Core.Database
             if (SettingsManager.ServerSettings.Sentry.Release.Length > 0)
                 _sentry.Dispose();
         }
-
-        public static bool SetDatabaseConnection(string settingsPath, string logsPath)
-        {
-            if (!SettingsManager.LoadSettings(settingsPath))
-            {
-                Logger.Error($"Unable to load settings from \"{settingsPath}\". Trying to create a new one.");
-                if (!SettingsManager.CreateSettings(settingsPath, logsPath))
-                {
-                    Logger.Fatal("Unable to create a new settings file.");
-                    return false;
-                }
-            }
-            else
-                Logger.Debug($"Successfully loaded settings from \"{settingsPath}\".");
-
-            return true;
-        }
-
-        public static bool CreateDatabaseConnection()
+        
+        public void CreateDatabaseConnection()
         {
             var connectionStringBuilder = new MySqlConnectionStringBuilder
             {
@@ -183,9 +125,6 @@ namespace Exo.Rp.Core.Database
             };
 
             ContextFactory.SetConnectionString(connectionStringBuilder);
-
-
-            return ContextFactory.Instance != null;
         }
 
         [ClientEvent("Update")]

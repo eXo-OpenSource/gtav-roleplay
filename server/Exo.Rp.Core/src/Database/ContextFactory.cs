@@ -23,11 +23,7 @@ namespace Exo.Rp.Core.Database
 
         public static DatabaseContext Instance
         {
-            get
-            {
-                if (_instance != null) return _instance;
-                return _instance = Create();
-            }
+            get => _instance;
         }
 
         private static  DatabaseContext Create()
@@ -60,5 +56,10 @@ namespace Exo.Rp.Core.Database
             return databaseContext;
         }
 
+        public static DatabaseContext Connect()
+        {
+            _instance = Create();
+            return _instance;
+        }
     }
 }

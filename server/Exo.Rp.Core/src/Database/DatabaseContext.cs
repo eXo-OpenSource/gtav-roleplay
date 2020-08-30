@@ -48,11 +48,6 @@ namespace Exo.Rp.Core.Database
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (ContextFactory.ConnectionString == null)
-            {
-                DatabaseCore.SetDatabaseConnection(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "config.json"), Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "logs"));
-            }
-
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
 

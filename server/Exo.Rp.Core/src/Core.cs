@@ -1,12 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
-using System.Threading;
+using System.IO;
 using System.Threading.Tasks;
 using AltV.Net;
 using AltV.Net.Elements.Entities;
-using AltV.Net.EntitySync;
-using AltV.Net.EntitySync.ServerEvent;
-using AltV.Net.EntitySync.SpatialPartitions;
 using AutoMapper;
 using Exo.Rp.Core.AutoMapper;
 using Exo.Rp.Core.BankAccounts;
@@ -21,23 +19,28 @@ using Exo.Rp.Core.Jobs;
 using Exo.Rp.Core.Peds;
 using Exo.Rp.Core.Players;
 using Exo.Rp.Core.Plugins;
+using Exo.Rp.Core.Sentry;
 using Exo.Rp.Core.Shops;
-using Exo.Rp.Core.StartupTasks;
-using Exo.Rp.Core.StartupTasks.Tasks;
 using Exo.Rp.Core.Streamer;
-using Exo.Rp.Core.Streamer.Grid;
 using Exo.Rp.Core.Streamer.Private;
+using Exo.Rp.Core.Tasks;
+using Exo.Rp.Core.Tasks.Shutdown;
+using Exo.Rp.Core.Tasks.Startup.Tasks;
+using Exo.Rp.Core.Tasks.StartupTasks;
 using Exo.Rp.Core.Teams;
 using Exo.Rp.Core.Translation;
 using Exo.Rp.Core.Updateable;
 using Exo.Rp.Core.Util;
 using Exo.Rp.Core.Util.Log;
+using Exo.Rp.Core.Util.Settings;
 using Exo.Rp.Core.Vehicles;
 using Exo.Rp.Core.World;
 using Exo.Rp.Sdk.Logger;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
-using Sentry.Protocol;
+using Sentry;
 using MetricsCollector = Exo.Rp.Core.Metrics.MetricsCollector;
 using IPlayer = AltV.Net.Elements.Entities.IPlayer;
 
@@ -46,19 +49,24 @@ namespace Exo.Rp.Core
     public class Core : Resource
     {
         private static readonly Logger<Core> Logger = new Logger<Core>();
+        private static IHost _host;
         private DatabaseCore _databaseCore;
-        private static IServiceProvider _serviceProvider;
 
         private UpdateableManager _updateableManager;
 
-        public override void OnStart()
+        public async override void OnStart()
         {
-            // Initialize database
-            _databaseCore = new DatabaseCore();
+            _host = Host.CreateDefaultBuilder()
+                .ConfigureServices(ConfigureServices)
+                .UseConsoleLifetime()
+                .Build();
 
-            // Prepare service provider
-            var serviceCollection = new ServiceCollection()
-                .AddSingleton<IMapper>(AutoMapperConfiguration.GetMapper())
+            await _host.StartAsync();
+        }
+
+        private async void ConfigureServices(HostBuilderContext context, IServiceCollection collection)
+        {
+            collection.AddSingleton<IMapper>(AutoMapperConfiguration.GetMapper())
                 .AddSingleton(typeof(ILogger), typeof(Logger))
                 .AddSingleton(typeof(ILogger<>), typeof(Logger<>))
                 .AddSingleton<RuntimeIndexer>()
@@ -81,69 +89,78 @@ namespace Exo.Rp.Core
                 .AddSingleton<DoorManager>()
                 .AddSingleton<EnvironmentManager>()
                 .AddSingleton<PedManager>();
-
+                    
             // Add startup tasks
-            serviceCollection
-                .AddStartupTask<InitializeEntitySyncTask>()
+            collection.AddStartupTask<InitializeEntitySyncTask>()
                 .AddStartupTask<LoadManagerTask>();
-
-
-            // Start loading database models
-            _databaseCore.OnResourceStartHandler(
-                configureSentry: (settings, options) =>
+            
+            // Load the settings
+            var settingsPath = Path.Combine("resources", Alt.Server.Resource.Name, "config.json");
+            var logsPath = Path.Combine("resources", Alt.Server.Resource.Name, "logs");
+            if (!SettingsManager.LoadSettings(settingsPath))
+            {
+                Logger.Error($"Unable to load settings from \"{settingsPath}\". Trying to create a new one.");
+                if (!SettingsManager.CreateSettings(settingsPath, logsPath))
                 {
-                    var logger = new SentryLogger(settings.LoggerLevel);
-                    options.Dsn = settings.Dsn;
-                    options.Environment = settings.Environment;
-                    options.Release = settings.Release;
-                    options.Debug = settings.Debug;
-                    options.DiagnosticLogger = logger;
-                    options.AttachStacktrace = true;
-                    options.BeforeSend = e =>
-                    {
-                        logger.Log(SentryLevel.Info, "Sending event with Id {0}.", null, e.EventId);
-
-                        return e;
-                    };
-                    options.ServerName = settings.Environment;
-                },
-                onDatabaseInitialized: () => {
-                    _serviceProvider = serviceCollection
-                        .AddSingleton(ContextFactory.Instance)
-                        .BuildServiceProvider();
-                    RunTasks().Wait();
+                    Logger.Fatal("Unable to create a new settings file.");
+                    throw null;
                 }
-            );
+            }
+            else
+                Logger.Debug($"Successfully loaded settings from \"{settingsPath}\".");
+            
+            // Initialize sentry
+            if (SettingsManager.ServerSettings.Sentry.Release.Length > 0)
+                 SentrySdk.Init((options) =>
+                 {
+                     var settings = SettingsManager.ServerSettings.Sentry;
+                     var logger = new SentryLogger(settings.LoggerLevel);
+                     options.Dsn = settings.Dsn;
+                     options.Environment = settings.Environment;
+                     options.Release = settings.Release;
+                     options.Debug = settings.Debug;
+                     options.DiagnosticLogger = logger;
+                     options.AttachStacktrace = true;
+                     options.SendDefaultPii = true;
+                     options.AddExceptionProcessor(new SentryEventExceptionProcessor(new Logger<SentryEventExceptionProcessor>()));
+                     options.ServerName = settings.Environment;
+                 });
+            
+            // Initialize database
+            _databaseCore = new DatabaseCore();
+            _databaseCore.CreateDatabaseConnection();
+            collection.AddSingleton(ContextFactory.Connect());
+            
+            // Start loading database models
+            await _databaseCore.OnResourceStartHandler();
+            await ExecuteTasks<IStartupTask>( "Startup");
         }
 
-        private async Task RunTasks()
+        public static async Task ExecuteTasks<TTask>(string target = "Runtime")
+            where TTask : ITask
         {
-            Logger.Info("Startup Tasks | Executing Tasks...");
+            Logger.Info($"Tasks | { target } | Executing Tasks...");
             var stopWatch = Stopwatch.StartNew();
-
-            var startupTasks = _serviceProvider.GetServices<IStartupTask>();
-            foreach (var task in startupTasks)
+            
+            foreach (var task in _host.Services.GetServices<TTask>())
             {
-                Logger.Info($"Startup Tasks | Executing {task.GetType().Name}...");
+                Logger.Debug($"Tasks | { target } | Executing {task.GetType().Name}...");
                 var _stopWatch = Stopwatch.StartNew();
 
                 await task.ExecuteAsync();
 
                 _stopWatch.Stop();
-                Logger.Info($"Startup Tasks | Executed {task.GetType().Name} in {_stopWatch.ElapsedMilliseconds}ms.");
+                Logger.Debug($"Tasks | { target } | Executed {task.GetType().Name} in {_stopWatch.ElapsedMilliseconds}ms.");
             }
 
             stopWatch.Stop();
-            Logger.Debug($"Startup Tasks | Excuted Taks in {stopWatch.ElapsedMilliseconds} ms.");
+            Logger.Info($"Tasks | { target } | Excuted Taks in {stopWatch.ElapsedMilliseconds} ms.");
         }
 
-        public override void OnStop()
+        public async override void OnStop()
         {
-            Logger.Info("Disposing Metrics collector...");
-            _serviceProvider.GetService<MetricsCollector>().Dispose();
-            Logger.Info("Disposing Plugin manager...");
-            _serviceProvider.GetService<PluginManager>().Dispose();
-
+            await ExecuteTasks<IShutdownTask>("Shutdown");
+            
             Logger.Info("Committing changes to database...");
             DatabaseCore.SaveChangeToDatabase();
             _databaseCore.OnResourceStopHandler();
@@ -184,12 +201,12 @@ namespace Exo.Rp.Core
         public static T GetService<T>()
             where T : IService
         {
-            return _serviceProvider.GetService<T>();
+            return _host.Services.GetService<T>();
         }
 
         public static object GetService(Type type)
         {
-            return _serviceProvider.GetService(type);
+            return _host.Services.GetService(type);
         }
     }
 
