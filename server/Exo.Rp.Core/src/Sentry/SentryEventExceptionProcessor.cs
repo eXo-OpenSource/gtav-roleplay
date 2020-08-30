@@ -1,6 +1,5 @@
 using System;
 using Exo.Rp.Sdk.Logger;
-using Microsoft.VisualBasic;
 using Sentry;
 using Sentry.Extensibility;
 
