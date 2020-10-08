@@ -6,10 +6,11 @@ using Exo.Rp.Sdk;
 using Exo.Rp.Sdk.Logger;
 using Sentry;
 using Sentry.Protocol;
+using Sentry.Extensibility;
 
 namespace Exo.Rp.Core.Util.Log
 {
-    public class SentryLogger : Logger, Sentry.Extensibility.IDiagnosticLogger
+    public class SentryLogger : Logger, IDiagnosticLogger
     {
         private readonly SentryLevel _lowestLevel;
 
