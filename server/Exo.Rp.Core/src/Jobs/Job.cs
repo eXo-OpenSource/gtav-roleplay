@@ -35,6 +35,8 @@ namespace Exo.Rp.Core.Jobs
         public string Name;
         public Position PedPosition;
 
+        private string InteractionId;
+
         public Job(int jobId)
         {
             JobId = jobId;
@@ -70,7 +72,7 @@ namespace Exo.Rp.Core.Jobs
                 SourceObject = this,
                 CallBack = null
             };
-            player.GetCharacter()
+            InteractionId = player.GetCharacter()
                 .ShowInteraction("Job: " + Name, "onJobPedInteraction", interactionData: interactionData);
         }
 
@@ -79,7 +81,7 @@ namespace Exo.Rp.Core.Jobs
             if(!(entity is IPlayer player)) return;
             if (player.GetCharacter() == null) return;
 
-            player.GetCharacter().HideInteraction();
+            player.GetCharacter().HideInteraction(InteractionId);
         }
 
 

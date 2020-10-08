@@ -214,7 +214,7 @@ namespace Exo.Rp.Core.Players.Characters
         {
             Pos = _player.Position;
             Health = _player.Health;
-            Skin = DefaultSkin;
+            Skin = (PedModel)_player.Model;
 
         }
 
@@ -247,7 +247,10 @@ namespace Exo.Rp.Core.Players.Characters
                 ff.Gender, ff.ShapeFirst, ff.ShapeSecond, ff.ShapeThird,
                 ff.SkinFirst, ff.SkinSecond, ff.SkinThird, ff.ShapeMix, ff.SkinMix,
                 ff.Freckles, ff.EyeColor, ff.Hair, ff.HairColor, ff.HairColorHighlight,
-                ff.Eyebrows, ff.EyebrowsColor1, ff.Ageing, ff.FacialHair, ff.FacialHairColor1
+                ff.Eyebrows, ff.EyebrowsColor1, ff.Ageing, ff.FacialHair, ff.FacialHairColor1,
+                ff.NoseWidth, ff.NoseHeight, ff.NoseLength, ff.NoseBridge, ff.NoseTip, ff.NoseShift,
+                ff.BrowHeight, ff.BrowWidth, ff.CheekboneHeight, ff.CheekboneWidth, ff.CheeksWidth, ff.EyesWidth,
+                ff.LipsWidth, ff.JawWidth, ff.JawHeight, ff.ChinLength, ff.ChinPosition, ff.ChinWidth, ff.ChinShape, ff.NeckWidth
             };
 
             _player.SetSyncedMetaData("faceFeatures.Data", JsonConvert.SerializeObject(data));

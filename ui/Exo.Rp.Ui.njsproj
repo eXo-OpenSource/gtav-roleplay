@@ -48,6 +48,8 @@
     <Folder Include="src\" />
     <Folder Include="src\components\" />
     <Folder Include="src\forms\" />
+    <Folder Include="src\forms\charcreator\" />
+    <Folder Include="src\forms\charcreator\utility\" />
     <Folder Include="src\hud\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />

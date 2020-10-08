@@ -13,7 +13,7 @@ namespace Exo.Rp.Core.Streamer
 
         public PublicStreamer()
         {
-            Alt.OnClient<int>("ready", (player, _) =>
+            Alt.OnClient("ready", (player) =>
             {
                 player.Emit("globalBlips:init", _globalBlips);
             });

@@ -4,8 +4,8 @@ import { UiManager } from "./UiManager"
 import { Ped } from "../systems/Ped"
 import { Camera } from "../utils/Camera"
 import { Vector3 } from "natives"
-import {Player} from 'alt-client';
-import {loadCutscene} from "../systems/Cutscene";
+import { Player } from 'alt-client';
+import { loadCutscene } from "../systems/Cutscene";
 
 export class FaceFeaturesUi {
   private uiManager: UiManager
@@ -24,40 +24,18 @@ export class FaceFeaturesUi {
   }
 
   private model = "mp_m_freemode_01"
-  private gender = 1
-  private fatherID = 0
-  private motherID = 21
-  private skin = 50
-  private look = 50
-  private moleID = 0
-  private eyeColor = 0
-  private hairID = 0
-  private hairColor = 0
-  private hairHighlight = 0
-  private eyebrowID = 0
-  private eyebrowColor = 0
-  private age = 0
-  private beard = 0
-  private beardColor = 0
-  private name = "Saul"
-  private surname = "Badman"
+  private gender = 0
+  private name = ""
+  private surname = ""
+
+  private prevData = {sex: 1}
 
   public constructor(uiManager) {
     this.uiManager = uiManager
     this.uiManager.navigate("/charactercreator", true)
 
     // Events
-    this.uiManager.on("FaceFeatures:UpdateSex", this.updateSex.bind(this))
-    this.uiManager.on("FaceFeatures:UpdateParent", this.updateParent.bind(this))
-    this.uiManager.on("FaceFeatures:UpdateHairs", this.updateHairs.bind(this))
-    this.uiManager.on("FaceFeatures:UpdateHairColor", this.updateHairColor.bind(this))
-    this.uiManager.on("FaceFeatures:UpdateHairHighlights", this.updateHairColor.bind(this))
-    this.uiManager.on("FaceFeatures:UpdateEyebrows", this.updateEyebrows.bind(this))
-    this.uiManager.on("FaceFeatures:UpdateEyebrowColor", this.updateEyebrowColor.bind(this))
-    this.uiManager.on("FaceFeatures:UpdateEyes", this.updateEyeColor.bind(this))
-    this.uiManager.on("FaceFeatures:UpdateBeard", this.updateBeard.bind(this))
-    this.uiManager.on("FaceFeatures:UpdateAgeing", this.updateAgeing.bind(this))
-    this.uiManager.on("FaceFeatures:UpdateMoles", this.updateMoles.bind(this))
+    this.uiManager.on("FaceFeatures:Update", this.update.bind(this))
     this.uiManager.on("FaceFeatures:Finished", this.finished.bind(this))
 
     native.requestModel(native.getHashKey("mp_m_freemode_01"))
@@ -71,109 +49,116 @@ export class FaceFeaturesUi {
       this.playerPoint.z, this.playerPoint.x, this.playerPoint.y, this.playerPoint.z)
 
     this.resetCamera(this.model)
-    this.freezePed()
   }
 
-  private freezePed() {
-    //alt.setTimeout(() => native.freezeEntityPosition(this.testPed.scriptID, true), 2500)
+  private resetCamera(modelToUse) {
+    this.testPed.destroy()
+    if (this.camera) this.camera.destroy()
+
+    this.testPed = new Ped(modelToUse, this.playerPoint)
+    alt.setTimeout(() => {native.freezeEntityPosition(this.testPed.scriptID, true)}, 500)
+
+    this.camera = new Camera(this.cameraPoint, 38)
+    this.camera.pointAtBone(this.testPed.scriptID, 31086, 0.05, 0, 0)
+    this.camera.playerControlsEntity(this.testPed.scriptID, true)
   }
 
-  private applyFaceFeatures(ped) {
-    native.setPedHeadBlendData(ped,
-      this.fatherID, this.motherID, 0,
-      this.fatherID, this.motherID, 0, this.look,
-      this.skin, 0, false
-    )
-    native.setPedHeadOverlay(ped, 9, this.moleID, 255)
-    native.setPedEyeColor(ped, this.eyeColor)
-    native.setPedComponentVariation(ped, 2, this.hairID, 0, 0)
-    native.setPedHairColor(ped, this.hairColor, this.hairHighlight)
-    native.setPedHeadOverlay(ped, 2, this.eyebrowID, 255)
-    native.setPedHeadOverlayColor(ped, 2, 1, this.eyebrowColor, this.eyebrowColor)
-    native.setPedHeadOverlay(ped, 3, this.age, 255)
-    if (this.gender == 1) {
-      native.setPedHeadOverlay(ped, 1, this.beard, 255)
-      native.setPedHeadOverlayColor(ped, 1, 1, this.beardColor, this.beardColor)
+  async update(data) {
+    native.clearPedBloodDamage(this.testPed.scriptID);
+    native.clearPedDecorations(this.testPed.scriptID);
+    native.setPedHeadBlendData(this.testPed.scriptID, 0, 0, 0, 0, 0, 0, 0, 0, 0, false);
+
+    this.model = data.sex === 0 ? "mp_f_freemode_01" : "mp_m_freemode_01"
+    if (data.sex != this.prevData.sex) this.resetCamera(this.model)
+
+    native.setPedHeadBlendData(this.testPed.scriptID, 0, 0, 0, 0, 0, 0, 0, 0, 0, false);
+    native.setPedHeadBlendData(
+        this.testPed.scriptID,
+        data.faceFather,
+        data.faceMother,
+        0,
+        data.skinFather,
+        data.skinMother,
+        0,
+        parseFloat(data.faceMix),
+        parseFloat(data.skinMix),
+        0,
+        false
+    );
+
+    // Hair
+    const collection = native.getHashKey(data.hairOverlay.collection);
+    const overlay = native.getHashKey(data.hairOverlay.overlay);
+    native.addPedDecorationFromHashes(this.testPed.scriptID, collection, overlay);
+    native.setPedComponentVariation(this.testPed.scriptID, 2, data.hair, 0, 0);
+    native.setPedHairColor(this.testPed.scriptID, data.hairColor1, data.hairColor2);
+
+    // Facial Hair
+    native.setPedHeadOverlay(this.testPed.scriptID, 1, data.facialHair, data.facialHairOpacity);
+    native.setPedHeadOverlayColor(this.testPed.scriptID, 1, 1, data.facialHairColor1, data.facialHairColor1);
+
+    // Eyebrows
+    native.setPedHeadOverlay(this.testPed.scriptID, 2, data.eyebrows, 1);
+    native.setPedHeadOverlayColor(this.testPed.scriptID, 2, 1, data.eyebrowsColor1, data.eyebrowsColor1);
+
+    // Ageing
+    // native.setPedHeadOverlay(this.testPed.scriptID, 3, data.ageing, 1);
+
+    // Eyes
+    native.setPedEyeColor(this.testPed.scriptID, data.eyes);
+
+    // Facefeatures:
+
+    // Nose
+    native.setPedFaceFeature(this.testPed.scriptID, 0, data.noseWidth) // nose width
+    native.setPedFaceFeature(this.testPed.scriptID, 1, data.noseHeight) // nose height
+    native.setPedFaceFeature(this.testPed.scriptID, 2, data.noseLength) // nose length
+    native.setPedFaceFeature(this.testPed.scriptID, 3, data.noseBridge) // nose bridge
+    native.setPedFaceFeature(this.testPed.scriptID, 4, data.noseTip) // nose tip
+    native.setPedFaceFeature(this.testPed.scriptID, 5, data.noseBridgeShift) // nose bridge
+    native.setPedFaceFeature(this.testPed.scriptID, 6, data.browHeight) // brow height
+    native.setPedFaceFeature(this.testPed.scriptID, 7, data.browWidth) // brow width
+    native.setPedFaceFeature(this.testPed.scriptID, 8, data.cheekboneHeight) // cheekbone height
+    native.setPedFaceFeature(this.testPed.scriptID, 9, data.cheekboneWidth) // cheekbone width
+    native.setPedFaceFeature(this.testPed.scriptID, 10, data.cheeksWidth) // cheeks width
+    native.setPedFaceFeature(this.testPed.scriptID, 11, data.eyeWide) // eyes wide
+    native.setPedFaceFeature(this.testPed.scriptID, 12, data.lipWide) // lips wide
+    native.setPedFaceFeature(this.testPed.scriptID, 13, data.jawWidth) // jaw width
+    native.setPedFaceFeature(this.testPed.scriptID, 14, data.jawHeight) // jaw height
+    native.setPedFaceFeature(this.testPed.scriptID, 15, data.chinLength) // chin length
+    native.setPedFaceFeature(this.testPed.scriptID, 16, data.chinPosition) // chin position
+    native.setPedFaceFeature(this.testPed.scriptID, 17, data.chinWidth) // chin width
+    native.setPedFaceFeature(this.testPed.scriptID, 18, data.chinShape) // chin shape
+    native.setPedFaceFeature(this.testPed.scriptID, 19, data.neckWidth) // neck width
+
+    if (data.sex === 0) {
+        native.setPedComponentVariation(this.testPed.scriptID, 3, 15, 0, 0); // arms
+        native.setPedComponentVariation(this.testPed.scriptID, 4, 14, 0, 0); // pants
+        native.setPedComponentVariation(this.testPed.scriptID, 6, 35, 0, 0); // shoes
+        native.setPedComponentVariation(this.testPed.scriptID, 8, 15, 0, 0); // shirt
+        native.setPedComponentVariation(this.testPed.scriptID, 11, 15, 0, 0); // torso
+    } else {
+        native.setPedComponentVariation(this.testPed.scriptID, 3, 15, 0, 0); // arms
+        native.setPedComponentVariation(this.testPed.scriptID, 4, 14, 0, 0); // pants
+        native.setPedComponentVariation(this.testPed.scriptID, 6, 34, 0, 0); // shoes
+        native.setPedComponentVariation(this.testPed.scriptID, 8, 15, 0, 0); // shirt
+        native.setPedComponentVariation(this.testPed.scriptID, 11, 91, 0, 0); // torso
     }
-  }
 
-  // Update sex
-  private updateSex(gender) {
-    this.model = gender == 0 ? "mp_f_freemode_01" : "mp_m_freemode_01"
-    this.gender = gender
-    this.resetCamera(this.model)
-    native.setPedHeadBlendData(this.testPed.scriptID,
-      this.fatherID, this.motherID, 0,
-      this.fatherID, this.motherID, 0, this.look,
-      this.skin, 0, false
-    )
-  }
+    this.prevData = data;
+}
 
-  // Update parent
-  private updateParent(fatherID = this.fatherID, motherID = this.motherID, skin = this.skin, look = this.look) {
-    this.fatherID = fatherID
-    this.motherID = motherID
-    this.skin = skin
-    this.look = look
-    this.preventFaceBugs()
-    native.setPedHeadBlendData(this.testPed.scriptID, this.fatherID, this.motherID, 0,
-      this.fatherID, this.motherID, 0, this.look, this.skin, 0, false
-    )
-  }
-
-  private updateEyebrows(eyebrows = this.eyebrowID) {
-    this.eyebrowID = eyebrows - 1
-    native.setPedHeadOverlay(this.testPed.scriptID, 2, this.eyebrowID, 255)
-  }
-
-  private updateEyebrowColor(color = this.eyebrowColor) {
-    this.eyebrowColor = color - 1
-    native.setPedHeadOverlayColor(this.testPed.scriptID, 2, 1, this.eyebrowColor, this.eyebrowColor)
-  }
-
-  private updateHairColor(hairColor = this.hairColor, hairHighlight = this.hairHighlight) {
-    this.hairColor = hairColor - 1
-    this.hairHighlight = hairHighlight - 1
-    native.setPedHairColor(this.testPed.scriptID, this.hairColor, this.hairHighlight)
-  }
-
-  private updateMoles(moleID = this.moleID) {
-    this.moleID = moleID - 1
-    native.setPedHeadOverlay(this.testPed.scriptID, 9, this.moleID, 255)
-  }
-
-  private updateEyeColor(eyeColor = this.eyeColor) {
-    this.eyeColor = eyeColor - 1
-    native.setPedEyeColor(this.testPed.scriptID, this.eyeColor)
-  }
-
-  private updateHairs(hairs = this.hairID) {
-    this.hairID = hairs - 1
-    native.setPedComponentVariation(this.testPed.scriptID, 2, this.hairID, 0, 0)
-  }
-
-  private updateAgeing(age = this.age) {
-    this.age = age - 1
-    native.setPedHeadOverlay(this.testPed.scriptID, 3, this.age, 255)
-  }
-
-  private updateBeard(beard = this.beard, beardColor = this.beardColor) {
-    this.beard = beard - 1
-    this.beardColor = beardColor - 1
-    if (this.gender == 1) {
-      native.setPedHeadOverlay(this.testPed.scriptID, 1, this.beard, 255)
-      native.setPedHeadOverlayColor(this.testPed.scriptID, 1, 1, this.beardColor, this.beardColor)
-    }
-  }
-
-  private applyData() {
+  private applyData(_data) {
     const data = [
       this.name, this.surname,
-      this.gender, this.fatherID, this.motherID, this.skin.toFixed(1), this.look.toFixed(1),
-      this.moleID, this.eyeColor, this.hairID, this.hairColor, this.hairHighlight,
-      this.eyebrowID, this.eyebrowColor, this.age, this.beard, this.beardColor
+      this.gender, _data.faceFather, _data.faceMother, parseFloat(_data.skinFather), parseFloat(_data.skinMother),
+      _data.faceMix, _data.skinMix, _data.freckles || 0, _data.eyes, _data.hair, _data.hairColor1, _data.hairColor2,
+      _data.eyebrows, _data.eyebrowsColor1, _data.ageing, _data.facialHair, _data.facialHairColor1,
+      _data.noseWidth, _data.noseHeight, _data.noseLength, _data.noseBridge, _data.noseTip, _data.noseBridgeShift,
+      _data.browHeight, _data.browWidth, _data.cheekboneHeight, _data.cheekboneWidth, _data.cheeksWidth, _data.eyeWide,
+      _data.lipWide, _data.jawWidth, _data.jawHeight, _data.chinLength, _data.chinPosition, _data.chinWidth, _data.chinShape,
+      _data.neckWidth, this.model
     ]
-    this.applyFaceFeatures(alt.Player.local.scriptID)
     alt.emitServer("FaceFeatures:ApplyData", JSON.stringify(data))
     this.testPed.destroy()
     this.camera.destroy()
@@ -181,11 +166,11 @@ export class FaceFeaturesUi {
 
 
   // Finished
-  private finished(_name, _surname) {
-    this.name = _name
-    this.surname = _surname
+  private finished(name, surname, data) {
+    this.name = name
+    this.surname = surname
 
-    this.applyData()
+    this.applyData(data);
 
     native.prefetchSrl("GTAO_INTRO_MALE")
     loadCutscene("mp_intro_concat", 8).then(() => {
@@ -207,41 +192,57 @@ export class FaceFeaturesUi {
       }, 33000)
     })
   }
-
-  private preventFaceBugs() {
-    native.setPedHeadBlendData(this.testPed.scriptID, 0, 0, 0, 0, 0, 0, 0, 0, 0, false);
-  }
-
-  private resetCamera(modelToUse) {
-    this.testPed.destroy()
-
-    this.testPed = new Ped(modelToUse, this.playerPoint)
-
-    this.camera = new Camera(this.cameraPoint, 38)
-    this.camera.pointAtBone(this.testPed.scriptID, 31086, 0.05, 0, 0)
-    this.camera.playerControlsEntity(this.testPed.scriptID, true)
-
-    this.preventFaceBugs()
-  }
 }
 
 alt.on("syncedMetaChange", (player: Player, key: string, value: any) => {
   if (key == "faceFeatures.Data") {
     var data = JSON.parse(value)
 
-    native.setPedHeadBlendData(player.scriptID,
+    native.clearPedBloodDamage(player.scriptID);
+    native.clearPedDecorations(player.scriptID);
+    native.setPedHeadBlendData(player.scriptID, 0, 0, 0, 0, 0, 0, 0, 0, 0, false);
+
+    native.setPedHeadBlendData(
+      player.scriptID,
       data[1], data[2], 0,
       data[4], data[5], 0, data[7],
       data[8], 0, false
-    )
-    native.setPedHeadOverlay(player.scriptID, 9, data[9], 255)
-    native.setPedEyeColor(player.scriptID, data[10])
-    native.setPedComponentVariation(player.scriptID, 2, data[11], 0, 0)
-    native.setPedHairColor(player.scriptID, data[12], data[13])
-    native.setPedHeadOverlay(player.scriptID, 2, data[14], 255)
-    native.setPedHeadOverlayColor(player.scriptID, 2, 1, data[15], data[15])
-    native.setPedHeadOverlay(player.scriptID, 3, data[16], 255)
-    native.setPedHeadOverlay(player.scriptID, 1, data[17], 255)
-    native.setPedHeadOverlayColor(player.scriptID, 1, 1, data[18], data[18])
+    );
+
+    native.setPedComponentVariation(player.scriptID, 2, data[11], 0, 0);
+    native.setPedHairColor(player.scriptID, data[12], data[13]);
+
+    // Facial Hair
+    native.setPedHeadOverlay(player.scriptID, 1, data[17], 1);
+    native.setPedHeadOverlayColor(player.scriptID, 1, 1, data[18], data[18]);
+
+    // Eyebrows
+    native.setPedHeadOverlay(player.scriptID, 2, data[14], 1);
+    native.setPedHeadOverlayColor(player.scriptID, 2, 1, data[15], data[15]);
+
+    // Eyes
+    native.setPedEyeColor(player.scriptID, data[10]);
+
+    // Facefeatures
+    native.setPedFaceFeature(player.scriptID, 0, data[19]) // nose width
+    native.setPedFaceFeature(player.scriptID, 1, data[20]) // nose height
+    native.setPedFaceFeature(player.scriptID, 2, data[21]) // nose length
+    native.setPedFaceFeature(player.scriptID, 3, data[22]) // nose bridge
+    native.setPedFaceFeature(player.scriptID, 4, data[23]) // nose tip
+    native.setPedFaceFeature(player.scriptID, 5, data[24]) // nose bridge
+    native.setPedFaceFeature(player.scriptID, 6, data[25]) // brow height
+    native.setPedFaceFeature(player.scriptID, 7, data[26]) // brow width
+    native.setPedFaceFeature(player.scriptID, 8, data[27]) // cheekbone height
+    native.setPedFaceFeature(player.scriptID, 9, data[28]) // cheekbone width
+    native.setPedFaceFeature(player.scriptID, 10, data[29]) // cheeks width
+    native.setPedFaceFeature(player.scriptID, 11, data[30]) // eyes wide
+    native.setPedFaceFeature(player.scriptID, 12, data[31]) // lips wide
+    native.setPedFaceFeature(player.scriptID, 13, data[32]) // jaw width
+    native.setPedFaceFeature(player.scriptID, 14, data[33]) // jaw height
+    native.setPedFaceFeature(player.scriptID, 15, data[34]) // chin length
+    native.setPedFaceFeature(player.scriptID, 16, data[35]) // chin position
+    native.setPedFaceFeature(player.scriptID, 17, data[36]) // chin width
+    native.setPedFaceFeature(player.scriptID, 18, data[37]) // chin shape
+    native.setPedFaceFeature(player.scriptID, 19, data[38]) // neck width
   }
 })

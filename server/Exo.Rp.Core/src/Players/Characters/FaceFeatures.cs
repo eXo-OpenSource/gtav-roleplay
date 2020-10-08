@@ -15,26 +15,26 @@ namespace Exo.Rp.Core.Players.Characters
         public int HairColorHighlight { get; set; }
         public int EyeColor { get; set; }
 
-        public int NoseWidth { get; set; }
-        public int NoseHeight { get; set; }
-        public int NoseLength { get; set; }
-        public int NoseBridge { get; set; }
-        public int NoseTip { get; set; }
-        public int NoseShift { get; set; }
-        public int BrowWidth { get; set; }
-        public int BrowHeight { get; set; }
-        public int CheekboneHeight { get; set; }
-        public int CheekboneWidth { get; set; }
-        public int CheeksWidth { get; set; }
-        public int EyesWidth { get; set; }
-        public int LipsWidth { get; set; }
-        public int JawWidth { get; set; }
-        public int JawHeight { get; set; }
-        public int ChinLength { get; set; }
-        public int ChinPosition { get; set; }
-        public int ChinWidth { get; set; }
-        public int ChinShape { get; set; }
-        public int NeckWidth { get; set; }
+        public double NoseWidth { get; set; }
+        public double NoseHeight { get; set; }
+        public double NoseLength { get; set; }
+        public double NoseBridge { get; set; }
+        public double NoseTip { get; set; }
+        public double NoseShift { get; set; }
+        public double BrowWidth { get; set; }
+        public double BrowHeight { get; set; }
+        public double CheekboneHeight { get; set; }
+        public double CheekboneWidth { get; set; }
+        public double CheeksWidth { get; set; }
+        public double EyesWidth { get; set; }
+        public double LipsWidth { get; set; }
+        public double JawWidth { get; set; }
+        public double JawHeight { get; set; }
+        public double ChinLength { get; set; }
+        public double ChinPosition { get; set; }
+        public double ChinWidth { get; set; }
+        public double ChinShape { get; set; }
+        public double NeckWidth { get; set; }
 
         public int ShapeFirst { get; set; }
         public int ShapeSecond { get; set; }

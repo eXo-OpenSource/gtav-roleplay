@@ -17,14 +17,56 @@ export class VehicleUI {
 
         if (vehicle) {
           alt.toggleGameControls(false)
-          this.uiManager.navigate('/vehicleui', true)
           native.playSoundFrontend(-1, 'CONTINUE', 'HUD_FRONTEND_DEFAULT_SOUNDSET', true)
 
           if (player.vehicle) {
-            this.uiManager.emit('VehicleUI:ChangeUI', 'inVehicle')
+            this.uiManager.emit('InteractionMenu:UpdateItems', [
+              {
+                title: "Fahrzeuginfo",
+                img: "info"
+              },
+              {
+                title: "Licht an/aus",
+                img: "light"
+              },
+              {
+                title: "Auf-/ Zuschließen",
+                img: "key"
+              },
+              {
+                title: "Schließen",
+                img: "close"
+              },
+              {
+                title: "Motor an/aus",
+                img: "engine"
+              }
+            ])
           } else {
-            this.uiManager.emit('VehicleUI:ChangeUI', 'outVehicle')
+            this.uiManager.emit('InteractionMenu:UpdateItems', [
+              {
+                title: "Fahrzeuginfo",
+                img: "info"
+              },
+              {
+                title: "Auf-/ Zuschließen",
+                img: "key"
+              },
+              {
+                title: "Schließen",
+                img: "close"
+              },
+              {
+                title: "Motorhaube auf/zu",
+                img: "engineHood"
+              },
+              {
+                title: "Kofferraum auf/zu",
+                img: "trunk"
+              }
+            ])
           }
+          this.uiManager.emit("InteractionMenu:ToggleShow", true)
         }
       }
     })
@@ -35,7 +77,7 @@ export class VehicleUI {
 
         if (vehicle) {
           alt.toggleGameControls(true)
-          this.uiManager.reset()
+          this.uiManager.emit("InteractionMenu:ToggleShow", false)
           native.playSoundFrontend(-1, 'EXIT', 'HUD_FRONTEND_DEFAULT_SOUNDSET', true)
 
           switch(option) {
@@ -62,7 +104,7 @@ export class VehicleUI {
                 alt.emitServer('Vehicle:ToggleDoor', entity.getByScriptID(vehicle), 5, true)
               }
               break;
-            case 'Auf-/Zuschließen':
+            case 'Auf-/ Zuschließen':
               alt.emitServer('Vehicle:ToggleLock', (player.vehicle ? entity.getByScriptID(player.vehicle.scriptID) : entity.getByScriptID(vehicle)))
               break;
           }
@@ -70,7 +112,7 @@ export class VehicleUI {
       }
     })
 
-    this.uiManager.on('VehicleUI:UpdateData', (_option) => {
+    this.uiManager.on('InteractionMenu:CurrentSelection', (_option) => {
       option = _option
     })
 
