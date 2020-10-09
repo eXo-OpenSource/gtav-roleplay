@@ -149,6 +149,8 @@ namespace Exo.Rp.Core.Jobs.Jobs
             Core.GetService<PrivateStreamer>().AddEntity(Pizza.DeliveryBlip);
             Pizza.DeliveryBlip.AddVisibleEntity(player.Id);
 
+            Alt.Log(Pizza.DeliveryBlip.Position.ToString());
+
             Pizza.DeliveryCol.OnColShapeEnter += OnDeliveryMarkerHit;
             Pizza.DeliveryCol.OnColShapeExit += OnDeliveryMarkerLeave;
         }
@@ -208,7 +210,7 @@ namespace Exo.Rp.Core.Jobs.Jobs
             if (!IsJobLeader(player)) return;
             DestroyJobVehicle(player);
             player.GetCharacter().GiveMoney(Pizza.Pay, "This Pizza Lohn");
-            player.SendSuccess($"Du hast {Pizza.Pay} erhalten!");
+            player.SendSuccess($"Du hast ${Pizza.Pay} erhalten!");
         }
     }
 }

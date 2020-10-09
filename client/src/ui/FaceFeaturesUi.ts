@@ -56,7 +56,7 @@ export class FaceFeaturesUi {
     if (this.camera) this.camera.destroy()
 
     this.testPed = new Ped(modelToUse, this.playerPoint)
-    alt.setTimeout(() => {native.freezeEntityPosition(this.testPed.scriptID, true)}, 500)
+    alt.setTimeout(() => {native.freezeEntityPosition(this.testPed.scriptID, true)}, 1000)
 
     this.camera = new Camera(this.cameraPoint, 38)
     this.camera.pointAtBone(this.testPed.scriptID, 31086, 0.05, 0, 0)
@@ -102,7 +102,7 @@ export class FaceFeaturesUi {
     native.setPedHeadOverlayColor(this.testPed.scriptID, 2, 1, data.eyebrowsColor1, data.eyebrowsColor1);
 
     // Ageing
-    // native.setPedHeadOverlay(this.testPed.scriptID, 3, data.ageing, 1);
+    native.setPedHeadOverlay(this.testPed.scriptID, 3, data.ageing, 1);
 
     // Eyes
     native.setPedEyeColor(this.testPed.scriptID, data.eyes);
@@ -219,6 +219,9 @@ alt.on("syncedMetaChange", (player: Player, key: string, value: any) => {
     // Eyebrows
     native.setPedHeadOverlay(player.scriptID, 2, data[14], 1);
     native.setPedHeadOverlayColor(player.scriptID, 2, 1, data[15], data[15]);
+
+    // Ageing
+    native.setPedHeadOverlay(this.testPed.scriptID, 3, data.ageing, 1);
 
     // Eyes
     native.setPedEyeColor(player.scriptID, data[10]);

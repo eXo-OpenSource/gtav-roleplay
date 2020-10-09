@@ -824,10 +824,10 @@ export default class Charcreation extends Component {
         <div className="mx-5 mt-5 bg-gray-900 h-auto inner-box-shadow box-border border border-black">
           <div className="flex">
             <p className="w-2/4 text-left h-10 ml-4 pt-3 font-medium text-base text-white text-shadow-md">Altersfalten</p>
-            <p className="w-2/4 text-right h-10 mr-4 pt-3 font-medium text-base text-white text-shadow-md">{this.state.data.ageing} | 13</p>
+            <p className="w-2/4 text-right h-10 mr-4 pt-3 font-medium text-base text-white text-shadow-md">{this.state.data.ageing} | 15</p>
           </div>
           <div className="m-4">
-            <input className="w-full" type="range" min="0" max="13" onChange={this.ageingChange.bind(this)}/>
+            <input className="w-full" type="range" min="0" max="15" onChange={this.ageingChange.bind(this)}/>
           </div>
         </div>
         <hr className="mt-6 mb-2 border-gray-900"></hr>
