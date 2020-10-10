@@ -3,6 +3,7 @@ import * as native from "natives";
 
 export default class PizzaDelivery {
   private pizza;
+  private player = alt.Player.local;
 
   constructor() {
     alt.on("syncedMetaChange", (entity: Entity, key: string, value: any) => {
@@ -17,6 +18,10 @@ export default class PizzaDelivery {
       } else if (key == "JobPizza:PlacePizza") {
         alt.setTimeout(() => native.detachEntity(this.pizza, true, true), 2000);
         alt.setTimeout(() => native.deleteObject(this.pizza), 10*1000);
+      } else if (key == "JobPizza:RemovePizza") {
+        if (!this.pizza) return
+        native.detachEntity(this.pizza, true, true)
+        native.deleteObject(this.pizza)
       } else if (key == "JobPizza:TakePizza") {
         native.freezeEntityPosition(entity.scriptID, true);
         alt.toggleGameControls(false);
@@ -24,6 +29,14 @@ export default class PizzaDelivery {
           native.freezeEntityPosition(entity.scriptID, false);
           alt.toggleGameControls(true);
         }, 5000)
+      }
+    })
+
+    alt.everyTick(() => {
+      if (native.getVehiclePedIsEntering(this.player.scriptID) && this.pizza || native.isPedSittingInAnyVehicle(this.player.scriptID)) {
+        if (!this.pizza) return
+        native.detachEntity(this.pizza, true, true)
+        native.deleteObject(this.pizza)
       }
     })
   }

@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using AltV.Net;
 using AltV.Net.Data;
+using AltV.Net.Elements.Entities;
 using Exo.Rp.Core.Jobs.Jobs;
 using Exo.Rp.Models.Enums;
 using IPlayer = Exo.Rp.Core.Players.IPlayer;
@@ -26,6 +27,15 @@ namespace Exo.Rp.Core.Events.Jobs
                 pizzaJob.CreateRandomDelivery(player);
                 player.SetSyncedMetaData("JobPizza:GivePizza", true);
             });
+        }
+
+        [ScriptEvent(ScriptEventType.PlayerLeaveVehicle)]
+        public void VehicleLeave(IVehicle vehicle, IPlayer player, byte seat)
+        {
+            var job = player.GetCharacter().GetJob();
+            if (job.JobId != (int)JobId.Pizzaboy) return;
+            var pizzaJob = (PizzaDelivery)job;
+            player.SetSyncedMetaData("JobPizza:GivePizza", true);
         }
     }
 }

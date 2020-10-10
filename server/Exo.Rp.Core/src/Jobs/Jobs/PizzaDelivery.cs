@@ -143,7 +143,7 @@ namespace Exo.Rp.Core.Jobs.Jobs
             Pizza.Capacity++;
 
             int randomDeliverySpot = randomizeDelivery.Next(0, deliverySpot.Length);
-            Pizza.DeliveryBlip = new PrivateBlip((Position)deliverySpot.GetValue(randomDeliverySpot), 0, 999) { Sprite = 364, Name = "Mülltonne" };
+            Pizza.DeliveryBlip = new PrivateBlip((Position)deliverySpot.GetValue(randomDeliverySpot), 0, 999) { Sprite = 364, Name = "Lieferort" };
             Pizza.DeliveryCol = (Colshape.Colshape)Alt.CreateColShapeSphere((Position)deliverySpot.GetValue(randomDeliverySpot), 1.9f);
             Core.GetService<PrivateStreamer>().AddEntity(Pizza.DeliveryBlip);
             Pizza.DeliveryBlip.AddVisibleEntity(player.Id);

@@ -25,7 +25,7 @@ export class HUD {
 
         this.uiManager.emit("HUD:SetData", "amount", ammoInClip + " / " + (ammoInWeapon - ammoInClip))
       } else {
-        this.uiManager.emit("HUD:SetData", "amount", "$ "+ money)
+        this.uiManager.emit("HUD:SetData", "amount", "$ " + money)
       }
 
       let date = new Date()
@@ -47,7 +47,7 @@ export class HUD {
     })
 
     alt.onServer("HUD:Hide", (isHidden) => {
-  this.uiManager.emit("HUD:SetData", "hidden", isHidden)
+      this.uiManager.emit("HUD:SetData", "hidden", isHidden)
     })
 
     alt.onServer("HUD:UpdateMoney", (amount) => {
