@@ -29,10 +29,9 @@ namespace Exo.Rp.Core.Jobs.Jobs
 
         private static readonly ILogger<PizzaDelivery> Logger = new Logger<PizzaDelivery>();
 
-        private Pizza Pizza;
+        public Pizza Pizza;
 
         private string InteractionId;
-
 
         private Random randomizeDelivery = new Random();
 

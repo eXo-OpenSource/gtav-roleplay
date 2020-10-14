@@ -35,7 +35,9 @@ namespace Exo.Rp.Core.Events.Jobs
             var job = player.GetCharacter().GetJob();
             if (job.JobId != (int)JobId.Pizzaboy) return;
             var pizzaJob = (PizzaDelivery)job;
-            player.SetSyncedMetaData("JobPizza:GivePizza", true);
+
+            if (pizzaJob.Pizza.Capacity > 0)
+                player.SetSyncedMetaData("JobPizza:GivePizza", true);
         }
     }
 }
