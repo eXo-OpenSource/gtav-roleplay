@@ -124,7 +124,7 @@ namespace Exo.Rp.Core.Jobs
                     },
                     player.GetCharacter().GetJob() != null ? new PopupButtonDto
                     {
-                        Name = $"{Name}-Job kündigen",
+                        Name = $"{player.GetCharacter().GetJob()?.Name}-Job kündigen",
                         Callback = "Job:DeclineJob",
                         CallbackArgs = new List<object>{JobId},
                         Color = "red"
