@@ -46,6 +46,18 @@ export interface StreamedEntity {
   data: any
 }
 
+interface AttachOptions {
+  entity: number,
+  boneId: number,
+  x: number,
+  y: number,
+  z: number,
+  xRot: number,
+  yRot: number,
+  zRot: number,
+  vertexIndex: number,
+}
+
 alt.onServer("entitySync:create", (entityId, entityType, position, currEntityData) => {
 
   if(currEntityData) {
@@ -92,6 +104,9 @@ alt.onServer("entitySync:create", (entityId, entityType, position, currEntityDat
           native.taskSetBlockingOfNonTemporaryEvents(handle, true);
           native.setBlockingOfNonTemporaryEvents(handle, true);
           native.setPedFleeAttributes(handle, 0, false);
+          native.setEntityInvincible(handle, true)
+          native.setPedCanBeTargetted(handle, false)
+          alt.setTimeout(() => native.freezeEntityPosition(handle, true), 500)
         }
       })
     }
@@ -140,8 +155,11 @@ alt.onServer("entitySync:updateData", (entityId: number, entityType, newData) =>
   if(entityType === 1) {
     let data = entities.find(value => value.id === entityId && value.type == entityType).data;
     // alt.log(JSON.stringify(data))
-    natives.attachEntityToEntity(<number>entities.find(value => value.id === entityId && value.type == entityType).handle, alt.Player.getByID(data.attachToEntity).scriptID,
-      natives.getPedBoneIndex(alt.Player.local.scriptID, 57005), 0.12, 0, 0, 25, 270, 180, true, false, false, true, 1, true)
+    if(data.attachToEntity) {
+      const attachOptions: AttachOptions = data.attachToEntity;
+      natives.attachEntityToEntity(<number>entities.find(value => value.id === entityId && value.type == entityType).handle, alt.Player.getByID(attachOptions.entity).scriptID,
+        natives.getPedBoneIndex(alt.Player.local.scriptID, attachOptions.boneId), attachOptions.x, attachOptions.y, attachOptions.z, attachOptions.xRot, attachOptions.yRot, attachOptions.zRot, true, false, false, true, attachOptions.vertexIndex, true)
+    }
   }
 });
 

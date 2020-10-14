@@ -14,7 +14,7 @@ namespace Exo.Rp.Core.Events.Jobs
         public void StartMission(IPlayer player)
         {
             var job = player.GetCharacter().GetJob();
-            if (job.JobId != (int)JobId.Pizzaboy) return;
+            if (!player.GetCharacter().IsJobActive() || job.JobId != (int)JobId.Pizzaboy) return;
             var pizzaJob = (PizzaDelivery)job;
 
             player.GetCharacter().HideInteraction();
@@ -33,7 +33,7 @@ namespace Exo.Rp.Core.Events.Jobs
         public void VehicleLeave(IVehicle vehicle, IPlayer player, byte seat)
         {
             var job = player.GetCharacter().GetJob();
-            if (job.JobId != (int)JobId.Pizzaboy) return;
+            if (!player.GetCharacter().IsJobActive() || job.JobId != (int)JobId.Pizzaboy) return;
             var pizzaJob = (PizzaDelivery)job;
 
             if (pizzaJob.Pizza.Capacity > 0)

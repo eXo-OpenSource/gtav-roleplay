@@ -218,7 +218,19 @@ namespace Exo.Rp.Core.Jobs.Jobs
             Task.Delay(3000).ContinueWith(_ =>
             {
                 player.StopAnimation();
-                binData.BinObject.SetData("attachToEntity", entity.Id);
+                //binData.BinObject.SetData("attachToEntity", entity.Id);
+                binData.BinObject.AttachToBone(new AttachOptions
+                {
+                    Entity = entity.Id,
+                    BoneID = 57005,
+                    X = 0.12f,
+                    Y = 0,
+                    Z = 0,
+                    XRot = 25,
+                    YRot = 270,
+                    ZRot = 180,
+                    VertexIndex = 1
+                });
                 Core.GetService<PrivateStreamer>().RemoveEntity(binData.Blip);
                 //player.AttachObject(binData.BinObject, 6286, new Position(0f, 0.9f, -0.9f), new Position(0, 0, 180));
 
