@@ -11,12 +11,14 @@ import Popup from "./hud/popup";
 import Toast from "./hud/toast";
 import Progress from "./hud/progress";
 import Interaction from "./hud/interaction";
+import Farmer from "./jobs/farmer";
 
 const loadableOptions = { };
 const LoadableLoginComponent = loadable(() => import("./forms/login"), loadableOptions);
 const LoadableCharacterCreatorComponent = loadable(() => import("./forms/charcreator/charcreator"), loadableOptions);
 const LoadableATMComponent = loadable(() => import("./forms/atm"), loadableOptions);
 const LoadableCarRentComponent = loadable(() => import("./forms/car-rent"), loadableOptions);
+const LoadableFarmerComponent = loadable(() => import("./jobs/farmer"), loadableOptions);
 
 class App extends Component {
   constructor(props) {
@@ -33,6 +35,7 @@ class App extends Component {
             <Route path="/charactercreator" component={LoadableCharacterCreatorComponent} />
             <Route path="/atm" component={LoadableATMComponent} />
             <Route path="/carrent" component={LoadableCarRentComponent} />
+            <Route path="/farmer" component={LoadableFarmerComponent} />
           </Switch>
         </Router>
         <Chat/>

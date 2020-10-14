@@ -144,7 +144,6 @@ namespace Exo.Rp.Core.Events
             var data = JsonConvert.DeserializeObject<List<object>>(_data);
             var ff = client.GetCharacter().FaceFeatures;
 
-            Alt.Log(data[39].ToString());
             client.Model = Alt.Hash(data[39].ToString());
             client.GetCharacter().FirstName = data[0].ToString();
             client.GetCharacter().LastName = data[1].ToString();

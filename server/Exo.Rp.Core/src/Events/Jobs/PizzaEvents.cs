@@ -21,7 +21,7 @@ namespace Exo.Rp.Core.Events.Jobs
             player.SendInformation("Warten auf den Chef...");
             player.SetSyncedMetaData("JobPizza:TakePizza", true);
             player.Position = new Position(-1526.244140625f, -911.1417236328125f, 10.169964790344238f);
-            player.PlayAnimation("anim@heists@box_carry@", "idle", (int)AnimationFlags.AllowPlayerControl);
+            player.PlayAnimation("anim@heists@box_carry@", "walk", (int)AnimationFlags.AllowPlayerControl);
             Task.Delay(5000).ContinueWith(_ => {
                 player.SendInformation("Neuer Auftrag - fahr zum Kunden!");
                 pizzaJob.CreateRandomDelivery(player);

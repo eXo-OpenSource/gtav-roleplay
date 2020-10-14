@@ -160,7 +160,7 @@ namespace Exo.Rp.Core.Jobs.Jobs
 
             var interactionData = new InteractionData
             {
-                SourceObject = new PizzaDelivery(JobId),
+                SourceObject = this,
                 CallBack = null
             };
 

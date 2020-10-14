@@ -19,12 +19,35 @@ namespace Exo.Rp.Core.Events.Jobs
         }
 
         [ClientEvent("JobFarmer:onEnterDeliveryMarker")]
-        public void OnEnterDeliveryMarker(IPlayer player, ColShape shape)
+        public void OnEnterDeliveryMarker(IPlayer player)
+        {
+            Alt.Log("1");
+            var job = player.GetCharacter().GetJob();
+            if (job.JobId != (int) JobId.Farmer) return;
+            var farmerJob = (Farmer) job;
+            Alt.Log("2");
+            int itemCount = player.GetCharacter().GetInventory().GetItemCount(farmerJob.apple);
+
+            if (player.GetCharacter().GetInventory().GetItemCount(farmerJob.apple) > 0)
+            {
+                player.SendSuccess($"Du hast {itemCount} Äpfel abgegeben.");
+                player.GetCharacter().GetInventory().RemoveItem(farmerJob.apple, itemCount);
+            }
+            else
+            {
+                player.SendInformation("todo inventory bag");
+                player.SendError("Du hast keine Äpfel zum Abgeben.");
+            }
+        }
+
+        [ClientEvent("JobFarmer:Start")]
+        public void StartFarmerJob(IPlayer player, int jobId)
         {
             var job = player.GetCharacter().GetJob();
             if (job.JobId != (int) JobId.Farmer) return;
             var farmerJob = (Farmer) job;
-            farmerJob.OnDeliveryMarkerHit(player);
+            farmerJob.StartJobType(player, jobId);
+            player.SetData("FarmerJob:JobType", jobId);
         }
     }
 }

@@ -2,6 +2,6 @@ namespace Exo.Rp.Models.Enums
 {
     public enum ItemModel
     {
-        Smartphone, Apfel
+        Smartphone, Apfel, Weizen
     }
 }

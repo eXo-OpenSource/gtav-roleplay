@@ -51,6 +51,7 @@
     <Folder Include="src\forms\charcreator\" />
     <Folder Include="src\forms\charcreator\utility\" />
     <Folder Include="src\hud\" />
+    <Folder Include="src\jobs\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
   <ProjectExtensions>

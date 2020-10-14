@@ -7,6 +7,7 @@ import { Cursor } from "../utils/Cursor";
 import { HUD } from "./HUD";
 import { VehicleUI } from "./VehicleUI";
 import { ATM } from "./ATM"
+import { Farmer } from "../jobs/Farmer"
 import Speedo from "./Speedo";
 import Popup from "./Popup";
 import { CarRent } from "../environment/CarRent"
@@ -22,6 +23,7 @@ export class UiManager {
   private vehicleUI: VehicleUI;
   private atm: ATM;
   private carRent: CarRent;
+  private farmer: Farmer;
 
   constructor() {
     this.mainView = new View()
@@ -34,6 +36,7 @@ export class UiManager {
     this.vehicleUI = new VehicleUI(this);
     this.atm = new ATM(this)
     this.carRent = new CarRent(this)
+    this.farmer = new Farmer(this)
     this.loadEvents()
   }
 

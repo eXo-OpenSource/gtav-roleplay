@@ -1,8 +1,13 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AltV.Net;
 using AltV.Net.Data;
+using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
 using Exo.Rp.Core.Inventory.Items;
+using Exo.Rp.Core.Players.Characters;
+using Exo.Rp.Core.Streamer.Entities;
+using Exo.Rp.Core.Streamer.Private;
 using Exo.Rp.Models.Enums;
 using Exo.Rp.Models.Jobs;
 using IPlayer = Exo.Rp.Core.Players.IPlayer;
@@ -12,20 +17,30 @@ namespace Exo.Rp.Core.Jobs.Jobs
     internal class Farmer : Job
     {
         public const double TreeCooldown = 30; // Seconds
+        public const double WheatCooldown = 60; // Seconds
 
-        private readonly Item apple = Core.GetService<ItemManager>().GetItem(ItemModel.Apfel);
+        private string TreeInteractionId;
+        private string DeliveryInteractionId;
 
-        private readonly Position _deliveryMarker = new Position(2315.753f, 5076.539f, 44.3425f);
+        public readonly Item apple = Core.GetService<ItemManager>().GetItem(ItemModel.Apfel);
 
-        private readonly Tree[] trees =
+        private Dictionary<int, Tree> appleTrees;
+        private Dictionary<int, Wheat> wheatCorners;
+
+        private Colshape.Colshape appleDeliveryMarker;
+        private PrivateEntity appleDeliveryBlip;
+
+        private readonly Position appleDeliveryPosition = new Position(2315.753f, 5076.539f, 44.3425f);
+
+        private readonly Position[] treePositions =
         {
-            new Tree(new Position(2390.723f, 4991.62f, 45.23268f)),
-            new Tree(new Position(2389.445f, 5005.084f, 45.74849f)),
-            new Tree(new Position(2377.074f, 5003.869f, 44.55497f)),
-            new Tree(new Position(2377.004f, 5017.008f, 45.50089f))
+            new Position(2390.723f, 4991.62f, 45.23268f),
+            new Position(2389.445f, 5005.084f, 45.74849f),
+            new Position(2377.074f, 5003.869f, 44.55497f),
+            new Position(2377.004f, 5017.008f, 45.50089f)
         };
 
-        private readonly Position[] wheatFieldCorners =
+        private readonly Position[] wheatFieldCornerPositions =
         {
             new Position(2309.235f, 5087.252f, 46.88379f),
             new Position(2259.764f, 5135.268f, 53.92041f),
@@ -46,6 +61,10 @@ namespace Exo.Rp.Core.Jobs.Jobs
             Description = "Bepflanze, Ernte und Verkaufe als Farmer!";
             PedPosition = new Position(2320.17f, 5078.815f, 45.82973f);
             SpriteId = 496;
+
+            appleTrees = new Dictionary<int, Tree>();
+            wheatCorners = new Dictionary<int, Wheat>();
+
             JobUpgrades.Add(new JobUpgradeCategoryDto
             {
                 Id = 1,
@@ -67,23 +86,7 @@ namespace Exo.Rp.Core.Jobs.Jobs
         {
             base.StartJobForPlayer(player);
 
-            player.GetCharacter().CreateMarker(_deliveryMarker,
-                colshapeRange: 2,
-                colEnter: p =>
-                {
-                    var character = player.GetCharacter();
-                    if (character.IsJobCurrentAndActive<Farmer>())
-                    {
-                        OnDeliveryMarkerHit(player);
-                    }
-                }
-            );
-
-            if (GetJobUpgradeValue(player, 1) >= 1)
-            {
-                var veh = CreateJobVehicle(player, VehicleModel.Tractor2, wheatTractorPosition, wheatTractorRotation);
-            }
-
+            player.Emit("Farmer:OpenGUI");
             player.SendInformation(Name + "-Job gestartet!");
         }
 
@@ -91,23 +94,110 @@ namespace Exo.Rp.Core.Jobs.Jobs
         {
             base.StopJob(player);
             player.StopAnimation();
-            player.GetCharacter().DeleteMarker(_deliveryMarker);
             player.SendInformation(Name + "-Job beendet!");
+
+            if (player.GetData("FarmerJob:JobType", out int result) && result == 1)
+            {
+                for (int i = 1; i < wheatFieldCornerPositions.Length; i++)
+                {
+                    wheatCorners[i].Blip.RemoveVisibleEntity(player.Id);
+                    wheatCorners[i].Destroy();
+                    wheatCorners.Remove(i);
+                }
+            } else
+            {
+                appleDeliveryMarker.Remove();
+                appleDeliveryBlip.RemoveVisibleEntity(player.Id);
+                Core.GetService<PrivateStreamer>().RemoveEntity(appleDeliveryBlip);
+                for (int i = 1; i < treePositions.Length; i++)
+                {
+                    appleTrees[i].Blip.RemoveVisibleEntity(player.Id);
+                    appleTrees[i].Destroy();
+                    appleTrees.Remove(i);
+                }
+            }
         }
 
-        public void OnDeliveryMarkerHit(IPlayer player)
+        public void StartJobType(IPlayer player, int jobId)
         {
-            if (player.GetCharacter().IsJobCurrentAndActive<Farmer>()) return;
+            if (player.GetCharacter() == null || player.GetCharacter().GetJob() != this ||
+                !player.GetCharacter().IsJobActive()) return;
 
-            if (player.GetCharacter().GetInventory().GetItemCount(apple) > 0)
+            if (jobId == 1)
             {
-                player.SendInformation($"Du hast {player.GetCharacter().GetInventory().GetItemCount(apple)} Äpfel abgegeben.");
-                player.GetCharacter().GetInventory().RemoveItem(apple);
-            }
-            else
+                var veh = CreateJobVehicle(player, VehicleModel.Tractor2, wheatTractorPosition, wheatTractorRotation);
+                player.SetIntoVehicle(veh.handle, -1);
+                player.SendNotification("Fahre die auf der Karte markierten Weizenfelder ab!");
+                
+                for (int i = 0; i < wheatFieldCornerPositions.Length; i++)
+                {
+                    wheatCorners.Add(i, new Wheat(wheatFieldCornerPositions[i]));
+                    wheatCorners[i].Blip.AddVisibleEntity(player.Id);
+                }
+            } else
             {
-                player.SendInformation("Du hast keine Äpfel zum abgeben.");
+                CreateAppleDeliveryMarker(player, appleDeliveryPosition);
+                player.SendNotification("Pflücke die auf der Karte markierten Äpfel ab!");
+                for (int i = 0; i < treePositions.Length; i++)
+                {
+                    appleTrees.Add(i, new Tree(treePositions[i]));
+                    appleTrees[i].Blip.AddVisibleEntity(player.Id);
+                }
+
             }
+
+        }
+        public void CreateAppleDeliveryMarker(IPlayer player, Position position)
+        {
+            appleDeliveryBlip = new PrivateBlip(position, 0, 999) { Sprite = 38, Name = "Apfelankauf" };
+            Core.GetService<PrivateStreamer>().AddEntity(appleDeliveryBlip);
+            appleDeliveryBlip.AddVisibleEntity(player.Id);
+
+            appleDeliveryMarker = (Colshape.Colshape)Alt.CreateColShapeSphere(position, 2);
+            appleDeliveryMarker.OnColShapeEnter += OnAppleDeliveryMarkerHit;
+            appleDeliveryMarker.OnColShapeExit += OnAppleDeliveryMarkerExit;
+        }
+
+        public void OnTreeMarkerHit(Colshape.Colshape col, IEntity entity)
+        {
+            if (!(entity is IPlayer player)) return;
+            if (player.GetCharacter() == null || player.GetCharacter().GetJob() != this ||
+                !player.GetCharacter().IsJobActive() || player.IsInVehicle) return;
+
+            var interactionData = new InteractionData
+            {
+                SourceObject = this,
+                CallBack = null
+            };
+            TreeInteractionId = player.GetCharacter().ShowInteraction("Baum pflücken", "JobFarmer:onTreeInteract", interactionData: interactionData);
+        }
+
+        public void OnTreeMarkerLeave(Colshape.Colshape col, IEntity entity)
+        {
+            if (!(entity is IPlayer player)) return;
+            
+            player.GetCharacter().HideInteraction(TreeInteractionId);
+        }
+
+        public void OnAppleDeliveryMarkerHit(Colshape.Colshape colshape, IEntity entity)
+        {
+            if (!(entity is IPlayer player)) return;
+            if (player.GetCharacter() == null || player.GetCharacter().GetJob() != this ||
+                !player.GetCharacter().IsJobActive() || player.IsInVehicle) return;
+
+            var interactionData = new InteractionData
+            {
+                SourceObject = this,
+                CallBack = null
+            };
+            DeliveryInteractionId = player.GetCharacter().ShowInteraction("Apfelankauf", "JobFarmer:onEnterDeliveryMarker", interactionData: interactionData);
+        }
+
+        public void OnAppleDeliveryMarkerExit(Colshape.Colshape colshape, IEntity entity)
+        {
+            if (!(entity is IPlayer player)) return;
+
+            player.GetCharacter().HideInteraction(DeliveryInteractionId);
         }
 
         public void OnTreeInteract(IPlayer player, Tree tree)
@@ -125,13 +215,13 @@ namespace Exo.Rp.Core.Jobs.Jobs
                     {
                         player.StopAnimation();
                         player.GetCharacter().GetInventory().AddItem(apple);
-                        player.SendInformation($"Äpfel: {player.GetCharacter().GetInventory().GetItemCount(apple)}");
+                        player.SendSuccess($"Äpfel: {player.GetCharacter().GetInventory().GetItemCount(apple)}");
                     });
                 });
             }
             else
             {
-                player.SendInformation($"Dieser Baum hat gerade keine Äpfel, du musst noch {tree.Cooldown()} Sekunden warten!");
+                player.SendError($"Dieser Baum hat gerade keine Äpfel, du musst noch {tree.Cooldown()} Sekunden warten!");
             }
         }
     }
