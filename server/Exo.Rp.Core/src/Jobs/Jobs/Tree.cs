@@ -72,10 +72,11 @@ namespace Exo.Rp.Core.Jobs.Jobs
             return (int)(Farmer.TreeCooldown - (DateTime.Now - LastUsed).TotalSeconds);
         }
 
-        public void Destroy()
+        public void Destroy(IPlayer player)
         {
             Col.Remove();
             Core.GetService<PrivateStreamer>().RemoveEntity(Blip);
+            Blip.RemoveVisibleEntity(player.Id);
         }
     }
 }

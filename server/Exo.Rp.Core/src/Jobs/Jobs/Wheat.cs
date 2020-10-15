@@ -8,6 +8,7 @@ using Exo.Rp.Core.Streamer.Entities;
 using Exo.Rp.Core.Streamer.Private;
 using IPlayer = Exo.Rp.Core.Players.IPlayer;
 using Exo.Rp.Core.Inventory.Items;
+using Exo.Rp.Core.Util;
 
 namespace Exo.Rp.Core.Jobs.Jobs
 {
@@ -17,7 +18,6 @@ namespace Exo.Rp.Core.Jobs.Jobs
             Center = pos;
             Col = (Colshape.Colshape)Alt.CreateColShapeSphere(Center, 2);
             Col.OnColShapeEnter += OnEnterCol;
-            Col.OnColShapeExit += OnExitCol;
             LastUsed = DateTime.Now.AddSeconds(-Farmer.WheatCooldown);
             Blip = new PrivateBlip(Center, 0, 300) { Sprite = 364, Name = "Weizenfeld" };
             Core.GetService<PrivateStreamer>().AddEntity(Blip);
@@ -34,15 +34,24 @@ namespace Exo.Rp.Core.Jobs.Jobs
             if (!(entity is IPlayer player)) return;
             if (player.GetCharacter() == null || player.GetCharacter().GetJob().JobId != (int)JobId.Farmer ||
                 !player.GetCharacter().IsJobActive() || !player.IsInVehicle && !IsUsable()) return;
+            if (Farmer.MaxWheat < Farmer.CurrentWheat)
+            {
+                player.SendError("Geh dein Traktor entladen!");
+                return;
+            }
 
-            player.GetCharacter().GetInventory().AddItem(wheat);
-            Use();
+            LastUsed = DateTime.Now;
+            Farmer.CurrentWheat++;
             player.SendInformation("+1 Weizen");
-        }
+            player.Emit("Progress:Set", Math.Round(Farmer.CurrentWheat / (float)Farmer.MaxWheat, 2));
+            player.GetCharacter().GetInventory().AddItem(wheat);
+            Blip.RemoveVisibleEntity(player.Id);
+            Core.GetService<PrivateStreamer>().RemoveEntity(Blip);
 
-        private void OnExitCol(Colshape.Colshape colshape, IEntity entity)
-        {
-
+            /*new TimerHandler(() => {
+                Core.GetService<PrivateStreamer>().AddEntity(Blip);
+                Blip.AddVisibleEntity(player.Id);
+            }, (int)Farmer.WheatCooldown * 1000); */
         }
 
         public bool IsUsable()
@@ -50,20 +59,16 @@ namespace Exo.Rp.Core.Jobs.Jobs
             return Cooldown() < 0;
         }
 
-        public void Use()
-        {
-            LastUsed = DateTime.Now;
-        }
-
         public int Cooldown()
         {
             return (int)(Farmer.WheatCooldown - (DateTime.Now - LastUsed).TotalSeconds);
         }
 
-        public void Destroy()
+        public void Destroy(IPlayer player)
         {
             Col.Remove();
-            Core.GetService<PrivateStreamer>().AddEntity(Blip);
+            Blip.RemoveVisibleEntity(player.Id);
+            Core.GetService<PrivateStreamer>().RemoveEntity(Blip);
         }
     }
 }

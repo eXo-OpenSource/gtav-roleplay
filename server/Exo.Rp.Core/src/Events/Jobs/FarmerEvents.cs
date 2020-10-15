@@ -8,6 +8,15 @@ namespace Exo.Rp.Core.Events.Jobs
 {
     internal class FarmerEvents : IScript
     {
+        [ScriptEvent(ScriptEventType.PlayerLeaveVehicle)]
+        public void VehicleLeave(IVehicle vehicle, IPlayer player, byte seat)
+        {
+            var job = player.GetCharacter().GetJob();
+            if (!player.GetCharacter().IsJobActive() || job.JobId != (int)JobId.Farmer) return;
+            var farmerJob = (Farmer)job;
+            farmerJob.StopJob(player);
+        }
+
         [ClientEvent("JobFarmer:onTreeInteract")]
         public void OnTreeInteract(IPlayer player)
         {
@@ -21,11 +30,9 @@ namespace Exo.Rp.Core.Events.Jobs
         [ClientEvent("JobFarmer:onEnterDeliveryMarker")]
         public void OnEnterDeliveryMarker(IPlayer player)
         {
-            Alt.Log("1");
             var job = player.GetCharacter().GetJob();
             if (job.JobId != (int) JobId.Farmer) return;
             var farmerJob = (Farmer) job;
-            Alt.Log("2");
             int itemCount = player.GetCharacter().GetInventory().GetItemCount(farmerJob.apple);
 
             if (player.GetCharacter().GetInventory().GetItemCount(farmerJob.apple) > 0)

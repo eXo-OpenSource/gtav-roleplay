@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AltV.Net;
@@ -19,18 +20,26 @@ namespace Exo.Rp.Core.Jobs.Jobs
         public const double TreeCooldown = 30; // Seconds
         public const double WheatCooldown = 60; // Seconds
 
+        public const int MaxWheat = 20;
+        public static int CurrentWheat = 0;
+
         private string TreeInteractionId;
         private string DeliveryInteractionId;
+        private string WheatDeliveryInteractionId;
 
         public readonly Item apple = Core.GetService<ItemManager>().GetItem(ItemModel.Apfel);
+        public readonly Item wheat = Core.GetService<ItemManager>().GetItem(ItemModel.Weizen);
 
         private Dictionary<int, Tree> appleTrees;
         private Dictionary<int, Wheat> wheatCorners;
 
         private Colshape.Colshape appleDeliveryMarker;
         private PrivateEntity appleDeliveryBlip;
+        private Colshape.Colshape wheatDeliveryMarker;
+        private PrivateEntity wheatDeliveryBlip;
 
         private readonly Position appleDeliveryPosition = new Position(2315.753f, 5076.539f, 44.3425f);
+        private readonly Position wheatDeliveryPosition = new Position(2338.303f, 5095.162f, 46.55493f);
 
         private readonly Position[] treePositions =
         {
@@ -49,8 +58,6 @@ namespace Exo.Rp.Core.Jobs.Jobs
             new Position(2325.556f, 5086.558f, 46.30328f)
         };
 
-
-        private readonly Position wheatMarker = new Position(2338.303f, 5095.162f, 46.55493f);
 
         private readonly Position wheatTractorPosition = new Position(2311.975f, 5083.859f, 46.42386f);
         private readonly float wheatTractorRotation = 147.6577f;
@@ -95,13 +102,14 @@ namespace Exo.Rp.Core.Jobs.Jobs
             base.StopJob(player);
             player.StopAnimation();
             player.SendInformation(Name + "-Job beendet!");
+            player.Emit("Progress:Active", false);
 
             if (player.GetData("FarmerJob:JobType", out int result) && result == 1)
             {
                 for (int i = 1; i < wheatFieldCornerPositions.Length; i++)
                 {
                     wheatCorners[i].Blip.RemoveVisibleEntity(player.Id);
-                    wheatCorners[i].Destroy();
+                    wheatCorners[i].Destroy(player);
                     wheatCorners.Remove(i);
                 }
             } else
@@ -112,7 +120,7 @@ namespace Exo.Rp.Core.Jobs.Jobs
                 for (int i = 1; i < treePositions.Length; i++)
                 {
                     appleTrees[i].Blip.RemoveVisibleEntity(player.Id);
-                    appleTrees[i].Destroy();
+                    appleTrees[i].Destroy(player);
                     appleTrees.Remove(i);
                 }
             }
@@ -125,10 +133,16 @@ namespace Exo.Rp.Core.Jobs.Jobs
 
             if (jobId == 1)
             {
+                player.Emit("Progress:Text", $"Traktor-Füllstand - max. {MaxWheat}");
+                player.Emit("Progress:Set", 0);
+                player.Emit("Progress:Active", true);
+
                 var veh = CreateJobVehicle(player, VehicleModel.Tractor2, wheatTractorPosition, wheatTractorRotation);
                 player.SetIntoVehicle(veh.handle, -1);
+
+                CreateWheatDeliveryMarker(player, wheatDeliveryPosition);
                 player.SendNotification("Fahre die auf der Karte markierten Weizenfelder ab!");
-                
+         
                 for (int i = 0; i < wheatFieldCornerPositions.Length; i++)
                 {
                     wheatCorners.Add(i, new Wheat(wheatFieldCornerPositions[i]));
@@ -138,6 +152,7 @@ namespace Exo.Rp.Core.Jobs.Jobs
             {
                 CreateAppleDeliveryMarker(player, appleDeliveryPosition);
                 player.SendNotification("Pflücke die auf der Karte markierten Äpfel ab!");
+
                 for (int i = 0; i < treePositions.Length; i++)
                 {
                     appleTrees.Add(i, new Tree(treePositions[i]));
@@ -147,15 +162,27 @@ namespace Exo.Rp.Core.Jobs.Jobs
             }
 
         }
+
         public void CreateAppleDeliveryMarker(IPlayer player, Position position)
         {
             appleDeliveryBlip = new PrivateBlip(position, 0, 999) { Sprite = 38, Name = "Apfelankauf" };
             Core.GetService<PrivateStreamer>().AddEntity(appleDeliveryBlip);
             appleDeliveryBlip.AddVisibleEntity(player.Id);
 
-            appleDeliveryMarker = (Colshape.Colshape)Alt.CreateColShapeSphere(position, 2);
+            appleDeliveryMarker = (Colshape.Colshape)Alt.CreateColShapeSphere(position, 4);
             appleDeliveryMarker.OnColShapeEnter += OnAppleDeliveryMarkerHit;
             appleDeliveryMarker.OnColShapeExit += OnAppleDeliveryMarkerExit;
+        }
+
+        public void CreateWheatDeliveryMarker(IPlayer player, Position position)
+        {
+            wheatDeliveryBlip = new PrivateBlip(position, 0, 999) { Sprite = 38, Name = "Weizenankauf" };
+            Core.GetService<PrivateStreamer>().AddEntity(wheatDeliveryBlip);
+            wheatDeliveryBlip.AddVisibleEntity(player.Id);
+
+            wheatDeliveryMarker = (Colshape.Colshape)Alt.CreateColShapeSphere(position, 4);
+            wheatDeliveryMarker.OnColShapeEnter += OnWheatDeliveryMarkerHit;
+            wheatDeliveryMarker.OnColShapeExit += OnWheatDeliveryMarkerExit;
         }
 
         public void OnTreeMarkerHit(Colshape.Colshape col, IEntity entity)
@@ -198,6 +225,31 @@ namespace Exo.Rp.Core.Jobs.Jobs
             if (!(entity is IPlayer player)) return;
 
             player.GetCharacter().HideInteraction(DeliveryInteractionId);
+        }
+
+        public void OnWheatDeliveryMarkerHit(Colshape.Colshape colshape, IEntity entity)
+        {
+            if (!(entity is IPlayer player)) return;
+            if (player.GetCharacter() == null || player.GetCharacter().GetJob() != this ||
+                !player.GetCharacter().IsJobActive() || !player.IsInVehicle) return;
+
+            if (player.GetCharacter().GetInventory().GetItemCount(wheat) > 0)
+            {
+                player.SendSuccess($"Du hast {CurrentWheat} Weizen entladen.");
+                player.GetCharacter().GetInventory().RemoveItem(wheat, CurrentWheat);
+            }
+            else
+            {
+                player.SendInformation("todo inventory bag");
+                player.SendError("Du hast kein Weizen zum Entladen.");
+            }
+        }
+
+        public void OnWheatDeliveryMarkerExit(Colshape.Colshape colshape, IEntity entity)
+        {
+            if (!(entity is IPlayer player)) return;
+
+            player.GetCharacter().HideInteraction(WheatDeliveryInteractionId);
         }
 
         public void OnTreeInteract(IPlayer player, Tree tree)
