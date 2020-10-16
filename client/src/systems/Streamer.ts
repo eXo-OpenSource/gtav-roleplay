@@ -20,7 +20,6 @@ async function loadModel(model) {
           return resolve(true);
         }
 
-        alt.log("only once?")
         natives.requestModel(model);
         currentlyLoading = true;
 

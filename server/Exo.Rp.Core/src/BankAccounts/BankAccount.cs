@@ -25,7 +25,6 @@ namespace Exo.Rp.Core.BankAccounts
 
         public int Money { get; set; }
 
-        #region Functions
 
         public int GetMoney() => Money;
 
@@ -48,7 +47,6 @@ namespace Exo.Rp.Core.BankAccounts
             return true;
         }
 
-        #endregion
 
     }
 }

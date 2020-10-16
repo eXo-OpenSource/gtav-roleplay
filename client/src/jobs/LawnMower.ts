@@ -47,13 +47,6 @@ export default class LawnMower {
         }
       }
     })
-
-    // Output position for adding later more markers
-    alt.on("consoleCommand", (cmd, ...arg) => {
-      if (cmd == "pos") {
-        alt.log("new Position(" + this.player.pos.x + "f, " + this.player.pos.y + "f, " + this.player.pos.z + "f),")
-      }
-    })
   }
 
   enableSprint() {

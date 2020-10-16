@@ -16,8 +16,7 @@ namespace Exo.Rp.Core.Chat
 
         }
 
-        //[ServerEvent(Event.ChatMessage)]
-        public void OnChatMessage(IPlayer sender, string message)
+        /* public void ChatMessage(IPlayer sender, string message)
         {
             message = EscapeMessage(message);
             var senderName = sender.GetCharacter()?.GetNormalizedName();
@@ -31,9 +30,9 @@ namespace Exo.Rp.Core.Chat
                 player.SendChatMessage(message);
                 player.Emit("outputClientConsole", message, false);
             }
-        }
+        } */
 
-        private void OocChat(IPlayer sender, string message)
+        public static void OocChat(IPlayer sender, string message)
         {
             message = EscapeMessage(message);
             var senderName = sender.GetCharacter()?.GetNormalizedName();
@@ -41,11 +40,13 @@ namespace Exo.Rp.Core.Chat
             foreach (var player in Alt.GetAllPlayers().Cast<IPlayer>())
             {
                 if (player == null) continue;
-                if (player.Position.Distance(sender.Position) < _maxChatDistance) continue;
-
-                message = $"#y#OOC#w# {senderName ?? $"#r#[[#w#{sender.Name}#r#]]#w#"}: {message}";
-                player.SendChatMessage(message);
-                player.Emit("outputClientConsole", message, false);
+                //if (player.Position.Distance(sender.Position) < _maxChatDistance) continue;
+                if (sender.Position.Distance(player.Position) <= _maxChatDistance)
+                {
+                    message = $"#y#OOC#w# {senderName ?? $"#r#[[#w#{sender.Name}#r#]]#w#"}: {message}";
+                    player.SendChatMessage(message);
+                    player.Emit("outputClientConsole", message, false);
+                }
             }
         }
 

@@ -12,6 +12,7 @@ import PizzaDelivery from "./jobs/PizzaDelivery";
 import IPLManager from "./world/IPLManager";
 import DoorManager from "./world/Doormanager";
 import "./systems/Blip"
+import "./utils/DevCommands";
 
 @Singleton
 export class Core {

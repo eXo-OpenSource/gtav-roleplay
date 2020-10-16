@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AltV.Net;
 using Exo.Rp.Core.Commands;
+using Exo.Rp.Core.Chat;
 using Exo.Rp.Core.Players;
 using Exo.Rp.Core.Translation;
 using Exo.Rp.Core.Util;
@@ -73,6 +74,7 @@ namespace Exo.Rp.Core.Events
             }
             else
             {
+                ChatManager.OocChat(player, msg);
                 Logger.Debug($"Chat | {player.ToString()}: {msg}");
             }
         }

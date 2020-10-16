@@ -150,7 +150,7 @@ class Chat extends Component {
   renderMessages() {
     return this.state.messages.map((value, key) => {
       return (
-        <div key={key} className="text-white" style={{ textShadow: "0px 0px 4px black" }}>
+        <div key={key} className="text-white mx-2" style={{ textShadow: "0px 0px 2px black" }}>
           {value.player ? <strong>{value.player}:</strong>: null} {value.msg}
         </div>
       );
@@ -161,14 +161,14 @@ class Chat extends Component {
     return this.state.chatVisible ?
       (
         <div className="w-1/4 container rounded px-3 py-3 absolute top-0">
-          <SimpleBar style={{ maxHeight: 200 }}>
+          <SimpleBar style={{ maxHeight: 94 }}>
             {this.renderMessages()}
             <div ref={(msgEnd) => { this.msgEnd = msgEnd; }} />
           </SimpleBar>
           {this.state.chatBoxVisible
             ? <input
               ref={(input) => { this.chatInput = input; }}
-              className="border rounded w-full appearance-none py-2 px-2 opacity-75 bg-gray-400
+              className="border rounded w-full appearance-none py-1 px-2 opacity-75 bg-gray-400
               outline-none"
               value={this.state.currentMessage}
               onChange={this.onChatInputChange.bind(this)}

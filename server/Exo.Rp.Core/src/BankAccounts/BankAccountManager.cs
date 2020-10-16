@@ -5,6 +5,8 @@ using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using Exo.Rp.Core.Database;
 using Exo.Rp.Core.Extensions;
+using Exo.Rp.Core.Streamer;
+using Exo.Rp.Core.Streamer.Entities;
 using Exo.Rp.Models.Enums;
 using IPlayer = Exo.Rp.Core.Players.IPlayer;
 
@@ -49,6 +51,16 @@ namespace Exo.Rp.Core.BankAccounts
         {
             var col = (Colshape.Colshape)Alt.CreateColShapeSphere(pos, 1.9f);
             col.OnColShapeEnter += OnATMColEnter;
+
+            Core.GetService<PublicStreamer>().AddGlobalBlip(new StaticBlip
+            {
+                Color = 4,
+                Name = "ATM",
+                X = pos.X,
+                Y = pos.Y,
+                Z = pos.Z,
+                SpriteId = 276,
+            });
         }
 
         public void OnATMColEnter(Colshape.Colshape colshape, IEntity entity)
