@@ -14,6 +14,7 @@ namespace Exo.Rp.Core.Events.Jobs
             var job = player.GetCharacter().GetJob();
             if (!player.GetCharacter().IsJobActive() || job.JobId != (int)JobId.Farmer) return;
             var farmerJob = (Farmer)job;
+            player.Vehicle.Remove();
             farmerJob.StopJob(player);
         }
 
