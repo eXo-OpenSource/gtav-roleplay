@@ -5,6 +5,7 @@ using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using Exo.Rp.Core.Database;
 using Exo.Rp.Core.Extensions;
+using Exo.Rp.Core.Players.Characters;
 using Exo.Rp.Core.Streamer;
 using Exo.Rp.Core.Streamer.Entities;
 using Exo.Rp.Models.Enums;
@@ -35,6 +36,8 @@ namespace Exo.Rp.Core.BankAccounts
         }
 
         private Dictionary<int, Position[]> atmPositions;
+        public string InteractionId { get; set; }
+
         public void LoadATMCols()
         {
             atmPositions = new Dictionary<int, Position[]>();
@@ -49,8 +52,9 @@ namespace Exo.Rp.Core.BankAccounts
 
         public void CreateATMCols(Position pos)
         {
-            var col = (Colshape.Colshape)Alt.CreateColShapeSphere(pos, 1.9f);
+            var col = (Colshape.Colshape)Alt.CreateColShapeSphere(pos, 1.5f);
             col.OnColShapeEnter += OnATMColEnter;
+            col.OnColShapeExit += OnATMColExit;
 
             Core.GetService<PublicStreamer>().AddGlobalBlip(new StaticBlip
             {
@@ -65,8 +69,22 @@ namespace Exo.Rp.Core.BankAccounts
 
         public void OnATMColEnter(Colshape.Colshape colshape, IEntity entity)
         {
-            if (entity is IPlayer player)
-                player.Emit("ATM:Show");
+            if (!(entity is IPlayer player)) return;
+
+            var interactionData = new InteractionData
+            {
+                SourceObject = this,
+                CallBack = null
+            };
+            InteractionId = player.GetCharacter()
+                .ShowInteraction("Bankautomat", "BankAccount:ShowInteraction", interactionData: interactionData);
+        }
+
+        public void OnATMColExit(Colshape.Colshape colshape, IEntity entity)
+        {
+            if (!(entity is IPlayer player)) return;
+
+            player.GetCharacter().HideInteraction(InteractionId);
         }
     }
 }

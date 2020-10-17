@@ -93,45 +93,6 @@ namespace Exo.Rp.Core.Events
             player.SendSuccess("Willkommen in San Andreas!");
         }
 
-        [ClientEvent("BankAccount:RefreshData")]
-        public void RefreshData(IPlayer client)
-        {
-            client.Emit("BankAccount:UpdateData", client.GetCharacter().GetMoney(true),
-                client.GetCharacter().GetMoney(false), client.GetCharacter().GetNormalizedName());
-        }
-
-        [ClientEvent("BankAccount:CashIn")]
-        public void CashIn(IPlayer client, int amount)
-        {
-            if (client.GetCharacter().GetMoney() < amount)
-            {
-                client.SendError("Du hast nicht genug Geld bei dir.");
-                return;
-            }
-
-            RefreshData(client);
-
-            client.GetCharacter().GiveMoney(amount, "Maze Bank Einzahlung", true);
-            client.GetCharacter().TakeMoney(amount, "Maze Bank Einzahlung", false);
-            client.SendSuccess($"Du hast ${amount} eingezahlt!");
-        }
-
-        [ClientEvent("BankAccount:CashOut")]
-        public void CashOut(IPlayer client, int amount)
-        {
-            if (client.GetCharacter().BankAccount.GetMoney() < amount)
-            {
-                client.SendError("Du verfügst nicht über genügend Geld auf der Bank.");
-                return;
-            }
-
-            RefreshData(client);
-
-            client.GetCharacter().GiveMoney(amount, "Maze Bank Auszahlung", false);
-            client.GetCharacter().TakeMoney(amount, "Maze Bank Auszahlung", true);
-            client.SendSuccess($"Du hast ${amount} ausgezahlt!");
-        }
-
         [ClientEvent("Ui:Hide")]
         public void HideUi(IPlayer player, bool hide = true)
         {
