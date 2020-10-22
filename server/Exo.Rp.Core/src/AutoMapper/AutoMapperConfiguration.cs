@@ -14,32 +14,32 @@ namespace Exo.Rp.Core.AutoMapper
     {
         private static Mapper _mapper;
 
-        public static Mapper GetMapper(),
+        public static Mapper GetMapper()
         {
             var configuration = new MapperConfiguration(cfg =>
             {
                 // Teams
-                cfg.CreateMap<Team, Lspd>(),;
+                cfg.CreateMap<Team, Lspd>();
 
                 // Vehicles
-                cfg.CreateMap<Vehicle, TemporaryVehicle>(),;
-                cfg.CreateMap<Vehicle, PlayerVehicle>(),;
-                cfg.CreateMap<Vehicle, TeamVehicle>(),;
+                cfg.CreateMap<Vehicle, TemporaryVehicle>();
+                cfg.CreateMap<Vehicle, PlayerVehicle>();
+                cfg.CreateMap<Vehicle, TeamVehicle>();
 
                 // Inventories
-                cfg.CreateMap<Inventory.Inventory, PermanentInventory>(),;
-                cfg.CreateMap<Inventory.Inventory, PlayerInventory>(),;
-                cfg.CreateMap<Inventory.Inventory, TeamInventory>(),;
-                cfg.CreateMap<Inventory.Inventory, TemporaryInventory>(),;
-                cfg.CreateMap<Inventory.Inventory, VehicleInventory>(),;
+                cfg.CreateMap<Inventory.Inventory, PermanentInventory>();
+                cfg.CreateMap<Inventory.Inventory, PlayerInventory>();
+                cfg.CreateMap<Inventory.Inventory, TeamInventory>();
+                cfg.CreateMap<Inventory.Inventory, TemporaryInventory>();
+                cfg.CreateMap<Inventory.Inventory, VehicleInventory>();
 
                 // Shops
-                cfg.CreateMap<Shop, VehicleShop>(),;
-                cfg.CreateMap<Shop, ItemShop>(),;
-                cfg.CreateMap<Shop, TuningShop>(),;
-            }),;
+                cfg.CreateMap<Shop, VehicleShop>();
+                cfg.CreateMap<Shop, ItemShop>();
+                cfg.CreateMap<Shop, TuningShop>();
+            });
 
-            return new Mapper(configuration),;
+            return new Mapper(configuration);
         }
     }
 }

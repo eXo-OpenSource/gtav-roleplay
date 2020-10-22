@@ -9,12 +9,12 @@ namespace Exo.Rp.Core.Database
 {
     public static class ContextFactory
     {
-        private static readonly ILogger Logger = new Logger(typeof(ContextFactory),),;
+        private static readonly ILogger Logger = new Logger(typeof(ContextFactory));
 
         private static DatabaseContext _instance;
         private static bool _checkedConnection;
 
-        public static void SetConnectionString(MySqlConnectionStringBuilder connectionString),
+        public static void SetConnectionString(MySqlConnectionStringBuilder connectionString)
         {
             ConnectionString = connectionString.ConnectionString;
         }
@@ -26,39 +26,39 @@ namespace Exo.Rp.Core.Database
             get => _instance;
         }
 
-        private static  DatabaseContext Create(),
+        private static  DatabaseContext Create()
         {
-            if (_checkedConnection),
+            if (_checkedConnection)
                 return null;
 
             _checkedConnection = true;
 
-            if (string.IsNullOrWhiteSpace(ConnectionString),),
-                throw new InvalidOperationException("An attempt was made to instantiate a database connection without connection parameters."),;
+            if (string.IsNullOrWhiteSpace(ConnectionString))
+                throw new InvalidOperationException("An attempt was made to instantiate a database connection without connection parameters.");
 
             try
             {
-                var connection = new MySqlConnection(ConnectionString),;
-                connection.Open(),;
-                connection.Close(),;
-                Logger.Info("Successfully established a connection with the database."),;
+                var connection = new MySqlConnection(ConnectionString);
+                connection.Open();
+                connection.Close();
+                Logger.Info("Successfully established a connection with the database.");
             }
-            catch (MySqlException ex),
+            catch (MySqlException ex)
             {
-                ex.TrackOrThrow(),;
-                Logger.Fatal($"MySql error: {ex.Message} ErrorCode: {ex.Number}"),;
+                ex.TrackOrThrow();
+                Logger.Fatal($"MySql error: {ex.Message} ErrorCode: {ex.Number}");
                 return null;
             }
 
-            var databaseContext = new DatabaseContext(),;
-            databaseContext.Database.EnsureCreated(),;
+            var databaseContext = new DatabaseContext();
+            databaseContext.Database.EnsureCreated();
 
             return databaseContext;
         }
 
-        public static DatabaseContext Connect(),
+        public static DatabaseContext Connect()
         {
-            _instance = Create(),;
+            _instance = Create();
             return _instance;
         }
     }

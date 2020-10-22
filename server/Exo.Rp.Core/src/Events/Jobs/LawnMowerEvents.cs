@@ -6,11 +6,11 @@ namespace Exo.Rp.Core.Events.Jobs
 {
     internal class LawnMowerEvents : IScript
     {
-        [ClientEvent("JobLawn:OnMarkerHit"),]
-        public void OnMarkerHit(IPlayer client),
+        [ClientEvent("JobLawn:OnMarkerHit")]
+        public void OnMarkerHit(IPlayer client)
         {
-            var job = client.GetCharacter(),.GetJob(), as LawnCaretaker;
-            job?.OnMarkerColEnter(client),;
+            var job = client.GetCharacter().GetJob() as LawnCaretaker;
+            job?.OnMarkerColEnter(client);
         }
     }
 }

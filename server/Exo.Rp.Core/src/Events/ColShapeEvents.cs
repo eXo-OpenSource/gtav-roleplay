@@ -5,16 +5,16 @@ namespace Exo.Rp.Core.Events
 {
     class ColShapeEvents : IScript
     {
-        [ScriptEvent(ScriptEventType.ColShape),]
-        public void OnEntityColShapeHit(Colshape.Colshape shape, IEntity entity, bool state),
+        [ScriptEvent(ScriptEventType.ColShape)]
+        public void OnEntityColShapeHit(Colshape.Colshape shape, IEntity entity, bool state)
         {
-            if (state),
+            if (state)
             {
-                shape.TriggerEnter(entity),;
+                shape.TriggerEnter(entity);
             }
             else
             {
-                shape.TriggerExit(entity),;
+                shape.TriggerExit(entity);
             }
         }
     }
