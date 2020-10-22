@@ -12,148 +12,148 @@ namespace Exo.Rp.Core.Events.Jobs
 {
     internal class JobEvents : IScript
     {
-        private static readonly ILogger<JobEvents> Logger = new Logger<JobEvents>();
+        private static readonly ILogger<JobEvents> Logger = new Logger<JobEvents>(),;
 
-        [ClientEvent("onJobPedInteraction")]
-        public void OnJobPedInteraction(IPlayer player)
+        [ClientEvent("onJobPedInteraction"),]
+        public void OnJobPedInteraction(IPlayer player),
         {
-            if (player.GetCharacter().GetInteractionData() == null) return;
+            if (player.GetCharacter(),.GetInteractionData(), == null), return;
 
-            var job = (Job) player.GetCharacter().GetInteractionData().SourceObject;
-            job.ShowJobMenu(player);
+            var job = (Job), player.GetCharacter(),.GetInteractionData(),.SourceObject;
+            job.ShowJobMenu(player),;
         }
 
-        [ClientEvent("Job:AcceptJob")]
-        public void AcceptJob(IPlayer player, int jobId)
+        [ClientEvent("Job:AcceptJob"),]
+        public void AcceptJob(IPlayer player, int jobId),
         {
-            if (player.GetCharacter().GetJob() != null)
+            if (player.GetCharacter(),.GetJob(), != null),
             {
-                player.SendError("Du hast bereits einen Job!");
+                player.SendError("Du hast bereits einen Job!"),;
                 return;
             }
 
-            var job = Core.GetService<JobManager>().GetJob(jobId);
-            player.GetCharacter().SetJob(job);
-            player.SendSuccess("Job angenommen!");
+            var job = Core.GetService<JobManager>(),.GetJob(jobId),;
+            player.GetCharacter(),.SetJob(job),;
+            player.SendSuccess("Job angenommen!"),;
 
-            player.Emit("Popup:Close");
-            job.ShowJobMenu(player);
+            player.Emit("Popup:Close"),;
+            job.ShowJobMenu(player),;
         }
 
-        [ClientEvent("Job:DeclineJob")]
-        public void DeclineJob(IPlayer player, int jobId)
+        [ClientEvent("Job:DeclineJob"),]
+        public void DeclineJob(IPlayer player, int jobId),
         {
-            if (player.GetCharacter().GetJob() == null)
+            if (player.GetCharacter(),.GetJob(), == null),
             {
-                player.SendError("Du hast keinen Job zum kündigen!");
+                player.SendError("Du hast keinen Job zum kündigen!"),;
                 return;
             }
 
-            var job = Core.GetService<JobManager>().GetJob(jobId);
+            var job = Core.GetService<JobManager>(),.GetJob(jobId),;
 
-            player.GetCharacter().SetJob(null);
-            player.SendSuccess("Job gekündigt!");
+            player.GetCharacter(),.SetJob(null),;
+            player.SendSuccess("Job gekündigt!"),;
 
-            player.Emit("Popup:Close");
-            job.ShowJobMenu(player);
+            player.Emit("Popup:Close"),;
+            job.ShowJobMenu(player),;
         }
 
-        [ClientEvent("Job:StartJobSingle")]
-        public void StartJob(IPlayer player, int jobId)
+        [ClientEvent("Job:StartJobSingle"),]
+        public void StartJob(IPlayer player, int jobId),
         {
-            if (player.GetCharacter().GetJob() == null)
+            if (player.GetCharacter(),.GetJob(), == null),
             {
-                player.SendError("Du hast keinen Job!");
+                player.SendError("Du hast keinen Job!"),;
                 return;
             }
 
-            Core.GetService<JobManager>().GetJob(jobId).AddPlayerToJob(player, player, false);
-            Core.GetService<JobManager>().GetJob(jobId).StartJob(player);
-            player.Emit("Popup:Close");
+            Core.GetService<JobManager>(),.GetJob(jobId),.AddPlayerToJob(player, player, false),;
+            Core.GetService<JobManager>(),.GetJob(jobId),.StartJob(player),;
+            player.Emit("Popup:Close"),;
         }
 
-        [ClientEvent("Job:StartJobMultiplayer")]
-        public void StartJobMultiplayer(IPlayer player, int jobId)
+        [ClientEvent("Job:StartJobMultiplayer"),]
+        public void StartJobMultiplayer(IPlayer player, int jobId),
         {
-            if (player.GetCharacter().GetJob() == null)
+            if (player.GetCharacter(),.GetJob(), == null),
             {
-                player.SendError("Du hast keinen Job!");
+                player.SendError("Du hast keinen Job!"),;
                 return;
             }
 
-            Core.GetService<JobManager>().GetJob(jobId).StartJob(player);
-            player.Emit("Popup:Close");
+            Core.GetService<JobManager>(),.GetJob(jobId),.StartJob(player),;
+            player.Emit("Popup:Close"),;
         }
 
-        [ClientEvent("Job:StopJob")]
-        public void StopJob(IPlayer player, int jobId)
+        [ClientEvent("Job:StopJob"),]
+        public void StopJob(IPlayer player, int jobId),
         {
-            if (player.GetCharacter().GetJob() == null)
+            if (player.GetCharacter(),.GetJob(), == null),
             {
-                player.SendError("Du hast keinen Job!");
+                player.SendError("Du hast keinen Job!"),;
                 return;
             }
 
-            Core.GetService<JobManager>().GetJob(jobId).StopJob(player);
-            player.Emit("Popup:Close");
+            Core.GetService<JobManager>(),.GetJob(jobId),.StopJob(player),;
+            player.Emit("Popup:Close"),;
         }
 
-        [ClientEvent("Job:AcceptCoop")]
-        public void AcceptCook(IPlayer player)
+        [ClientEvent("Job:AcceptCoop"),]
+        public void AcceptCook(IPlayer player),
         {
-            if (player.GetCharacter().GetInteractionData() == null) return;
+            if (player.GetCharacter(),.GetInteractionData(), == null), return;
 
-            var job = (Job) player.GetCharacter().GetInteractionData().SourceObject;
-            var leader = (IPlayer)player.GetCharacter().GetInteractionData().CallBack;
-            if(player.GetCharacter().GetJob() != job) player.GetCharacter().SetJob(job);
-            job.AddPlayerToJob(player, leader, true);
-            leader.Emit("Popup:Close");
-            OpenCoopMenu(leader, job.JobId);
+            var job = (Job), player.GetCharacter(),.GetInteractionData(),.SourceObject;
+            var leader = (IPlayer),player.GetCharacter(),.GetInteractionData(),.CallBack;
+            if(player.GetCharacter(),.GetJob(), != job), player.GetCharacter(),.SetJob(job),;
+            job.AddPlayerToJob(player, leader, true),;
+            leader.Emit("Popup:Close"),;
+            OpenCoopMenu(leader, job.JobId),;
         }
-        [ClientEvent("Job:AskCoop")]
-        public void AskCoop(IPlayer leader, int jobId, int playerId)
+        [ClientEvent("Job:AskCoop"),]
+        public void AskCoop(IPlayer leader, int jobId, int playerId),
         {
-            if (leader.GetCharacter().GetJob() == null)
+            if (leader.GetCharacter(),.GetJob(), == null),
             {
-                leader.SendError("Du hast keinen Job!");
+                leader.SendError("Du hast keinen Job!"),;
                 return;
             }
 
-            var job = Core.GetService<JobManager>().GetJob(jobId);
-            var player = Core.GetService<PlayerManager>().GetClient(playerId);
+            var job = Core.GetService<JobManager>(),.GetJob(jobId),;
+            var player = Core.GetService<PlayerManager>(),.GetClient(playerId),;
 
-            if (player != null)
+            if (player != null),
             {
                 var interactionData = new InteractionData
                 {
                     SourceObject = job,
                     CallBack = leader
                 };
-                player.GetCharacter()
+                player.GetCharacter(),
                     .ShowInteraction("Job-Einladung", "Job:AcceptCoop", "Drücke E um die Einladung anzunehmen"
-                        , interactionData: interactionData);
+                        , interactionData: interactionData),;
                 /*QuestionDialogue.Create(leader, player,
                     "Multiplayer Job Anfrage",
-                    $"Möchtest du in das {job.Name}-Team von {leader.GetCharacter().GetNormalizedName()}"  +
+                    $"Möchtest du in das {job.Name}-Team von {leader.GetCharacter(),.GetNormalizedName(),}"  +
                     " aufgenommen werden?",
-                    (leader1, target1) =>
+                    (leader1, target1), =>
                     {
-                        job.AddPlayerToJob(player, leader, true);
-                        leader.Emit("Popup:Close");
-                        OpenCoopMenu(leader, jobId);
+                        job.AddPlayerToJob(player, leader, true),;
+                        leader.Emit("Popup:Close"),;
+                        OpenCoopMenu(leader, jobId),;
                     },
-                    (leader1, target) => leader.SendError($"{player.Name} hat deine Job-Anfrage abgelehnt!")
-                );*/
+                    (leader1, target), => leader.SendError($"{player.Name} hat deine Job-Anfrage abgelehnt!"),
+                ),;*/
             }
             else
-                leader.SendError("Spieler nicht gefunden!");
+                leader.SendError("Spieler nicht gefunden!"),;
         }
 
-        [ClientEvent("Job:OpenCoop")]
-        public void OpenCoopMenu(IPlayer player, int jobId)
+        [ClientEvent("Job:OpenCoop"),]
+        public void OpenCoopMenu(IPlayer player, int jobId),
         {
-            var job = Core.GetService<JobManager>().GetJob(jobId);
-            var currentPlayers = job.JobPlayers.ContainsKey(player) ? job.JobPlayers[player].Count : 1;
+            var job = Core.GetService<JobManager>(),.GetJob(jobId),;
+            var currentPlayers = job.JobPlayers.ContainsKey(player), ? job.JobPlayers[player].Count : 1;
             var data = new PopupMenuDto
             {
                 Title = "Job",
@@ -166,21 +166,21 @@ namespace Exo.Rp.Core.Events.Jobs
                     }
                 }
             };
-            if (!job.JobPlayers.ContainsKey(player))
+            if (!job.JobPlayers.ContainsKey(player),),
             {
                 data.Items.Add(new PopupLabelDto
                 {
-                    Name = $"{player.Name} (Leader)"
-                });
+                    Name = $"{player.Name} (Leader),"
+                }),;
             }
             else
             {
-                foreach (var jobPlayer in job.JobPlayers[player])
+                foreach (var jobPlayer in job.JobPlayers[player]),
                 {
                     data.Items.Add(new PopupLabelDto
                     {
-                        Name = $"{jobPlayer.Value} " + (jobPlayer.Key == player.GetId() ? "(Leader)" : "")
-                    });
+                        Name = $"{jobPlayer.Value} " + (jobPlayer.Key == player.GetId(), ? "(Leader)," : ""),
+                    }),;
                 }
             }
             data.Items.Add(new PopupButtonDto
@@ -189,52 +189,52 @@ namespace Exo.Rp.Core.Events.Jobs
                 Color = "green",
                 Callback = "Job:StartJobMultiplayer",
                 CallbackArgs = new List<object>{jobId}
-            });
-            if (!job.JobPlayers.ContainsKey(player) || job.JobPlayers[player].Count < job.MaxPlayers)
+            }),;
+            if (!job.JobPlayers.ContainsKey(player), || job.JobPlayers[player].Count < job.MaxPlayers),
             {
                 data.Items.Add(new PopupHeaderDto
                 {
                     LeftText = "Spieler hinzufügen", RightText = ""
-                });
-                foreach (Player online in Alt.GetAllPlayers())
+                }),;
+                foreach (Player online in Alt.GetAllPlayers(),),
                 {
-                    if(online == player) continue;
+                    if(online == player), continue;
                     data.Items.Add(new PopupButtonDto
                     {
                         Name = online.Name,
                         Callback = "Job:AskCoop",
-                        CallbackArgs = new List<object>{jobId, online.GetAccount().Id}
-                    });
+                        CallbackArgs = new List<object>{jobId, online.GetAccount(),.Id}
+                    }),;
                 }
             }
 
-            player.Emit("Popup:Show", data);
+            player.Emit("Popup:Show", data),;
         }
 
-        [ClientEvent("Job:BuyUpgrade")]
-        public void BuyUpgrade(IPlayer player, int jobId, int categoryId, int upgradeId)
+        [ClientEvent("Job:BuyUpgrade"),]
+        public void BuyUpgrade(IPlayer player, int jobId, int categoryId, int upgradeId),
         {
-            if (player.GetCharacter().GetJob() == null) return;
-            var job = Core.GetService<JobManager>().GetJob(jobId);
-            var needed = job.GetJobUpgradePoints(player, categoryId, upgradeId);
-            if (needed <= 0)
+            if (player.GetCharacter(),.GetJob(), == null), return;
+            var job = Core.GetService<JobManager>(),.GetJob(jobId),;
+            var needed = job.GetJobUpgradePoints(player, categoryId, upgradeId),;
+            if (needed <= 0),
             {
-                player.SendError("Du besitzt dieses Upgrade bereits!");
+                player.SendError("Du besitzt dieses Upgrade bereits!"),;
                 return;
             }
 
-            if (job.GetPlayerUpgradePoints(player) >= needed)
+            if (job.GetPlayerUpgradePoints(player), >= needed),
             {
-                job.SetJobUpgrade(player, categoryId, upgradeId);
-                Logger.Info($"BUY Upgrade For Job {jobId} Cat: {categoryId} Upgrade: {upgradeId}");
+                job.SetJobUpgrade(player, categoryId, upgradeId),;
+                Logger.Info($"BUY Upgrade For Job {jobId} Cat: {categoryId} Upgrade: {upgradeId}"),;
 
-                player.SendSuccess("Upgrade gekauft!");
-                player.Emit("Popup:Close");
-                job.ShowJobMenu(player, "upgrade");
+                player.SendSuccess("Upgrade gekauft!"),;
+                player.Emit("Popup:Close"),;
+                job.ShowJobMenu(player, "upgrade"),;
             }
             else
             {
-                player.SendError("Du hast nicht genug Job-Punkte!");
+                player.SendError("Du hast nicht genug Job-Punkte!"),;
             }
         }
     }

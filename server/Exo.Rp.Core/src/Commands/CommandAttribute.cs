@@ -3,7 +3,7 @@ using Exo.Rp.Models.Enums;
 
 namespace Exo.Rp.Core.Commands
 {
-    [AttributeUsage(AttributeTargets.Method, Inherited = false)]
+    [AttributeUsage(AttributeTargets.Method, Inherited = false),]
     public class CommandAttribute : Attribute
     {
         public string CommandIdentifier { get; }
@@ -12,7 +12,7 @@ namespace Exo.Rp.Core.Commands
         public TeamPermissions RequiredTeamPermissions { get; set; }
         public bool GreedyArg { get; set; }
 
-        public CommandAttribute(string command)
+        public CommandAttribute(string command),
         {
             CommandIdentifier = command;
         }

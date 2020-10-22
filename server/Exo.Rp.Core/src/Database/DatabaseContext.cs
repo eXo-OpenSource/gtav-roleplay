@@ -26,7 +26,7 @@ namespace Exo.Rp.Core.Database
 {
     public class DatabaseContext : DbContext, IService
     {
-        // If a new entity is added it need to be load "DatabaseCore.OnResourceStartHandler()"
+        // If a new entity is added it need to be load "DatabaseCore.OnResourceStartHandler(),"
         public DbSet<AccountModel> AccountModel { get; set; }
         public DbSet<CharacterModel> CharacterModel { get; set; }
 
@@ -46,22 +46,22 @@ namespace Exo.Rp.Core.Database
 
         public DbSet<FaceFeaturesModel> FaceFeaturesModel { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder),
         {
-            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance),;
 
 
-            if (SettingsManager.ServerSettings.Database.QueryLog)
+            if (SettingsManager.ServerSettings.Database.QueryLog),
             {
                 optionsBuilder
-                    .UseLoggerFactory(DatabaseCore.GetLoggerFactory(LogLevel.Information))
-                    .UseMySql(ContextFactory.ConnectionString);
+                    .UseLoggerFactory(DatabaseCore.GetLoggerFactory(LogLevel.Information),),
+                    .UseMySql(ContextFactory.ConnectionString),;
             }
             else
             {
                 optionsBuilder
-                    .UseLoggerFactory(DatabaseCore.GetLoggerFactory(LogLevel.Error))
-                    .UseMySql(ContextFactory.ConnectionString);
+                    .UseLoggerFactory(DatabaseCore.GetLoggerFactory(LogLevel.Error),),
+                    .UseMySql(ContextFactory.ConnectionString),;
             }
         }
     }
