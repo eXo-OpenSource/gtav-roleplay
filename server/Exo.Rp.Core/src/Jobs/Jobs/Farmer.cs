@@ -41,24 +41,6 @@ namespace Exo.Rp.Core.Jobs.Jobs
         private readonly Position appleDeliveryPosition = new Position(2315.753f, 5076.539f, 44.3425f);
         private readonly Position wheatDeliveryPosition = new Position(2338.303f, 5095.162f, 46.55493f);
 
-        private readonly Position[] treePositions =
-        {
-            new Position(2390.723f, 4991.62f, 45.23268f),
-            new Position(2389.445f, 5005.084f, 45.74849f),
-            new Position(2377.074f, 5003.869f, 44.55497f),
-            new Position(2377.004f, 5017.008f, 45.50089f)
-        };
-
-        private readonly Position[] wheatFieldCornerPositions =
-        {
-            new Position(2309.235f, 5087.252f, 46.88379f),
-            new Position(2259.764f, 5135.268f, 53.92041f),
-            new Position(2296.756f, 5172.824f, 59.22077f),
-            new Position(2357.246f, 5116.976f, 47.95833f),
-            new Position(2325.556f, 5086.558f, 46.30328f)
-        };
-
-
         private readonly Position wheatTractorPosition = new Position(2311.975f, 5083.859f, 46.42386f);
         private readonly float wheatTractorRotation = 147.6577f;
 
@@ -106,7 +88,7 @@ namespace Exo.Rp.Core.Jobs.Jobs
 
             if (player.GetData("FarmerJob:JobType", out int result) && result == 1)
             {
-                for (int i = 1; i < wheatFieldCornerPositions.Length; i++)
+                for (int i = 1; i < Wheat.wheatFieldCornerPositions.Length; i++)
                 {
                     wheatCorners[i].Blip.RemoveVisibleEntity(player.Id);
                     wheatCorners[i].Destroy(player);
@@ -117,7 +99,7 @@ namespace Exo.Rp.Core.Jobs.Jobs
                 appleDeliveryMarker.Remove();
                 appleDeliveryBlip.RemoveVisibleEntity(player.Id);
                 Core.GetService<PrivateStreamer>().RemoveEntity(appleDeliveryBlip);
-                for (int i = 1; i < treePositions.Length; i++)
+                for (int i = 1; i < Tree.treePositions.Length; i++)
                 {
                     appleTrees[i].Blip.RemoveVisibleEntity(player.Id);
                     appleTrees[i].Destroy(player);
@@ -143,9 +125,9 @@ namespace Exo.Rp.Core.Jobs.Jobs
                 CreateWheatDeliveryMarker(player, wheatDeliveryPosition);
                 player.SendNotification("Fahre die auf der Karte markierten Weizenfelder ab!");
          
-                for (int i = 0; i < wheatFieldCornerPositions.Length; i++)
+                for (int i = 0; i < Wheat.wheatFieldCornerPositions.Length; i++)
                 {
-                    wheatCorners.Add(i, new Wheat(wheatFieldCornerPositions[i]));
+                    wheatCorners.Add(i, new Wheat(Wheat.wheatFieldCornerPositions[i]));
                     wheatCorners[i].Blip.AddVisibleEntity(player.Id);
                 }
             } else
@@ -153,9 +135,9 @@ namespace Exo.Rp.Core.Jobs.Jobs
                 CreateAppleDeliveryMarker(player, appleDeliveryPosition);
                 player.SendNotification("Pflücke die auf der Karte markierten Äpfel ab!");
 
-                for (int i = 0; i < treePositions.Length; i++)
+                for (int i = 0; i < Tree.treePositions.Length; i++)
                 {
-                    appleTrees.Add(i, new Tree(treePositions[i]));
+                    appleTrees.Add(i, new Tree(Tree.treePositions[i]));
                     appleTrees[i].Blip.AddVisibleEntity(player.Id);
                 }
 

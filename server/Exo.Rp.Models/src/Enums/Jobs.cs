@@ -7,6 +7,7 @@ namespace Exo.Rp.Models.Enums
         LawnCaretaker = 2,
         Farmer = 3,
         Miner = 4,
-        Pizzaboy = 5
+        Pizzaboy = 5,
+        WoodCutter = 6
     }
 }

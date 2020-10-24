@@ -19,6 +19,7 @@ const LoadableCharacterCreatorComponent = loadable(() => import("./forms/charcre
 const LoadableATMComponent = loadable(() => import("./forms/atm"), loadableOptions);
 const LoadableCarRentComponent = loadable(() => import("./forms/car-rent"), loadableOptions);
 const LoadableFarmerComponent = loadable(() => import("./jobs/farmer"), loadableOptions);
+const LoadableWoodCutterComponent = loadable(() => import("./jobs/woodcutter"), loadableOptions);
 
 class App extends Component {
   constructor(props) {
@@ -36,6 +37,7 @@ class App extends Component {
             <Route path="/atm" component={LoadableATMComponent} />
             <Route path="/carrent" component={LoadableCarRentComponent} />
             <Route path="/farmer" component={LoadableFarmerComponent} />
+            <Route path="/woodcutter" component={LoadableWoodCutterComponent} />
           </Switch>
         </Router>
         <Chat/>

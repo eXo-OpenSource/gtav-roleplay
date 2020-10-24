@@ -15,7 +15,8 @@ namespace Exo.Rp.Core.Jobs
                 {2, new LawnCaretaker(2)},
                 {3, new Farmer(3)},
                 {4, new Miner(4)},
-                {5, new PizzaDelivery(5)}
+                {5, new PizzaDelivery(5)},
+                {6, new WoodCutter(6)}
             };
         }
 
