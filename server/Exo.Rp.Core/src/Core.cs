@@ -38,13 +38,14 @@ namespace Exo.Rp.Core
         {
             Logger.Info($"Tasks | { target } | Executing Tasks...");
             var stopWatch = Stopwatch.StartNew();
-            
+            var cancellationTokenSource = new CancellationTokenSource();
+        
             foreach (var task in _host.Services.GetServices<TTask>())
             {
                 Logger.Debug($"Tasks | { target } | Executing {task.GetType().Name}...");
                 var _stopWatch = Stopwatch.StartNew();
 
-                await task.ExecuteAsync();
+                await task.ExecuteAsync(cancellationTokenSource.Token);
 
                 _stopWatch.Stop();
                 Logger.Debug($"Tasks | { target } | Executed {task.GetType().Name} in {_stopWatch.ElapsedMilliseconds}ms.");

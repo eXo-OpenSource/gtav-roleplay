@@ -47,6 +47,14 @@ namespace Exo.Rp.Core.Util
                 .Where(type => type.GetInterface(typeof(TInterface).Name, true) != default);
         }
 
+        public IEnumerable<Type> IndexImplementsInterface<TInterface, TInterface2>(Assembly target)
+        {
+            return target
+                .GetTypes()
+                .Where(type => type.GetInterface(typeof(TInterface).Name, true) != default)
+                .Where(type => type.GetInterface(typeof(TInterface2).Name, true) != default);
+        }
+
         public IEnumerable<Type> IndexImplementsInterface<TInterface>(IEnumerable<Assembly> assemblies)
         {
             return assemblies

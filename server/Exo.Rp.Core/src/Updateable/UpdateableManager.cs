@@ -27,8 +27,7 @@ namespace Exo.Rp.Core.Updateable
 
         public UpdateableManager(RuntimeIndexer indexer)
         {
-            _updateables = indexer.IndexImplementsInterface<IUpdateable>(Assembly.GetExecutingAssembly())
-                .Where(t => t.GetInterface(typeof(IManager).Name) != default)
+            _updateables = indexer.IndexImplementsInterface<IUpdateable, IManager>(Assembly.GetExecutingAssembly())
                 .ToList();
         }
 
