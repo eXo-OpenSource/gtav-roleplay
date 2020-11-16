@@ -30,7 +30,7 @@ ADD ui/*.html       ui/
 WORKDIR /app/ui
 RUN npm install
 RUN npm run build
-RUN npm audit fix
+#RUN npm audit fix
 
 
 ## Justpack
