@@ -6,7 +6,6 @@ import { Camera } from "../utils/Camera"
 
 const url = 'http://resource/cef/index.html#/login';
 
-
 export class RegisterLogin {
   private uiManager: UiManager;
   private camera: Camera;

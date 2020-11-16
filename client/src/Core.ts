@@ -30,6 +30,6 @@ export class Core {
     alt.on('consoleCommand', () => {
       alt.log('consoleCommand');
       alt.emitServer("ClientConnectionComplete", "Test")
-    })
+    });
   }
 }
