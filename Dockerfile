@@ -1,5 +1,5 @@
 ## Base Image
-FROM eisengrind/altv-server:1300-js-dotnet as runner
+FROM eisengrind/altv-server:1301-js-dotnet as runner
 
 
 ## Builder Server
