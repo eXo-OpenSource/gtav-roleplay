@@ -117,6 +117,6 @@ namespace Exo.Rp.Core
             Console.WriteLine("OnStop");
             await _host.StopAsync();
         }
-    }
 */
+    }
 }
