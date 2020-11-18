@@ -40,7 +40,6 @@ using IPlayer = AltV.Net.Elements.Entities.IPlayer;
 
 namespace Exo.Rp.Core
 {
-    /*
     public class Entrypoint : Resource
     {
         private static readonly Logger<Entrypoint> Logger = new Logger<Entrypoint>();
@@ -159,5 +158,4 @@ namespace Exo.Rp.Core
             return new ColShapeBaseObjectFactory();
         }
     }
-    */
 }
