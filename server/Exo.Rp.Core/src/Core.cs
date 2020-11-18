@@ -28,12 +28,12 @@ namespace Exo.Rp.Core
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            //await ExecuteTasks<IStartupTask>("Startup");
+            await ExecuteTasks<IStartupTask>("Startup");
         }
 
         public async Task StopAsync(CancellationToken cancellationToken)
         {
-            //await ExecuteTasks<IShutdownTask>("Shutdown");
+            await ExecuteTasks<IShutdownTask>("Shutdown");
         }
 
         public static async Task ExecuteTasks<TTask>(string target = "Runtime")
