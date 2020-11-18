@@ -9,28 +9,31 @@ using Exo.Rp.Core.Tasks.StartupTasks;
 using Exo.Rp.Core.Util.Log;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Sentry;
 
 namespace Exo.Rp.Core
 {
     public class Core : IHostedService
     {
         private static IHost _host;
+        private static IHub _hub;
 
-        public Core(IHost host)
+        public Core(IHost host, IHub hub)
         {
             _host = host;
+            _hub = hub;
         }
 
         private static readonly Logger<Core> Logger = new Logger<Core>();
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            await ExecuteTasks<IStartupTask>("Startup");
+            //await ExecuteTasks<IStartupTask>("Startup");
         }
 
         public async Task StopAsync(CancellationToken cancellationToken)
         {
-            await ExecuteTasks<IShutdownTask>("Shutdown");
+            //await ExecuteTasks<IShutdownTask>("Shutdown");
         }
 
         public static async Task ExecuteTasks<TTask>(string target = "Runtime")

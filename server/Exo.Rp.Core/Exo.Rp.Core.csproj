@@ -12,6 +12,7 @@
 		<Product>eXo Roleplay Server</Product>
 		<RootNamespace>Exo.Rp.Core</RootNamespace>
 		<LangVersion>8</LangVersion>
+		<UserSecretsId>bd336d8e-8dd7-4502-bd29-d3c3c438febc</UserSecretsId>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)'=='Debug'">
@@ -36,7 +37,7 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-	  <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+		<CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="AltV.Net" Version="1.38.4" />
@@ -49,11 +50,13 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
+		<PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="5.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.2" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Console" Version="3.1.2" />
 		<PackageReference Include="NGettext" Version="0.6.5" />
 		<PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.1.1" />
-		<PackageReference Include="Sentry" Version="2.1.0" />
+		<PackageReference Include="Sentry" Version="2.1.6" />
+		<PackageReference Include="Sentry.Extensions.Logging" Version="2.1.6" />
 	</ItemGroup>
 
 	<ItemGroup>
