@@ -96,11 +96,11 @@ namespace Exo.Rp.Core
 
             // Initialize database
             DatabaseCore databaseCore = new DatabaseCore();
-            //databaseCore.CreateDatabaseConnection();
-            //collection.AddSingleton(ContextFactory.Connect());
+            databaseCore.CreateDatabaseConnection();
+            collection.AddSingleton(ContextFactory.Connect());
 
             // Start loading database models
-            //await databaseCore.OnResourceStartHandler();
+            await databaseCore.OnResourceStartHandler();
 
             // Add Core
             collection.AddHostedService<Core>();
