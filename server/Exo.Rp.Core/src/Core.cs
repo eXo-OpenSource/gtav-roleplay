@@ -16,12 +16,10 @@ namespace Exo.Rp.Core
     public class Core : IHostedService
     {
         private static IHost _host;
-        private static IHub _hub;
 
-        public Core(IHost host, IHub hub)
+        public Core(IHost host)
         {
             _host = host;
-            _hub = hub;
         }
 
         private static readonly Logger<Core> Logger = new Logger<Core>();
