@@ -29,18 +29,18 @@ export class HUD {
       }
 
       let date = new Date()
-      date.setHours(native.getClockHours())
+      // Fir
+      /* date.setHours(native.getClockHours())
       date.setMinutes(native.getClockMinutes())
       date.setSeconds(native.getClockSeconds())
       date.setFullYear(native.getClockYear(), native.getClockMonth())
-      date.setDate(native.getClockDayOfMonth())
+      date.setDate(native.getClockDayOfMonth()) */
 
-      const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' }
       let zone = native.getLabelText(native.getNameOfZone(alt.Player.local.pos.x, alt.Player.local.pos.y, alt.Player.local.pos.z))
 
       this.uiManager.emit("HUD:SetData", "location", zone)
-      this.uiManager.emit("HUD:SetData", "date", date.toLocaleDateString("de-DE", dateOptions))
-      this.uiManager.emit("HUD:SetData", "time", date.toLocaleTimeString("de-DE"))
+      this.uiManager.emit("HUD:SetData", "date", `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`)
+      this.uiManager.emit("HUD:SetData", "time", Date().slice(16, 21))
       this.uiManager.emit("HUD:SetData", "kevlar", native.getPedArmour(alt.Player.local.scriptID))
       this.uiManager.emit("HUD:SetData", "health", native.getEntityHealth(alt.Player.local.scriptID)/2)
       this.uiManager.emit("HUD:SetData", "hunger", "75") // need hunger-system
