@@ -239,18 +239,18 @@ namespace Exo.Rp.Core.Commands
             {
                 var veh = player.Vehicle;
                 var model = ((VehicleModel) player.Vehicle.Model).ToString();
-                player.SendChatMessage("#b#Fahrzeug-Position (" + model + "):");
+                player.SendChatMessage(null, "#b#Fahrzeug-Position (" + model + "):");
                 var pos = veh.Position;
                 var rot = veh.Rotation;
                 OutputPosition(player, pos, rot);
             }
             else
             {
-                player.SendChatMessage("#b#Spieler-Position:");
+                player.SendChatMessage(null, "#b#Spieler-Position:");
                 var pos = player.Position;
                 var rot = player.Rotation;
-                player.SendChatMessage($"{pos.X}, {pos.Y}, {pos.Z}");
-                player.SendChatMessage($"{rot.Roll}, {rot.Pitch} {rot.Yaw}");
+                player.SendChatMessage(null, $"{pos.X}, {pos.Y}, {pos.Z}");
+                player.SendChatMessage(null, $"{rot.Roll}, {rot.Pitch} {rot.Yaw}");
                 OutputPosition(player, pos, rot);
             }
         }
@@ -316,16 +316,16 @@ namespace Exo.Rp.Core.Commands
         [Command("money")]
         public static void Money(IPlayer player, string func, int amount = 0, bool bank = false)
         {
-            if (func == "get") player.SendChatMessage("Geld: $" + player.GetCharacter().GetMoney(bank));
+            if (func == "get") player.SendChatMessage(null, "Geld: $" + player.GetCharacter().GetMoney(bank));
             else if (func == "give")
             {
                 player.GetCharacter().GiveMoney(amount, "Admin", bank, false);
-                player.SendChatMessage("Geld: $" + player.GetCharacter().GetMoney(bank));
+                player.SendChatMessage(null, "Geld: $" + player.GetCharacter().GetMoney(bank));
             }
             else if (func == "take")
             {
                 player.GetCharacter().TakeMoney(amount, "Admin", bank, false);
-                player.SendChatMessage("Geld: $" + player.GetCharacter().GetMoney(bank));
+                player.SendChatMessage(null, "Geld: $" + player.GetCharacter().GetMoney(bank));
             }
         }
 
@@ -333,7 +333,7 @@ namespace Exo.Rp.Core.Commands
         public static void Jail(IPlayer player, string target)
         {
             var test = _jail.AddPrisoner(Player.FindPlayer(player, target), new TimeSpan(0, 0, 10));
-            player.SendChatMessage(test.ToString());
+            player.SendChatMessage(null, test.ToString());
         }
 
         [Command("waypoint")]
@@ -398,7 +398,7 @@ namespace Exo.Rp.Core.Commands
             player.GetAccount().Autologin = state;
             player.GetAccount().HardwareId = player.HardwareIdHash;
             player.GetAccount().SocialClubId = player.SocialClubId;
-            player.SendChatMessage(state ? "Autologin aktiviert!" : "Autologin deaktiviert!");
+            player.SendChatMessage(null, state ? "Autologin aktiviert!" : "Autologin deaktiviert!");
         }
 
         [Command("addshopveh")]
@@ -443,7 +443,7 @@ namespace Exo.Rp.Core.Commands
         [ClientEvent("Debug:onObjectPlaced")]
         public static void OnObjectPlaced(IPlayer player, string pos, string rot, int number)
         {
-            player.SendChatMessage("#b#Object-Position:");
+            player.SendChatMessage(null, "#b#Object-Position:");
             var vPos = pos.DeserializeVector();
             var vRot = rot.DeserializeVector();
 

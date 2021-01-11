@@ -43,7 +43,7 @@ namespace Exo.Rp.Core.Admin
 
             var adminLevel = sourcePlayer.GetAccount().AdminLvl;
             foreach (var player in GetAdmins())
-                player.SendChatMessage($"#y#[{adminLevel.ToString()} {sourcePlayer.Name}]#w#: {text}");
+                player.SendChatMessage(null, $"#y#[{adminLevel.ToString()} {sourcePlayer.Name}]#w#: {text}");
         }
 
         ////[Command("o", GreedyArg = true)]
@@ -53,7 +53,7 @@ namespace Exo.Rp.Core.Admin
 
             var adminLevel = sourcePlayer.GetAccount().AdminLvl;
             foreach (var player in Alt.GetAllPlayers().Cast<IPlayer>())
-                player.SendChatMessage($"#b#[{adminLevel.ToString()} {sourcePlayer.Name}]#w#: {text}");
+                player.SendChatMessage(null, $"#b#[{adminLevel.ToString()} {sourcePlayer.Name}]#w#: {text}");
         }
     }
 }

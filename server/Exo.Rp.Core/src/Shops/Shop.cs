@@ -45,13 +45,13 @@ namespace Exo.Rp.Core.Shops
         protected virtual void OnPedColEnter(Colshape.Colshape colshape, IEntity entity)
         {
             if(!(entity is IPlayer player)) return;
-            player.SendChatMessage("Entered Shop Col! " + Name);
+            player.SendChatMessage(null, "Entered Shop Col! " + Name);
         }
 
         protected virtual void OnPedColExit(Colshape.Colshape colshape, IEntity entity)
         {
             if(!(entity is IPlayer player)) return;
-            player.SendChatMessage("Leaved Shop Col! " + Name);
+            player.SendChatMessage(null, "Leaved Shop Col! " + Name);
         }
 
         public virtual void BuyVehicle(IPlayer player, int vehicleId)

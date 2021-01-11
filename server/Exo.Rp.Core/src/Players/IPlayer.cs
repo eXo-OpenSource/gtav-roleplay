@@ -25,7 +25,7 @@ namespace Exo.Rp.Core.Players
         void SendSuccess(string text);
         void StopAnimation(bool force = false);
         void PlayAnimation(string animation, string v, int flag);
-        void SendChatMessage(string msg);
+        void SendChatMessage(string playername, string msg);
         void SetIntoVehicle(IVehicle veh, int seat);
         void StartScenario(string name);
         void RequestIpl(IEnumerable<string> ipls);

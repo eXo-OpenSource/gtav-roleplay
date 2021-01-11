@@ -43,8 +43,7 @@ namespace Exo.Rp.Core.Chat
                 //if (player.Position.Distance(sender.Position) < _maxChatDistance) continue;
                 if (sender.Position.Distance(player.Position) <= _maxChatDistance)
                 {
-                    message = $"#y#OOC#w# {senderName ?? $"#r#[[#w#{sender.Name}#r#]]#w#"}: {message}";
-                    player.SendChatMessage(message);
+                    player.SendChatMessage(senderName, message);
                     player.Emit("outputClientConsole", message, false);
                 }
             }
@@ -61,7 +60,7 @@ namespace Exo.Rp.Core.Chat
                 if (player.Position.Distance(sender.Position) < _maxScreamDistance) continue;
 
                 message = $"{senderName ?? $"#r#[[#w#{sender.Name}#r#]]#w#"} schreit: {message}";
-                player.SendChatMessage(message);
+                player.SendChatMessage(null, message);
                 player.Emit("outputClientConsole", message, false);
             }
         }
@@ -77,7 +76,7 @@ namespace Exo.Rp.Core.Chat
                 if (player.Position.Distance(sender.Position) < _maxWhisperDistance) continue;
 
                 message = $"{senderName ?? $"#r#[[#w#{sender.Name}#r#]]#w#"} flüstert: {message}";
-                player.SendChatMessage(message);
+                player.SendChatMessage(player.GetCharacter().FullName, message);
                 player.Emit("outputClientConsole", message, false);
             }
         }

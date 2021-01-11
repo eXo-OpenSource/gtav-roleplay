@@ -114,12 +114,12 @@ namespace Exo.Rp.Core.Events.Vehicles
         {
             if (veh != null)
             {
-                client.SendChatMessage(veh.Model.ToString());
+                client.SendChatMessage(null, veh.Model.ToString());
                 //client.Emit("vehicle:OpenInteractionMenu", veh);
             }
             else
             {
-                client.SendChatMessage("Vehicle not found! ");
+                client.SendChatMessage(null, "Vehicle not found! ");
             }
         }
 

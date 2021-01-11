@@ -172,7 +172,7 @@ namespace Exo.Rp.Core.Commands
         [Command("getdim")]
         public static void GetDimension(IPlayer player)
         {
-            player.SendChatMessage("Du bist in Dimension: " + player.Dimension);
+            player.SendChatMessage(null, "Du bist in Dimension: " + player.Dimension);
         }
 
         [Command("gotocords", Alias = "gtc")]
