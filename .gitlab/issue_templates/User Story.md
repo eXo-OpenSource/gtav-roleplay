@@ -1,5 +1,6 @@
-User Story
+# User Story 
+Als [Benutzerrolle] möchte ich [Feature], sodass [Nutzen]
 
-Story Points
+# Akzeptanzkriterien
 
-Akzeptanzkriterien
+# Notizen
