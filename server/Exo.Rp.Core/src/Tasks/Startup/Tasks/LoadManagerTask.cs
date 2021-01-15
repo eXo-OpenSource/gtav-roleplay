@@ -47,8 +47,8 @@ namespace Exo.Rp.Core.Tasks.Startup.Tasks
             _logger.Info("Services | Loading Command handler...");
             _serviceProvider.GetService<CommandHandler>();
 
-            _logger.Info("Services | Loading Metrics collector...");
-            _serviceProvider.GetService<MetricsCollector>().Start();
+            //_logger.Info("Services | Loading Metrics collector...");
+            //_serviceProvider.GetService<MetricsCollector>().Start();
 
             _logger.Info("Services | Loading Translation manager...");
             _serviceProvider.GetService<TranslationManager>();
