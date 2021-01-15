@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<TargetFramework>net5.0</TargetFramework>
 		<RuntimeIdentifiers>win10-x64;linux-x64</RuntimeIdentifiers>
 		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
 		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
@@ -44,7 +44,7 @@
 	</ItemGroup>
 
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-	  <Exec Command="if not exist $(OutDir)\..\..\server\netcoreapp3.1\plugins\* mkdir $(OutDir)\..\..\server\netcoreapp3.1\plugins&#xD;&#xA;copy /b /v /y $(OutDir)\*  $(OutDir)\..\..\server\netcoreapp3.1\plugins\*" />
+	  <Exec Command="if not exist $(OutDir)\..\..\server\net5.0\plugins\* mkdir $(OutDir)\..\..\server\net5.0\plugins&#xD;&#xA;copy /b /v /y $(OutDir)\*  $(OutDir)\..\..\server\net5.0\plugins\*" />
 	</Target>
 
 </Project>

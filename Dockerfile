@@ -3,7 +3,7 @@ FROM eisengrind/altv-server:rc as runner
 
 
 ## Builder Server
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1 as builder_server
+FROM mcr.microsoft.com/dotnet/sdk:5.0 as builder_server
 WORKDIR /
 
 # Restore nuget packages and build binaries

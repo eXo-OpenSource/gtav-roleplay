@@ -5,7 +5,7 @@
 4. Copy the `build/server.cfg` into `ALTV_DIR/server/server.cfg`
 5. Open `Exo Roleplay.sln` and build the project with `Ctrl+Shift+B`
 6. Go into the `ALTV_DIR/server/resources` dir and open the command prompt
-7. For the server type: `mklink /J "exov" "REPO_DIR/server/bin/server/netcoreapp3.1"`
+7. For the server type: `mklink /J "exov" "REPO_DIR/server/bin/server/net5.0"`
 8. For the client type: `mklink /J "exov-client" "REPO_DIR/client"`
 9. In the repo root create a folder called `bin` and launch a command prompt in it
 10. Type: `mklink /J "altv" "ALTV_DIR/server"`
