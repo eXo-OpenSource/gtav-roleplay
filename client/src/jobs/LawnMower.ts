@@ -1,7 +1,7 @@
-import alt, {Entity, Player, Vector3, Vehicle, WorldObject} from 'alt-client'
+import alt, { Entity, Player, Vector3, Vehicle, WorldObject } from 'alt-client'
 import * as native from 'natives'
 import Marker from "../systems/Marker"
-import {distance} from "../utils/Vector"
+import { distance } from "../utils/Vector"
 
 export default class LawnMower {
   private player = alt.Player.local
@@ -64,7 +64,7 @@ export default class LawnMower {
   }
 
   setWayPoint(x: number, y: number, z: number) {
-    this.marker = Marker.createMarker(30, new Vector3(x, y, z), 1, {r: 25, g: 175, b: 0, a: 225})
+    this.marker = Marker.createMarker(30, new Vector3(x, y, z), 1, { r: 25, g: 175, b: 0, a: 225 })
     native.setNewWaypoint(x, y)
   }
 
