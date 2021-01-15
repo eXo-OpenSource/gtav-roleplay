@@ -11,7 +11,7 @@
 		<Company>eXo Roleplay</Company>
 		<Product>eXo Roleplay Server</Product>
 		<RootNamespace>Exo.Rp.Core</RootNamespace>
-		<LangVersion>8</LangVersion>
+		<LangVersion>latest</LangVersion>
 		<UserSecretsId>bd336d8e-8dd7-4502-bd29-d3c3c438febc</UserSecretsId>
 	</PropertyGroup>
 
