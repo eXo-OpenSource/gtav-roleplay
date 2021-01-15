@@ -12,6 +12,13 @@ build_job:
   tags:
     - linux
     - dind
+  only:
+    changes:
+      - Dockerfile
+      - build/**/*
+      - server/**/*
+      - client/**/*
+      - ui/**/*
   script:
     - |
         docker build -f Dockerfile \
@@ -32,6 +39,9 @@ build_cdn_job:
   tags:
     - linux
     - dind
+  only:
+   changes:
+     - cdn/**/*
   script:
     - |
         docker build -f cdn/Dockerfile \
