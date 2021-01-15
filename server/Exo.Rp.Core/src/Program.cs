@@ -104,6 +104,8 @@ namespace Exo.Rp.Core
 
             // Add Core
             collection.AddHostedService<Core>();
+
+            Console.WriteLine(T._("Hello world {0}", player: null, ""));
         }
 
 /*

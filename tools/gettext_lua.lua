@@ -26,8 +26,7 @@ function processFile(path, name, pothandle)
 	input = removeComments(input)
 
 	-- 	this gmatch matches T._("TEXT")
-	for match in string.gmatch(input, 'T._%(%"(.-)%"') do -- .-_%(?"(.-)"%)?
-		print(match)
+	for match in string.gmatch(input, 'T._%(?"(.-)%)?"') do -- .-_%(?"(.-)"%)?
 		pothandle:write("#: "..path.."/"..name..":0\n")
 		pothandle:write("msgid \""..match.."\"\n")
 		pothandle:write("msgstr \"\"\n")
