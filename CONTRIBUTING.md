@@ -20,7 +20,8 @@
 # Errorshooting
 * Check if all node_modules are installed with `npm install -g npm-install-missing`
 * Check if your runtimeconfig has the correct settings:
-`{
+```
+{
   "runtimeOptions": {
     "tfm": "net5.0",
     "framework": {
@@ -28,4 +29,5 @@
       "version": "5.0.0"
     }
   }
-}`
+}
+```
