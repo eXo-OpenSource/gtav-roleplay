@@ -6,48 +6,46 @@ import { Cursor } from "../utils/Cursor"
 
 @Singleton
 export class ATM {
-  private uiManager: UiManager
-  private open = false
+  private static open = false
 
-  public constructor(uiManager) {
-    this.uiManager = uiManager;
 
-    this.uiManager.on("ATM:Logout", this.logOut.bind(this))
-    this.uiManager.on("ATM:CashIn", this.cashIn.bind(this))
-    this.uiManager.on("ATM:CashOut", this.cashOut.bind(this))
-
-    alt.emitServer("BankAccount:RefreshData")
-
-    alt.onServer("BankAccount:UpdateData", this.updateData.bind(this))
-
-    alt.onServer("ATM:Show", () => {
-      this.uiManager.navigate("/atm", true)
+  static showATM() {
+    UiManager.navigate("/atm", true)
       alt.toggleGameControls(false)
       this.open = true
-    })
   }
 
-  updateData(_bankmoney, _money, _normalizedName) {
-    this.uiManager.emit("ATM:SetData", "bankmoney", _bankmoney)
-    this.uiManager.emit("ATM:SetData", "money", _money)
-    this.uiManager.emit("ATM:SetData", "name", _normalizedName)
+  static updateData(_bankmoney, _money, _normalizedName) {
+    UiManager.emit("ATM:SetData", "bankmoney", _bankmoney)
+    UiManager.emit("ATM:SetData", "money", _money)
+    UiManager.emit("ATM:SetData", "name", _normalizedName)
     alt.emitServer("BankAccount:RefreshData")
   }
 
-  cashIn(_amount) {
+  static cashIn(_amount) {
     alt.emitServer("BankAccount:CashIn", Number(_amount))
     alt.emitServer("BankAccount:RefreshData")
   }
 
-  cashOut(_amount) {
+  static cashOut(_amount) {
     alt.emitServer("BankAccount:CashOut", Number(_amount))
     alt.emitServer("BankAccount:RefreshData")
   }
 
-  logOut() {
-    this.uiManager.reset()
+  static logOut() {
+    UiManager.reset()
     Cursor.show(false)
     alt.toggleGameControls(true)
     alt.setTimeout(() => this.open = false, 1000)
   }
 }
+
+alt.onServer("ATM:Show", ATM.showATM)
+
+UiManager.on("ATM:Logout", ATM.logOut)
+UiManager.on("ATM:CashIn", ATM.cashIn)
+UiManager.on("ATM:CashOut", ATM.cashOut)
+
+alt.emitServer("BankAccount:RefreshData")
+
+alt.onServer("BankAccount:UpdateData", ATM.updateData)

@@ -11,13 +11,18 @@ import LawnMower from "./jobs/LawnMower";
 import PizzaDelivery from "./jobs/PizzaDelivery";
 import IPLManager from "./world/IPLManager";
 import DoorManager from "./world/Doormanager";
-import "./systems/Blip"
+//extensions
+import "./extensions/Blip"
+
+//events
+import './events/keyup'
+
+
 import "./utils/DevCommands";
 
 @Singleton
 export class Core {
-  private uiManager = new UiManager();
-  private interaction = new Interaction(this.uiManager);
+  private interaction = new Interaction();
   private waste = new WasteCollector();
   private lawn = new LawnMower();
   private pizza = new PizzaDelivery();
@@ -26,6 +31,8 @@ export class Core {
 
   constructor() {
     alt.log('Loaded: client.mjs');
+
+    UiManager.createUi()
 
     alt.on('consoleCommand', () => {
       alt.log('consoleCommand');

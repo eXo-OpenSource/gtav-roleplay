@@ -14,11 +14,9 @@ export interface InteractionInstance {
 }
 
 export class Interaction {
-  private uiManager: UiManager;
   private currInteraction: InteractionInstance[];
 
-  constructor(uiManager) {
-    this.uiManager = uiManager;
+  constructor() {
     this.currInteraction = [];
 
     alt.onServer("Interaction:Show", (id, title, text, callback) => {
@@ -30,11 +28,11 @@ export class Interaction {
         callback: callback,
         key: 69 //E
       });
-      this.uiManager.insertToast(id, title, text)
+      UiManager.insertToast(id, title, text)
     })
 
     alt.onServer("Interaction:Hide", (id) => {
-      this.uiManager.removeToast(id)
+      UiManager.removeToast(id)
       this.currInteraction = this.currInteraction.filter(value => value.id !== id);
     })
 

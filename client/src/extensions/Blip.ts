@@ -1,16 +1,14 @@
 import alt, {BaseObject, Entity, Player, PointBlip, Vector3, WorldObject} from 'alt-client';
 import * as native from 'natives';
-import {StreamedEntity} from "./Streamer";
+import {StreamedEntity} from "../systems/Streamer";
 
 let globalBlips = []
 
-export class Blip {
-  public static createFromEntity(entity: StreamedEntity): PointBlip {
-    const blip = new PointBlip(entity.position.x, entity.position.y, entity.position.z);
-    blip.sprite = entity.data.sprite;
-    blip.name = entity.data.name;
-
-    return blip;
+export class Blip extends alt.PointBlip {
+  constructor(entity: StreamedEntity) {
+    super(entity.position.x, entity.position.y, entity.position.z);
+    this.sprite = entity.data.sprite;
+    this.name = entity.data.name;
   }
 }
 

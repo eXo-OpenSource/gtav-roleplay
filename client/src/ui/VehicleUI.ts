@@ -3,24 +3,20 @@ import * as native from 'natives'
 import { UiManager } from './UiManager'
 
 export class VehicleUI {
-  private uiManager: UiManager
+  static player = alt.Player.local;
+  static option = '';
+  static entity = alt.Entity;
 
-  public constructor(uiManager) {
-    this.uiManager = uiManager
-    const player = alt.Player.local
-    const entity = alt.Entity
-    let option = ''
-
-    alt.on('keydown', (key) => {
-      if (key === 0x58 && alt.gameControlsEnabled()) {
-        var vehicle = native.getClosestVehicle(player.pos.x, player.pos.y, player.pos.z, 5, 0, 70) || player.vehicle.scriptID
+  static activateInteractionMenu() {
+    if(alt.gameControlsEnabled()) {
+      var vehicle = native.getClosestVehicle(this.player.pos.x, this.player.pos.y, this.player.pos.z, 5, 0, 70) || this.player.vehicle.scriptID
 
         if (vehicle) {
           alt.toggleGameControls(false)
           native.playSoundFrontend(-1, 'CONTINUE', 'HUD_FRONTEND_DEFAULT_SOUNDSET', true)
 
-          if (player.vehicle) {
-            this.uiManager.emit('InteractionMenu:UpdateItems', [
+          if (this.player.vehicle) {
+            UiManager.emit('InteractionMenu:UpdateItems', [
               {
                 title: "Fahrzeuginfo",
                 img: "info"
@@ -43,7 +39,7 @@ export class VehicleUI {
               }
             ])
           } else {
-            this.uiManager.emit('InteractionMenu:UpdateItems', [
+            UiManager.emit('InteractionMenu:UpdateItems', [
               {
                 title: "Fahrzeuginfo",
                 img: "info"
@@ -66,23 +62,22 @@ export class VehicleUI {
               }
             ])
           }
-          this.uiManager.emit("InteractionMenu:ToggleShow", true)
+          UiManager.emit("InteractionMenu:ToggleShow", true)
         }
-      }
-    })
+    }
+  }
 
-    alt.on('keyup', (key) => {
-      if (key === 0x58) {
-        var vehicle = native.getClosestVehicle(player.pos.x, player.pos.y, player.pos.z, 5, 0, 70) || player.vehicle.scriptID
+  static deactivateInteractionMenu() {
+    var vehicle = native.getClosestVehicle(this.player.pos.x, this.player.pos.y, this.player.pos.z, 5, 0, 70) || this.player.vehicle.scriptID
 
         if (vehicle) {
           alt.toggleGameControls(true)
-          this.uiManager.emit("InteractionMenu:ToggleShow", false)
+          UiManager.emit("InteractionMenu:ToggleShow", false)
           native.playSoundFrontend(-1, 'EXIT', 'HUD_FRONTEND_DEFAULT_SOUNDSET', true)
 
-          switch(option) {
+          switch(this.option) {
             case 'Fahrzeuginfo':
-              alt.emitServer('Vehicle:GetInfo', (player.vehicle ? entity.getByScriptID(player.vehicle.scriptID) : entity.getByScriptID(vehicle)))
+              alt.emitServer('Vehicle:GetInfo', (this.player.vehicle ? this.entity.getByScriptID(this.player.vehicle.scriptID) : this.entity.getByScriptID(vehicle)))
               break;
             case 'Licht an/aus':
               alt.emitServer('Vehicle:ToggleLight')
@@ -92,29 +87,28 @@ export class VehicleUI {
               break;
             case 'Motorhaube auf/zu':
               if (native.getVehicleDoorAngleRatio(vehicle, 4) >= 0.1) {
-                alt.emitServer('Vehicle:ToggleDoor', entity.getByScriptID(vehicle), 4, false)
+                alt.emitServer('Vehicle:ToggleDoor', this.entity.getByScriptID(vehicle), 4, false)
               } else {
-                alt.emitServer('Vehicle:ToggleDoor', entity.getByScriptID(vehicle), 4, true)
+                alt.emitServer('Vehicle:ToggleDoor', this.entity.getByScriptID(vehicle), 4, true)
               }
               break;
             case 'Kofferraum auf/zu':
               if (native.getVehicleDoorAngleRatio(vehicle, 5) >= 0.1) {
-                alt.emitServer('Vehicle:ToggleDoor', entity.getByScriptID(vehicle), 5, false)
+                alt.emitServer('Vehicle:ToggleDoor', this.entity.getByScriptID(vehicle), 5, false)
               } else {
-                alt.emitServer('Vehicle:ToggleDoor', entity.getByScriptID(vehicle), 5, true)
+                alt.emitServer('Vehicle:ToggleDoor', this.entity.getByScriptID(vehicle), 5, true)
               }
               break;
             case 'Auf-/ Zuschließen':
-              alt.emitServer('Vehicle:ToggleLock', (player.vehicle ? entity.getByScriptID(player.vehicle.scriptID) : entity.getByScriptID(vehicle)))
+              alt.emitServer('Vehicle:ToggleLock', (this.player.vehicle ? this.entity.getByScriptID(this.player.vehicle.scriptID) : this.entity.getByScriptID(vehicle)))
               break;
           }
         }
-      }
-    })
+  }
 
-    this.uiManager.on('InteractionMenu:CurrentSelection', (_option) => {
-      option = _option
-    })
-
+  static setOption(_option) {
+    this.option = _option;
   }
 }
+
+UiManager.on('InteractionMenu:CurrentSelection', VehicleUI.setOption)

@@ -6,37 +6,32 @@ import { Camera } from "../utils/Camera"
 
 const url = 'http://resource/cef/index.html#/login';
 
-export class RegisterLogin {
-  private uiManager: UiManager;
-  private camera: Camera;
+UiManager.on('login', (username: string, password: string) => {
+  alt.emitServer('RegisterLogin:Login', username, password);
+});
 
-  private cameraPoint: Vector3 = {
+alt.onServer("registerLogin:Error", (error) => {
+  UiManager.emit("setError", error)
+});
+
+export class RegisterLogin {
+
+  private static cameraPoint: Vector3 = {
     x: -80,
     y: -825.03,
     z: 328.67
   }
 
-  public constructor(uiManager) {
+  private static camera: Camera = new Camera(RegisterLogin.cameraPoint, 17);
 
-    this.uiManager = uiManager;
-    this.camera = new Camera(this.cameraPoint, 17)
+  static openLogin() {
     this.camera.pointAtCoord(this.cameraPoint)
 
-    // Setup Webview
-    //this.uiManager.writeChat(url);
-
     alt.toggleGameControls(false)
-    this.uiManager.navigate("/login", true)
-    this.uiManager.on('login', (username: string, password: string) => {
-      alt.emitServer('RegisterLogin:Login', username, password);
-    });
-
-    alt.onServer("registerLogin:Error", (error) => {
-      this.uiManager.emit("setError", error)
-    });
+    UiManager.navigate("/login", true)
 
     alt.onServer("registerLogin:Success", () => {
-      this.uiManager.reset()
+      UiManager.reset()
       this.camera.destroy()
       alt.toggleGameControls(true)
     });

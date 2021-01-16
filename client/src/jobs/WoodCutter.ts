@@ -6,26 +6,22 @@ import { Cursor } from "../utils/Cursor"
 
 @Singleton
 export class WoodCutter {
-  private uiManager: UiManager
-  private open = false
+  private static open = false
 
-  public constructor(uiManager) {
-    this.uiManager = uiManager;
-
-    this.uiManager.on("WoodCutter:CloseGUI", this.closeGUI.bind(this))
-
-    alt.onServer("WoodCutter:OpenGUI", () => {
-      if (this.open) return
-      this.uiManager.navigate("/woodcutter", true)
+  static openGUI() {
+    if (this.open) return
+      UiManager.navigate("/woodcutter", true)
       alt.toggleGameControls(false)
       this.open = true
-    })
   }
 
-  closeGUI() {
-    this.uiManager.reset()
+  static closeGUI() {
+    UiManager.reset()
     Cursor.show(false)
     alt.toggleGameControls(true)
     this.open = false
   }
 }
+
+UiManager.on("WoodCutter:CloseGUI", WoodCutter.closeGUI)
+alt.onServer("WoodCutter:OpenGUI", WoodCutter.openGUI)

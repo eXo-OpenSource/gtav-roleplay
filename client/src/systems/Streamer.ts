@@ -1,5 +1,5 @@
 import alt, {BaseObject, PointBlip, Vector3} from 'alt-client';
-import Blip from "./Blip";
+import Blip from "../extensions/Blip";
 import * as natives from "natives";
 import native from "natives";
 
@@ -113,7 +113,7 @@ alt.onServer("entitySync:create", (entityId, entityType, position, currEntityDat
     const thisEntity = entities.find(value => value.id === entityId && value.type == entityType);
     if(!thisEntity) return;
     if(entityType === 0) {
-      thisEntity.handle = Blip.createFromEntity(thisEntity);
+      thisEntity.handle = new Blip(thisEntity);
     } else if (entityType === 1) {
       loadModel(thisEntity.data.model).then(() => {
         let handle = natives.createObject( thisEntity.data.model, thisEntity.position.x, thisEntity.position.y,

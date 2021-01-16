@@ -1,27 +1,25 @@
-import * as alt from "alt-client"
+import alt from "alt-client"
 import * as native from "natives"
 import { UiManager } from "./UiManager"
 import { Ped } from "../systems/Ped"
 import { Camera } from "../utils/Camera"
-import { Vector3 } from "natives"
-import { Player } from 'alt-client';
+import { Player, Vector3 } from 'alt-client';
 import { loadCutscene } from "../systems/Cutscene";
 
 export class FaceFeaturesUi {
-  private uiManager: UiManager
   private testPed: Ped
   private camera: Camera
-  private cameraPoint: Vector3 = {
-    x: -813.67474,
-    y: 175.17363,
-    z: 76.72888
-  }
+  private cameraPoint = new Vector3(
+    -813.67474,
+    175.17363,
+    76.72888
+  )
 
-  private playerPoint: Vector3 = {
-    x: -811.67474,
-    y: 175.17363,
-    z: 76.72888
-  }
+  private playerPoint = new Vector3(
+    -811.67474,
+    175.17363,
+    76.72888
+  )
 
   private model = "mp_m_freemode_01"
   private gender = 0
@@ -30,13 +28,12 @@ export class FaceFeaturesUi {
 
   private prevData = {sex: 1}
 
-  public constructor(uiManager) {
-    this.uiManager = uiManager
-    this.uiManager.navigate("/charactercreator", true)
+  public constructor() {
+    UiManager.navigate("/charactercreator", true)
 
     // Events
-    this.uiManager.on("FaceFeatures:Update", this.update.bind(this))
-    this.uiManager.on("FaceFeatures:Finished", this.finished.bind(this))
+    UiManager.on("FaceFeatures:Update", this.update.bind(this))
+    UiManager.on("FaceFeatures:Finished", this.finished.bind(this))
 
     native.requestModel(native.getHashKey("mp_m_freemode_01"))
     native.requestModel(native.getHashKey("mp_f_freemode_01"))
@@ -178,8 +175,8 @@ export class FaceFeaturesUi {
       native.registerEntityForCutscene(0, this.gender == 0 ? "MP_Female_Character" : "MP_Male_Character", 3, native.getHashKey(this.gender == 1 ? "mp_f_freemode_01" : "mp_m_freemode_01"), 0)
       native.beginSrl()
       native.startCutscene(4)
-      alt.setTimeout(() => this.uiManager.emit("FaceFeatures:FadeOut"), 5000)
-      alt.setTimeout(() => this.uiManager.reset(), 11000)
+      alt.setTimeout(() => UiManager.emit("FaceFeatures:FadeOut"), 5000)
+      alt.setTimeout(() => UiManager.reset(), 11000)
       alt.setTimeout(() => native.doScreenFadeOut(1000), 30000)
       alt.setTimeout(() => {
         native.stopCutsceneImmediately()
@@ -221,7 +218,7 @@ alt.on("syncedMetaChange", (player: Player, key: string, value: any) => {
     native.setPedHeadOverlayColor(player.scriptID, 2, 1, data[15], data[15]);
 
     // Ageing
-    native.setPedHeadOverlay(this.testPed.scriptID, 3, data.ageing, 1);
+    native.setPedHeadOverlay(player.scriptID, 3, data.ageing, 1);
 
     // Eyes
     native.setPedEyeColor(player.scriptID, data[10]);

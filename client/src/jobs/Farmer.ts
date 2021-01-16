@@ -6,31 +6,27 @@ import { Cursor } from "../utils/Cursor"
 
 @Singleton
 export class Farmer {
-  private uiManager: UiManager
-  private open = false
+  private static open = false
 
-  public constructor(uiManager) {
-    this.uiManager = uiManager;
-
-    this.uiManager.on("Farmer:SelectJob", this.jobSelected.bind(this))
-
-    alt.onServer("Farmer:OpenGUI", () => {
-      if (this.open) return
-      this.uiManager.navigate("/farmer", true)
+  static openGUI() {
+    if (this.open) return
+      UiManager.navigate("/farmer", true)
       alt.toggleGameControls(false)
       this.open = true
-    })
   }
 
-  jobSelected(jobId) {
+  static jobSelected(jobId) {
     alt.emitServer("JobFarmer:Start", jobId)
     this.closeGUI()
   }
 
-  closeGUI() {
-    this.uiManager.reset()
+  static closeGUI() {
+    UiManager.reset()
     Cursor.show(false)
     alt.toggleGameControls(true)
     this.open = false
   }
 }
+
+UiManager.on("Farmer:SelectJob", Farmer.jobSelected)
+alt.onServer("Farmer:OpenGUI", Farmer.openGUI)

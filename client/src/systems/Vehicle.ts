@@ -5,6 +5,46 @@ import Speedo from '../ui/Speedo';
 
 alt.log('Loaded: client->utility->vehicle.mjs');
 
+export class VehicleController {
+
+
+  static enterAsPassenger() {
+    if(alt.gameControlsEnabled()) {
+      const player = alt.Player.local;
+      let vehicle = native.getClosestVehicle(player.pos.x, player.pos.y, player.pos.z, 8, 0, 70);
+  
+      if(!vehicle) return;
+  
+      if(!native.areAnyVehicleSeatsFree(vehicle)) return;
+  
+      let nearestSeatDistance = Number.MAX_VALUE;
+      let nearestSeat = 0;
+      let dif = 0;
+      for (let i=0; i< seatBones.length; i++) {
+        //index in array is not equal to boneIndex. On Trash, seat_dside_r1 is 2
+        //if(!native.isVehicleSeatFree(vehicle, i, false)) continue;
+  
+        const boneIndex = native.getEntityBoneIndexByName(vehicle, seatBones[i]);
+        alt.log(seatBones[i], boneIndex);
+        if(boneIndex == -1) {
+          dif += 1
+          continue;
+        }
+  
+        const dist = distance(native.getWorldPositionOfEntityBone(vehicle, boneIndex), player.pos);
+        if(dist > nearestSeatDistance) continue;
+        nearestSeatDistance = dist;
+        nearestSeat = i-dif;
+      }
+      /*if(nearestSeat > 3) {
+        native.taskWarpPedIntoVehicle(player.scriptID, vehicle, nearestSeat);
+      } else {*/
+        native.taskEnterVehicle(player.scriptID, vehicle, 5000, nearestSeat, 1, 1, 0);
+      //}
+    }
+  }
+}
+
 alt.onServer("Vehicle:SetIntoVehicle", (veh, seat) => {
   let cleared = false;
   const interval = alt.setInterval(() => {
@@ -42,43 +82,6 @@ const seatBones: string[] = [
   "seat_dside_r7",
   "seat_pside_r7"
 ];
-
-alt.on("keyup", (key) => {
-  // G
-  if(key == 0x47 && alt.gameControlsEnabled()) {
-    const player = alt.Player.local;
-    let vehicle = native.getClosestVehicle(player.pos.x, player.pos.y, player.pos.z, 7.5, 0, 70);
-
-    if(!vehicle) return;
-
-    if(!native.areAnyVehicleSeatsFree(vehicle)) return;
-
-    let nearestSeatDistance = Number.MAX_VALUE;
-    let nearestSeat = 0;
-    let dif = 0;
-    for (let i=0; i< seatBones.length; i++) {
-      //index in array is not equal to boneIndex. On Trash, seat_dside_r1 is 2
-      //if(!native.isVehicleSeatFree(vehicle, i, false)) continue;
-
-      const boneIndex = native.getEntityBoneIndexByName(vehicle, seatBones[i]);
-      alt.log(seatBones[i], boneIndex);
-      if(boneIndex == -1) {
-        dif += 1
-        continue;
-      }
-
-      const dist = distance(native.getWorldPositionOfEntityBone(vehicle, boneIndex), player.pos);
-      if(dist > nearestSeatDistance) continue;
-      nearestSeatDistance = dist;
-      nearestSeat = i-dif;
-    }
-    /*if(nearestSeat > 3) {
-      native.taskWarpPedIntoVehicle(player.scriptID, vehicle, nearestSeat);
-    } else {*/
-      native.taskEnterVehicle(player.scriptID, vehicle, 5000, nearestSeat, 1, 1, 0);
-    //}
-  }
-});
 
 // Sync vehicle states
 alt.on("streamSyncedMetaChange", (entity: Entity, key: string, value: any) => {
