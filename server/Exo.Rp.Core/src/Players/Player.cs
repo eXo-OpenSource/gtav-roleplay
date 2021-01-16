@@ -103,9 +103,9 @@ namespace Exo.Rp.Core.Players
             Emit("Animation:Start", v, animation, flag);
         }
 
-        public void SendChatMessage(string playername, string msg)
+        public void SendChatMessage(string sendername, string msg)
         {
-            Emit("Chat:Message", playername, msg);
+            Emit("Chat:Message", sendername, msg);
         }
 
         public void SetIntoVehicle(IVehicle veh, int seat)

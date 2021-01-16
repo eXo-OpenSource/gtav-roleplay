@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Numerics;
 using System.Text;
 using System.Threading;
@@ -238,20 +239,17 @@ namespace Exo.Rp.Core.Commands
             if (player.IsInVehicle)
             {
                 var veh = player.Vehicle;
-                var model = ((VehicleModel) player.Vehicle.Model).ToString();
-                player.SendChatMessage(null, "#b#Fahrzeug-Position (" + model + "):");
                 var pos = veh.Position;
                 var rot = veh.Rotation;
-                OutputPosition(player, pos, rot);
+                player.SendChatMessage("Fahrzeugposition", $"Position:\n{pos.X}, {pos.Y}, {pos.Z}\nRotation:\n{rot.Roll}, {rot.Pitch} {rot.Yaw}");
+                //OutputPosition(player, pos, rot);
             }
             else
             {
-                player.SendChatMessage(null, "#b#Spieler-Position:");
                 var pos = player.Position;
                 var rot = player.Rotation;
-                player.SendChatMessage(null, $"{pos.X}, {pos.Y}, {pos.Z}");
-                player.SendChatMessage(null, $"{rot.Roll}, {rot.Pitch} {rot.Yaw}");
-                OutputPosition(player, pos, rot);
+                player.SendChatMessage("Spielerposition", $"Position:\n{pos.X}, {pos.Y}, {pos.Z}\nRotation:\n{rot.Roll}, {rot.Pitch} {rot.Yaw}");
+                //OutputPosition(player, pos, rot);
             }
         }
 
@@ -264,11 +262,11 @@ namespace Exo.Rp.Core.Commands
 
             if (player.IsInVehicle)
             {
-                player.Vehicle.SetPosition(x, y, z);
+                player.Vehicle.Position = new Position(x, y, z);
             }
             else
             {
-                player.SetPosition(x, y, z);
+                player.Position = new Position(x, y, z);
             }
         }
 
@@ -313,19 +311,23 @@ namespace Exo.Rp.Core.Commands
             player.SendInformation("Trying to unload IPL: " + ipl);
         }
 
-        [Command("money")]
-        public static void Money(IPlayer player, string func, int amount = 0, bool bank = false)
+        [Command("money", GreedyArg = false)]
+        public static void Money(IPlayer player, string func, string _amount = "0", string _bank = "false")
         {
-            if (func == "get") player.SendChatMessage(null, "Geld: $" + player.GetCharacter().GetMoney(bank));
-            else if (func == "give")
+            int.TryParse(_amount, out int amount);
+            bool.TryParse(_bank, out bool bank);
+            var funcs = new Dictionary<string, Action>
             {
-                player.GetCharacter().GiveMoney(amount, "Admin", bank, false);
-                player.SendChatMessage(null, "Geld: $" + player.GetCharacter().GetMoney(bank));
-            }
-            else if (func == "take")
+                {"show", () => { } },
+                {"take", () => player.GetCharacter().TakeMoney(amount, "Admin: " + player.GetAccount().ForumId, bank, false) },
+                {"give", () => player.GetCharacter().GiveMoney(amount, "Admin: " + player.GetAccount().ForumId, bank, false) }
+            };
+
+            bool isValid = funcs.TryGetValue(func, out Action value);
+            if (isValid)
             {
-                player.GetCharacter().TakeMoney(amount, "Admin", bank, false);
-                player.SendChatMessage(null, "Geld: $" + player.GetCharacter().GetMoney(bank));
+                funcs[func].Invoke();
+                player.SendChatMessage("Geld " + (bank ? "(Bank)" : "(Bar)"), player.GetCharacter().GetMoney(bank).ToString());
             }
         }
 
