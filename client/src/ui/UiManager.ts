@@ -1,6 +1,4 @@
 import * as alt from 'alt-client';
-import { FaceFeaturesUi } from './FaceFeaturesUi';
-import { RegisterLogin } from './RegisterLogin';
 import { View } from "../utils/View";
 import Chat from "./Chat";
 import { Cursor } from "../utils/Cursor";
@@ -28,9 +26,6 @@ export default class UiManager {
   static loadEvents() {
     alt.log('Loaded: UI Manager Events');
 
-    alt.onServer('Ui:ShowFaceFeatures', () => new FaceFeaturesUi());
-
-    alt.onServer('Ui:ShowRegisterLogin', () => RegisterLogin.openLogin());
 
     this.mainView.on("ready", () => alt.emitServer("ready"))
 

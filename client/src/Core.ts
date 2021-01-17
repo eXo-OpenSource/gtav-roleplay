@@ -16,6 +16,7 @@ import "./extensions/Blip"
 
 //events
 import './events/keyup'
+import './events/ui'
 
 
 import "./utils/DevCommands";
