@@ -4,6 +4,9 @@ import { FaceFeaturesUi } from '../ui/FaceFeaturesUi';
 import { RegisterLogin } from '../ui/RegisterLogin';
 import UiManager from '../ui/UiManager';
 
+UiManager.createUi()
+
+
 alt.onServer('Ui:ShowFaceFeatures', () => new FaceFeaturesUi());
 
 alt.onServer('Ui:ShowRegisterLogin', () => RegisterLogin.openLogin());

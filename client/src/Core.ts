@@ -43,8 +43,6 @@ export class Core {
   constructor() {
     alt.log('Loaded: client.mjs');
 
-    UiManager.createUi()
-
     alt.on('consoleCommand', () => {
       alt.log('consoleCommand');
       alt.emitServer("ClientConnectionComplete", "Test")

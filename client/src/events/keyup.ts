@@ -46,7 +46,7 @@ alt.on("keyup", (key: number) => {
 alt.on("keydown", (key: number) => {
 
 
-    if(KEY_BINDS[key].keydown == null)
+    if(KEY_BINDS[key]?.keydown == null)
         return;
 
     KEY_BINDS[key]?.keydown()
