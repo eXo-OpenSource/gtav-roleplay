@@ -68,7 +68,7 @@ class ATM extends Component {
       return (
         <div className="flex mt-24">
           <div className="text-center mr-0 pl-0 mt-64 w-48 text-gray-200 bg-gray-700" style={{marginLeft: "32.5%"}}>
-            <img className="mx-auto mt-6 rounded-full w-32 h-32 border-2 border-blue-500" src="https://exocentral.de/atm/mazebank.jpg"></img>
+            <img className="mx-auto mt-6 rounded-full w-32 h-32 border-2 border-blue-500" src="https://static.exo.cool/minio/exov-static/images/atm/mazebank.jpg"></img>
             <p className="mt-4 text-xl">{name}</p>
             <button className="btn btn-primary mt-8 rounded-sm font-normal" onClick={this.logOut.bind(this)}>Ausloggen</button>
           </div>
