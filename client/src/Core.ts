@@ -1,6 +1,8 @@
 import * as alt from "alt-client";
 import { Singleton } from "./utils/Singleton";
 import UiManager from './ui/UiManager';
+//fix
+UiManager.createUi()
 // import { log } from "util";
 import "./systems/Vehicle";
 import "./systems/Notification";
