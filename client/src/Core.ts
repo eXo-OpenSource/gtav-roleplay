@@ -27,7 +27,7 @@ import './events/ui'
 
 //ui
 import "./ui/Chat"
-import "./ui/HUD";
+import "./ui/Hud";
 import "./ui/VehicleUI";
 import "./ui/ATM"
 import "./jobs/Farmer"
