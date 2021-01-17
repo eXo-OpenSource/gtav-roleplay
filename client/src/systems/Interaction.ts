@@ -1,7 +1,7 @@
 import alt, {Entity, Player} from 'alt-client';
 import * as native from 'natives';
 import {distance} from "../utils/Vector";
-import {UiManager} from "../ui/UiManager";
+import UiManager from "../ui/UiManager";
 
 alt.log('Loaded: client->utility->vehicle.mjs');
 

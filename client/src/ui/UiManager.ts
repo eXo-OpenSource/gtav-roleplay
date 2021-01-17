@@ -15,11 +15,11 @@ import { CarRent } from "../environment/CarRent"
 
 const url = 'http://resource/cef/index.html#';
 
-export class UiManager {
-  private static mainView: View;
+export default class UiManager {
+  private static mainView: View = new View();
 
   static createUi() {
-    this.mainView = new View()
+    //this.mainView = new View()
     this.mainView.open(url, false, true);
 
     this.loadEvents()

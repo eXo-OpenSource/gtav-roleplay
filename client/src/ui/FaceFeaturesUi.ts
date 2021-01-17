@@ -1,10 +1,10 @@
 import alt from "alt-client"
 import * as native from "natives"
-import { UiManager } from "./UiManager"
+import UiManager from "./UiManager"
 import { Ped } from "../systems/Ped"
 import { Camera } from "../utils/Camera"
 import { Player, Vector3 } from 'alt-client';
-import { loadCutscene } from "../systems/Cutscene";
+import { loadCutscene } from "../utils/Cutscene";
 
 export class FaceFeaturesUi {
   private testPed: Ped
@@ -170,6 +170,7 @@ export class FaceFeaturesUi {
     this.applyData(data);
 
     native.prefetchSrl("GTAO_INTRO_MALE")
+    native.setCutsceneEntityStreamingFlags(this.gender == 1 ? "MP_Female_Character" : "MP_Male_Character", 0, 1)
     loadCutscene("mp_intro_concat", 8).then(() => {
       native.registerEntityForCutscene(Player.local.scriptID, this.gender == 1 ? "MP_Female_Character" : "MP_Male_Character", 0, 0, 0)
       native.registerEntityForCutscene(0, this.gender == 0 ? "MP_Female_Character" : "MP_Male_Character", 3, native.getHashKey(this.gender == 1 ? "mp_f_freemode_01" : "mp_m_freemode_01"), 0)

@@ -2,7 +2,7 @@ import * as alt from 'alt-client'
 import * as native from 'natives'
 import { View } from '../utils/View'
 import { Singleton } from '../utils/Singleton'
-import { UiManager } from "./UiManager";
+import UiManager from "./UiManager";
 
 const url = 'http://resource/cef/index.html#/hud'
 

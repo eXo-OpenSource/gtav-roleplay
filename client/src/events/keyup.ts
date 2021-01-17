@@ -38,21 +38,17 @@ export const KEY_BINDS = {
 }
 
 alt.on("keyup", (key: number) => {
-    
-    if(!KEY_BINDS[key])
-        return;
 
-    KEY_BINDS[key].keyup()
+
+    KEY_BINDS[key]?.keyup()
 });
 
 alt.on("keydown", (key: number) => {
-    if(!KEY_BINDS[key])
-    return;
 
 
     if(KEY_BINDS[key].keydown == null)
         return;
 
-    KEY_BINDS[key].keydown()
+    KEY_BINDS[key]?.keydown()
 });
 

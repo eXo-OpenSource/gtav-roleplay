@@ -1,6 +1,6 @@
 import * as alt from "alt-client"
 import * as native from "natives"
-import { UiManager } from "../ui/UiManager"
+import UiManager from "../ui/UiManager"
 import { Singleton } from "../utils/Singleton"
 import { Cursor } from "../utils/Cursor"
 

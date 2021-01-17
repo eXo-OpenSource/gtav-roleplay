@@ -1,6 +1,6 @@
 import * as alt from 'alt-client';
 import * as natives from 'natives';
-import {UiManager} from "./UiManager";
+import UiManager from "./UiManager";
 
 export class Chat {
   private static loaded = false;

@@ -1,7 +1,7 @@
 import * as alt from 'alt-client'
 import * as native from 'natives'
 import {Singleton} from "../utils/Singleton";
-import {UiManager} from "./UiManager";
+import UiManager from "./UiManager";
 import { isNumber, isBoolean } from 'util';
 
 @Singleton

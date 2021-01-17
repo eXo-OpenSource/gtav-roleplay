@@ -1,7 +1,7 @@
 import * as alt from 'alt-client';
 import * as native from 'natives';
 import { Vector3 } from "natives"
-import { UiManager } from "./UiManager";
+import UiManager from "./UiManager";
 import { Camera } from "../utils/Camera"
 
 const url = 'http://resource/cef/index.html#/login';
