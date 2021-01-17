@@ -23,7 +23,7 @@ export const KEY_BINDS = {
         keyup: Chat.closeChat
     },
     [KEYS.T]: {
-        keyup: Chat.openChat
+      keyup: Chat.openChat
     },
     [KEYS.F7]: {
         keyup: Chat.hide

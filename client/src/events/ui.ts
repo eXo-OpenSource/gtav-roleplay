@@ -9,5 +9,4 @@ alt.onServer('Ui:ShowFaceFeatures', () => new FaceFeaturesUi());
 
 alt.onServer('Ui:ShowRegisterLogin', () => RegisterLogin.openLogin());
 
-UiManager.on("Chat:Message", Chat.handleChatMessage);
-UiManager.on("Chat:Loaded", Chat.loadChat)
+

@@ -11,7 +11,9 @@ export default class UiManager {
   static createUi() {
     //this.mainView = new View()
     this.mainView.open(url, false, true);
-
+    alt.log("createUI")
+    UiManager.on("Chat:Message", Chat.handleChatMessage);
+    UiManager.on("Chat:Loaded", Chat.loadChat)
     this.loadEvents()
   }
 

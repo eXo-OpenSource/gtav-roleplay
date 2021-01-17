@@ -21,9 +21,9 @@ alt.onServer("gotoWayPoint", () => {
 })
 
 alt.onServer("globalBlips:init", (blips) => {
-  alt.log(JSON.stringify(blips))
+  //alt.log(JSON.stringify(blips))
   blips.forEach(b => {
-    console.log(b.name)
+    //console.log(b.name)
     let blip = new PointBlip(b.x, b.y, b.z)
     blip.sprite = +b.sprite;
     blip.color = +b.color;

@@ -47,11 +47,13 @@
     <Folder Include="src\" />
     <Folder Include="src\chat\" />
     <Folder Include="src\environment\" />
+    <Folder Include="src\events\" />
     <Folder Include="src\jobs\" />
     <Folder Include="src\systems\" />
     <Folder Include="src\ui\" />
     <Folder Include="src\utils\" />
     <Folder Include="src\world\" />
+    <Folder Include="src\extensions\" />
     <Folder Include="typings\" />
   </ItemGroup>
   <ItemGroup>
@@ -64,6 +66,9 @@
     <TypeScriptCompile Include="src\jobs\Farmer.ts" />
     <TypeScriptCompile Include="src\jobs\PizzaDelivery.ts" />
     <TypeScriptCompile Include="src\jobs\WasteCollector.ts" />
+    <TypeScriptCompile Include="src\events\keyup.ts" />
+    <TypeScriptCompile Include="src\events\ui.ts" />
+    <TypeScriptCompile Include="src\extensions\Blip.ts" />
     <TypeScriptCompile Include="src\systems\Cutscene.ts" />
     <TypeScriptCompile Include="src\systems\Interaction.ts" />
     <TypeScriptCompile Include="src\systems\Marker.ts" />
@@ -73,6 +78,7 @@
     <TypeScriptCompile Include="src\systems\Vehicle.ts" />
     <TypeScriptCompile Include="src\ui\FaceFeaturesUi.ts" />
     <TypeScriptCompile Include="src\ui\Hud.ts" />
+    <TypeScriptCompile Include="src\ui\Chat.ts" />
     <TypeScriptCompile Include="src\ui\Popup.ts" />
     <TypeScriptCompile Include="src\ui\RegisterLogin.ts" />
     <TypeScriptCompile Include="src\ui\Speedo.ts" />
