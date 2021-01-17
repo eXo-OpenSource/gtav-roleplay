@@ -18,6 +18,16 @@ import "./extensions/Blip"
 import './events/keyup'
 import './events/ui'
 
+//ui
+import "./HUD";
+import "./VehicleUI";
+import "./ATM"
+import "../jobs/Farmer"
+import "../jobs/WoodCutter"
+import "./Speedo";
+import "./Popup";
+import "../environment/CarRent"
+
 
 import "./utils/DevCommands";
 

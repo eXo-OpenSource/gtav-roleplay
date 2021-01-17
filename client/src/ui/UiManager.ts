@@ -2,14 +2,6 @@ import * as alt from 'alt-client';
 import { View } from "../utils/View";
 import Chat from "./Chat";
 import { Cursor } from "../utils/Cursor";
-import { HUD } from "./HUD";
-import { VehicleUI } from "./VehicleUI";
-import { ATM } from "./ATM"
-import { Farmer } from "../jobs/Farmer"
-import { WoodCutter } from "../jobs/WoodCutter"
-import Speedo from "./Speedo";
-import Popup from "./Popup";
-import { CarRent } from "../environment/CarRent"
 
 const url = 'http://resource/cef/index.html#';
 

@@ -79,9 +79,6 @@ export class Chat {
 
 }
 
-UiManager.on("Chat:Message", Chat.handleChatMessage);
-UiManager.on("Chat:Loaded", Chat.loadChat)
-
 alt.onServer('Chat:Message', Chat.pushMessage);
 alt.onServer('Chat:Hide', Chat.hide);
 
