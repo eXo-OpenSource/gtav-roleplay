@@ -26,14 +26,14 @@ export class RegisterLogin {
     });
   }
   static openLogin() {
-    this.camera.pointAtCoord(this.cameraPoint)
+    RegisterLogin.camera.pointAtCoord(RegisterLogin.cameraPoint)
 
     alt.toggleGameControls(false)
     UiManager.navigate("/login", true)
 
     alt.onServer("registerLogin:Success", () => {
       UiManager.reset()
-      this.camera.destroy()
+      RegisterLogin.camera.destroy()
       alt.toggleGameControls(true)
     });
 

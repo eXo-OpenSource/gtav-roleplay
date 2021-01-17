@@ -7,23 +7,23 @@ export class Popup {
 
   static clickPopup(item) {
     if(item == "Schließen") {
-      this.close()
+      Popup.close()
     } else {
-      const pItem = this.popup.items.find(value => value.name === item);
+      const pItem = Popup.popup.items.find(value => value.name === item);
       const args: Array<object> = pItem.callbackArgs;
       alt.emitServer(pItem.callback, ...args)
     }
   }
 
   static showPopup(popup) {
-    this.popup = popup;
+    Popup.popup = popup;
     popup.active = true;
     popup.items.push({id: 1, name: "Schließen", color: "red"})
     UiManager.emit("Popup:Data", popup);
   }
 
   static close() {
-    this.popup = null;
+    Popup.popup = null;
     UiManager.emit("Popup:Close")
   }
 }

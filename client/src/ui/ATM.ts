@@ -12,7 +12,7 @@ export class ATM {
   static showATM() {
     UiManager.navigate("/atm", true)
       alt.toggleGameControls(false)
-      this.open = true
+      ATM.open = true
   }
 
   static updateData(_bankmoney, _money, _normalizedName) {
@@ -36,7 +36,7 @@ export class ATM {
     UiManager.reset()
     Cursor.show(false)
     alt.toggleGameControls(true)
-    alt.setTimeout(() => this.open = false, 1000)
+    alt.setTimeout(() => ATM.open = false, 1000)
   }
 }
 

@@ -9,17 +9,17 @@ export class WoodCutter {
   private static open = false
 
   static openGUI() {
-    if (this.open) return
+    if (WoodCutter.open) return
       UiManager.navigate("/woodcutter", true)
       alt.toggleGameControls(false)
-      this.open = true
+      WoodCutter.open = true
   }
 
   static closeGUI() {
     UiManager.reset()
     Cursor.show(false)
     alt.toggleGameControls(true)
-    this.open = false
+    WoodCutter.open = false
   }
 }
 

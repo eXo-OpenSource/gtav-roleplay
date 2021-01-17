@@ -9,13 +9,13 @@ export class VehicleUI {
 
   static activateInteractionMenu() {
     if(alt.gameControlsEnabled()) {
-      var vehicle = native.getClosestVehicle(this.player.pos.x, this.player.pos.y, this.player.pos.z, 5, 0, 70) || this.player.vehicle.scriptID
+      var vehicle = native.getClosestVehicle(VehicleUI.player.pos.x, VehicleUI.player.pos.y, VehicleUI.player.pos.z, 5, 0, 70) || VehicleUI.player.vehicle.scriptID
 
         if (vehicle) {
           alt.toggleGameControls(false)
           native.playSoundFrontend(-1, 'CONTINUE', 'HUD_FRONTEND_DEFAULT_SOUNDSET', true)
 
-          if (this.player.vehicle) {
+          if (VehicleUI.player.vehicle) {
             UiManager.emit('InteractionMenu:UpdateItems', [
               {
                 title: "Fahrzeuginfo",
@@ -68,16 +68,16 @@ export class VehicleUI {
   }
 
   static deactivateInteractionMenu() {
-    var vehicle = native.getClosestVehicle(this.player.pos.x, this.player.pos.y, this.player.pos.z, 5, 0, 70) || this.player.vehicle.scriptID
+    var vehicle = native.getClosestVehicle(VehicleUI.player.pos.x, VehicleUI.player.pos.y, VehicleUI.player.pos.z, 5, 0, 70) || VehicleUI.player.vehicle.scriptID
 
         if (vehicle) {
           alt.toggleGameControls(true)
           UiManager.emit("InteractionMenu:ToggleShow", false)
           native.playSoundFrontend(-1, 'EXIT', 'HUD_FRONTEND_DEFAULT_SOUNDSET', true)
 
-          switch(this.option) {
+          switch(VehicleUI.option) {
             case 'Fahrzeuginfo':
-              alt.emitServer('Vehicle:GetInfo', (this.player.vehicle ? this.entity.getByScriptID(this.player.vehicle.scriptID) : this.entity.getByScriptID(vehicle)))
+              alt.emitServer('Vehicle:GetInfo', (VehicleUI.player.vehicle ? VehicleUI.entity.getByScriptID(VehicleUI.player.vehicle.scriptID) : VehicleUI.entity.getByScriptID(vehicle)))
               break;
             case 'Licht an/aus':
               alt.emitServer('Vehicle:ToggleLight')
@@ -87,27 +87,27 @@ export class VehicleUI {
               break;
             case 'Motorhaube auf/zu':
               if (native.getVehicleDoorAngleRatio(vehicle, 4) >= 0.1) {
-                alt.emitServer('Vehicle:ToggleDoor', this.entity.getByScriptID(vehicle), 4, false)
+                alt.emitServer('Vehicle:ToggleDoor', VehicleUI.entity.getByScriptID(vehicle), 4, false)
               } else {
-                alt.emitServer('Vehicle:ToggleDoor', this.entity.getByScriptID(vehicle), 4, true)
+                alt.emitServer('Vehicle:ToggleDoor', VehicleUI.entity.getByScriptID(vehicle), 4, true)
               }
               break;
             case 'Kofferraum auf/zu':
               if (native.getVehicleDoorAngleRatio(vehicle, 5) >= 0.1) {
-                alt.emitServer('Vehicle:ToggleDoor', this.entity.getByScriptID(vehicle), 5, false)
+                alt.emitServer('Vehicle:ToggleDoor', VehicleUI.entity.getByScriptID(vehicle), 5, false)
               } else {
-                alt.emitServer('Vehicle:ToggleDoor', this.entity.getByScriptID(vehicle), 5, true)
+                alt.emitServer('Vehicle:ToggleDoor', VehicleUI.entity.getByScriptID(vehicle), 5, true)
               }
               break;
             case 'Auf-/ Zuschließen':
-              alt.emitServer('Vehicle:ToggleLock', (this.player.vehicle ? this.entity.getByScriptID(this.player.vehicle.scriptID) : this.entity.getByScriptID(vehicle)))
+              alt.emitServer('Vehicle:ToggleLock', (VehicleUI.player.vehicle ? VehicleUI.entity.getByScriptID(VehicleUI.player.vehicle.scriptID) : VehicleUI.entity.getByScriptID(vehicle)))
               break;
           }
         }
   }
 
   static setOption(_option) {
-    this.option = _option;
+    VehicleUI.option = _option;
   }
 }
 

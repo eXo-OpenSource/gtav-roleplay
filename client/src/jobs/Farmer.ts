@@ -9,22 +9,22 @@ export class Farmer {
   private static open = false
 
   static openGUI() {
-    if (this.open) return
+    if (Farmer.open) return
       UiManager.navigate("/farmer", true)
       alt.toggleGameControls(false)
-      this.open = true
+      Farmer.open = true
   }
 
   static jobSelected(jobId) {
     alt.emitServer("JobFarmer:Start", jobId)
-    this.closeGUI()
+    Farmer.closeGUI()
   }
 
   static closeGUI() {
     UiManager.reset()
     Cursor.show(false)
     alt.toggleGameControls(true)
-    this.open = false
+    Farmer.open = false
   }
 }
 

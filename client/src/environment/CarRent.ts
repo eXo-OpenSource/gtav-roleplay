@@ -7,23 +7,23 @@ export class CarRent {
   private static visible = false;
 
   static openUI() {
-    if (!this.visible) {
+    if (!CarRent.visible) {
       alt.toggleGameControls(false)
       UiManager.navigate("/carrent", true)
-      this.visible = true
+      CarRent.visible = true
     }
   }
 
   static closeUI() {
-    if(this.visible) {
-      this.resetUI()
+    if(CarRent.visible) {
+      CarRent.resetUI()
     }
   }
 
   static resetUI() {
     alt.toggleGameControls(true)
     UiManager.reset()
-    this.visible = false
+    CarRent.visible = false
   }
 }
 

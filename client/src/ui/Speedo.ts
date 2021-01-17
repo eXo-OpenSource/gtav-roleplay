@@ -10,14 +10,14 @@ export class Speedo {
 
   static updateSpeedo() {
       if(alt.Player.local.vehicle == null) {
-        if(this.active) {
+        if(Speedo.active) {
           UiManager.emit("Speedo:SetData", "active", false);
-          this.active = false;
+          Speedo.active = false;
         }
       } else {
-        if(!this.active) {
+        if(!Speedo.active) {
           UiManager.emit("Speedo:SetData", "active", true);
-          this.active = true;
+          Speedo.active = true;
         }
         const veh = alt.Player.local.vehicle;
 
