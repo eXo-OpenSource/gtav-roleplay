@@ -19,14 +19,14 @@ import './events/keyup'
 import './events/ui'
 
 //ui
-import "./HUD";
-import "./VehicleUI";
-import "./ATM"
-import "../jobs/Farmer"
-import "../jobs/WoodCutter"
-import "./Speedo";
-import "./Popup";
-import "../environment/CarRent"
+import "./ui/HUD";
+import "./ui/VehicleUI";
+import "./ui/ATM"
+import "./jobs/Farmer"
+import "./jobs/WoodCutter"
+import "./ui/Speedo";
+import "./ui/Popup";
+import "./environment/CarRent"
 
 
 import "./utils/DevCommands";
