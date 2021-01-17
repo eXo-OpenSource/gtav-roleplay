@@ -4,6 +4,9 @@ module.exports = {
       '1/2': '50vh',
     },
     extend: {
+      fontFamily: {
+        'sans': ['Open Sans', 'Helvetica', 'Arial', 'sans-serif']
+      },
       alphaColors: ['gray.700']
     },
   },

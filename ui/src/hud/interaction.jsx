@@ -27,7 +27,7 @@ class Interaction extends Component {
       })
     } else {
       this.setState({
-        show: true,
+        show: false,
         items: [
           {
             title: "Fahrzeuginfo",

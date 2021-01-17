@@ -18,8 +18,8 @@ export class Toast extends Component {
     } else {
       this.setState({
         toasts: [
-          {id: "nearby-veh", title: "Auto: Osiris", text: "Drücke E um Respekt zu zollen"},
-          {id: "nearby-player", title: "Spieler: gatno", text: "Drücke E um Respekt zu zollen"}
+          /*{id: "nearby-veh", title: "Auto: Osiris", text: "Drücke E um Respekt zu zollen"},
+          {id: "nearby-player", title: "Spieler: gatno", text: "Drücke E um Respekt zu zollen"} */
         ]
       })
     }

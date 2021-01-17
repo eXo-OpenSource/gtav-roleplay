@@ -20,7 +20,7 @@ export default class BrowserMockup extends Component {
                 <span class="relative w-3 h-3 rounded-full bg-green-400 pr-1/3"></span>
                 <input class="rounded-full text-gray-700 bg-gray-200 p-1 w-full px-5" type="text" value={this.url} />
               </div>
-              <div class="relative border-t-0 w-full border-t">
+              <div class="relative border-t-0 w-full">
                 <div class="absolute w-full inset-0 bg-gray-200 opacity-60" style={{ height: "750px" }}>{this.site}</div>
               </div>
             </div>

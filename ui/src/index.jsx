@@ -20,6 +20,7 @@ const LoadableATMComponent = loadable(() => import("./forms/atm"), loadableOptio
 const LoadableCarRentComponent = loadable(() => import("./forms/car-rent"), loadableOptions);
 const LoadableFarmerComponent = loadable(() => import("./jobs/farmer"), loadableOptions);
 const LoadableWoodCutterComponent = loadable(() => import("./jobs/woodcutter"), loadableOptions);
+const LoadableDrivingSchoolComponent = loadable(() => import("./forms/drivingschool/theory"), loadableOptions);
 
 class App extends Component {
   constructor(props) {
@@ -38,6 +39,7 @@ class App extends Component {
             <Route path="/carrent" component={LoadableCarRentComponent} />
             <Route path="/farmer" component={LoadableFarmerComponent} />
             <Route path="/woodcutter" component={LoadableWoodCutterComponent} />
+            <Route path="/drivingschool" component={LoadableDrivingSchoolComponent} />
           </Switch>
         </Router>
         <Chat/>
