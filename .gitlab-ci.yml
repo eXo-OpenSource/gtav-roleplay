@@ -40,11 +40,13 @@ build_cdn_job:
     - docker run --name justpack exo-rp-altv-cdn
     - docker cp justpack:/opt/altv/cdn_upload/connect.json .
     - docker cp justpack:/opt/altv/cdn_upload/exov-client.resource .
+    - docker cp justpack:/opt/altv/cdn_upload/mrpd.resource .
     - docker rm justpack
   artifacts:
     paths:
       - connect.json
       - exov-client.resource
+      - mrpd.resource
     expire_in: 1 Week
 
 sentry_job:
@@ -89,6 +91,7 @@ deploy_cdn:
     - mc alias set exo https://static.exo.cool $MINIO_ACCESS_KEY $MINIO_SECRET_KEY
     - mc cp connect.json          exo/exov-static/resources/pack/
     - mc cp exov-client.resource  exo/exov-static/resources/pack/
+    - mc cp mrpd.resource         exo/exov-static/resources/pack/
   only:
     - master
     - release/production

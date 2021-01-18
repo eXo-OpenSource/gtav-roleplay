@@ -40,6 +40,9 @@ FROM eisengrind/altv-server:release-js as justpack
 RUN mkdir -p resources/exov-client/
 COPY --from=builder_client  /app/client resources/exov-client/
 
+# Add DLC Packs
+COPY dlcs resources/
+
 # Add config file
 ADD cdn/server.cfg server.cfg
 
