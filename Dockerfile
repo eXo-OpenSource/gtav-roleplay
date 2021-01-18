@@ -86,6 +86,9 @@ COPY --from=builder_server  /app/bin                resources/exov/
 COPY --from=configpatcher   /config/config.json     resources/exov/
 COPY --from=builder_client  /app/client             resources/exov-client/
 
+# Add DLC Packs
+COPY dlcs resources/
+
 # Add server config
 ADD build/server.cfg server.cfg
 ADD build/entrypoint.sh /root/entrypoint.sh
