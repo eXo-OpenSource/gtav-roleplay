@@ -45,8 +45,7 @@ build_cdn_job:
   artifacts:
     paths:
       - connect.json
-      - exov-client.resource
-      - mrpd.resource
+      - "*.resource"
     expire_in: 1 Week
 
 sentry_job:
