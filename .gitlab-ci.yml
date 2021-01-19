@@ -88,8 +88,8 @@ deploy_cdn:
     - dind
   script:
     - mc alias set exo https://static.exo.cool $MINIO_ACCESS_KEY $MINIO_SECRET_KEY
-    - mc cp connect.json          exo/exov-static/resources/pack/
-    - mc cp *.resource            exo/exov-static/resources/pack/
+    - mc cp connect.json  exo/exov-static/resources/pack/
+    - mc cp *.resource    exo/exov-static/resources/pack/
   only:
     - master
     - release/production
