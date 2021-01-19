@@ -340,6 +340,9 @@ namespace Exo.Rp.Core.Commands
                 case "give":
                     player.GetCharacter().GiveMoney(amount, "Admin: " + player.GetAccount().ForumId, bank);
                     break;
+                default:
+                    player.SendError(T._("Funktion nicht gefunden!", player));
+                    break;
             }
         }
 
