@@ -1,0 +1,1 @@
+{"operation":"get","status":"success","bucket":"exo/exov-static","permission":"custom","policy":{"Statement":[{"Action":["s3:GetObject"],"Effect":"Allow","Principal":{"AWS":["*"]},"Resource":["arn:aws:s3:::exov-static/*"]}],"Version":"2012-10-17"}}

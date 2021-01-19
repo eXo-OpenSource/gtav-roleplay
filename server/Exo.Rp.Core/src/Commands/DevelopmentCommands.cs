@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Numerics;
 using System.Text;
 using System.Threading;
@@ -43,25 +44,28 @@ namespace Exo.Rp.Core.Commands
         [Command("fly", RequiredAdminLevel = AdminLevel.Moderator)]
         public static void Fly(IPlayer player)
         {
-            if (player.Model == (uint) PedModel.Crow)
+            if (player.Model == (uint)PedModel.Crow)
                 player.GetCharacter().ResetSkin();
             else
                 player.GetCharacter().SetTemporarySkin(PedModel.Crow);
         }
 
         [Command("skin", Alias = "char", RequiredAdminLevel = AdminLevel.Moderator)]
-        public static void Skin(IPlayer player, string modelString)
+        public static void Skin(IPlayer player, string hash)
         {
-            if (!Enum.TryParse(modelString, out PedModel model))
-            {
-                player.SendError("Model nicht gefunden!");
-                return;
+            try {
+                var model = uint.Parse(hash, NumberStyles.HexNumber);
+                if (!Enum.IsDefined(typeof(PedModel), model)) {
+                    if (player.Model == model)
+                        player.GetCharacter().ResetSkin();
+                    else
+                        player.GetCharacter().SetTemporarySkin((PedModel)model);
+                } else {
+                    player.SendError(T._("Skin Hash nicht gefunden!", player));
+                }
+            } catch (SystemException) {
+                player.SendError(T._("Ungültiger Hash.", player));   
             }
-
-            if (player.Model == (uint)model)
-                player.GetCharacter().ResetSkin();
-            else
-                player.GetCharacter().SetTemporarySkin(model);
         }
 
         [Command("save")]
@@ -72,19 +76,24 @@ namespace Exo.Rp.Core.Commands
         }
 
         [Command("vehicle", Alias = "veh")]
-        public static void CreateVehicle(IPlayer player, string modelString)
+        public static void CreateVehicle(IPlayer player, string hash)
         {
-            if (Enum.IsDefined(typeof(VehicleModel), modelString))
-            {
-                var random = new Random();
-                var color = new Rgba(Convert.ToByte(random.Next(255)), Convert.ToByte(random.Next(255)), Convert.ToByte(random.Next(255)), Convert.ToByte(random.Next(255)));
-                var veh = Core.GetService<VehicleManager>().CreateTemporaryVehicle(Enum.Parse<VehicleModel>(modelString), player.Position, player.Rotation.Roll, color, color, "Admin");
+            try {
+                var model = int.Parse(hash, NumberStyles.HexNumber);
+                if (Enum.IsDefined(typeof(VehicleModel), model))
+                {
+                    var random = new Random();
+                    var color = new Rgba(Convert.ToByte(random.Next(255)), Convert.ToByte(random.Next(255)), Convert.ToByte(random.Next(255)), Convert.ToByte(random.Next(255)));
+                    var veh = Core.GetService<VehicleManager>().CreateTemporaryVehicle((VehicleModel)model, player.Position, player.Rotation.Roll, color, color, "Admin");
 
-                Alt.Log("Fahrzeug gespawnt: " + veh.Model.ToString() + "!");
-                player.SetIntoVehicle(veh.handle, -1);
-            } else
-            {
-                player.SendError(T._("Fahrzeug wurde nicht gefunden!", player));
+                    Alt.Log("Fahrzeug gespawnt: " + veh.Model.ToString() + "!");
+                    player.SetIntoVehicle(veh.handle, -1);
+                } else
+                {
+                    player.SendError(T._("Fahrzeug wurde nicht gefunden!", player));
+                }
+            } catch (SystemException) {
+                player.SendError(T._("Ungültiger Hash.", player));   
             }
         }
 
@@ -213,15 +222,20 @@ namespace Exo.Rp.Core.Commands
         }*/
 
         [Command("weapon")]
-        public static void WeaponCommand(IPlayer player, string name)
+        public static void WeaponCommand(IPlayer player, string hash)
         {
-            if (Enum.IsDefined(typeof(WeaponModel), name))
-            {
-                player.GiveWeapon((uint)Enum.Parse<WeaponModel>(name), 500, true);
-            }
-            else
-            {
-                player.SendError(T._("Waffe wurde nicht gefunden!", player));
+            try {
+                var model = uint.Parse(hash, NumberStyles.HexNumber);
+                if (Enum.IsDefined(typeof(WeaponModel), model))
+                {
+                    player.GiveWeapon((WeaponModel)model, 500, true);
+                }
+                else
+                {
+                    player.SendError(T._("Waffe wurde nicht gefunden!", player));
+                }
+            } catch (SystemException) {
+                player.SendError(T._("Ungültiger Hash.", player));   
             }
         }
 
