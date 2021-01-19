@@ -328,20 +328,18 @@ namespace Exo.Rp.Core.Commands
         [Command("money", GreedyArg = false)]
         public static void Money(IPlayer player, string func, string _amount = "0", string _bank = "false")
         {
-            int.TryParse(_amount, out int amount);
-            bool.TryParse(_bank, out bool bank);
-            var funcs = new Dictionary<string, Action>
-            {
-                {"show", () => { } },
-                {"take", () => player.GetCharacter().TakeMoney(amount, "Admin: " + player.GetAccount().ForumId, bank, false) },
-                {"give", () => player.GetCharacter().GiveMoney(amount, "Admin: " + player.GetAccount().ForumId, bank, false) }
-            };
-
-            bool isValid = funcs.TryGetValue(func, out Action value);
-            if (isValid)
-            {
-                funcs[func].Invoke();
-                player.SendChatMessage("Geld " + (bank ? "(Bank)" : "(Bar)"), player.GetCharacter().GetMoney(bank).ToString());
+            var amount = int.Parse(_amount);
+            var bank = bool.Parse(_bank);
+            switch(func) {
+                case "show":
+                    player.SendInformation($"${player.GetCharacter().GetMoney(bank)}");
+                    break;
+                case "take":
+                    player.GetCharacter().TakeMoney(amount, "Admin: " + player.GetAccount().ForumId, bank);
+                    break;
+                case "give":
+                    player.GetCharacter().GiveMoney(amount, "Admin: " + player.GetAccount().ForumId, bank);
+                    break;
             }
         }
 

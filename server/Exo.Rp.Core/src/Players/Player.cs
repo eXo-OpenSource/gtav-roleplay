@@ -66,7 +66,7 @@ namespace Exo.Rp.Core.Players
         {
             SendNotification("~b~Info~w~: " + text);
         }
-
+        
         public void SendWarning(string text)
         {
             SendNotification("~o~Warnung~w~: " + text);
