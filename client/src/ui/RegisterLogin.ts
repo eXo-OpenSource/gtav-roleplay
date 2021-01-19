@@ -15,16 +15,7 @@ export class RegisterLogin {
   }
 
   private static camera: Camera = new Camera(RegisterLogin.cameraPoint, 17);
-  static initLogin() {
-    alt.log("registerLogin")
-    UiManager.on('login', (username: string, password: string) => {
-      alt.emitServer('RegisterLogin:Login', username, password);
-    });
 
-    alt.onServer("registerLogin:Error", (error) => {
-      UiManager.emit("setError", error)
-    });
-  }
   static openLogin() {
     RegisterLogin.camera.pointAtCoord(RegisterLogin.cameraPoint)
 
@@ -43,3 +34,11 @@ export class RegisterLogin {
     })
   }
 }
+
+UiManager.on('login', (username: string, password: string) => {
+  alt.emitServer('RegisterLogin:Login', username, password);
+});
+
+alt.onServer("registerLogin:Error", (error) => {
+  UiManager.emit("setError", error)
+});

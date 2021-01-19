@@ -9,7 +9,7 @@ export class VehicleUI {
 
   static activateInteractionMenu() {
     if(alt.gameControlsEnabled()) {
-      var vehicle = native.getClosestVehicle(VehicleUI.player.pos.x, VehicleUI.player.pos.y, VehicleUI.player.pos.z, 5, 0, 70) || VehicleUI.player.vehicle.scriptID
+      var vehicle = native.getClosestVehicle(VehicleUI.player.pos.x, VehicleUI.player.pos.y, VehicleUI.player.pos.z, 5, 0, 70) || VehicleUI.player.vehicle?.scriptID
 
         if (vehicle) {
           alt.toggleGameControls(false)
@@ -68,7 +68,7 @@ export class VehicleUI {
   }
 
   static deactivateInteractionMenu() {
-    var vehicle = native.getClosestVehicle(VehicleUI.player.pos.x, VehicleUI.player.pos.y, VehicleUI.player.pos.z, 5, 0, 70) || VehicleUI.player.vehicle.scriptID
+    var vehicle = native.getClosestVehicle(VehicleUI.player.pos.x, VehicleUI.player.pos.y, VehicleUI.player.pos.z, 5, 0, 70) || VehicleUI.player.vehicle?.scriptID
 
         if (vehicle) {
           alt.toggleGameControls(true)

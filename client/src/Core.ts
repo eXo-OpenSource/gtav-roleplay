@@ -1,9 +1,6 @@
 import * as alt from "alt-client";
 import { Singleton } from "./utils/Singleton";
 import UiManager from './ui/UiManager';
-//fix
-UiManager.createUi()
-alt.log("core createUI")
 // import { log } from "util";
 import "./systems/Vehicle";
 import "./systems/Notification";
@@ -17,7 +14,7 @@ import DoorManager from "./world/Doormanager";
 import { RegisterLogin } from "./ui/RegisterLogin"
 import { HUD } from "./ui/Hud"
 import { Chat } from "./ui/Chat"
-
+import { VehicleUI } from "./ui/VehicleUI"
 //extensions
 import "./extensions/Blip"
 
@@ -27,12 +24,11 @@ import './events/ui'
 
 //ui
 import "./ui/Chat"
-import "./ui/Hud";
 import "./ui/VehicleUI";
 import "./ui/ATM"
 import "./jobs/Farmer"
 import "./jobs/WoodCutter"
-//import "./ui/Speedo";
+import "./ui/Speedo";
 import "./ui/Popup";
 import "./environment/CarRent"
 
@@ -50,8 +46,7 @@ export class Core {
 
   constructor() {
     alt.log('Loaded: client.mjs');
-    RegisterLogin.initLogin();
-    HUD.initHud();
+    UiManager.createUi();
 
     alt.on('consoleCommand', () => {
       alt.log('consoleCommand');

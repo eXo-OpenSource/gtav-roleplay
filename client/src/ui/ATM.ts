@@ -40,11 +40,11 @@ export class ATM {
   }
 }
 
-alt.onServer("ATM:Show", ATM.showATM)
-
 UiManager.on("ATM:Logout", ATM.logOut)
 UiManager.on("ATM:CashIn", ATM.cashIn)
 UiManager.on("ATM:CashOut", ATM.cashOut)
+
+alt.onServer("ATM:Show", ATM.showATM)
 
 alt.emitServer("BankAccount:RefreshData")
 

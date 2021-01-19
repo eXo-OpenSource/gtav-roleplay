@@ -6,12 +6,11 @@ import { Cursor } from "../utils/Cursor";
 const url = 'http://resource/cef/index.html#';
 
 export default class UiManager {
-  private static mainView: View = new View();
+  static mainView: View = new View();
 
   static createUi() {
     //this.mainView = new View()
-    this.mainView.open(url, false, true);
-    alt.log("createUI")
+    //this.mainView.open(url, false, true);
     UiManager.on("Chat:Message", Chat.handleChatMessage);
     UiManager.on("Chat:Loaded", Chat.loadChat)
     this.loadEvents()
@@ -86,3 +85,5 @@ export default class UiManager {
   }
 
 }
+// Init webView first
+UiManager.mainView.open(url, false, true);

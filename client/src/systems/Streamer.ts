@@ -136,9 +136,9 @@ alt.onServer("entitySync:remove", (entityId, entityType) => {
     handle.destroy()
   } else if(entityType === 1) {
     // alt.log(JSON.stringify(entity))
-    natives.deleteObject(<number>entity.handle)
+    natives.deleteObject(<number>entity?.handle)
   } else if(entityType === 2) {
-    natives.deleteEntity(<number>entity.handle)
+    natives.deleteEntity(<number>entity?.handle)
   }
   entity.handle = null;
 })

@@ -40,27 +40,6 @@ export class HUD {
 
     static money = 0;
 
-    static initHud() {
-      alt.everyTick(() => {
-        native.displayAmmoThisFrame(false) // hides amount of ammo
-        native.hideHudComponentThisFrame(20) // hides weapon stats ui
-
-        if (native.isPedArmed(alt.Player.local.scriptID, 7)) {
-          let selectedWeapon = native.getSelectedPedWeapon(alt.Player.local.scriptID)
-          let ammoInWeapon = native.getAmmoInPedWeapon(alt.Player.local.scriptID, selectedWeapon)
-          let [_, ammoInClip] = native.getAmmoInClip(alt.Player.local.scriptID, selectedWeapon, ammoInWeapon)
-
-          UiManager.emit("HUD:SetData", "amount", ammoInClip + " / " + (ammoInWeapon - ammoInClip))
-        } else {
-          UiManager.emit("HUD:SetData", "amount", "$ " + HUD.money)
-        }
-
-        UiManager.emit("HUD:SetData", "kevlar", native.getPedArmour(alt.Player.local.scriptID))
-        UiManager.emit("HUD:SetData", "health", native.getEntityHealth(alt.Player.local.scriptID) / 2)
-        UiManager.emit("HUD:SetData", "hunger", "75") // need hunger-system
-      })
-    }
-
     static updateMoney(money) {
       HUD.money = money;
     }
@@ -72,3 +51,22 @@ export class HUD {
 }
 
 alt.onServer("HUD:UpdateMoney", HUD.updateMoney)
+
+alt.everyTick(() => {
+  native.displayAmmoThisFrame(false) // hides amount of ammo
+  native.hideHudComponentThisFrame(20) // hides weapon stats ui
+
+  if (native.isPedArmed(alt.Player.local.scriptID, 7)) {
+    let selectedWeapon = native.getSelectedPedWeapon(alt.Player.local.scriptID)
+    let ammoInWeapon = native.getAmmoInPedWeapon(alt.Player.local.scriptID, selectedWeapon)
+    let [_, ammoInClip] = native.getAmmoInClip(alt.Player.local.scriptID, selectedWeapon, ammoInWeapon)
+
+    UiManager.emit("HUD:SetData", "amount", ammoInClip + " / " + (ammoInWeapon - ammoInClip))
+  } else {
+    UiManager.emit("HUD:SetData", "amount", "$ " + HUD.money)
+  }
+
+  UiManager.emit("HUD:SetData", "kevlar", native.getPedArmour(alt.Player.local.scriptID))
+  UiManager.emit("HUD:SetData", "health", native.getEntityHealth(alt.Player.local.scriptID) / 2)
+  UiManager.emit("HUD:SetData", "hunger", "75") // need hunger-system
+})
