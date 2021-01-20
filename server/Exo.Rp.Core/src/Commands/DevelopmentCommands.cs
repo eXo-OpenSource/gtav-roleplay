@@ -78,8 +78,9 @@ namespace Exo.Rp.Core.Commands
         [Command("vehicle", Alias = "veh")]
         public static void CreateVehicle(IPlayer player, string hash)
         {
-            try {
-                var model = int.Parse(hash, NumberStyles.HexNumber);
+            try
+            {
+                var model = Convert.ToUInt32(hash, 16);
                 if (Enum.IsDefined(typeof(VehicleModel), model))
                 {
                     var random = new Random();
@@ -88,12 +89,15 @@ namespace Exo.Rp.Core.Commands
 
                     Alt.Log("Fahrzeug gespawnt: " + veh.Model.ToString() + "!");
                     player.SetIntoVehicle(veh.handle, -1);
-                } else
+                }
+                else
                 {
                     player.SendError(T._("Fahrzeug wurde nicht gefunden!", player));
                 }
-            } catch (SystemException) {
-                player.SendError(T._("Ungültiger Hash.", player));   
+            }
+            catch (SystemException)
+            {
+                player.SendError(T._("Ungültiger Hash.", player));
             }
         }
 
