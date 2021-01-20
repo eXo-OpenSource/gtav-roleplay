@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using AltV.Net.Data;
 using AltV.Net.Enums;
 
@@ -34,9 +35,6 @@ namespace Exo.Rp.Core.Util
             return new Rgba((byte)rnd.Next(255), (byte)rnd.Next(255), (byte)rnd.Next(255), 255);
         }
         
-        public static bool IsHexString(string test)
-        {
-            return System.Text.RegularExpressions.Regex.IsMatch(test, @"\A\b(0[xX])?[0-9a-fA-F]+\b\Z");
-        }
+        public static bool IsHexString(string test) => Regex.IsMatch(test, @"\A\b(0[xX])?[0-9a-fA-F]+\b\Z");
     }
 }
