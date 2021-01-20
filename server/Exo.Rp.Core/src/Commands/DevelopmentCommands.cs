@@ -69,7 +69,7 @@ namespace Exo.Rp.Core.Commands
             }
             catch (SystemException e)
             {
-                player.SendError(T._("Ungültiger Hash. {0}.", player, e.Message));
+                player.SendError(T._("Parsing fehlgeschlagen! {0}.", player, e.Message));
             }
         }
 
@@ -105,7 +105,7 @@ namespace Exo.Rp.Core.Commands
             }
             catch (SystemException e)
             {
-                player.SendError(T._("Ungültiger Hash. {0}.", player, e.Message));
+                player.SendError(T._("Parsing fehlgeschlagen! {0}.", player, e.Message));
             }
         }
 
@@ -166,7 +166,7 @@ namespace Exo.Rp.Core.Commands
                 }
             catch (SystemException e)
             {
-                player.SendError(T._("Ungültiger Hash. {0}.", player, e.Message));
+                player.SendError(T._("Parsing fehlgeschlagen! {0}.", player, e.Message));
             }
         }
 
