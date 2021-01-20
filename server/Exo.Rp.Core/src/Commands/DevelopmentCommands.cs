@@ -15,6 +15,7 @@ using Exo.Rp.Core.Shops;
 using Exo.Rp.Core.Shops.Types;
 using Exo.Rp.Core.Teams.State;
 using Exo.Rp.Core.Translation;
+using Exo.Rp.Core.Util;
 using Exo.Rp.Core.Vehicles;
 using Exo.Rp.Core.World;
 using Exo.Rp.Models.Enums;
@@ -54,9 +55,12 @@ namespace Exo.Rp.Core.Commands
         public static void Skin(IPlayer player, string hash)
         {
             try {
-                var model = (uint)Enum.Parse<PedModel>(hash, true);
-                if (hash.StartsWith("0x"))
+                uint model;
+                if (General.IsHexString(hash)) {
                     model = Convert.ToUInt32(hash, 16);
+                } else {
+                    model = (uint)Enum.Parse<PedModel>(hash, true);
+                }
 
                 if (Enum.IsDefined(typeof(PedModel), model)) {
                     if (player.Model == model)
@@ -85,9 +89,12 @@ namespace Exo.Rp.Core.Commands
         {
             try
             {
-                var model = (uint)Enum.Parse<VehicleModel>(hash, true);
-                if (hash.StartsWith("0x"))
+                uint model;
+                if (General.IsHexString(hash)) {
                     model = Convert.ToUInt32(hash, 16);
+                } else {
+                    model = (uint)Enum.Parse<VehicleModel>(hash, true);
+                }
 
                 if (Enum.IsDefined(typeof(VehicleModel), model))
                 {
@@ -152,9 +159,12 @@ namespace Exo.Rp.Core.Commands
         public static void WeaponCommand(IPlayer player, string hash)
         {
             try {
-                var model = (uint)Enum.Parse<WeaponModel>(hash, true);
-                if (hash.StartsWith("0x"))
+                uint model;
+                if (General.IsHexString(hash)) {
                     model = Convert.ToUInt32(hash, 16);
+                } else {
+                    model = (uint)Enum.Parse<WeaponModel>(hash, true);
+                }
 
                 if (Enum.IsDefined(typeof(WeaponModel), model))
                 {
