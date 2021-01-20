@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 using AltV.Net.Data;
+using AltV.Net.Enums;
 
 namespace Exo.Rp.Core.Util
 {

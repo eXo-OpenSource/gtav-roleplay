@@ -54,7 +54,10 @@ namespace Exo.Rp.Core.Commands
         public static void Skin(IPlayer player, string hash)
         {
             try {
-                var model = uint.Parse(hash, NumberStyles.HexNumber);
+                var model = (uint)Enum.Parse<PedModel>(hash, true);
+                if (hash.StartsWith("0x"))
+                    model = Convert.ToUInt32(hash, 16);
+
                 if (!Enum.IsDefined(typeof(PedModel), model)) {
                     if (player.Model == model)
                         player.GetCharacter().ResetSkin();
@@ -63,8 +66,10 @@ namespace Exo.Rp.Core.Commands
                 } else {
                     player.SendError(T._("Skin Hash nicht gefunden!", player));
                 }
-            } catch (SystemException) {
-                player.SendError(T._("Ungültiger Hash.", player));   
+            }
+            catch (SystemException e)
+            {
+                player.SendError(T._("Ungültiger Hash. {0}.", player, e.Message));
             }
         }
 
@@ -80,7 +85,10 @@ namespace Exo.Rp.Core.Commands
         {
             try
             {
-                var model = Convert.ToUInt32(hash, 16);
+                var model = (uint)Enum.Parse<VehicleModel>(hash, true);
+                if (hash.StartsWith("0x"))
+                    model = Convert.ToUInt32(hash, 16);
+
                 if (Enum.IsDefined(typeof(VehicleModel), model))
                 {
                     var random = new Random();
@@ -95,9 +103,9 @@ namespace Exo.Rp.Core.Commands
                     player.SendError(T._("Fahrzeug wurde nicht gefunden!", player));
                 }
             }
-            catch (SystemException)
+            catch (SystemException e)
             {
-                player.SendError(T._("Ungültiger Hash.", player));
+                player.SendError(T._("Ungültiger Hash. {0}.", player, e.Message));
             }
         }
 
@@ -140,96 +148,14 @@ namespace Exo.Rp.Core.Commands
             }
         }
 
-        //[Command("nveh")]
-        /*public void CreateVehicleNew(IPlayer player, string vehicleName)
-        {
-            var newVehicles = new List<string>
-            {
-                "entity2",
-                "cheburek",
-                "jester3",
-                "caracara",
-                "hotring",
-                "seasparrow",
-                "flashgt",
-                "ellie",
-                "michelli",
-                "fagaloa",
-                "dominator3",
-                "tyrant",
-                "tezeract",
-                "gb200",
-                "issi3",
-                "taipan",
-                "bruiser",
-                "bruiser2",
-                "bruiser3",
-                "brutus",
-                "brutus2",
-                "brutus3",
-                "cerberus",
-                "cerberus2",
-                "cerberus3",
-                "clique",
-                "deathbike",
-                "deathbike2",
-                "deathbike3",
-                "deveste",
-                "deviant",
-                "dominator4",
-                "dominator5",
-                "dominator6",
-                "impaler",
-                "impaler2",
-                "impaler3",
-                "impaler4",
-                "imperator",
-                "imperator2",
-                "imperator3",
-                "issi4",
-                "issi5",
-                "issi6",
-                "italigto",
-                "monster3",
-                "monster4",
-                "monster5",
-                "rcbandito",
-                "scarab",
-                "scarab2",
-                "scarab",
-                "schlagen",
-                "slamvan4",
-                "slamvan5",
-                "slamvan6",
-                "toros",
-                "tulip",
-                "vamos",
-                "zr380",
-                "zr3802",
-                "zr3803"
-            };
-
-
-            if (!newVehicles.Contains(vehicleName))
-            {
-                player.SendError("Fahrzeug nicht gefunden!");
-                return;
-            }
-
-            var veh = VehicleManager.CreateTemporaryVehicle(
-                (VehicleModel) NAPI.Util.GetHashKey(vehicleName), player.Position, player.Heading,
-                General.GetRandomColor(), General.GetRandomColor(), "Admin");
-
-
-            //NAPI.Chat.SendChatMessageToPlayer(player, "Fahrzeug gespawnt: " + vehicleName + "!");
-            player.SetIntoVehicle(veh.handle, -1);
-        }*/
-
         [Command("weapon")]
         public static void WeaponCommand(IPlayer player, string hash)
         {
             try {
-                var model = uint.Parse(hash, NumberStyles.HexNumber);
+                var model = (uint)Enum.Parse<WeaponModel>(hash, true);
+                if (hash.StartsWith("0x"))
+                    model = Convert.ToUInt32(hash, 16);
+
                 if (Enum.IsDefined(typeof(WeaponModel), model))
                 {
                     player.GiveWeapon((WeaponModel)model, 500, true);
@@ -238,18 +164,11 @@ namespace Exo.Rp.Core.Commands
                 {
                     player.SendError(T._("Waffe wurde nicht gefunden!", player));
                 }
-            } catch (SystemException) {
-                player.SendError(T._("Ungültiger Hash.", player));   
+            catch (SystemException e)
+            {
+                player.SendError(T._("Ungültiger Hash. {0}.", player, e.Message));
             }
         }
-
-        /*
-        [Command("eval", GreedyArg = true)]
-        public void EvalCommand(IPlayer sender, string cmd)
-        {
-            //sender.Eval(cmd);
-        }
-        */
 
         [Command("getpos", Alias = "gp")]
         public static void GetPosition(IPlayer player)
