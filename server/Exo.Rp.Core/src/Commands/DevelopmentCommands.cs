@@ -98,8 +98,7 @@ namespace Exo.Rp.Core.Commands
 
                 if (Enum.IsDefined(typeof(VehicleModel), model))
                 {
-                    var random = new Random();
-                    var color = new Rgba(Convert.ToByte(random.Next(255)), Convert.ToByte(random.Next(255)), Convert.ToByte(random.Next(255)), Convert.ToByte(random.Next(255)));
+                    var color = General.GetRandomColor();
                     var veh = Core.GetService<VehicleManager>().CreateTemporaryVehicle((VehicleModel)model, player.Position, player.Rotation.Roll, color, color, "Admin");
 
                     Alt.Log("Fahrzeug gespawnt: " + veh.Model.ToString() + "!");

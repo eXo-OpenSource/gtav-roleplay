@@ -10,12 +10,12 @@ namespace Exo.Rp.Core.Commands
 {
     public class CommandHandler : IManager
     {
-        private readonly IEnumerable<(CommandAttribute command, MethodInfo method)> _commands;
+        private readonly IList<(CommandAttribute command, MethodInfo method)> _commands;
 
         public CommandHandler(RuntimeIndexer indexer)
         {
             _commands = indexer.IndexWithAttribute<CommandAttribute, MethodInfo>(Assembly.GetExecutingAssembly(),
-                method => method.IsStatic && method.IsPublic);
+                method => method.IsStatic && method.IsPublic).ToList();
         }
 
         public CommandInvokeResult Invoke(string commandIdentifier, IPlayer player, object[] commandArguments)
