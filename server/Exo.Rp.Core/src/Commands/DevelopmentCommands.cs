@@ -164,6 +164,7 @@ namespace Exo.Rp.Core.Commands
                 {
                     player.SendError(T._("Waffe wurde nicht gefunden!", player));
                 }
+            }
             catch (SystemException e)
             {
                 player.SendError(T._("Parsing fehlgeschlagen! {0}.", player, e.Message));
