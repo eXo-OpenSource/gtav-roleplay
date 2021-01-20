@@ -58,7 +58,7 @@ namespace Exo.Rp.Core.Commands
                 if (hash.StartsWith("0x"))
                     model = Convert.ToUInt32(hash, 16);
 
-                if (!Enum.IsDefined(typeof(PedModel), model)) {
+                if (Enum.IsDefined(typeof(PedModel), model)) {
                     if (player.Model == model)
                         player.GetCharacter().ResetSkin();
                     else
