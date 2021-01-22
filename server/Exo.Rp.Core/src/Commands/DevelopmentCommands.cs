@@ -404,9 +404,9 @@ namespace Exo.Rp.Core.Commands
         [Command("clearvehicles")]
         public static void ClearVehicles(IPlayer player)
         {
-            foreach (var veh in Alt.GetAllVehicles())
+            foreach (Vehicles.Vehicle veh in Alt.GetAllVehicles())
             {
-                veh.Remove();
+                if (veh.OwnerType != OwnerType.RentedCar) veh.handle.Remove();
             }
             //NAPI.Chat.SendChatMessageToAll($"Alle Fahrzeuge wurden von {player.Name} gelöscht.");
         }

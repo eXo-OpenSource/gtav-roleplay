@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Exo.Rp.Core.Environment.CarRentTypes;
 
 namespace Exo.Rp.Core.Environment
 {

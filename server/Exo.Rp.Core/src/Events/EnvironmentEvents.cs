@@ -1,6 +1,7 @@
 using AltV.Net;
 using Exo.Rp.Core.Environment;
 using Exo.Rp.Core.Players;
+using Exo.Rp.Core.Environment.CarRentTypes;
 
 namespace Exo.Rp.Core.Events
 
@@ -38,10 +39,10 @@ namespace Exo.Rp.Core.Events
             player.Emit("CarRent:OpenUI");
         }
 
-        [ClientEvent("CarRent:SpawnVehicle")]
-        public void RentVehicle(IPlayer player, string vehicle, int price)
+        [ClientEvent("CarRent:RentVehicle")]
+        public void RentVehicle(IPlayer player, string vehicle, int rentalGroupId)
         {
-            CarRent.SpawnVehicle(player, vehicle, price);
+            CarRent.rentalGroups[rentalGroupId].RentVehicle(player, vehicle);
         }
 
     }

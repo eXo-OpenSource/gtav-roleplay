@@ -14,6 +14,7 @@ using Exo.Rp.Core.Vehicles.Types;
 using Exo.Rp.Models.Enums;
 using Exo.Rp.Sdk;
 using Exo.Rp.Sdk.Logger;
+using Exo.Rp.Core.Environment.CarRentTypes;
 using IPlayer = Exo.Rp.Core.Players.IPlayer;
 
 namespace Exo.Rp.Core.Vehicles
@@ -173,7 +174,7 @@ namespace Exo.Rp.Core.Vehicles
         }
 
         public RentVehicle CreateRentedVehicle(IPlayer tempOwner, VehicleModel hash, Position position, float heading, int time,
-            Rgba? color1T, Rgba? color2T, string plate = "Rented")
+            Rgba? color1T, Rgba? color2T, RentalGroup rentalGroup, bool isActive = false, string plate = "Rented")
         {
             if (color1T == null) color1T = _defaultColor;
             if (color2T == null) color2T = _defaultColor;
@@ -194,6 +195,13 @@ namespace Exo.Rp.Core.Vehicles
                 PosZ = position.Z,
                 Pos = position,
                 RotZ = heading,
+                RespawnPosX = position.X,
+                RespawnPosY = position.Y,
+                RespawnPosZ = position.Z,
+                RespawnPos = position,
+                RespawnRotZ = heading,
+                IsActive = isActive,
+                RentalGroup = rentalGroup,
                 Inventory = new VehicleInventory()
                 {
                     OwnerType = OwnerType.Vehicle,

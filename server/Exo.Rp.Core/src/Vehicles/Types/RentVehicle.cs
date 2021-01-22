@@ -1,12 +1,40 @@
 using AltV.Net;
 using IPlayer = Exo.Rp.Core.Players.IPlayer;
+using Exo.Rp.Core.Environment.CarRentTypes;
+using AltV.Net.Data;
 
 namespace Exo.Rp.Core.Vehicles.Types
 {
     public class RentVehicle : Vehicle
     {
+        public RentalGroup RentalGroup;
+        public bool IsActive;
+        public float RespawnPosX { get; set; }
+        public float RespawnPosY { get; set; }
+        public float RespawnPosZ { get; set; }
+        public float RespawnRotZ { get; set; }
+
+        public Position RespawnPos
+        {
+            get => new Position(RespawnPosX, RespawnPosY, RespawnPosZ);
+            set
+            {
+                RespawnPosX = value.X;
+                RespawnPosY = value.Y;
+                RespawnPosZ = value.Z;
+            }
+        }
+        public void Respawn()
+        {
+            OwnerId = -1;
+            IsActive = false;
+            handle.BodyHealth = 100;
+            handle.Rotation = new Rotation(0, 0, RespawnRotZ);
+            handle.Position = RespawnPos;
+        }
         public override void OnEnter(IPlayer client, int seat)
         {
+            if (IsActive) client.Emit("CarRent:DeleteRentMarker");
             base.OnEnter(client, seat);
             Alt.EmitAllClients("onIPlayerTeamVehicleEnter", client, handle, seat);
         }
@@ -31,13 +59,13 @@ namespace Exo.Rp.Core.Vehicles.Types
 
         public override bool CanEnter(IPlayer client, int seat)
         {
-            return true;
+            return OwnerId == client.GetId();
         }
 
         public override bool CanStartEngine(IPlayer client)
         {
             //return _owner.Equals(client.GetCharacter().GetTeam());
-            return true;
+            return OwnerId == client.GetId();
         }
     }
 }

@@ -4,105 +4,151 @@ using AltV.Net;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
+using Exo.Rp.Core.Commands;
 using Exo.Rp.Core.Players.Characters;
 using Exo.Rp.Core.Streamer;
 using Exo.Rp.Core.Streamer.Entities;
 using Exo.Rp.Core.Vehicles;
+using Exo.Rp.Core.Environment.CarRentTypes;
+using Exo.Rp.Core.Translation;
 using IPlayer = Exo.Rp.Core.Players.IPlayer;
 using Vehicle = Exo.Rp.Core.Vehicles.Vehicle;
+using AltV.Net.Elements.Args;
+using System.Timers;
+using System.Text;
+using System.Linq;
+using AltV.Net.Elements.Pools;
+using Exo.Rp.Core.Vehicles.Types;
 
 namespace Exo.Rp.Core.Environment
 {
     public class CarRent
     {
-        int loadedCarRents = 0;
-
-        private Dictionary<int, Colshape.Colshape> colshapes;
-        private static Dictionary<int, Vehicle> vehicles;
-
-        private readonly Position[] rentSpots =
+        public static List<RentalGroup> rentalGroups;
+        public static Dictionary<int, RentalGroup> playerGroups = new Dictionary<int, RentalGroup>();
+        // dev commands
+        [Command("rentveh")]
+        public static void CommandRentVehicle(IPlayer player, string vehicle)
         {
-            new Position(-986.8756713867188f, -2690.510986328125f, 14.04065227508545f)
-        };
+            if (playerGroups.TryGetValue(player.GetId(), out RentalGroup rGroup))
+            {
+                if (!rGroup.rentedVehicles.ContainsKey(player.GetId()))
+                {
+                    rGroup.RentVehicle(player, vehicle);
+                } else 
+                {
+                    player.SendChatMessage("CarRent", "Du hast bereits ein Leihwagen!");
+                }
+            }            
+        }
+
+        [Command("unrent")]
+        public static void CommandUnrentVehicle(IPlayer player)
+        {
+            // TODO
+            if (player.IsInVehicle)
+            {
+                var veh = player.Vehicle;
+                if (veh.GetData("rentalGroup", out int id))
+                {
+                    /*CarRent.rentalGroups[id].spawnedVehicles.Remove((RentVehicle)veh);
+                    veh.handle.Remove();*/
+                    rentalGroups[id].ReturnVehicle(player);
+                }
+            }
+        }
+        [Command("owner")]
+        public static void GetVehicleData(IPlayer player)
+        {
+            if (player.IsInVehicle)
+            {
+                var veh = (RentVehicle)player.Vehicle;
+                player.SendChatMessage("CarRent", veh.OwnerId.ToString());
+            }
+        }
+        [Command("rsprent")]
+        public static void RespawnRentals(IPlayer player)
+        {
+            foreach (var group in rentalGroups)
+            {
+                foreach (var veh in group.spawnedVehicles)
+                {
+                    veh.Respawn();
+                }
+            }
+        }
+        [Command("vehhealth")]
+        public static void VehicleHealth(IPlayer player)
+        {
+            player.SendChatMessage("VehHealth", player.Vehicle?.BodyHealth.ToString());
+        }
 
         public CarRent()
         {
-            colshapes = new Dictionary<int, Colshape.Colshape>();
-            vehicles = new Dictionary<int, Vehicle>();
-            LoadCarRents();
-        }
-
-        public void LoadCarRents()
-        {
-            foreach (Position _carRent in rentSpots)
+            // init all rentals
+            rentalGroups = new List<RentalGroup>()
             {
-                Core.GetService<PublicStreamer>().AddGlobalBlip(new StaticBlip
-                {
-                    Color = 5,
-                    Name = "Autovermietung",
-                    X = _carRent.X,
-                    Y = _carRent.Y,
-                    Z = _carRent.Z,
-                    SpriteId = 198,
-                });
-                colshapes.Add(loadedCarRents, (Colshape.Colshape)Alt.CreateColShapeSphere(_carRent, 1.9f));
-                colshapes[loadedCarRents].OnColShapeEnter += OnColshapeEnter;
-                colshapes[loadedCarRents].OnColShapeExit += OnColshapeLeave;
-                loadedCarRents++;
-            }
+                new TouchdownRental(), new EscaleraRental()//, new BikeRental()
+            };
         }
 
+
+        // deprecated
         public static Vehicle SpawnVehicle(IPlayer player, string vehicle, int price)
         {
-            if (!vehicles.ContainsKey(player.GetId()))
+            if (player.GetData("rentGroup", out RentalGroup rGroup))
             {
-                if (price <= player.GetCharacter().GetMoney()) {
+                if (price <= player.GetCharacter().GetMoney())
+                {
+                    int count = rGroup.vehiclePositions.Count - 1;
+                    var vehiclePos = rGroup.vehiclePositions[new Random().Next(0, count)];
                     var veh = Core.GetService<VehicleManager>().CreateRentedVehicle(player, (VehicleModel)Enum.Parse(typeof(VehicleModel), vehicle),
-                        new Position(-986.8756713867188f, -2690.510986328125f, 14.04065227508545f), 0, 3600000, Rgba.Zero, Rgba.Zero);
+                        vehiclePos.Pos, vehiclePos.Rot.Yaw, 3600000, Rgba.Zero, Rgba.Zero, rGroup);
+                    rGroup.rentedVehicles.Add(player.GetId(), veh);
+                    veh.handle.SetData("rentGroup", rGroup);
 
                     player.GetCharacter().TakeMoney(price, "Fahrzeugverleih");
-                    player.SendSuccess($"Fahrzeug gemietet! (-${price})");
+                    player.SendSuccess(T._($"Fahrzeug gemietet! (-${price})", player));
                     player.SetIntoVehicle(veh.handle, -1);
-                    vehicles.Add(player.GetId(), veh);
                     player.Emit("CarRent:CloseUI");
+
+                    player.SendChatMessage("CarRental", T._($"Fahrzeug ausgeliehen von '{rGroup.name}'", player));
+
+                    /*var timer = new Timer(10000);
+                    timer.Elapsed += (args, e) =>
+                    {
+                        player.GetCharacter().TakeMoney(1, "CarRental");
+                        player.SendChatMessage("CarRent", T._("Dir wurden soeben $1 für die Nutztung deines Leihfahrzeuges abgezogen!", player));
+                    };
+                    timer.Enabled = true;
+                    rGroup.timers.Add(player.GetId(), timer);*/
                     return veh;
-                } else
+                }
+                else
                 {
-                    player.SendError("Du hast nicht genug Geld!");
+                    player.SendError(T._("Du hast nicht genug Geld!", player));
                     return null;
                 }
             }
-            player.SendError("Du hast bereits ein Leihfahrzeug!");
+            player.SendError(T._("Du hast bereits ein Leihfahrzeug!", player));
             return null;
         }
 
         public static void RemoveVeh(IPlayer player)
         {
-            if (vehicles.ContainsKey(player.GetId()))
+            if (player.GetData("rentGroup", out RentalGroup rGroup))
             {
-                vehicles.Remove(player.GetId());
+                if (rGroup.timers[player.GetId()] != null)
+                {
+                    rGroup.timers[player.GetId()].Dispose();
+                }
+                player.DeleteData("rentGroup");
+                rGroup.rentedVehicles.Remove(player.GetId());
                 player.Emit("CarRent:CloseUI");
-                player.SendError("Dein Leihfahrzeug ist abgelaufen!");
+                player.SendError(T._("Dein Leihfahrzeug ist abgelaufen!", player));
+
+                player.SendChatMessage("CarRent", "Dein Fahrzeug ist abgelaufen!");
             }
-        }
-
-        public void OnColshapeEnter(Colshape.Colshape col, IEntity entity)
-        {
-            if (!(entity is IPlayer player)) return;
-
-            var interactionData = new InteractionData {
-                SourceObject = this,
-                CallBack = null
-            };
-
-            player.GetCharacter().ShowInteraction("Rent A Car", "CarRent:OnPedInteract", "DrÃ¼cke E um zu interagieren", interactionData: interactionData);
-        }
-
-        public void OnColshapeLeave(Colshape.Colshape col, IEntity entity)
-        {
-            if(!(entity is IPlayer player)) return;
-            if (player.GetCharacter() == null) return;
-            player.GetCharacter().HideInteraction();
         }
     }
 }
