@@ -36,6 +36,7 @@ using Exo.Rp.Sdk.Logger;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Sentry;
+using Sentry.AsyncStackTrace;
 using IPlayer = AltV.Net.Elements.Entities.IPlayer;
 
 namespace Exo.Rp.Core
@@ -124,6 +125,7 @@ namespace Exo.Rp.Core
                     options.SendDefaultPii = true;
                     options.AddExceptionProcessor(new SentryEventExceptionProcessor(new Logger<SentryEventExceptionProcessor>()));
                     options.ServerName = settings.Environment;
+                    options.UseAsyncStackTraceFactory();
                 });
 
             // Initialize database
