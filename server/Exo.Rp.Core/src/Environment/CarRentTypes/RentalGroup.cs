@@ -81,7 +81,7 @@ namespace Exo.Rp.Core.Environment.CarRentTypes
                 var color = colors[Random.Next(colors.Count)];
                 var veh = Core.GetService<VehicleManager>().CreateRentedVehicle(null, (VehicleModel)Enum.Parse(typeof(VehicleModel), vehicle.Name),
                     vehicle.Pos, vehicle.Rot.Yaw, 3600000, color[0], color[1], this);
-                veh.handle.LockState = VehicleLockState.Locked;
+                //veh.handle.LockState = VehicleLockState.Locked;
                 veh.handle.SetData("rentalGroup", id);
                 spawnedVehicles.Add(veh);
             }
