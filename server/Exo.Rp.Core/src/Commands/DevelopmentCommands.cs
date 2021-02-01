@@ -404,10 +404,13 @@ namespace Exo.Rp.Core.Commands
         [Command("clearvehicles")]
         public static void ClearVehicles(IPlayer player)
         {
-            foreach (Vehicles.Vehicle veh in Alt.GetAllVehicles())
+            var count = 0;
+            foreach (IVehicle veh in Alt.GetAllVehicles())
             {
-                if (veh.OwnerType != OwnerType.RentedCar) veh.handle.Remove();
+                veh.Remove();
+                count++;
             }
+            player.SendChatMessage("Command", $"{count} Fahrzeuge gelöscht");
             //NAPI.Chat.SendChatMessageToAll($"Alle Fahrzeuge wurden von {player.Name} gelöscht.");
         }
 

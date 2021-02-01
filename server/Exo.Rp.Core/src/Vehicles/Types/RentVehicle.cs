@@ -65,7 +65,8 @@ namespace Exo.Rp.Core.Vehicles.Types
         public override bool CanStartEngine(IPlayer client)
         {
             //return _owner.Equals(client.GetCharacter().GetTeam());
-            return OwnerId == client.GetId();
+            //return OwnerId == client.GetId();
+            return true;
         }
     }
 }

@@ -209,11 +209,11 @@ namespace Exo.Rp.Core.Vehicles
                 }
             };
 
-            Task.Delay(time).ContinueWith(_ =>
+            /*Task.Delay(time).ContinueWith(_ =>
             {
                 CarRent.RemoveVeh(tempOwner);
                 veh.handle.Remove();
-            });
+            });*/
             
             AddVehicle<RentVehicle>(veh, true);
             _rentedVehicleId++;

@@ -83,6 +83,16 @@ namespace Exo.Rp.Core.Environment
             player.SendChatMessage("VehHealth", player.Vehicle?.BodyHealth.ToString());
         }
 
+        [Command("resetrental")]
+        public static void ResetRental(IPlayer player)
+        {
+            foreach (RentalGroup group in rentalGroups)
+            {
+                foreach (RentVehicle veh in group.spawnedVehicles) veh.handle.Remove();
+                group.LoadRentSpots();
+            }
+        }
+
         public CarRent()
         {
             // init all rentals
