@@ -79,6 +79,7 @@ namespace Exo.Rp.Core
                 .AddSingleton<InventoryManager>()
                 .AddSingleton<IplManager>()
                 .AddSingleton<JobManager>()
+                .AddSingleton<CityhallManager>()
                 .AddSingleton<UpdateableManager>()
                 .AddSingleton<PluginManager>()
                 .AddSingleton<PrivateStreamer>()

@@ -55,14 +55,13 @@ namespace Exo.Rp.Core.Events.Vehicles
         {
             var vehicle = Core.GetService<VehicleManager>().GetVehicleFromHandle<Vehicle>(client.Vehicle);
             if (vehicle == null) return;
-
             if (client.Vehicle.EngineOn == false)
             {
-                if (vehicle.CanStartEngine(client)) vehicle.ToggleEngine(true);
+                if (vehicle.CanStartEngine(client)) vehicle.ToggleEngine(client, true);
             }
             else
             {
-                vehicle.ToggleEngine(false);
+                vehicle.ToggleEngine(client, false);
             }
         }
 

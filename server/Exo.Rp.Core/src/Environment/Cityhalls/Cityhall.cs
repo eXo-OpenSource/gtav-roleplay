@@ -19,6 +19,7 @@ namespace Exo.Rp.Core.Environment
         public Position ExitMarkerPos;
         public Position ExitSpawnPos;
         public string InteractionId;
+
         public Cityhall(int townHallId)
         {
             Id = townHallId;
@@ -29,7 +30,6 @@ namespace Exo.Rp.Core.Environment
             var col = (Colshape.Colshape)Alt.CreateColShapeSphere(EntranceMarkerPos, 3);
             col.OnColShapeEnter += OnColEnter;
             col.OnColShapeExit += OnColExit;
-
             Core.GetService<PublicStreamer>().AddGlobalBlip(new StaticBlip
             {
                 Name = Name,

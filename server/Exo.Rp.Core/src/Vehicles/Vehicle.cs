@@ -3,8 +3,8 @@ using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
 using Exo.Rp.Core.Util.Log;
-using Exo.Rp.Sdk;
 using Exo.Rp.Sdk.Logger;
+using System.Timers;
 using IPlayer = Exo.Rp.Core.Players.IPlayer;
 
 namespace Exo.Rp.Core.Vehicles
@@ -16,6 +16,7 @@ namespace Exo.Rp.Core.Vehicles
         public IVehicle handle;
         private bool _lightStatus;
         public string ownerName;
+        private Timer fuelTimer;
 
         public virtual IVehicle Spawn()
         {
@@ -73,10 +74,28 @@ namespace Exo.Rp.Core.Vehicles
             return true;
         }
 
-        public virtual void ToggleEngine(bool state)
+        public virtual void ToggleEngine(IPlayer client, bool state)
         {
             handle.EngineOn = state;
             handle.SetSyncedMetaData("vehicle.Engine", state);
+
+            if (handle.EngineOn)
+            {
+                fuelTimer = new Timer(5000);
+                fuelTimer.Elapsed += (args, e) =>
+                {
+                    if (Fuel <= 0f) {
+                        client.SendError("Der Tank ist verbraucht!");
+                        fuelTimer.Enabled = false;
+                        return;
+                    }
+                    Fuel--;
+                };
+                fuelTimer.Enabled = true;
+            } else
+            {
+                fuelTimer.Enabled = false;
+            }
         }
 
         public virtual void ToggleLight()
@@ -93,7 +112,14 @@ namespace Exo.Rp.Core.Vehicles
 
         public virtual bool CanStartEngine(IPlayer client)
         {
-            return true;
+            if (Fuel <= 0f && FuelType != Models.Enums.FuelType.None)
+            {
+                client.SendError("Der Tank ist leer.");
+                return false;
+            } else
+            {
+                return true;
+            }
         }
 
         public virtual void ToggleLocked(IPlayer client, bool? state = null)

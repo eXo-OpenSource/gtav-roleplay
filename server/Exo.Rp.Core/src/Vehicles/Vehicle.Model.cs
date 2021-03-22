@@ -20,6 +20,9 @@ namespace Exo.Rp.Core.Vehicles
         public int Color1 { get; set; }
         public int Color2 { get; set; }
         public string Plate { get; set; }
+        public FuelType FuelType { get; set; }
+        public float Fuel { get; set; }
+        public float MaxFuel { get; set; }
 
         [Column(TypeName = "tinyint(1)")]
         public bool Locked { get; set; }
