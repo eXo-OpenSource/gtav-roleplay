@@ -11,8 +11,8 @@ namespace Exo.Rp.Core.Events
         [ClientEvent("onTownHallInteraction")]
         public void OnVehicleShopInteraction(IPlayer player)
         {
-            var townHall = (TownHall) player.GetCharacter().GetInteractionData().SourceObject;
-            TownHall.OnInteract(player);
+            var townHall = (Cityhall) player.GetCharacter().GetInteractionData().SourceObject;
+            townHall.OnInteract(player);
         }
 
         [ClientEvent("setCharacterName")]

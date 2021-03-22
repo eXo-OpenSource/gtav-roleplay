@@ -83,8 +83,8 @@ namespace Exo.Rp.Core.Util.Settings
                 },
                 WotlabApi = new WotlabApiSettings
                 {
-                    Url = "https://exo-roleplay.de/forum/?user-api",
-                    Secret = "jWTf6KBkVcJI__m0kP2tR_M",
+                    Url = "https://exo-roleplay.de/index.php?user-api",
+                    Secret = "760fd784f17284abc237cfb782da8396",
                     OnlyBeta = true,
                     BetaGroupId = 9
                 },
