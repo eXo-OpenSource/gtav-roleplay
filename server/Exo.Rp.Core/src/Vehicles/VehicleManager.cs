@@ -113,7 +113,7 @@ namespace Exo.Rp.Core.Vehicles
             throw new NotImplementedException();
         }
 
-        public PlayerVehicle CreatePlayerVehicle(IPlayer owner, VehicleModel model, Position position, float rotation, FuelType fuelType = FuelType.Gasoline, float fuel = 80.00f, float maxFuel = 80.00f)
+        public PlayerVehicle CreatePlayerVehicle(IPlayer owner, VehicleModel model, Position position, float rotation, FuelType fuelType = FuelType.Super, float fuel = 80.00f, float maxFuel = 80.00f)
         {
             var nVehicle = new PlayerVehicle()
             {
@@ -144,7 +144,7 @@ namespace Exo.Rp.Core.Vehicles
         }
 
         public TemporaryVehicle CreateTemporaryVehicle(VehicleModel hash, Position position, float heading,
-            Rgba? color1T, Rgba? color2T, string plate = "Temporary", FuelType fuelType = FuelType.Gasoline, float fuel = 6.00f, float maxFuel = 80.00f)
+            Rgba? color1T, Rgba? color2T, string plate = "Temporary", FuelType fuelType = FuelType.Super, float fuel = 80.00f, float maxFuel = 80.00f)
         {
             if (color1T == null) color1T = _defaultColor;
             if (color2T == null) color2T = _defaultColor;
@@ -180,7 +180,7 @@ namespace Exo.Rp.Core.Vehicles
         }
 
         public RentVehicle CreateRentedVehicle(IPlayer tempOwner, VehicleModel hash, Position position, float heading, int time,
-            Rgba? color1T, Rgba? color2T, RentalGroup rentalGroup, bool isActive = false, string plate = "Rented")
+            Rgba? color1T, Rgba? color2T, RentalGroup rentalGroup, bool isActive = false, string plate = "Rented", FuelType fuelType = FuelType.Super, float fuel = 80.00f, float maxFuel = 80.00f)
         {
             if (color1T == null) color1T = _defaultColor;
             if (color2T == null) color2T = _defaultColor;
@@ -196,6 +196,9 @@ namespace Exo.Rp.Core.Vehicles
                 Model = hash,
                 Color1 = color1.ToInt32(),
                 Color2 = color2.ToInt32(),
+                FuelType = fuelType,
+                Fuel = fuel,
+                MaxFuel = maxFuel,
                 PosX = position.X,
                 PosY = position.Y,
                 PosZ = position.Z,

@@ -43,7 +43,7 @@ namespace Exo.Rp.Core.Players
 
         public static IPlayer GetFromId(int id)
         {
-            foreach (var player in AltV.Net.Alt.GetAllPlayers().Cast<IPlayer>())
+            foreach (var player in Alt.GetAllPlayers().Cast<IPlayer>())
             {
                 if (player.Id != id) continue;
                 return player;

@@ -55,6 +55,11 @@ namespace Exo.Rp.Core.Players.Characters
 
         public FaceFeatures FaceFeatures { get; set; }
 
+        [ForeignKey("Licenses")]
+        public int LicensesId { get; set; }
+
+        public Licenses Licenses { get; set; }
+
         [NotMapped]
         public CharacterJobData JobData {
             get => string.IsNullOrEmpty(JobLevelsSerialized) || JobLevelsSerialized == "null"

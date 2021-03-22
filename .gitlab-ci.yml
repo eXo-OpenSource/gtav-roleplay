@@ -41,6 +41,7 @@ build_cdn_job:
     - docker cp justpack:/opt/altv/cdn_upload/connect.json .
     - docker cp justpack:/opt/altv/cdn_upload/exov-client.resource .
     - docker cp justpack:/opt/altv/cdn_upload/mrpd.resource .
+    - docker cp justpack:/opt/altv/cdn_upload/drivingschool.resource .
     - docker rm justpack
   artifacts:
     paths:

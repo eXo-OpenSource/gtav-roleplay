@@ -1,7 +1,8 @@
 export var drivingSchoolQuestions = [
     {
       id: 1,
-      text: 'Frage sasdasds1',
+      text: 'Frage 1',
+      img: 'rechtsvorlinks.png',
       choices: [
         {
           id: 'A',
@@ -24,7 +25,8 @@ export var drivingSchoolQuestions = [
     },
     {
       id: 2,
-      text: 'Frage dasdas2',
+      text: 'Frage 2',
+      img: 'linksvorrechts.png',
       choices: [
         {
           id: 'A',
