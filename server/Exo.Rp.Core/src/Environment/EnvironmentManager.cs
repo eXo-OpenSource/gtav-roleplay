@@ -6,11 +6,13 @@ namespace Exo.Rp.Core.Environment
 {
     public class EnvironmentManager : IManager
     {
-        public List<object> _environment = new List<object>();
+        public List<object> environment = new List<object>();
 
         public EnvironmentManager()
         {
-            _environment.Add(new CarRent());
+            environment.Add(new CarRent());
+            environment.Add(new LsCityhall(1));
+            environment.Add(new LsDrivingschool(1));
         }
     }
 }

@@ -1,6 +1,8 @@
 using AltV.Net;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
+using AltV.Net.Enums;
+using Exo.Rp.Core.Peds;
 using Exo.Rp.Core.Players.Characters;
 using Exo.Rp.Core.Streamer;
 using Exo.Rp.Core.Streamer.Entities;
@@ -14,10 +16,8 @@ namespace Exo.Rp.Core.Environment
         public string Name;
         public int Id;
         public int SpriteId;
-        public Position EntranceMarkerPos;
-        public Position EntranceSpawnPos;
-        public Position ExitMarkerPos;
-        public Position ExitSpawnPos;
+        public Position PedPosition;
+        public PedModel PedModel;
         public string InteractionId;
 
         public Cityhall(int townHallId)
@@ -27,7 +27,8 @@ namespace Exo.Rp.Core.Environment
 
         public void Init()
         {
-            var col = (Colshape.Colshape)Alt.CreateColShapeSphere(EntranceMarkerPos, 3);
+            PedManager.CreatePed(PedModel, PedPosition, 180, 0);
+            var col = (Colshape.Colshape)Alt.CreateColShapeSphere(PedPosition, 3);
             col.OnColShapeEnter += OnColEnter;
             col.OnColShapeExit += OnColExit;
             Core.GetService<PublicStreamer>().AddGlobalBlip(new StaticBlip
@@ -35,9 +36,9 @@ namespace Exo.Rp.Core.Environment
                 Name = Name,
                 Color = 4,
                 SpriteId = SpriteId,
-                X = EntranceMarkerPos.X,
-                Y = EntranceMarkerPos.Y,
-                Z = EntranceMarkerPos.Z
+                X = PedPosition.X,
+                Y = PedPosition.Y,
+                Z = PedPosition.Z
             });
         }
 
@@ -52,7 +53,7 @@ namespace Exo.Rp.Core.Environment
                 CallBack = null
             };
             InteractionId = player.GetCharacter()
-                .ShowInteraction(Name, "TownHall:OnEntranceInteract", interactionData: interactionData);
+                .ShowInteraction(Name, "Cityhall:OnEntranceInteract", interactionData: interactionData);
         }
         public void OnColExit(Colshape.Colshape colshape, IEntity entity)
         {

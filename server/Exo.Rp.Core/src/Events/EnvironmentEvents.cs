@@ -8,11 +8,18 @@ namespace Exo.Rp.Core.Events
 {
     internal class EnvironmentEvents : IScript
     {
-        [ClientEvent("onTownHallInteraction")]
-        public void OnVehicleShopInteraction(IPlayer player)
+        [ClientEvent("Cityhall:OnEntranceInteract")]
+        public void OnCityhallInteract(IPlayer player)
         {
-            var townHall = (Cityhall) player.GetCharacter().GetInteractionData().SourceObject;
+            var townHall = (Cityhall)player.GetCharacter().GetInteractionData().SourceObject;
             townHall.OnInteract(player);
+        }
+
+        [ClientEvent("Drivingschool:OnEntranceInteract")]
+        public void OnDrivingschoolInteract(IPlayer player)
+        {
+            var drivingschool = (Drivingschool)player.GetCharacter().GetInteractionData().SourceObject;
+            drivingschool.OnInteract(player);
         }
 
         [ClientEvent("setCharacterName")]

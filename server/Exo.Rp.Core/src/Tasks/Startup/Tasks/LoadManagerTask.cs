@@ -80,9 +80,6 @@ namespace Exo.Rp.Core.Tasks.Startup.Tasks
             _logger.Info("Services | Loading Job manager...");
             _serviceProvider.GetService<JobManager>();
 
-            _logger.Info("Services | Loading Cityhall manager...");
-            _serviceProvider.GetService<CityhallManager>();
-
             _logger.Info("Services | Loading Updateable manager...");
             _serviceProvider.GetService<UpdateableManager>();
 
