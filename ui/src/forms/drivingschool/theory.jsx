@@ -9,10 +9,21 @@ class DrivingSchoolTheory extends Component {
     super(props)
     this.startTest = this.startTest.bind(this)
     this.finished = this.finished.bind(this)
-
+  
     this.state = {
-      quizStarted: false
+      quizStarted: false,
+      license: null
     }
+  }
+
+  componentDidMount() {
+    if ("alt" in window) {
+      alt.on("DrivingschoolUi:StartTest", this.setLicense.bind(this))
+    }
+  }
+
+  setLicense(license) {
+    this.setState({ license: license })
   }
 
   startTest() {
@@ -20,8 +31,9 @@ class DrivingSchoolTheory extends Component {
   }
 
   finished() {
-    alt.emit("Drivingschool:CloseUi", quizScore); 
+    alt.emit("Drivingschool:CloseUi", quizScore, this.state.license); 
     this.setState({ quizStarted: false })
+    this.setState({ license: 0 })
     quizScore = 0;
   }
 
@@ -36,11 +48,10 @@ class DrivingSchoolTheory extends Component {
           <div className="m-auto w-1/2 text-center bg-gray-300" style={{height: "400px"}}>
             <h1 className="pt-3 font-bold text-gray-700">Willkommen im Online Fahrschultest!</h1>
             <p className="p-5 text-sm">
-              Um als Bürger die Möglichkeit zu haben, ein Auto zu fahren, müssen Sie ihren theoretischen Teil der Führerscheinprüfung bei der Polizei absolvieren.<br></br>
+              Um als Bürger die Möglichkeit zu haben, ein Auto zu fahren, müssen Sie ihren theoretischen Teil der Prüfung bei der Polizei absolvieren.<br></br>
               Lassen Sie sich Zeit und denken Sie nach bevor Sie antworten.
             </p>
             <p className="p-5 text-sm italic">
-              Die Kosten für die Theorieprüfung belaufen sich auf $500.<br></br>
               Sie haben bestanden, wenn 80% ihrer Angaben richtig sind.
             </p>
             <p className="p-5 text-sm">
@@ -59,7 +70,7 @@ class DrivingSchoolTheory extends Component {
       <BrowserMockup url={"https://www.drivingschool.san-andreas.com/online-exam"} site={
         <>
           <div className="mt-32 container w-1/2 m-auto">
-            <Quiz questions={drivingSchoolQuestions} closeFunction={this.finished}/>
+            <Quiz questions={drivingSchoolQuestions[this.state.license]} closeFunction={this.finished}/>
           </div>
         </>
       }/>

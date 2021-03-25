@@ -22,17 +22,17 @@ namespace Exo.Rp.Core.Events
         }
 
         [ClientEvent("Drivingschool:OnExamFinished")]
-        public void OnExamFinished(IPlayer player, int score)
+        public void OnExamFinished(IPlayer player, int score, License license)
         {
             var drivingschool = (Drivingschool)player.GetCharacter().GetInteractionData().SourceObject;
-            drivingschool.OnExamFinished(player, score);
+            drivingschool.OnExamFinished(player, score, license);
         }
 
         [ClientEvent("Drivingschool:OnLaptopInteract")]
         public void OnLaptopInteract(IPlayer player)
         {
             var drivingschool = (Drivingschool)player.GetCharacter().GetInteractionData().SourceObject;
-            drivingschool.StartDrivingExam(player);
+            drivingschool.StartDrivingExam(player, License.Car);
         }
 
         [ClientEvent("setCharacterName")]

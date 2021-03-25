@@ -77,7 +77,7 @@ namespace Exo.Rp.Core.Environment
                 CallBack = null
             };
             InteractionId = player.GetCharacter()
-                .ShowInteraction(Name, "Drivingschool:OnLaptopInteract", $"Drücke E um die Fahrprüfung für ${LicensePrice.Car} zu starten", interactionData: interactionData);
+                .ShowInteraction(Name, "Drivingschool:OnLaptopInteract", $"Drücke E um die Fahrprüfung für ${(int)LicensePrice.Car} zu starten", interactionData: interactionData);
         }
         public void OnLaptopColExit(Colshape.Colshape colshape, IEntity entity)
         {
@@ -87,24 +87,24 @@ namespace Exo.Rp.Core.Environment
             player.GetCharacter().HideInteraction(InteractionId);
         }
 
-        public void OnExamFinished(IPlayer player, int score)
+        public void OnExamFinished(IPlayer player, int score, License license)
         {
             if (score >= 80)
             {
-                player.GetCharacter().SetPlayerLicense(License.Car, 1);
+                player.GetCharacter().SetPlayerLicense(license, License.Add);
                 player.SendSuccess($"Glückwunsch zur Fahrerlaubnis! Du hast mit {score}% bestanden!");
             }
             else
                 player.SendError($"Durchgefallen! Du bist mit {score}% durchgefallen!");
         }
 
-        public void StartDrivingExam(IPlayer player)
+        public void StartDrivingExam(IPlayer player, License license)
         {
-            if (player.GetCharacter().GetMoney(true) >= (int)LicensePrice.Car)
+            if (player.GetCharacter().GetMoney(true) >= (int)license)
             {
-                player.GetCharacter().TakeMoney((int)LicensePrice.Car, "Drivingschool Exam", true);
+                player.GetCharacter().TakeMoney((int)license, "Drivingschool Exam", true);
                 player.SendNotification("Das Geld wurde Dir vom Konto abgebucht.");
-                player.Emit("Drivingschool:OpenUi");
+                player.Emit("Drivingschool:OpenUi", (int)license);
             }
             else
             {

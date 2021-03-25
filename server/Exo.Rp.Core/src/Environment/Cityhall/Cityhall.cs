@@ -55,6 +55,7 @@ namespace Exo.Rp.Core.Environment
             InteractionId = player.GetCharacter()
                 .ShowInteraction(Name, "Cityhall:OnEntranceInteract", interactionData: interactionData);
         }
+
         public void OnColExit(Colshape.Colshape colshape, IEntity entity)
         {
             if (!(entity is IPlayer player)) return;

@@ -273,10 +273,10 @@ namespace Exo.Rp.Core.Players.Characters
             return 0;
         }
 
-        public void SetPlayerLicense(License license, int value)
+        public void SetPlayerLicense(License license, License value)
         {
             var licenseData = LicensesData ?? new CharacterLicenseData();
-            licenseData.Licenses.Add((int)license, value);
+            licenseData.Licenses.Add((int)license, (int)value);
 
             LicensesData = licenseData;
             Alt.Log($"{licenseData}");

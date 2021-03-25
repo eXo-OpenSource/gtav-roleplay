@@ -4,11 +4,14 @@ import UiManager from "../ui/UiManager"
 export class Drivingschool {
   private static visible = false;
 
-  static openUI() {
+  static openUI(license) {
     if (!Drivingschool.visible) {
-      alt.toggleGameControls(false)
-      UiManager.navigate("/drivingschool", true)
-      Drivingschool.visible = true
+      alt.setTimeout(() => UiManager.emit("DrivingschoolUi:StartTest", license), 500)
+      alt.setTimeout(() => {
+        alt.toggleGameControls(false)
+        UiManager.navigate("/drivingschool", true)
+        Drivingschool.visible = true
+      }, 250)
     }
   }
 
@@ -18,13 +21,13 @@ export class Drivingschool {
     Drivingschool.visible = false
   }
 
-  static closeUI(score) {
+  static closeUI(score, license) {
     if (Drivingschool.visible) {
         Drivingschool.resetUI()
-        alt.emitServer("Drivingschool:OnExamFinished", score)
+        alt.emitServer("Drivingschool:OnExamFinished", score, license)
     }
   }
 }
 
 alt.onServer("Drivingschool:OpenUi", Drivingschool.openUI)
-UiManager.on("Drivingschool:CloseUi", (score) => Drivingschool.closeUI(score))
+UiManager.on("Drivingschool:CloseUi", Drivingschool.closeUI)
