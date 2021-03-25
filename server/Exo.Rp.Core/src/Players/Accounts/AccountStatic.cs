@@ -47,10 +47,6 @@ namespace Exo.Rp.Core.Players.Accounts
                     {
                         
                     },
-                    Licenses = new Licenses()
-                    {
-
-                    }
 
                 }
             };
@@ -62,7 +58,6 @@ namespace Exo.Rp.Core.Players.Accounts
             Core.GetService<DatabaseContext>().BankAccountModel.Local.Add(accountData.Character.BankAccount);
             Core.GetService<DatabaseContext>().InventoryModel.Local.Add(accountData.Character.InventoryModel);
             Core.GetService<DatabaseContext>().FaceFeaturesModel.Local.Add(accountData.Character.FaceFeatures);
-            Core.GetService<DatabaseContext>().LicensesModel.Local.Add(accountData.Character.Licenses);
 
             DatabaseCore.SaveChangeToDatabase();
 

@@ -85,7 +85,7 @@ namespace Exo.Rp.Core.Vehicles
                 fuelTimer.Elapsed += (args, e) =>
                 {
                     if (Fuel <= 0f) {
-                        client.SendError("Der Tank ist verbraucht!");
+                        handle.EngineOn = false;
                         fuelTimer.Enabled = false;
                         return;
                     }

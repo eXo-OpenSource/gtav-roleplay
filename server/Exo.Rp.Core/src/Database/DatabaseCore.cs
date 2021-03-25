@@ -94,9 +94,6 @@ namespace Exo.Rp.Core.Database
             ContextFactory.Instance.InventoryItemsModel.Load();
             Logger.Info($"Loaded {ContextFactory.Instance.InventoryItemsModel.Local.Count} inventory items.");
 
-            ContextFactory.Instance.LicensesModel.Load();
-            Logger.Info($"Loaded {ContextFactory.Instance.LicensesModel.Local.Count} licenses.");
-
             ContextFactory.Instance.WorldObjectsModels.Load();
             Logger.Info($"Loaded {ContextFactory.Instance.WorldObjectsModels.Local.Count} world objects.");
 

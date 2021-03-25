@@ -13,7 +13,8 @@ namespace Exo.Rp.Core.Environment
         {
             Name = "Strawberry Drivingschool";
             SpriteId = 545;
-            PedPosition = new Position(214.45714f, -1400.189f, 30.57727f);
+            LaptopPosition = new Position(210.03957f, -1393.5692f, 30.57727f);
+            PedPosition = new Position(214.36484f, -1400.0703f, 30.57727f);
             PedModel = PedModel.Business01AMM;
 
             Init();

@@ -19,7 +19,6 @@ using ItemModel = Exo.Rp.Core.Inventory.Items.Item;
 using InventoryModel = Exo.Rp.Core.Inventory.Inventory;
 using TeamMemberModel = Exo.Rp.Core.Teams.TeamMember;
 using FaceFeaturesModel = Exo.Rp.Core.Players.Characters.FaceFeatures;
-using LicensesModel = Exo.Rp.Core.Players.Characters.Licenses;
 using CharacterModel = Exo.Rp.Core.Players.Characters.Character;
 using AccountModel = Exo.Rp.Core.Players.Accounts.Account;
 
@@ -37,7 +36,6 @@ namespace Exo.Rp.Core.Database
         public DbSet<TeamMemberModel> TeamMemberModel { get; set; }
         public DbSet<TeamMemberPermissionModel> TeamMemberPermissionModel { get; set; }
         public DbSet<BankAccountModel> BankAccountModel { get; set; }
-        public DbSet<LicensesModel> LicensesModel { get; set; }
         public DbSet<ShopModel> ShopModel { get; set; }
         public DbSet<VehicleShopVehicleModel> VehicleShopVehicleModel { get; set; }
         public DbSet<PedModel> PedModel { get; set; }

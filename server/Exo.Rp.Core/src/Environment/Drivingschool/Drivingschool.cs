@@ -16,6 +16,7 @@ namespace Exo.Rp.Core.Environment
         public string Name;
         public int Id;
         public int SpriteId;
+        public Position LaptopPosition;
         public Position PedPosition;
         public string InteractionId;
         public PedModel PedModel;
@@ -29,8 +30,11 @@ namespace Exo.Rp.Core.Environment
         {
             PedManager.CreatePed(PedModel.Cop01SFY, PedPosition, 180, 0);
             var col = (Colshape.Colshape)Alt.CreateColShapeSphere(PedPosition, 3);
+            var examCol = (Colshape.Colshape)Alt.CreateColShapeSphere(LaptopPosition, 3);
             col.OnColShapeEnter += OnColEnter;
             col.OnColShapeExit += OnColExit;
+            examCol.OnColShapeEnter += OnLaptopColEnter;
+            examCol.OnColShapeExit += OnLaptopColExit;
             Core.GetService<PublicStreamer>().AddGlobalBlip(new StaticBlip
             {
                 Name = Name,
@@ -53,7 +57,7 @@ namespace Exo.Rp.Core.Environment
                 CallBack = null
             };
             InteractionId = player.GetCharacter()
-                .ShowInteraction(Name, "Drivingschool:OnEntranceInteract", interactionData: interactionData);
+                .ShowInteraction(Name, "Drivingschool:OnPedInteract", interactionData: interactionData);
         }
         public void OnColExit(Colshape.Colshape colshape, IEntity entity)
         {
@@ -62,10 +66,25 @@ namespace Exo.Rp.Core.Environment
 
             player.GetCharacter().HideInteraction(InteractionId);
         }
-
-        public void OnInteract(IPlayer player)
+        public void OnLaptopColEnter(Colshape.Colshape col, IEntity entity)
         {
-            player.SendInformation("hi");
+            if (!(entity is IPlayer player)) return;
+            if (player.GetCharacter() == null) return;
+
+            var interactionData = new InteractionData
+            {
+                SourceObject = this,
+                CallBack = null
+            };
+            InteractionId = player.GetCharacter()
+                .ShowInteraction(Name, "Drivingschool:OnLaptopInteract", interactionData: interactionData);
+        }
+        public void OnLaptopColExit(Colshape.Colshape colshape, IEntity entity)
+        {
+            if (!(entity is IPlayer player)) return;
+            if (player.GetCharacter() == null) return;
+
+            player.GetCharacter().HideInteraction(InteractionId);
         }
     }
 }

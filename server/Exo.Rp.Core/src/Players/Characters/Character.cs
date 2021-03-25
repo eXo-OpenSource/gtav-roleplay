@@ -9,8 +9,10 @@ using Exo.Rp.Core.Jobs;
 using Exo.Rp.Core.Shops;
 using Exo.Rp.Core.Teams;
 using Exo.Rp.Models.Enums;
+using Exo.Rp.Core.Environment;
 using Newtonsoft.Json;
 using Team = Exo.Rp.Core.Teams.Team;
+using AltV.Net;
 
 namespace Exo.Rp.Core.Players.Characters
 {
@@ -260,6 +262,28 @@ namespace Exo.Rp.Core.Players.Characters
         {
             return Inventory;
         }
+
+        #region Licenses
+        public int GetPlayerLicense(License license)
+        {
+            var licenseData = LicensesData;
+            if (licenseData != null && licenseData.Licenses != null && licenseData.Licenses.ContainsKey((int)license))
+                return licenseData.Licenses[(int)license];
+
+            return 0;
+        }
+
+        public void SetPlayerLicense(License license, int value)
+        {
+            var licenseData = LicensesData ?? new CharacterLicenseData();
+            licenseData.Licenses.Add((int)license, value);
+
+            LicensesData = licenseData;
+            Alt.Log($"{licenseData}");
+        }
+
+
+        #endregion
 
         #region Weapon
 

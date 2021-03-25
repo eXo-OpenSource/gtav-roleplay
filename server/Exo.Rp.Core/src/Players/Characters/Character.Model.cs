@@ -1,8 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using AltV.Net;
 using AltV.Net.Data;
 using AltV.Net.Enums;
 using Exo.Rp.Core.BankAccounts;
+using Exo.Rp.Core.Environment;
 using Exo.Rp.Core.Inventory.Inventories;
 using Exo.Rp.Core.Jobs;
 using Exo.Rp.Models.Enums;
@@ -55,13 +57,9 @@ namespace Exo.Rp.Core.Players.Characters
 
         public FaceFeatures FaceFeatures { get; set; }
 
-        [ForeignKey("Licenses")]
-        public int LicensesId { get; set; }
-
-        public Licenses Licenses { get; set; }
-
         [NotMapped]
-        public CharacterJobData JobData {
+        public CharacterJobData JobData
+        {
             get => string.IsNullOrEmpty(JobLevelsSerialized) || JobLevelsSerialized == "null"
                     ? new CharacterJobData()
                     : JsonConvert.DeserializeObject<CharacterJobData>(JobLevelsSerialized);
@@ -69,10 +67,23 @@ namespace Exo.Rp.Core.Players.Characters
             set => JobLevelsSerialized = JsonConvert.SerializeObject(value);
         }
 
+        [NotMapped]
+        public CharacterLicenseData LicensesData
+        {
+            get => string.IsNullOrEmpty(LicensesSerialized) || LicensesSerialized == "null"
+                    ? new CharacterLicenseData()
+                    : JsonConvert.DeserializeObject<CharacterLicenseData>(LicensesSerialized);
+
+            set => LicensesSerialized = JsonConvert.SerializeObject(value);
+        }
+
         private PlayerInventory _playerInventory { get; set; }
 
         [Column("JobLevels")]
         public string JobLevelsSerialized { get; set; }
+
+        [Column("Licenses")]
+        public string LicensesSerialized { get; set; }
 
         [NotMapped]
         public PedModel Skin

@@ -1,7 +1,7 @@
 using AltV.Net;
 using Exo.Rp.Core.Environment;
 using Exo.Rp.Core.Players;
-using Exo.Rp.Core.Environment.CarRentTypes;
+using Exo.Rp.Models.Enums;
 
 namespace Exo.Rp.Core.Events
 
@@ -15,11 +15,36 @@ namespace Exo.Rp.Core.Events
             townHall.OnInteract(player);
         }
 
-        [ClientEvent("Drivingschool:OnEntranceInteract")]
-        public void OnDrivingschoolInteract(IPlayer player)
+        [ClientEvent("Drivingschool:OnPedInteract")]
+        public void OnPedInteract(IPlayer player)
         {
-            var drivingschool = (Drivingschool)player.GetCharacter().GetInteractionData().SourceObject;
-            drivingschool.OnInteract(player);
+            player.SendInformation("Die Fahrprüfung kannst Du am Laptop für $5000 starten!");
+        }
+
+        [ClientEvent("Drivingschool:OnExamFinished")]
+        public void OnExamFinished(IPlayer player, int score)
+        {
+            if (score >= 80)
+            {
+                player.GetCharacter().SetPlayerLicense(License.Car, 1);
+                player.SendSuccess($"Glückwunsch zur Fahrerlaubnis! Du hast mit {score}% bestanden!");
+            }
+            else
+                player.SendError($"Durchgefallen! Du bist mit {score}% durchgefallen!");
+        }
+
+        [ClientEvent("Drivingschool:OnLaptopInteract")]
+        public void OnLaptopInteract(IPlayer player)
+        {
+            if (player.GetCharacter().GetMoney(true) >= 5000)
+            {
+                player.GetCharacter().TakeMoney(5000, "Drivingschool Exam", true);
+                player.SendNotification("Das Geld wurde Dir vom Konto abgebucht.");
+                player.Emit("Drivingschool:OpenUi");
+            } else
+            {
+                player.SendError("Die Fahrprüfung kostet $5000!");
+            }
         }
 
         [ClientEvent("setCharacterName")]

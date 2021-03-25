@@ -1,5 +1,7 @@
 import React, {Component} from "react"
 
+export var quizScore = 0;
+
 class QuizQuestion extends Component {
     constructor(props) {
         super(props)
@@ -47,7 +49,8 @@ class QuizScore extends Component {
 
 class QuizResult extends Component {
     render() {
-        const quizScore = this.props.score/this.props.total*100
+        const _quizScore = this.props.score/this.props.total*100
+        quizScore = _quizScore;
         return (
             <div>
                 <div class="container w-full h-full rounded-t-lg px-4" style={{backgroundColor: "#31b6ef"}}>
@@ -55,8 +58,8 @@ class QuizResult extends Component {
                 </div>
                 <div class="text-gray-200 w-full h-full p-4 text-center" style={{backgroundColor: "#2b2b2b"}}>
                     <p class="">Du hast {this.props.score} von {this.props.total} Fragen richtig.</p>
-                    <p>{quizScore}% - {quizScore > 80 ? "Du hast bestanden!" : "Du bist durchgefallen."}</p>
-                    <button class="btn btn-primary mt-8">Quiz schließen</button>
+                    <p>{_quizScore}% - {_quizScore > 80 ? "Du hast bestanden!" : "Du bist durchgefallen."}</p>
+                    <button class="btn btn-primary mt-8" onClick={this.props.closeFunction}>Quiz schließen</button>
                 </div>
                 <div class="container w-full h-12 pt-3 rounded-b-lg px-4 text-gray-200" style={{backgroundColor: "#3b3b3b"}}>
                     <p class="float-left pl-4">Fragen: {this.props.total}</p>
@@ -73,7 +76,8 @@ export class Quiz extends Component {
         
         this.state = {
             score: 0,
-            cur: 1
+            cur: 1,
+            closeFunction: null
         }
 
         this.handleChange = this.handleChange.bind(this)
@@ -84,6 +88,7 @@ export class Quiz extends Component {
             cur: previous.cur + 1,
             score: choice == props.questions[previous.cur - 1].correct ? previous.score + 1 : previous.score
         }))
+        quizPoints = this.state.score
     }
 
     render() {
@@ -93,7 +98,7 @@ export class Quiz extends Component {
                     <QuizQuestion question={this.props.questions[this.state.cur - 1]} onChoiceChange={this.handleChange}></QuizQuestion> 
                 }
                 {this.state.cur > this.props.questions.length &&
-                    <QuizResult total={this.props.questions.length} score={this.state.score}></QuizResult> 
+                    <QuizResult total={this.props.questions.length} score={this.state.score} closeFunction={this.props.closeFunction}></QuizResult> 
                 }
                 {this.state.cur <= this.props.questions.length &&
                     <QuizScore total={this.props.questions.length} cur={this.state.cur} score={this.state.score}></QuizScore> 
