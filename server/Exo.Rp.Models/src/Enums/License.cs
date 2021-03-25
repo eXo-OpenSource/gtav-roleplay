@@ -15,6 +15,20 @@ namespace Exo.Rp.Models.Enums
         Truck = 5,
         Boat = 6,
         PlaneA = 7,
-        PlaneB = 8
+        PlaneB = 8,
+        Add = 1,
+        Remove = 0
+    }
+
+    public enum LicensePrice
+    {
+        Greencard = 0,
+        Citizenship = 0,
+        Car = 5000,
+        Motorcycle = 2500,
+        Truck = 5000,
+        Boat = 3000,
+        PlaneA = 75000,
+        PlaneB = 150000
     }
 }

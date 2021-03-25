@@ -6,7 +6,7 @@ using Exo.Rp.Core.Peds;
 using Exo.Rp.Core.Players.Characters;
 using Exo.Rp.Core.Streamer;
 using Exo.Rp.Core.Streamer.Entities;
-using System.Collections.Generic;
+using Exo.Rp.Models.Enums;
 using IPlayer = Exo.Rp.Core.Players.IPlayer;
 
 namespace Exo.Rp.Core.Environment
@@ -77,7 +77,7 @@ namespace Exo.Rp.Core.Environment
                 CallBack = null
             };
             InteractionId = player.GetCharacter()
-                .ShowInteraction(Name, "Drivingschool:OnLaptopInteract", interactionData: interactionData);
+                .ShowInteraction(Name, "Drivingschool:OnLaptopInteract", $"Drücke E um die Fahrprüfung für ${LicensePrice.Car} zu starten", interactionData: interactionData);
         }
         public void OnLaptopColExit(Colshape.Colshape colshape, IEntity entity)
         {
@@ -85,6 +85,31 @@ namespace Exo.Rp.Core.Environment
             if (player.GetCharacter() == null) return;
 
             player.GetCharacter().HideInteraction(InteractionId);
+        }
+
+        public void OnExamFinished(IPlayer player, int score)
+        {
+            if (score >= 80)
+            {
+                player.GetCharacter().SetPlayerLicense(License.Car, 1);
+                player.SendSuccess($"Glückwunsch zur Fahrerlaubnis! Du hast mit {score}% bestanden!");
+            }
+            else
+                player.SendError($"Durchgefallen! Du bist mit {score}% durchgefallen!");
+        }
+
+        public void StartDrivingExam(IPlayer player)
+        {
+            if (player.GetCharacter().GetMoney(true) >= (int)LicensePrice.Car)
+            {
+                player.GetCharacter().TakeMoney((int)LicensePrice.Car, "Drivingschool Exam", true);
+                player.SendNotification("Das Geld wurde Dir vom Konto abgebucht.");
+                player.Emit("Drivingschool:OpenUi");
+            }
+            else
+            {
+                player.SendError($"Die Fahrprüfung kostet ${LicensePrice.Car}!");
+            }
         }
     }
 }
