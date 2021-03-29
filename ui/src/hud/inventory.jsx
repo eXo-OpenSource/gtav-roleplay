@@ -4,7 +4,20 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
 
 function Inventory() {
 
-    const init = [...Array(15).keys()];
+    const init = [
+      {
+        id: 1,
+        item: {
+          name: "kekse"
+        },
+      },
+      {
+        id: 5,
+        item: {
+          name: "kekse"
+        },
+      },
+    ];
 
     const reorder = (list, startIndex, endIndex) => {
         const result = Array.from(list);
@@ -17,8 +30,20 @@ function Inventory() {
     const [items, setItems] = useState(init)
 
     function getStuff() {
-        return items.map((value, index) => {
-            return <Item item={value} index={index} />
+        return [...Array(15).keys()].map((value, index) => {
+            const item = items.find((item) => item.id == index)?.item;
+            return <Droppable droppableId={index + ""} isDropDisabled={item != undefined} key={index}>
+            {(provided, snapshot) => (
+                <div
+                ref={provided.innerRef}
+                className={(snapshot.isDraggingOver ? 'bg-blue-700' : 'bg-gray-800') + " px-2 mx-2 w-24 h-24 mb-2 " + (Boolean(snapshot.draggingFromThisWith) ? 'bg-green-700' : '')}
+                {...provided.droppableProps}
+                >
+                {item != undefined ? <Item item={item} index={index} /> : null}
+                <span style={{ display: 'none' }}>{provided.placeholder}</span>
+                </div>
+            )}
+            </Droppable>
         })
     }
 
@@ -27,36 +52,31 @@ function Inventory() {
           return;
         }
     
-        if (result.destination.index === result.source.index) {
+        if (result.destination.droppableId === result.source.droppableId) {
           return;
         }
+
+        const oldItem = items.find((item) => item.id == result.source.droppableId);
+        const newItems = items.filter((item) => item.id != result.source.droppableId);
+        
+        newItems.push({
+          id: result.destination.droppableId,
+          item: oldItem.item
+        })
+
+        setItems(newItems)
     
-        const reordered = reorder(
-          items,
-          result.source.index,
-          result.destination.index
-        );
-    
-        setItems(reordered)
+        //setItems(reordered)
       }
     
 
     return (
-        <div className="container mx-auto max-w-md bg-gray-700 mt-32 py-2" style={{"height": "60vh"}}>
+        <div className="container mx-auto bg-gray-700 mt-64 py-2" style={{"height": "50vh", "width": "28vw"}}>
             <DragDropContext onDragEnd={onDragEnd}>
-                <SimpleBar style={{"maxHeight": "60vh"}}>
-                <Droppable droppableId="inv">
-                {(provided, snapshot) => (
-                    <div
-                    ref={provided.innerRef}
-                    className={(snapshot.isDraggingOver ? 'bg-blue-700' : 'bg-gray-700') + " px-2 rounded mx-2" }
-                    {...provided.droppableProps}
-                    >
-                    {getStuff()}
-                    {provided.placeholder}
+                <SimpleBar style={{"maxHeight": "49vh"}}>
+                    <div className="flex flex-wrap px-4">
+                      {getStuff()}
                     </div>
-                )}
-                </Droppable>
                 </SimpleBar>
             </DragDropContext>
         </div>
@@ -65,15 +85,21 @@ function Inventory() {
 
 function Item({item, index}) {
     return (
-        <Draggable draggableId={item+"s"} key={item} index={index}>
+        <Draggable draggableId={index+item.name+"s"} key={item} index={index}>
             {(provided, snapshot) => (
-              <div
+              /*<div
                 className="bg-gray-800 rounded mb-2 px-4 py-4 text-white"
                 ref={provided.innerRef}
                 {...provided.draggableProps}
                 {...provided.dragHandleProps}
               >
                 Drag me!{item}
+              </div>*/
+              <div className="relative text-white" ref={provided.innerRef}
+              {...provided.draggableProps}
+              {...provided.dragHandleProps}>
+                <img className="w-24 h-24 px-2 py-2 shadow-img" src={"https://static.exo.cool/exov-static/images/vehicles/interaction/trunk.png"} />
+                <span className="font-bold absolute right-0 bottom-0">22</span>
               </div>
             )}
           </Draggable>
