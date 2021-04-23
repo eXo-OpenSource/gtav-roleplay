@@ -11,7 +11,7 @@ namespace Exo.Rp.Core.Teams.State
         public Lspd()
         {
             var pos = new Position(440.7878f, -978.15f, 30.68959f);
-            PedManager.CreatePed(PedModel.Cop01SFY, pos, 180, 0);
+            PedManager.CreateRuntimePed(PedModel.Cop01SFY, pos, 180, 0);
             var blip = Alt.CreateBlip(BlipType.Cop, pos);
         }
     }

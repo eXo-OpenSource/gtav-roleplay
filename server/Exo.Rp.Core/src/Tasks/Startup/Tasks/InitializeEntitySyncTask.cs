@@ -38,7 +38,7 @@ namespace Exo.Rp.Core.Tasks.Startup.Tasks
                 (threadId) => threadId switch
                     {
                         1 => new LimitedGrid3(50_000, 50_000, 125, 10_000, 10_000, 1000),
-                        2 => new LimitedGrid3(50_000, 50_000, 175, 10_000, 10_000, 64),
+                        2 => new LimitedGrid3(50_000, 50_000, 100, 10_000, 10_000, 128),
                         _ => new LimitedGrid3(50_000, 50_000, 175, 10_000, 10_000, 300)
                     }, _privateStreamer.idProvider);
 

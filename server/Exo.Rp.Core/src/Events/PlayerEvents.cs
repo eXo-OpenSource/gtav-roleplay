@@ -159,14 +159,14 @@ namespace Exo.Rp.Core.Events
         [ScriptEvent(ScriptEventType.PlayerConnect)]
         public void PlayerConnect(IPlayer player, string reason)
         {
-            Alt.Log($"{player.Name} connected.");
+            //Logger.Info($"{player.Name} connected.");
             player.Position = new Position(0,0,75);
         }
 
         [ScriptEvent(ScriptEventType.PlayerDisconnect)]
         public void PlayerDisconnect(IPlayer player, string reason)
         {
-            Alt.Log($"{player.Name} disconnected.");
+            Logger.Info($"{player.Name} disconnected.");
             Core.GetService<PlayerManager>().OnDisconnect(player);
         }
     }

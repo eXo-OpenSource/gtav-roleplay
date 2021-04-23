@@ -27,7 +27,7 @@ namespace Exo.Rp.Core.Environment
 
         public void Init()
         {
-            PedManager.CreatePed(PedModel, PedPosition, 180, 0);
+            PedManager.CreateRuntimePed(PedModel, PedPosition, 180, 0);
             var col = (Colshape.Colshape)Alt.CreateColShapeSphere(PedPosition, 3);
             col.OnColShapeEnter += OnColEnter;
             col.OnColShapeExit += OnColExit;

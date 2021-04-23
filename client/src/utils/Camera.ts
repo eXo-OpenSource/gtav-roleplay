@@ -1,6 +1,6 @@
 import * as alt from 'alt-client';
 import * as native from 'natives';
-import { Vector3 } from "natives";
+import { Vector3 } from "alt-client";
 
 export class Camera {
   public cam: number;
@@ -110,7 +110,7 @@ export class Camera {
   playerControls() {
     native.disableAllControlActions(0);
     native.disableAllControlActions(1);
-    let cursor = <Vector3>alt.getCursorPos();
+    let cursor = alt.getCursorPos();
     let mX = cursor.x;
     let fov = native.getCamFov(this.cam);
     let coord = native.getCamCoord(this.cam);

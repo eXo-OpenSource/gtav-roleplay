@@ -17,7 +17,7 @@ export function getEntityFromRaycast(flag: number, ignorePlayer: boolean): any {
     // Do a ray cast.
     let ray;
     if (ignorePlayer) {
-      ray = native.startShapeTestRay(
+      ray = native.startExpensiveSynchronousShapeTestLosProbe(
         pos.x,
         pos.y,
         pos.z,
@@ -29,7 +29,7 @@ export function getEntityFromRaycast(flag: number, ignorePlayer: boolean): any {
         0
       );
     } else {
-      ray = native.startShapeTestRay(
+      ray = native.startExpensiveSynchronousShapeTestLosProbe(
         pos.x,
         pos.y,
         pos.z,

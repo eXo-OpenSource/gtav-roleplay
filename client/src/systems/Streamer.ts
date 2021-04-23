@@ -89,27 +89,10 @@ alt.onServer("entitySync:create", (entityId, entityType, position, currEntityDat
         natives.setEntityCollision(handle, false, true);
       });
     } else if(entityType === 2) {
-      loadModel(currEntityData.model).then(() => {
-        let handle = natives.createPed(1, currEntityData.model, position.x, position.y, position.z,
-          currEntityData.heading, false, false)
-        entities.push({
-          id: entityId,
-          type: entityType,
-          position: position,
-          data: currEntityData,
-          handle: handle
-        })
-        if(currEntityData.static) {
-          native.taskSetBlockingOfNonTemporaryEvents(handle, true);
-          native.setBlockingOfNonTemporaryEvents(handle, true);
-          native.setPedFleeAttributes(handle, 0, false);
-          native.setEntityInvincible(handle, true)
-          native.setPedCanBeTargetted(handle, false)
-          alt.setTimeout(() => native.freezeEntityPosition(handle, true), 500)
-        }
-      })
+      spawnPed(entityId, entityType, position, currEntityData, true);
     }
   } else {
+    alt.log("create known entity")
     const thisEntity = entities.find(value => value.id === entityId && value.type == entityType);
     if(!thisEntity) return;
     if(entityType === 0) {
@@ -124,12 +107,15 @@ alt.onServer("entitySync:create", (entityId, entityType, position, currEntityDat
         natives.setObjectTextureVariation(handle, 0)
         natives.setEntityCollision(handle, false, true);
       });
+    } else if (entityType === 2) {
+      spawnPed(entityId, entityType, position, thisEntity.data, false);
     }
   }
 })
 
 alt.onServer("entitySync:remove", (entityId, entityType) => {
 
+  alt.log("entitySync:remove");
   const entity = entities.find(value => value.id === entityId && value.type == entityType);
   if(entityType === 0){
     let handle:BaseObject = <BaseObject>entity.handle;
@@ -192,3 +178,60 @@ alt.onServer("Animation:Clear", () => {
 alt.onServer("Animation:ForceClear", () => {
   natives.clearPedTasksImmediately(alt.Player.local.scriptID);
 })
+
+alt.everyTick(() => {
+  let playerPos = alt.Player.local.pos;
+  for (let ped of entities) {
+    if(ped.handle == null)
+      continue;
+    let playerPos2 = native.getEntityCoords(<number>ped.handle, false);
+    let distance = Math.round(native.getDistanceBetweenCoords(playerPos.x, playerPos.y, playerPos.z, playerPos2.x, playerPos2.y, playerPos2.z, true));
+
+    let scale = distance / (15 * 15.0);
+    if (scale < 0.25) scale = 0.25;
+
+    drawNameTags(`ID: ${ped.id}`,playerPos2.x, playerPos2.y, playerPos2.z + 0.94, 0.3, 255, 255, 255, 220, true);
+  }
+});
+
+function spawnPed(entityId, entityType, position, currEntityData, isNew: boolean) {
+  loadModel(currEntityData.model).then(() => {
+    let handle = natives.createPed(4, currEntityData.model, position.x, position.y, position.z,
+      currEntityData.heading, false, false)
+    if(handle == 0) {
+      alt.log("this is error")
+    }
+    if(isNew) {
+      entities.push({
+        id: entityId,
+        type: entityType,
+        position: position,
+        data: currEntityData,
+        handle: handle
+      })
+    } else {
+      entities.find(value => value.id === entityId && value.type == entityType).handle = handle;
+    }
+    if(currEntityData.static) {
+      native.taskSetBlockingOfNonTemporaryEvents(handle, true);
+      native.setBlockingOfNonTemporaryEvents(handle, true);
+      native.setPedFleeAttributes(handle, 0, false);
+      native.setEntityInvincible(handle, true)
+      native.setPedCanBeTargetted(handle, false)
+      alt.setTimeout(() => native.freezeEntityPosition(handle, true), 500)
+    }
+  })
+}
+
+function drawNameTags(text, x, y, z, scale, r, g, b, a, outline) {
+  native.setDrawOrigin(x, y, z, 0)
+  native.beginTextCommandDisplayText('STRING')
+  native.setTextFont(0)
+  native.setTextScale(scale, scale)
+  native.setTextProportional(false)
+  native.setTextColour(r, g, b, a)
+
+  if (outline) native.setTextOutline();
+  native.addTextComponentSubstringKeyboardDisplay(text)
+  native.endTextCommandDisplayText(0, 0, 0)
+}
