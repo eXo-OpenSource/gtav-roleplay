@@ -31,9 +31,7 @@ namespace Exo.Rp.Core.Tasks.Startup.Tasks
                         _ => new LimitedPrivateGrid3(50_000, 50_000, 75, 10_000, 10_000, 500)
                     }, new IdProvider());
 
-            AltEntitySync.Init(
-                3,
-                250,
+            AltEntitySync.Init(5, id => 100, _ => false,
                 (threadCount, repository) => new ServerEventNetworkLayer(threadCount, repository),
                 (entity, threadCount) => entity.Type,
                 (entityId, entityType, threadCount) => entityType,

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using AltV.Net;
 using AltV.Net.Data;
+using AltV.Net.Elements.Args;
 using AltV.Net.Elements.Entities;
 using Newtonsoft.Json;
 
@@ -32,8 +33,8 @@ namespace Exo.Rp.Core.Extensions
 
         public static dynamic GetElementData(this Entity entity, string key)
         {
-            entity.GetSyncedMetaData(key, out var data); // TODO: Not sure if my fix was correct!
-            return data;
+            entity.GetSyncedMetaData(key, out MValueConst data); // TODO: Not sure if my fix was correct!
+            return data.ToObject();
         }
 
         public static void RefreshElementData(this Entity entity, string key)

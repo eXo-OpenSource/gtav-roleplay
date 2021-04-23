@@ -37,6 +37,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Sentry;
 using Sentry.AsyncStackTrace;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using IPlayer = AltV.Net.Elements.Entities.IPlayer;
 
 namespace Exo.Rp.Core
@@ -59,7 +61,15 @@ namespace Exo.Rp.Core
 
         public async override void OnStop()
         {
-            await _host.StopAsync();
+            await _host.StopAsync(TimeSpan.FromSeconds(5));
+        }
+
+        public async static void Stop()
+        {
+            Alt.StopResource(Alt.Server.Resource.Name);
+            //TODO Change when AltV has official APi for that
+            await Task.Delay(1000);
+            Process.GetCurrentProcess().Kill();
         }
 
         private async void ConfigureServices(HostBuilderContext context, IServiceCollection collection)
@@ -93,7 +103,8 @@ namespace Exo.Rp.Core
                 .AddStartupTask<LoadManagerTask>();
 
             // Add shutdown tasks
-            collection.AddShutdownTask<DisposeManagerTask>();
+            collection.AddShutdownTask<DisposeManagerTask>()
+                .AddShutdownTask<StopEntitySyncTask>();;
 
             // Load the settings
             var settingsPath = Path.Combine("resources", Alt.Server.Resource.Name, "config.json");

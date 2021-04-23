@@ -1,15 +1,13 @@
-using System;
-using System.Diagnostics;
-using System.Threading;
-using System.Threading.Tasks;
-using Exo.Rp.Core.Database;
 using Exo.Rp.Core.Tasks;
 using Exo.Rp.Core.Tasks.Shutdown;
 using Exo.Rp.Core.Tasks.StartupTasks;
 using Exo.Rp.Core.Util.Log;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Sentry;
+using System;
+using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Exo.Rp.Core
 {
@@ -17,9 +15,13 @@ namespace Exo.Rp.Core
     {
         private static IHost _host;
 
-        public Core(IHost host)
+        public Core(IHost host, IHostApplicationLifetime appLifetime)
         {
             _host = host;
+            appLifetime.ApplicationStopping.Register(o =>
+            {
+                Entrypoint.Stop();
+            }, null);
         }
 
         private static readonly Logger<Core> Logger = new Logger<Core>();
@@ -37,23 +39,24 @@ namespace Exo.Rp.Core
         public static async Task ExecuteTasks<TTask>(string target = "Runtime")
             where TTask : ITask
         {
-            Logger.Info($"Tasks | { target } | Executing Tasks...");
+            Logger.Info($"Tasks | {target} | Executing Tasks...");
             var stopWatch = Stopwatch.StartNew();
             var cancellationTokenSource = new CancellationTokenSource();
-        
+
             foreach (var task in _host.Services.GetServices<TTask>())
             {
-                Logger.Debug($"Tasks | { target } | Executing {task.GetType().Name}...");
+                Logger.Debug($"Tasks | {target} | Executing {task.GetType().Name}...");
                 var _stopWatch = Stopwatch.StartNew();
 
                 await task.ExecuteAsync(cancellationTokenSource.Token);
 
                 _stopWatch.Stop();
-                Logger.Debug($"Tasks | { target } | Executed {task.GetType().Name} in {_stopWatch.ElapsedMilliseconds}ms.");
+                Logger.Debug(
+                    $"Tasks | {target} | Executed {task.GetType().Name} in {_stopWatch.ElapsedMilliseconds}ms.");
             }
 
             stopWatch.Stop();
-            Logger.Info($"Tasks | { target } | Excuted Taks in {stopWatch.ElapsedMilliseconds} ms.");
+            Logger.Info($"Tasks | {target} | Excuted Taks in {stopWatch.ElapsedMilliseconds} ms.");
         }
 
         public static T GetService<T>()

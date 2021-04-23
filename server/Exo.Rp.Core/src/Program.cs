@@ -92,7 +92,8 @@ namespace Exo.Rp.Core
                       .AddStartupTask<LoadManagerTask>();
 
             // Add shutdown tasks
-            collection.AddShutdownTask<DisposeManagerTask>();
+            collection.AddShutdownTask<DisposeManagerTask>()
+                .AddShutdownTask<StopEntitySyncTask>();
 
             // Initialize database
             DatabaseCore databaseCore = new DatabaseCore();
