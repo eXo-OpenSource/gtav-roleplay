@@ -32,10 +32,15 @@ namespace Exo.Rp.Core.Environment
 
         public void Init()
         {
+<<<<<<< HEAD
             PedManager.CreatePed(PedModel, PedPosition, 180, 0);
             var col = (Colshape.Colshape)Alt.CreateColShapeSphere(EntrancePosition, 3);
             var interiorCol = (Colshape.Colshape)Alt.CreateColShapeSphere(ExitPosition, 3);
             var licensesCol = (Colshape.Colshape)Alt.CreateColShapeSphere(PedPosition, 3);
+=======
+            PedManager.CreateRuntimePed(PedModel, PedPosition, 180, 0);
+            var col = (Colshape.Colshape)Alt.CreateColShapeSphere(PedPosition, 3);
+>>>>>>> b593bcf8e826210af5d5a83d5bb5e1ae8e11f532
             col.OnColShapeEnter += OnColEnter;
             col.OnColShapeExit += OnColExit;
             interiorCol.OnColShapeEnter += OnInteriorColEnter;

@@ -24,6 +24,10 @@ namespace Exo.Rp.Core.Streamer.Entities
             get => position;
             set => SetPositionInternal(value);
         }
+        
+        private bool exists = false;
+        
+        public bool Exists => exists;
 
         private bool positionState = false;
 
@@ -49,11 +53,22 @@ namespace Exo.Rp.Core.Streamer.Entities
             set => SetRangeInternal(value);
         }
 
+        public uint MigrationDistance { get; }
         public uint RangeSquared { get; private set; }
 
         private bool rangeState = false;
 
         private uint newRange;
+        
+        public IClient TempNetOwner { get; set; } = null;
+
+        public IClient NetOwner { get; set; } = null;
+
+        public float NetOwnerRange { get; set; } = float.MaxValue;
+
+        public float TempNetOwnerRange { get; set; } = float.MaxValue;
+
+        public float LastStreamInRange { get; set; } = -1;
 
         private readonly object propertiesMutex = new object();
 
@@ -74,18 +89,35 @@ namespace Exo.Rp.Core.Streamer.Entities
 
         public PrivateEntity(ulong type, Vector3 position, int dimension, uint range) : this(
             Core.GetService<PrivateStreamer>().idProvider.GetNext(), type,
-            position, dimension, range, new Dictionary<string, object>())
+            position, dimension, range, range / 2, new Dictionary<string, object>())
+        {
+        }
+        
+        public PrivateEntity(ulong type, Vector3 position, int dimension, uint range, uint migrationDistance) : this(
+            Core.GetService<PrivateStreamer>().idProvider.GetNext(), type,
+            position, dimension, range, migrationDistance, new Dictionary<string, object>())
+        {
+        }
+        
+        public PrivateEntity(ulong type, Vector3 position, int dimension, uint range, IDictionary<string, object> data) : this(
+            Core.GetService<PrivateStreamer>().idProvider.GetNext(), type,
+            position, dimension, range, range / 2, data)
         {
         }
 
-        public PrivateEntity(ulong type, Vector3 position, int dimension, uint range, IDictionary<string, object> data) : this(
+        public PrivateEntity(ulong type, Vector3 position, int dimension, uint range, uint migrationDistance, IDictionary<string, object> data) : this(
             Core.GetService<PrivateStreamer>().idProvider.GetNext(), type,
-            position, dimension, range, data)
+            position, dimension, range, migrationDistance, data)
+        {
+        }
+        
+        internal PrivateEntity(ulong id, ulong type, Vector3 position, int dimension, uint range,
+            IDictionary<string, object> data) : this(id, type, position, dimension, range, range / 2, data)
         {
         }
 
         internal PrivateEntity(ulong id, ulong type, Vector3 position, int dimension, uint range,
-            IDictionary<string, object> data)
+            uint migrationDistance, IDictionary<string, object> data)
         {
             Id = id;
             Type = type;
@@ -97,6 +129,13 @@ namespace Exo.Rp.Core.Streamer.Entities
             this.data = data;
             DataSnapshot = new EntityDataSnapshot(this);
             threadLocalData = new Dictionary<string, object>(data);
+            if (migrationDistance > range)
+            {
+                throw new ArgumentException("MigrationDistance should not be larger then range:" + migrationDistance +
+                                            "<=" + range + " = false");
+            }
+
+            MigrationDistance = migrationDistance;
             _visibleEntities = new HashSet<int>();
         }
 
@@ -274,6 +313,11 @@ namespace Exo.Rp.Core.Streamer.Entities
             }
 
             return m.ToArray();
+        }
+        
+        public void SetExistsInternal(bool state)
+        {
+            exists = state;
         }
 
         public override int GetHashCode()

@@ -3,6 +3,7 @@ import { CarRent } from '../environment/CarRent';
 import { VehicleController } from '../systems/Vehicle';
 import Chat from '../ui/Chat';
 import { VehicleUI } from '../ui/VehicleUI';
+import {Phone} from "../systems/Phone";
 
 export const KEYS = {
     G: 0x47,
@@ -12,7 +13,9 @@ export const KEYS = {
     ESC: 0x1B,
     SLASH: 0xBF,
     F7: 118,
-    SPACE: 32
+    SPACE: 32,
+    ARROWUP: 38,
+    ARROWDOWN: 40,
 }
 
 export const KEY_BINDS = {
@@ -34,7 +37,13 @@ export const KEY_BINDS = {
     },
     [KEYS.SPACE]: {
         keyup: CarRent.closeUI,
-    }
+    },
+    [KEYS.ARROWUP]: {
+      keyup: Phone.openPhone
+    },
+  [KEYS.ARROWDOWN]: {
+    keyup: Phone.closePhone
+  }
 }
 
 alt.on("keyup", (key: number) => {

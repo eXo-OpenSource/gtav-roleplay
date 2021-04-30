@@ -47,5 +47,25 @@ namespace Exo.Rp.Core.Peds
             Core.GetService<DatabaseContext>().PedModel.Local.Add(ped);
             return ped;
         }
+        
+        public static Ped CreateRuntimePed(PedModel skin, Position position, int rot, PedType type)
+        {
+            var ped = new Ped
+            {
+                Skin = skin,
+                Pos = position,
+                Rot = rot,
+                Type = type
+            };
+            //TODO Better logic for script created Peds
+            Core.GetService<PublicStreamer>()
+                .AddPed(new StreamPed(position, 0)
+                {
+                    Heading = rot,
+                    Model = (uint)skin,
+                    Static = true
+                });
+            return ped;
+        }
     }
 }

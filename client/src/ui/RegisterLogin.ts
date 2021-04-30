@@ -1,6 +1,6 @@
 import * as alt from 'alt-client';
 import * as native from 'natives';
-import { Vector3 } from "natives"
+import { Vector3 } from "alt-client"
 import UiManager from "./UiManager";
 import { Camera } from "../utils/Camera"
 
@@ -8,11 +8,11 @@ const url = 'http://resource/cef/index.html#/login';
 
 export class RegisterLogin {
 
-  private static cameraPoint: Vector3 = {
-    x: -80,
-    y: -825.03,
-    z: 328.67
-  }
+  private static cameraPoint: Vector3 = new Vector3(
+    -80,
+    -825.03,
+    328.67
+);
 
   private static camera: Camera = new Camera(RegisterLogin.cameraPoint, 17);
 

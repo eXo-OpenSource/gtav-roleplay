@@ -30,6 +30,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Exo.Rp.Sdk", "server\Exo.Rp
 EndProject
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "Exo.Rp.Ui", "ui\Exo.Rp.Ui.njsproj", "{D0098DE3-4F60-4518-B50E-16C3F990E0C5}"
 EndProject
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "Exo.Rp.Phone", "phone\Exo.Rp.Phone.njsproj", "{43A5DFD0-DB35-4E6B-8C3E-606BE37FD3B4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -62,6 +64,10 @@ Global
 		{D0098DE3-4F60-4518-B50E-16C3F990E0C5}.Debug|x64.Build.0 = Debug|Any CPU
 		{D0098DE3-4F60-4518-B50E-16C3F990E0C5}.Release|x64.ActiveCfg = Debug|Any CPU
 		{D0098DE3-4F60-4518-B50E-16C3F990E0C5}.Release|x64.Build.0 = Debug|Any CPU
+		{43A5DFD0-DB35-4E6B-8C3E-606BE37FD3B4}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{43A5DFD0-DB35-4E6B-8C3E-606BE37FD3B4}.Debug|x64.Build.0 = Debug|Any CPU
+		{43A5DFD0-DB35-4E6B-8C3E-606BE37FD3B4}.Release|x64.ActiveCfg = Debug|Any CPU
+		{43A5DFD0-DB35-4E6B-8C3E-606BE37FD3B4}.Release|x64.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,6 +81,7 @@ Global
 		{FBC1D2A7-3147-49C2-BDD7-9E507DC4322E} = {DF26B115-175D-45F6-9884-E4CA8E4311AA}
 		{4D283F5A-2735-4B19-8FCE-63EE421B14A0} = {DF26B115-175D-45F6-9884-E4CA8E4311AA}
 		{D0098DE3-4F60-4518-B50E-16C3F990E0C5} = {CF991E32-5FB0-42B3-9A9F-92E9E76E005E}
+		{43A5DFD0-DB35-4E6B-8C3E-606BE37FD3B4} = {CF991E32-5FB0-42B3-9A9F-92E9E76E005E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {40E02E30-2CF7-4ED7-8A88-4F024ABC01B0}
