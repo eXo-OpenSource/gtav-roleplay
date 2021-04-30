@@ -2,11 +2,13 @@ import * as alt from 'alt-client';
 import { View } from "../utils/View";
 import Chat from "./Chat";
 import { Cursor } from "../utils/Cursor";
+import {Phone} from "../systems/Phone";
 
 const url = 'http://resource/cef/index.html#';
 
 export default class UiManager {
   static mainView: View = new View();
+  static phone = new Phone();
 
   static createUi() {
     //this.mainView = new View()

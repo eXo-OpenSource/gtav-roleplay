@@ -20,7 +20,7 @@ module.exports = {
     webpack: {
         configure: (webpackConfig, { paths }) => {
 
-            //paths.appBuild = webpackConfig.output.path = path.resolve('../resources/html');
+            paths.appBuild = webpackConfig.output.path = path.resolve('../client/phone');
             return webpackConfig;
         },
     },

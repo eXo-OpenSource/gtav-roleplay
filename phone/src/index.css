@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* remove this wen there is a better way to remove the focus outline */
+* {
+    outline: none !important;
+}

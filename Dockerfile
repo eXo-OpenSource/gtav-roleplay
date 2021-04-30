@@ -25,6 +25,7 @@ WORKDIR /app
 
 # Add client files
 RUN mkdir -p client/cef
+RUN mkdir -p client/phone
 ADD client/src          client/src/
 ADD client/*.cfg        client/
 ADD client/*.json       client/
@@ -52,7 +53,9 @@ WORKDIR /app/ui
 RUN npm install
 RUN npm run build
 #RUN npm audit fix
-
+WORKDIR /app/phone
+RUN npm install
+RUN npm run build
 
 
 ## Config Patcher
