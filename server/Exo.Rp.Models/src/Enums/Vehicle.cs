@@ -13,10 +13,9 @@ namespace Exo.Rp.Models.Enums
     public enum FuelType
     {
         None = 0,
-        Super = 1,
-        SuperPlus = 2,
-        Diesel = 3,
-        Electric = 4,
-        Kerosene = 5
+        Gasoline = 1,
+        Diesel = 2,
+        Electric = 3,
+        Kerosene = 4
     }
 }

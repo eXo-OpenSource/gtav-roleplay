@@ -10,12 +10,14 @@ namespace Exo.Rp.Models.Enums
     {
         Greencard = 1,
         Citizenship = 2,
-        Car = 3,
-        Motorcycle = 4,
-        Truck = 5,
-        Boat = 6,
-        PlaneA = 7,
-        PlaneB = 8,
+        IdentityCard = 3,
+        WorkPermit = 4,
+        Car = 5,
+        Motorcycle = 6,
+        Truck = 7,
+        Boat = 8,
+        PlaneA = 9,
+        PlaneB = 10,
         Add = 1,
         Remove = 0
     }

@@ -21,6 +21,8 @@ const LoadableCarRentComponent = loadable(() => import("./forms/car-rent"), load
 const LoadableFarmerComponent = loadable(() => import("./jobs/farmer"), loadableOptions);
 const LoadableWoodCutterComponent = loadable(() => import("./jobs/woodcutter"), loadableOptions);
 const LoadableDrivingSchoolComponent = loadable(() => import("./forms/drivingschool/theory"), loadableOptions);
+const LoadablePetrolStationComponent = loadable(() => import("./forms/petrolstation"), loadableOptions);
+const LoadableLicensesComponent = loadable(() => import("./environment/cityhall/licenses"), loadableOptions);
 
 class App extends Component {
   constructor(props) {
@@ -40,6 +42,8 @@ class App extends Component {
             <Route path="/farmer" component={LoadableFarmerComponent} />
             <Route path="/woodcutter" component={LoadableWoodCutterComponent} />
             <Route path="/drivingschool" component={LoadableDrivingSchoolComponent} />
+            <Route path="/petrolstation" component={LoadablePetrolStationComponent} />
+            <Route path="/cityhall-licenses" component={LoadableLicensesComponent} />
           </Switch>
         </Router>
         <Chat/>

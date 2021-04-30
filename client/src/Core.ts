@@ -31,6 +31,7 @@ import "./jobs/WoodCutter"
 import "./ui/Speedo";
 import "./ui/Popup";
 import "./environment/CarRent"
+import "./environment/Cityhall"
 import "./environment/Drivingschool"
 
 

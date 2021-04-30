@@ -9,16 +9,30 @@ namespace Exo.Rp.Core.Events
     internal class EnvironmentEvents : IScript
     {
         [ClientEvent("Cityhall:OnEntranceInteract")]
-        public void OnCityhallInteract(IPlayer player)
+        public void OnCityhallEntranceInteract(IPlayer player)
         {
             var townHall = (Cityhall)player.GetCharacter().GetInteractionData().SourceObject;
-            townHall.OnInteract(player);
+            townHall.Enter(player);
+        }
+
+        [ClientEvent("Cityhall:OnExitInteract")]
+        public void OnCityhallExitInteract(IPlayer player)
+        {
+            var townHall = (Cityhall)player.GetCharacter().GetInteractionData().SourceObject;
+            townHall.Leave(player);
+        }
+
+        [ClientEvent("Cityhall:OnLicensesPedInteract")]
+        public void OnCityhallLicensesPedInteract(IPlayer player)
+        {
+            var townHall = (Cityhall)player.GetCharacter().GetInteractionData().SourceObject;
+            townHall.OnLicensesPedInteract(player);
         }
 
         [ClientEvent("Drivingschool:OnPedInteract")]
         public void OnPedInteract(IPlayer player)
         {
-            player.SendInformation($"Die Fahrprüfung kannst Du am Laptop für ${LicensePrice.Car} starten!");
+            player.SendInformation($"Die Fahrprüfung kannst Du am Laptop für ${(int)LicensePrice.Car} starten!");
         }
 
         [ClientEvent("Drivingschool:OnExamFinished")]

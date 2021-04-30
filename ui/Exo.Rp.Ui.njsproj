@@ -47,6 +47,8 @@
   <ItemGroup>
     <Folder Include="src\" />
     <Folder Include="src\components\" />
+    <Folder Include="src\environment\" />
+    <Folder Include="src\environment\cityhall\" />
     <Folder Include="src\forms\" />
     <Folder Include="src\forms\charcreator\" />
     <Folder Include="src\forms\charcreator\utility\" />
