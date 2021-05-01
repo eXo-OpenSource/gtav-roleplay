@@ -30,6 +30,7 @@ import "./jobs/Farmer"
 import "./jobs/WoodCutter"
 import "./ui/Speedo";
 import "./ui/Popup";
+import "./ui/Hud"
 import "./environment/CarRent"
 import "./environment/Cityhall"
 import "./environment/Drivingschool"
