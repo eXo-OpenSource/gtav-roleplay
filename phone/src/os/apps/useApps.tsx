@@ -1,11 +1,11 @@
 import React, {useMemo, useCallback} from 'react';
-import {APPS} from "./config";
+import {APPS, IApp} from "./config";
 import {createLazyAppIcon} from "./utils";
 import {useNotifications} from "../notifications/useNotifications";
 
 export const useApps = () => {
     const { icons } = useNotifications();
-    const apps = useMemo(() => APPS.map((app) => {
+    const apps: IApp[] = useMemo(() => APPS.map((app) => {
         
         const SvgIcon = React.lazy(
             () => import(`./icons/svg/${app.id}`)
@@ -33,3 +33,8 @@ export const useApps = () => {
     const getApp = useCallback((id) => apps.find((a) => a.id === id) || null, [apps]);
     return { apps, getApp };
 }
+
+export const useApp = (id: string): IApp => {
+    const { getApp } = useApps();
+    return getApp(id);
+};

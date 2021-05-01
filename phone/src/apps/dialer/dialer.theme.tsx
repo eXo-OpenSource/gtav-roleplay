@@ -1,6 +1,6 @@
 
-export const DIALER_APP_PRIMARY_COLOR = "bg-green-600";
-export const DIALER_APP_TEXT_COLOR = "text-white";
+export const DIALER_APP_PRIMARY_COLOR = "bg-white";
+export const DIALER_APP_TEXT_COLOR = "text-black";
 
 const theme = {
     palette: {

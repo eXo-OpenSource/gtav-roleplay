@@ -1,7 +1,7 @@
 import {atom} from "recoil";
 
 export const phoneState = {
-    visibility: atom({
+    visibility: atom<boolean>({
         key: "phoneVisibility",
         default: false,
     })

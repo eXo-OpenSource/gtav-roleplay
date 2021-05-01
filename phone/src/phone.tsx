@@ -9,10 +9,12 @@ import {useApps} from "./os/apps/useApps";
 import {useCurrentApp} from "./os/apps/useCurrentApp";
 import {usePhoneService} from "./os/phone/usePhoneService";
 import {NotificationAlert} from "./os/notifications/notificationAlert";
+import {useMessagesService} from "./apps/messages/useMessagesService";
 
 export const Phone = () => {
     
     usePhoneService();
+    useMessagesService();
 
     const {apps} = useApps();
     const currentApp = useCurrentApp();

@@ -36,13 +36,17 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="craco.config.js" />
+    <Content Include="package-lock.json" />
     <Content Include="package.json" />
     <Content Include="public\index.html" />
     <Content Include="README.md" />
     <Content Include="src\**\*.jsx" />
+	<Content Include="src\**\*.tsx" />
+	<Content Include="src\**\*.js" />
+	<Content Include="src\**\*.ts" />
 	<Content Include="src\**\*.css" />
-	<Content Include="src\wdyr.js" />
 	<Content Include="tailwind.config.js" />
+	<Content Include="tsconfig.json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="public\media" />

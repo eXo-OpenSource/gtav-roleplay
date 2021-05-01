@@ -3,7 +3,7 @@
 		"Exo.Rp.Core": {
 			"commandName": "Executable",
 			"executablePath": ".\\altv-server.exe",
-			"workingDirectory": "..\\..\\bin\\altv",
+			"workingDirectory": "E:\\Exo\\altv-gamemode\\bin\\altv",
 			"sqlDebugging": true
 		}
 	}

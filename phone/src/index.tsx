@@ -6,13 +6,16 @@ import {HashRouter} from "react-router-dom";
 import {Phone} from "./phone";
 import {NotificationsProvider} from "./os/notifications/notificationsProvider";
 import {RecoilRoot} from "recoil";
+import {SoundProvider} from "./os/sounds/soundProvider";
 
 ReactDOM.render(
     <HashRouter>
         <RecoilRoot>
-            <NotificationsProvider>
-                <Phone/>
-            </NotificationsProvider>
+            <SoundProvider>
+                <NotificationsProvider>
+                    <Phone/>
+                </NotificationsProvider>
+            </SoundProvider>
         </RecoilRoot>
     </HashRouter>,
     document.getElementById('root')

@@ -1,7 +1,8 @@
 import React from 'react';
 import SvgIcon from '@material-ui/core/SvgIcon';
+import {SvgIconProps} from "@material-ui/core";
 
-const DialerAppIcon = (props) => {
+const DialerAppIcon = (props: SvgIconProps) => {
     return (
         <SvgIcon {...props}>
             <svg

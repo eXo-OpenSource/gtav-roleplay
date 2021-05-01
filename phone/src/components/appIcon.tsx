@@ -1,4 +1,4 @@
-export const AppIcon = ({ id, nameLocale, name, Icon, backgroundColor, color, notification }) => {
+export const AppIcon = ({ id, nameLocale, Icon, backgroundColor, color, notification }) => {
     
 
     return (
