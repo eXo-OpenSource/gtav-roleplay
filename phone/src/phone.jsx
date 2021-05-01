@@ -8,6 +8,7 @@ import {HomeApp} from "./apps/home/home";
 import {useApps} from "./os/apps/useApps";
 import {useCurrentApp} from "./os/apps/useCurrentApp";
 import {usePhoneService} from "./os/phone/usePhoneService";
+import {NotificationAlert} from "./os/notifications/notificationAlert";
 
 export const Phone = () => {
     
@@ -28,6 +29,7 @@ export const Phone = () => {
                                     <App.Route key={App.id}/>
                                 ))}
                             </>
+                            <NotificationAlert />
                         </div>
                         <NavigationBar/>
                     </> 
@@ -42,6 +44,7 @@ export const Phone = () => {
                                         <App.Route key={App.id}/>
                                     ))}
                                 </>
+                                <NotificationAlert />
                             </div>
                         </div>
                         <NavigationBar/>
