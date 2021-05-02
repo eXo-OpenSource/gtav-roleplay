@@ -42,3 +42,4 @@ UiManager.on('login', (username: string, password: string) => {
 alt.onServer("registerLogin:Error", (error) => {
   UiManager.emit("setError", error)
 });
+alt.onServer('Ui:ShowRegisterLogin', RegisterLogin.openLogin);

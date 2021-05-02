@@ -3,50 +3,50 @@ import * as native from 'natives';
 import Marker from "../systems/Marker";
 import {distance} from "../utils/Vector";
 
-export class WasteCollector {
+class WasteCollector {
 
-  private collector: Entity;
-  private marker: Marker = Marker.createMarker(22, new Vector3(50, 0, 0), 2, {r: 255, g: 255, b: 0, a: 125});
-  private hit = false;
+  private static collector: Entity;
+  private static marker: Marker = Marker.createMarker(22, new Vector3(50, 0, 0), 2, {r: 255, g: 255, b: 0, a: 125});
+  private static hit = false;
 
-  constructor() {
+  static handleStopJob(jobid) {
+    WasteCollector.marker.visible = false;
+  }
 
-    alt.onServer("JobTrash:SetVehicle", (veh, max) => {
-      const interval = alt.setInterval(() => {
-        const vehicle = alt.Vehicle.getByID(veh);
-        if (vehicle) {
-          this.collector = vehicle;
-          alt.clearInterval(interval)
-        }
-      }, 10);
-    });
+  static handleEveryTick() {
+    if (!WasteCollector.collector || !WasteCollector.collector.valid) return;
+    if (native.getEntitySpeed(WasteCollector.collector.scriptID) * 3.6 > 5) {
+      WasteCollector.marker.visible = false;
+      return;
+    }
 
-    alt.onServer("Job:StopJob", (jobid) => {
-      this.marker.visible = false;
-    })
+    const markerPos = native.getOffsetFromEntityInWorldCoords(WasteCollector.collector.scriptID, 0, -5, 0);
 
-    alt.everyTick(() => {
-      if(!this.collector || !this.collector.valid) return;
-      if(native.getEntitySpeed(this.collector.scriptID)*3.6 > 5) {
-        this.marker.visible = false;
-        return;
+    if (distance(markerPos, WasteCollector.marker.pos) > 1) {
+      WasteCollector.marker.pos = markerPos;
+      WasteCollector.marker.visible = true;
+    }
+
+    if (distance(markerPos, alt.Player.local.pos) < 1.5 && !WasteCollector.hit) {
+      alt.emitServer("JobTrash:onVehicleMarkerHit", WasteCollector.collector)
+      WasteCollector.hit = true;
+    } else {
+      if (WasteCollector.hit) WasteCollector.hit = false;
+    }
+  }
+
+  static handleStartJob(veh, max) {
+    const interval = alt.setInterval(() => {
+      const vehicle = alt.Vehicle.getByID(veh);
+      if (vehicle) {
+        WasteCollector.collector = vehicle;
+        alt.clearInterval(interval)
       }
-
-      const markerPos = native.getOffsetFromEntityInWorldCoords(this.collector.scriptID, 0, -5, 0);
-
-      if(distance(markerPos, this.marker.pos) > 1) {
-        this.marker.pos = markerPos;
-        this.marker.visible = true;
-      }
-
-      if(distance(markerPos, alt.Player.local.pos) < 1.5 && !this.hit) {
-        alt.emitServer("JobTrash:onVehicleMarkerHit", this.collector)
-        this.hit = true;
-      } else {
-        if(this.hit) this.hit = false;
-      }
-    })
+    }, 10);
   }
 }
 
-export default WasteCollector;
+alt.everyTick(WasteCollector.handleEveryTick)
+alt.onServer("Job:StopJob", WasteCollector.handleStopJob)
+alt.onServer("JobTrash:SetVehicle", WasteCollector.handleStartJob);
+

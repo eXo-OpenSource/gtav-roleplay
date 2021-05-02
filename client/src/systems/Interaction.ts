@@ -2,6 +2,7 @@ import alt, {Entity, Player} from 'alt-client';
 import * as native from 'natives';
 import {distance} from "../utils/Vector";
 import UiManager from "../ui/UiManager";
+import {KEYS} from "../events/keyup";
 
 alt.log('Loaded: client->utility->vehicle.mjs');
 
@@ -13,38 +14,47 @@ export interface InteractionInstance {
   key: number;
 }
 
+const keys: number[] = [KEYS.E, 74, 75]
+
 export class Interaction {
-  private currInteraction: InteractionInstance[];
+  private static currInteraction: InteractionInstance[] = [];
 
-  constructor() {
-    this.currInteraction = [];
+  static hideInteraction(id) {
+    UiManager.removeToast(id)
+    Interaction.currInteraction = Interaction.currInteraction.filter(value => value.id !== id);
+  }
 
-    alt.onServer("Interaction:Show", (id, title, text, callback) => {
-      this.currInteraction = this.currInteraction.filter(value => value.id !== id);
-      this.currInteraction.push({
-        id: id,
-        title: title,
-        text: text,
-        callback: callback,
-        key: 69 //E
-      });
-      UiManager.insertToast(id, title, text)
-    })
+  static accessInteraction(key) {
+    if (!Interaction.currInteraction) return;
 
-    alt.onServer("Interaction:Hide", (id) => {
-      UiManager.removeToast(id)
-      this.currInteraction = this.currInteraction.filter(value => value.id !== id);
-    })
+    const interactionForKey = Interaction.currInteraction.find(value => value.key == key);
+    if (!interactionForKey) return;
 
-    alt.on("keyup", (key) => {
-      if(!this.currInteraction) return;
+    alt.emitServer(interactionForKey.callback);
+  }
 
-      const interactionForKey = this.currInteraction.find(value => value.key == key);
-      if(!interactionForKey) return;
-
-      alt.emitServer(interactionForKey.callback);
-    })
+  static showInteraction(id, title, text, callback) {
+    let interactKey: number;
+    let idx = 0;
+    do {
+      interactKey = keys[idx] ?? 69;
+      idx++;
+      if(idx > keys.length - 1 ) {
+        idx = 0;
+      }
+    } while (Interaction.currInteraction.find(value => value.key == interactKey) !== undefined)
+    Interaction.currInteraction = Interaction.currInteraction.filter(value => value.id !== id);
+    Interaction.currInteraction.push({
+      id: id,
+      title: title,
+      text: text,
+      callback: callback,
+      key: interactKey //E
+    });
+    UiManager.insertToast(id, title, "Drücke " + String.fromCharCode(interactKey) + " um zu Interagieren")
   }
 }
 
-export default Interaction;
+alt.onServer("Interaction:Show", Interaction.showInteraction)
+alt.onServer("Interaction:Hide", Interaction.hideInteraction)
+alt.on("keyup", Interaction.accessInteraction)

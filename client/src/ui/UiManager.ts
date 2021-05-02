@@ -89,3 +89,4 @@ export default class UiManager {
 }
 // Init webView first
 UiManager.mainView.open(url, false, true);
+UiManager.createUi()

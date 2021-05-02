@@ -37,9 +37,11 @@
     <Content Include="cef\chat\style.css" />
     <Content Include="package.json" />
     <Content Include="README.md" />
+    <Content Include="src\systems\Animations.ts" />
     <Content Include="src\systems\Blip.ts" />
     <Content Include="src\systems\Phone.ts" />
     <Content Include="src\systems\Vehicle.ts" />
+    <Content Include="src\utils\Math.ts" />
     <Content Include="tsconfig.json" />
   </ItemGroup>
   <ItemGroup>
@@ -60,7 +62,6 @@
   <ItemGroup>
     <TypeScriptCompile Include="src\chat\Chat.ts" />
     <TypeScriptCompile Include="src\environment\CarRent.ts" />
-    <TypeScriptCompile Include="src\Core.ts" />
     <TypeScriptCompile Include="src\Index.ts" />
     <TypeScriptCompile Include="src\jobs\LawnMower.ts" />
     <TypeScriptCompile Include="src\jobs\WoodCutter.ts" />

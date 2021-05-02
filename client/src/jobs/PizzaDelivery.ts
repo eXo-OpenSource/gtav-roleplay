@@ -1,43 +1,44 @@
 import alt, {Player, Entity} from 'alt-client'
 import * as native from "natives";
 
-export default class PizzaDelivery {
-  private pizza;
-  private player = alt.Player.local;
+class PizzaDelivery {
+  private static pizza;
+  private static player = alt.Player.local;
 
-  constructor() {
-    alt.on("syncedMetaChange", (entity: Entity, key: string, value: any) => {
-      if (key == "JobPizza:GivePizza") {
-        native.requestModel(604847691);
-        if (this.pizza) native.deleteObject(this.pizza);
+  static handleSyncedMetaChange(entity: Entity, key: string, value: any) {
+    if (key == "JobPizza:GivePizza") {
+      native.requestModel(604847691);
+      if (PizzaDelivery.pizza) native.deleteObject(PizzaDelivery.pizza);
+      native.freezeEntityPosition(entity.scriptID, false);
+      alt.toggleGameControls(true);
+      PizzaDelivery.pizza = native.createObject(604847691, entity.pos.x, entity.pos.y, entity.pos.z, true, true, false);
+      native.attachEntityToEntity(PizzaDelivery.pizza, entity.scriptID, native.getPedBoneIndex(entity.scriptID, 0xeb95),
+        0, 0, 0, 0, 0, 0, false, false, true, true, 2, true);
+    } else if (key == "JobPizza:PlacePizza") {
+      alt.setTimeout(() => native.detachEntity(PizzaDelivery.pizza, true, true), 2000);
+      alt.setTimeout(() => native.deleteObject(PizzaDelivery.pizza), 10 * 1000);
+    } else if (key == "JobPizza:RemovePizza") {
+      if (!PizzaDelivery.pizza) return
+      native.detachEntity(PizzaDelivery.pizza, true, true)
+      native.deleteObject(PizzaDelivery.pizza)
+    } else if (key == "JobPizza:TakePizza") {
+      native.freezeEntityPosition(entity.scriptID, true);
+      alt.toggleGameControls(false);
+      alt.setTimeout(() => {
         native.freezeEntityPosition(entity.scriptID, false);
         alt.toggleGameControls(true);
-        this.pizza = native.createObject(604847691, entity.pos.x, entity.pos.y, entity.pos.z, true, true, false);
-        native.attachEntityToEntity(this.pizza, entity.scriptID, native.getPedBoneIndex(entity.scriptID, 0xeb95),
-          0, 0, 0, 0, 0, 0, false, false, true, true, 2, true);
-      } else if (key == "JobPizza:PlacePizza") {
-        alt.setTimeout(() => native.detachEntity(this.pizza, true, true), 2000);
-        alt.setTimeout(() => native.deleteObject(this.pizza), 10*1000);
-      } else if (key == "JobPizza:RemovePizza") {
-        if (!this.pizza) return
-        native.detachEntity(this.pizza, true, true)
-        native.deleteObject(this.pizza)
-      } else if (key == "JobPizza:TakePizza") {
-        native.freezeEntityPosition(entity.scriptID, true);
-        alt.toggleGameControls(false);
-        alt.setTimeout(() => {
-          native.freezeEntityPosition(entity.scriptID, false);
-          alt.toggleGameControls(true);
-        }, 5000)
-      }
-    })
+      }, 5000)
+    }
+  }
 
-    alt.everyTick(() => {
-      if (native.getVehiclePedIsEntering(this.player.scriptID) && this.pizza || native.isPedSittingInAnyVehicle(this.player.scriptID)) {
-        if (!this.pizza) return
-        native.detachEntity(this.pizza, true, true)
-        native.deleteObject(this.pizza)
-      }
-    })
+  static handleEveryTick() {
+    if (native.getVehiclePedIsEntering(PizzaDelivery.player.scriptID) && PizzaDelivery.pizza || native.isPedSittingInAnyVehicle(PizzaDelivery.player.scriptID)) {
+      if (!PizzaDelivery.pizza) return
+      native.detachEntity(PizzaDelivery.pizza, true, true)
+      native.deleteObject(PizzaDelivery.pizza)
+    }
   }
 }
+
+alt.on("syncedMetaChange", PizzaDelivery.handleSyncedMetaChange)
+alt.everyTick(PizzaDelivery.handleEveryTick)

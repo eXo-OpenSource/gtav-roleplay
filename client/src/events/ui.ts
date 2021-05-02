@@ -7,6 +7,4 @@ import UiManager from '../ui/UiManager';
 
 alt.onServer('Ui:ShowFaceFeatures', () => new FaceFeaturesUi());
 
-alt.onServer('Ui:ShowRegisterLogin', () => RegisterLogin.openLogin());
-
 
