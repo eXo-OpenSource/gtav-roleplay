@@ -13,42 +13,49 @@ build_job:
     - linux
     - dind
   script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    - |
+        docker build -f dockerfiles/server.Dockerfile \
+          -t "$CI_REGISTRY_IMAGE/internal/server:latest" .
+    - |
+        docker build -f dockerfiles/client.Dockerfile \
+          -t "$CI_REGISTRY_IMAGE/internal/client:latest" .
     - |
         docker build -f Dockerfile \
+          --build-arg CI_REGISTRY_IMAGE="$CI_REGISTRY_IMAGE" \
           --build-arg CI_BUILD_REF_NAME="$CI_BUILD_REF_NAME" \
           --build-arg BASE_CONFIG="$GAMEMODE_CONFIG" \
           --build-arg SENTRY_DSN="$SENTRY_DSN" \
           --build-arg SENTRY_ENVIRONMENT="${CI_COMMIT_BRANCH//\//-}" \
           --build-arg SENTRY_RELEASE="${CI_COMMIT_SHA}" \
-          -t exo-rp-altv .
-    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
-    - docker tag exo-rp-altv $CI_REGISTRY_IMAGE:latest-$(echo $CI_BUILD_REF_NAME | tr -d /)
-    - '[ "$CI_BUILD_REF_NAME" == "master" ] && docker tag exo-rp-altv $CI_REGISTRY_IMAGE:latest'
+          -t "$CI_REGISTRY_IMAGE:latest" .
     - docker push "$CI_REGISTRY_IMAGE"
+    - docker push "$CI_REGISTRY_IMAGE/internal/server"
+    - docker push "$CI_REGISTRY_IMAGE/internal/client"
 
-build_cdn_job:
-  image: docker:latest
-  stage: build
-  tags:
-    - linux
-    - dind
-  script:
-    - |
-        docker build -f cdn/Dockerfile \
-          --build-arg CI_BUILD_REF_NAME="$CI_BUILD_REF_NAME" \
-          -t exo-rp-altv-cdn .
-    - docker run --name justpack exo-rp-altv-cdn
-    - docker cp justpack:/opt/altv/cdn_upload/connect.json .
-    - docker cp justpack:/opt/altv/cdn_upload/exov-client.resource .
-    - docker cp justpack:/opt/altv/cdn_upload/mrpd.resource .
-    - docker cp justpack:/opt/altv/cdn_upload/drivingschool.resource .
-    - docker cp justpack:/opt/altv/cdn_upload/cityhall.resource .
-    - docker rm justpack
-  artifacts:
-    paths:
-      - connect.json
-      - "*.resource"
-    expire_in: 1 Week
+#build_cdn_job:
+#  image: docker:latest
+#  stage: build
+#  tags:
+#    - linux
+#    - dind
+#  script:
+#    - |
+#        docker build -f cdn/Dockerfile \
+#          --build-arg CI_BUILD_REF_NAME="$CI_BUILD_REF_NAME" \
+#          -t exo-rp-altv-cdn .
+#    - docker run --name justpack exo-rp-altv-cdn
+#    - docker cp justpack:/opt/altv/cdn_upload/connect.json .
+#    - docker cp justpack:/opt/altv/cdn_upload/exov-client.resource .
+#    - docker cp justpack:/opt/altv/cdn_upload/mrpd.resource .
+#    - docker cp justpack:/opt/altv/cdn_upload/drivingschool.resource .
+#    - docker cp justpack:/opt/altv/cdn_upload/cityhall.resource .
+#    - docker rm justpack
+#  artifacts:
+#    paths:
+#      - connect.json
+#      - "*.resource"
+#    expire_in: 1 Week
 
 sentry_job:
   image: getsentry/sentry-cli
@@ -79,22 +86,22 @@ deploy_job_develop:
   only:
     - master
 
-deploy_cdn:
-  image: 
-    name: minio/mc
-    entrypoint: [''] # https://github.com/minio/mc/issues/3362#issuecomment-724249242
-  stage: deploy
-  needs: ["build_cdn_job"]
-  tags:
-    - linux
-    - dind
-  script:
-    - mc alias set exo https://static.exo.cool $MINIO_ACCESS_KEY $MINIO_SECRET_KEY
-    - mc cp connect.json  exo/exov-static/resources/pack/
-    - mc cp *.resource    exo/exov-static/resources/pack/
-  only:
-    - master
-    - release/production
+#deploy_cdn:
+#  image: 
+#    name: minio/mc
+#    entrypoint: [''] # https://github.com/minio/mc/issues/3362#issuecomment-724249242
+#  stage: deploy
+#  needs: ["build_cdn_job"]
+#  tags:
+#    - linux
+#    - dind
+#  script:
+#    - mc alias set exo https://static.exo.cool $MINIO_ACCESS_KEY $MINIO_SECRET_KEY
+#    - mc cp connect.json  exo/exov-static/resources/pack/
+#    - mc cp *.resource    exo/exov-static/resources/pack/
+#  only:
+#    - master
+#    - release/production
 
 # deploy_job_production:
 #     image: appropriate/curl
