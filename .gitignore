@@ -50,3 +50,6 @@ index.html.gz
 # CI
 exov-client.resource
 connect.json
+
+# Phone
+client/phone/
