@@ -29,9 +29,9 @@ build_job:
           --build-arg SENTRY_ENVIRONMENT="${CI_COMMIT_BRANCH//\//-}" \
           --build-arg SENTRY_RELEASE="${CI_COMMIT_SHA}" \
           -t "$CI_REGISTRY_IMAGE:latest" .
-    - docker push "$CI_REGISTRY_IMAGE"
-    - docker push "$CI_REGISTRY_IMAGE/internal/server"
-    - docker push "$CI_REGISTRY_IMAGE/internal/client"
+    - '[ "$CI_BUILD_REF_NAME" == "master" ] && docker push "$CI_REGISTRY_IMAGE"'
+    - '[ "$CI_BUILD_REF_NAME" == "master" ] && docker push "$CI_REGISTRY_IMAGE/internal/server"'
+    - '[ "$CI_BUILD_REF_NAME" == "master" ] && docker push "$CI_REGISTRY_IMAGE/internal/client"'
 
 #build_cdn_job:
 #  image: docker:latest
