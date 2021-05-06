@@ -129,10 +129,10 @@ namespace Exo.Rp.Core.Jobs
                         CallbackArgs = new List<object>{JobId},
                         Color = "red"
                     } : null,
-                    new PopupLabelDto
+                    player.GetCharacter().GetJob() != null ? new PopupLabelDto
                     {
                         Name = ""
-                    },
+                    } : null,
                     new PopupHeaderDto
                     {
                         LeftText = Name,
